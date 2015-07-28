@@ -20,7 +20,11 @@ public class MainApp extends Application {
         FXMLLoader loader = new FXMLLoader();
         Parent root = (Parent) loader.load(getClass().getResourceAsStream(fxmlFile));
         stage.setTitle("JavaFX and Maven");
-        stage.setScene(new Scene(root));
+        final Scene scene = new Scene(root, 800, 600);
+        scene.getStylesheets().add((getClass().getResource("/css/styles.css")).toExternalForm());
+        scene.setFill(null);
+        stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
     }
 }
