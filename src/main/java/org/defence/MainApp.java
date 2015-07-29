@@ -5,8 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.defence.domain.entities.AssertedName;
-import org.defence.infrastructure.UnitOfWork;
 
 /**
  * Created by root on 22.07.15.
@@ -14,13 +12,6 @@ import org.defence.infrastructure.UnitOfWork;
 public class MainApp extends Application {
     public static void main(String[] args) {
         launch(args);
-
-        AssertedName assertedName = new AssertedName();
-        assertedName.setName("Hernya");
-        assertedName.setNumber("Bolshaya");
-        UnitOfWork unitOfWork = new UnitOfWork(true);
-        unitOfWork.assertedNameRepository.insert(assertedName);
-        unitOfWork.save();
     }
 
     @Override

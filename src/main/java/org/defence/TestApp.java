@@ -1,20 +1,35 @@
 package org.defence;
 
-import org.defence.domain.entities.AssertedName;
-import org.defence.infrastructure.UnitOfWork;
+import javafx.application.Application;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
+import javafx.stage.Stage;
 
 /**
  * Created by root on 23.07.15.
  */
-public class TestApp {
+public class TestApp extends Application {
     public static void main(String[] args) {
-        UnitOfWork unitOfWork = new UnitOfWork(true);
+        launch(args);
+    }
 
-        AssertedName assertedName = new AssertedName();
-        assertedName.setName("Утвержденное наименование");
-        assertedName.setNumber("123456");
+    @Override
+    public void start(Stage stage) throws Exception {
+        WebView browser = new WebView();
+//        WebEngine webEngine = new WebEngine();
+        WebEngine webEngine = browser.getEngine();
 
-        unitOfWork.assertedNameRepository.insert(assertedName);
-        unitOfWork.save();
+        /*webEngine.getLoadWorker()
+                .stateProperty()
+                .addListener((obs, oldValue, newValue) -> {
+                    if (newValue == Worker.State.SUCCEEDED) {
+                        stage.setTitle(webEngine.getLocation());
+                    }
+                }); // addListener()
+
+// begin loading...*/
+        webEngine.load("http://www.oracle.com");
+        stage.setMinHeight(400);
+        stage.show();
     }
 }
