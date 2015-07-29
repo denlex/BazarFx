@@ -20,7 +20,7 @@
     </rowConstraints>
     <children>
         <Button mnemonicParsing="false" text="Button" GridPane.halignment="CENTER" GridPane.valignment="CENTER"
-                id="a_demo_four" fx:id="btn" onMousePressed="#onClickMethod"/>
+                id="big-yellow" fx:id="btn" onMousePressed="#onClickMethod"/>
         <Button mnemonicParsing="false" text="Button" GridPane.columnIndex="1" GridPane.halignment="CENTER"
                 GridPane.valignment="CENTER" id="big-yellow"/>
         <Button mnemonicParsing="false" text="Button" GridPane.columnIndex="2" GridPane.halignment="CENTER"
