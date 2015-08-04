@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
 /**
@@ -20,12 +21,14 @@ public class MainApp extends Application {
         FXMLLoader loader = new FXMLLoader();
         Parent root = (Parent) loader.load(getClass().getResourceAsStream(fxmlFile));
         stage.setTitle("JavaFX and Maven");
-        final Scene scene = new Scene(root, 800, 600);
+        final Scene scene = new Scene(root);
         scene.getStylesheets().add((getClass().getResource("/css/styles.css")).toExternalForm());
         scene.getStylesheets().add((getClass().getResource("/css/Button.css")).toExternalForm());
         scene.setFill(null);
         stage.setScene(scene);
-        stage.setResizable(false);
+        stage.setMinHeight(600);
+        stage.setMinWidth(800);
+        stage.setResizable(true);
         stage.show();
     }
 }
