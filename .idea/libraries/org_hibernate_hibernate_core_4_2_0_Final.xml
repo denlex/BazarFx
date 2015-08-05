@@ -1,8 +1,0 @@
-<component name="libraryTable">
-  <library name="org.hibernate:hibernate-core:4.2.0.Final" type="repository">
-    <properties maven-id="org.hibernate:hibernate-core:4.2.0.Final" />
-    <CLASSES />
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
