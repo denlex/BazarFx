@@ -1,32 +1,57 @@
 package org.defence.tests;
 
-import java.util.PriorityQueue;
-import java.util.Queue;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 /**
  * Created by root on 24.07.15.
  */
 
-public class MainTest {
-    public static void showQueue(Queue<Integer> queue) {
-        System.out.println(queue);
+class Contact {
+    private StringProperty firstName;
+    private StringProperty lastName;
+
+    public Contact(String firstName, String lastName) {
+        this.firstName = new SimpleStringProperty(firstName);
+        this.lastName = new SimpleStringProperty(lastName);
     }
 
+    public String getFirstName() {
+        return firstName.get();
+    }
+
+    public StringProperty firstNameProperty() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName.set(firstName);
+    }
+
+    public String getLastName() {
+        return lastName.get();
+    }
+
+    public StringProperty lastNameProperty() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName.set(lastName);
+    }
+}
+
+public class MainTest {
 
     public static void main(String[] args) {
-        Queue<Integer> list = new PriorityQueue<Integer>();
-        list.add(5);
-        showQueue(list);
+        Contact contact = new Contact("Joe", "Dawson");
+        StringProperty fname = new SimpleStringProperty();
+        fname.bindBidirectional(contact.firstNameProperty());
 
-        list.add(2);
-        showQueue(list);
+        contact.firstNameProperty().set("Play");
+        fname.set("Jane");
 
-        list.add(1);
-        showQueue(list);
-
-        list.add(4);
-        showQueue(list);
-
-        System.out.println(list);
+        System.out.println("contact.firstNameProperty = " + contact.firstNameProperty().get());
+        System.out.println("fname = " + fname.get());
     }
 }

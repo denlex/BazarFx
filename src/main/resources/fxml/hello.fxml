@@ -7,6 +7,8 @@
 
 <?import org.controlsfx.control.CheckTreeView?>
 <?import javafx.scene.control.cell.CheckBoxTreeCell?>
+<?import com.sun.javafx.scene.control.skin.ContextMenuContent.MenuBox?>
+<?import com.sun.javafx.scene.control.skin.SplitPaneSkin.Content?>
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="400.0" prefWidth="600.0"
           xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <columnConstraints>
@@ -23,7 +25,7 @@
     <children>
         <MenuBar GridPane.columnSpan="2147483647" GridPane.valignment="TOP">
             <menus>
-                <Menu mnemonicParsing="false" text="_File" >
+                <Menu mnemonicParsing="false" text="_File">
                     <items>
                         <MenuItem mnemonicParsing="false" text="Close"/>
                     </items>
@@ -51,26 +53,48 @@
                         <RowConstraints minHeight="150.0" prefHeight="150.0" vgrow="SOMETIMES"/>
                     </rowConstraints>
                     <children>
-                        <CheckTreeView>
-                            <CheckBoxTreeItem expanded="true" value="Colors">
+                        <TreeView>
+                            <contextMenu>
+                                <ContextMenu>
+                                    <items>
+                                        <MenuItem text="ddsf"></MenuItem>
+                                    </items>
+                                </ContextMenu>
+                            </contextMenu>
+                            <TreeItem expanded="true" value="Hierarchy">
                                 <children>
-                                    <CheckBoxTreeItem value="Red"></CheckBoxTreeItem>
-                                    <CheckBoxTreeItem value="Green"></CheckBoxTreeItem>
-                                    <CheckBoxTreeItem value="Blue"></CheckBoxTreeItem>
+                                    <TreeItem value="Colors">
+                                        <children>
+                                            <TreeItem value="Red"></TreeItem>
+                                            <TreeItem value="Green"></TreeItem>
+                                            <TreeItem value="Blue"></TreeItem>
+                                        </children>
+                                    </TreeItem>
+                                    <TreeItem expanded="true" value="Cars">
+                                        <children>
+                                            <TreeItem value="Volvo"></TreeItem>
+                                            <TreeItem value="BMW"></TreeItem>
+                                            <TreeItem value="Skoda"></TreeItem>
+                                        </children>
+                                    </TreeItem>
                                 </children>
-                            </CheckBoxTreeItem>
-                        </CheckTreeView>
+                            </TreeItem>
+                        </TreeView>
                     </children>
                 </GridPane>
-                <GridPane>
+                <GridPane style="-fx-background-color: maroon">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="100.0" prefWidth="100.0"/>
+                        <ColumnConstraints hgrow="ALWAYS" fillWidth="true"/>
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints minHeight="150.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="150.0" prefHeight="30.0" vgrow="ALWAYS"/>
                     </rowConstraints>
                     <children>
-                        <Pane prefHeight="200.0" prefWidth="200.0"/>
+                        <GridPane style="-fx-background-color: yellowgreen">
+                            <children>
+                                <fx:include source="/fxml/Form.fxml" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS"/>
+                            </children>
+                        </GridPane>
                     </children>
                 </GridPane>
             </items>
