@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import org.defence.controllers.*?>
-
-<?import org.controlsfx.control.CheckTreeView?>
-<?import javafx.scene.control.cell.CheckBoxTreeCell?>
-<?import com.sun.javafx.scene.control.skin.ContextMenuContent.MenuBox?>
-<?import com.sun.javafx.scene.control.skin.SplitPaneSkin.Content?>
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="400.0" prefWidth="600.0"
           xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <columnConstraints>

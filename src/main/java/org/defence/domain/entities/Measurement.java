@@ -1,13 +1,15 @@
 package org.defence.domain.entities;
 
+import java.io.Serializable;
+
 /**
  * Created by root on 22.07.15.
  */
-public class Measurement {
+public class Measurement implements Serializable {
     private int id;
+    private String code;
     private String name;
     private String shortName;
-    private String code;
     private MeasurementType type;
 
     public int getId() {

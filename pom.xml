@@ -27,7 +27,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>org.defence.tests.WebViewSample</mainClass>
+                            <mainClass>org.defence.MainApp</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

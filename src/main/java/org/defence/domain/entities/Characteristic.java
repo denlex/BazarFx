@@ -1,15 +1,20 @@
 package org.defence.domain.entities;
 
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Created by root on 22.07.15.
  */
-public class Characteristic {
+public class Characteristic implements Serializable {
     private int id;
-    private String number;
+    private String code;
     private String name;
-    private String value;
-    private Measurement measurement;
     private CharacteristicType characteristicType;
+    private Measurement measurement;
+
+    private Set<CharacteristicKit> characteristicKitSet = new HashSet<CharacteristicKit>();
 
     public int getId() {
         return id;
@@ -19,12 +24,12 @@ public class Characteristic {
         this.id = id;
     }
 
-    public String getNumber() {
-        return number;
+    public String getCode() {
+        return code;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getName() {
@@ -33,14 +38,6 @@ public class Characteristic {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
     }
 
     public Measurement getMeasurement() {
@@ -57,5 +54,13 @@ public class Characteristic {
 
     public void setCharacteristicType(CharacteristicType characteristicType) {
         this.characteristicType = characteristicType;
+    }
+
+    public Set<CharacteristicKit> getCharacteristicKitSet() {
+        return characteristicKitSet;
+    }
+
+    public void setCharacteristicKitSet(Set<CharacteristicKit> characteristicKitSet) {
+        this.characteristicKitSet = characteristicKitSet;
     }
 }

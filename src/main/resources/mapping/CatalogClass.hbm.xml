@@ -7,7 +7,7 @@
         <id name="id" column="Id">
             <generator class="native"/>
         </id>
-        <property name="number" column="Number" type="int"/>
+        <property name="code" column="Number" type="int"/>
         <property name="name" column="Name" type="string"/>
         <property name="include" column="Include" type="string"/>
         <property name="exclude" column="Exclude" type="string"/>

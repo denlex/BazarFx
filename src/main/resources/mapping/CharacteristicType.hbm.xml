@@ -3,11 +3,12 @@
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping package="org.defence.domain.entities">
-    <class name="AssertedName" table="AssertedName">
+    <class name="CharacteristicType" table="CHARACTERISTIC_TYPE">
         <id name="id" column="Id">
             <generator class="native"/>
         </id>
-        <property name="code" column="Number" type="string"/>
-        <property name="name" column="Name" type="string"/>
+
+        <property name="code" column="CODE" type="string"/>
+        <property name="name" column="NAME" type="string"/>
     </class>
 </hibernate-mapping>

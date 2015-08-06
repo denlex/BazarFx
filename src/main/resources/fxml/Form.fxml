@@ -2,13 +2,6 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<!--
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
-          prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" style="-fx-background-color: teal">
-</GridPane>-->
-<!--
-<GridPane prefWidth="-Infinity" prefHeight="-Infinity" style="-fx-background-color: tomato" >
-</GridPane>-->
 <GridPane style="-fx-background-color: tomato">
     <children>
         <Button>Hello World</Button>

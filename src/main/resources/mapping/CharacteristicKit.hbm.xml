@@ -3,11 +3,17 @@
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping package="org.defence.domain.entities">
-    <class name="AssertedName" table="AssertedName">
+    <class name="CharacteristicKit" table="CHARACTERISTIC_KIT">
         <id name="id" column="Id">
             <generator class="native"/>
         </id>
-        <property name="code" column="Number" type="string"/>
+
         <property name="name" column="Name" type="string"/>
+
+        <set name="characteristicSet" table="CHARACTERISTIC"
+             inverse="false" lazy="true" fetch="select" cascade="all">
+            <key column="CHARACTERISTIC_KIT_ID" />
+            <many-to-many column="CHARACTERISTIC_ID" class="Characteristic" />
+        </set>
     </class>
 </hibernate-mapping>
