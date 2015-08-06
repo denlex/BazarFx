@@ -3,21 +3,21 @@
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping package="org.defence.domain.entities">
-    <class name="Characteristic" table="CHARACTERISTIC">
+    <class name="Measurement" table="MEASUREMENT">
         <id name="id" column="ID">
             <generator class="native"/>
         </id>
 
         <property name="code" column="CODE" type="string"/>
         <property name="name" column="NAME" type="string"/>
+        <property name="shortName" column="SHORT_NAME" type="string"/>
 
-        <property name="measurement" column="MEASUREMENT" type="Measurement"></property>
+        <!--<property name="measurement" column="MEASUREMENT" type="Measurement"></property>-->
 
-
-        <set name="characteristicKitSet" table="CHARACTERISTIC_KIT"
+        <set name="characteristicSet" table="CHARACTERISTIC"
              inverse="false" lazy="true" fetch="select" cascade="all">
-            <key column="CHARACTERISTIC_ID" />
-            <many-to-many column="CHARACTERISTIC_KIT_ID" class="CharacteristicKit" />
+            <key column="MEASUREMENT_ID" />
+            <many-to-many column="CHARACTERISTIC_ID" class="Characteristic" />
         </set>
     </class>
 </hibernate-mapping>

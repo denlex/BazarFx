@@ -1,15 +1,15 @@
 package org.defence.domain.entities;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by root on 22.07.15.
+ * Created by root on 06.08.15.
  */
-public class DescriptionFormat {
+public class Value implements Serializable {
     private int id;
-    private String name;
-    private String code;
+    private String value;
     private Set<CharacteristicKit> characteristicKitSet = new HashSet<CharacteristicKit>();
 
     public int getId() {
@@ -20,20 +20,12 @@ public class DescriptionFormat {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getValue() {
+        return value;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
+    public void setValue(String value) {
+        this.value = value;
     }
 
     public Set<CharacteristicKit> getCharacteristicKitSet() {

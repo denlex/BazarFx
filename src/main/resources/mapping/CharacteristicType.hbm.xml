@@ -4,7 +4,7 @@
 
 <hibernate-mapping package="org.defence.domain.entities">
     <class name="CharacteristicType" table="CHARACTERISTIC_TYPE">
-        <id name="id" column="Id">
+        <id name="id" column="ID">
             <generator class="native"/>
         </id>
 

@@ -1,6 +1,7 @@
 package org.defence.domain.entities;
 
 import java.io.Serializable;
+import java.util.Set;
 
 /**
  * Created by root on 22.07.15.
@@ -11,6 +12,7 @@ public class Measurement implements Serializable {
     private String name;
     private String shortName;
     private MeasurementType type;
+    private Set<Characteristic> characteristicSet;
 
     public int getId() {
         return id;
@@ -50,5 +52,13 @@ public class Measurement implements Serializable {
 
     public void setType(MeasurementType type) {
         this.type = type;
+    }
+
+    public Set<Characteristic> getCharacteristicSet() {
+        return characteristicSet;
+    }
+
+    public void setCharacteristicSet(Set<Characteristic> characteristicSet) {
+        this.characteristicSet = characteristicSet;
     }
 }

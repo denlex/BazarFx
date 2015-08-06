@@ -18,6 +18,13 @@
 
       <mapping resource="mapping/AssertedName.hbm.xml"/>
       <mapping resource="mapping/CatalogClass.hbm.xml"/>
+      <mapping resource="mapping/Characteristic.hbm.xml"/>
+      <mapping resource="mapping/CharacteristicKit.hbm.xml"/>
+      <mapping resource="mapping/CharacteristicType.hbm.xml"/>
+      <mapping resource="mapping/DescriptionFormat.hbm.xml"/>
+      <mapping resource="mapping/Measurement.hbm.xml"/>
+      <mapping resource="mapping/MeasurementType.hbm.xml"/>
+      <mapping resource="mapping/Value.hbm.xml"/>
     <!-- DB schema will be updated if needed -->
     <!-- <property name="hbm2ddl.auto">update</property> -->
   </session-factory>

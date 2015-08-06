@@ -1,25 +1,17 @@
 package org.defence.controllers;
 
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.*;
-import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.effect.Lighting;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 
 import java.io.IOException;
-
-import static javafx.application.Application.launch;
 
 /**
  * Created by root on 22.07.15.
@@ -32,7 +24,7 @@ public class MainController {
     @FXML
     public void onClickMethod() {
         btn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
+//            @Override
             public void handle(ActionEvent t)  {
                 String fxmlFile = "/fxml/Form.fxml";
                 FXMLLoader loader = new FXMLLoader();
