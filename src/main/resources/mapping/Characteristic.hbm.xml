@@ -14,10 +14,10 @@
         <property name="measurement" column="MEASUREMENT" type="Measurement"></property>
 
 
-        <set name="characteristicKitSet" table="CHARACTERISTIC_KIT"
+        <!--<set name="characteristicKitSet" table="CHARACTERISTIC_KIT"
              inverse="false" lazy="true" fetch="select" cascade="all">
             <key column="CHARACTERISTIC_ID" />
             <many-to-many column="CHARACTERISTIC_KIT_ID" class="CharacteristicKit" />
-        </set>
+        </set>-->
     </class>
 </hibernate-mapping>

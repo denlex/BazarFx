@@ -10,10 +10,16 @@
 
         <property name="name" column="NAME" type="string"/>
 
-        <set name="characteristicSet" table="CHARACTERISTIC"
+        <set name="characteristicSet" table="CHARACTERISTIC_KIT_N_CHARACTERISTIC"
              inverse="false" lazy="true" fetch="select" cascade="all">
             <key column="CHARACTERISTIC_KIT_ID" />
             <many-to-many column="CHARACTERISTIC_ID" class="Characteristic" />
+        </set>
+
+        <set name="valueSet" table="CHARACTERISTIC_KIT_N_VALUE"
+             inverse="false" lazy="true" fetch="select" cascade="all">
+            <key column="CHARACTERISTIC_KIT_ID" />
+            <many-to-many column="VALUE_ID" class="Value" />
         </set>
     </class>
 </hibernate-mapping>

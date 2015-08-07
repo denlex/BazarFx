@@ -8,15 +8,15 @@
       <property name="connection.driver_class">org.postgresql.Driver</property>
       <property name="connection.username">postgres</property>
       <property name="connection.password">postgres</property>
-      <property name="hbm2ddl.auto">create</property>
+      <property name="hbm2ddl.auto">create-drop</property>
 
       <property name="dialect">org.hibernate.dialect.PostgreSQL82Dialect</property>
       <property name="connection.pool_size">1</property>
       <property name="current_session_context_class">thread</property>
       <property name="cache.provider_class">org.hibernate.cache.NoCacheRegionFactoryAvailableException</property>
-      <property name="show_sql">true</property>
+      <property name="show_sql">false</property>
 
-      <mapping resource="mapping/AssertedName.hbm.xml"/>
+      <!--<mapping resource="mapping/AssertedName.hbm.xml"/>
       <mapping resource="mapping/CatalogClass.hbm.xml"/>
       <mapping resource="mapping/Characteristic.hbm.xml"/>
       <mapping resource="mapping/CharacteristicKit.hbm.xml"/>
@@ -24,8 +24,9 @@
       <mapping resource="mapping/DescriptionFormat.hbm.xml"/>
       <mapping resource="mapping/Measurement.hbm.xml"/>
       <mapping resource="mapping/MeasurementType.hbm.xml"/>
-      <mapping resource="mapping/Value.hbm.xml"/>
-    <!-- DB schema will be updated if needed -->
-    <!-- <property name="hbm2ddl.auto">update</property> -->
+      <mapping resource="mapping/Value.hbm.xml"/>-->
+
+      <mapping resource="mapping/Certificate.hbm.xml"/>
+      <mapping resource="mapping/Employee.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

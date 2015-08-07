@@ -11,6 +11,7 @@ public class CharacteristicKit implements Serializable {
     private int id;
     private String name;
     private Set<Characteristic> characteristicSet = new HashSet<Characteristic>();
+    private Set<Value> valueSet = new HashSet<Value>();
 
     public CharacteristicKit() {
     }
@@ -37,5 +38,13 @@ public class CharacteristicKit implements Serializable {
 
     public void setCharacteristicSet(Set<Characteristic> characteristicSet) {
         this.characteristicSet = characteristicSet;
+    }
+
+    public Set<Value> getValueSet() {
+        return valueSet;
+    }
+
+    public void setValueSet(Set<Value> valueSet) {
+        this.valueSet = valueSet;
     }
 }

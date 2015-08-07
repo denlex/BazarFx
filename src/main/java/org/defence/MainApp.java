@@ -1,5 +1,6 @@
 package org.defence;
 
+import com.aquafx_project.AquaFx;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -29,14 +30,19 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+
+
 //        String fxmlFile = "/fxml/hello.fxml";
-        String fxmlFile = "/fxml/TestForm.fxml";
+        String fxmlFile = "/fxml/hello.fxml";
         FXMLLoader loader = new FXMLLoader();
         Parent root = (Parent) loader.load(getClass().getResourceAsStream(fxmlFile));
         stage.setTitle("JavaFX and Maven");
+
+//        AquaFx.style();
+        AquaFx.class.getResource("mac_os.css").toExternalForm();
+
         final Scene scene = new Scene(root);
         scene.getStylesheets().add((getClass().getResource("/css/styles.css")).toExternalForm());
-        scene.getStylesheets().add((getClass().getResource("/css/Button.css")).toExternalForm());
         scene.setFill(null);
         stage.setScene(scene);
         stage.setMinHeight(600);
