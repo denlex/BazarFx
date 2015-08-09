@@ -4,6 +4,9 @@ import org.defence.domain.entities.*;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Created by root on 06.08.15.
  */
@@ -18,34 +21,49 @@ public class HibernateTest {
             throw new ExceptionInInitializerError(ex);
         }
 
-        DescriptionFormat descriptionFormat = new DescriptionFormat();
-        descriptionFormat.setName("Самолеты");
-        descriptionFormat.setCode("1001");
-
-        CharacteristicType heightCharacteristicType = new CharacteristicType();
-        heightCharacteristicType.setName("Высота");
-        heightCharacteristicType.setCode("1");
-
-        MeasurementType heightMeasurementType = new MeasurementType();
-        heightCharacteristicType.setCode("0101");
-        heightCharacteristicType.setName("Высоты");
-
-        Measurement heightMeasurement = new Measurement();
-        heightMeasurement.setCode("0101.01");
-        heightMeasurement.setName("метры");
-        heightMeasurement.setShortName("м");
-        heightMeasurement.setType(heightMeasurementType);
-        heightMeasurement.setCharacteristicSet(null);
+        Characteristic maxSpeed = new Characteristic();
+        maxSpeed.setCode("01");
+        maxSpeed.setName("Макс. скорость полета");
 
         Characteristic maxHeight = new Characteristic();
-        maxHeight.setName("Максимальная высота полета");
-        maxHeight.setCode("001");
-        maxHeight.setMeasurement(heightMeasurement);
-        maxHeight.setCharacteristicKitSet(null);
+        maxHeight.setCode("02");
+        maxHeight.setName("Макс. высота полета");
 
-        CharacteristicKit migCharacteristicKit = new CharacteristicKit();
-        migCharacteristicKit.setName("Набор характеристик для самолета Миг-29");
-        migCharacteristicKit.setCharacteristicSet(null);
+        Characteristic maxDistance = new Characteristic();
+        maxDistance.setCode("03");
+        maxDistance.setName("Макс. дальность полета");
+
+        Characteristic moatWidth = new Characteristic();
+        moatWidth.setCode("04");
+        moatWidth.setName("Ширана преодолеваемого рва");
+
+        Characteristic speedOnRoad = new Characteristic();
+        speedOnRoad.setCode("05");
+        speedOnRoad.setName("Скорость по трассе");
+
+        Set<Characteristic> migCharacteristics = new HashSet<Characteristic>();
+        migCharacteristics.add(maxDistance);
+        migCharacteristics.add(maxHeight);
+        migCharacteristics.add(maxSpeed);
+
+        CharacteristicKit destroyersOfVVS = new CharacteristicKit();
+        destroyersOfVVS.setName("Истребители ВВС");
+        destroyersOfVVS.setCharacteristics(migCharacteristics);
+
+        Set<CharacteristicKit> characteristicKits = new HashSet<CharacteristicKit>();
+        characteristicKits.add(destroyersOfVVS);
+
+        CatalogDescription mig29 = new CatalogDescription();
+        mig29.setName("Миг-29");
+
+        Set<CatalogDescription> catalogDescriptions = new HashSet<CatalogDescription>();
+        catalogDescriptions.add(mig29);
+
+        DescriptionFormat destroyer = new DescriptionFormat();
+        destroyer.setName("Истребители");
+        destroyer.setCode("001");
+        destroyer.setCharacteristicKits(characteristicKits);
+        destroyer.setCatalogDescriptions(catalogDescriptions);
 
     }
 }

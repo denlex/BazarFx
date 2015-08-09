@@ -10,7 +10,7 @@ public class MeasurementType implements Serializable {
     private int id;
     private String name;
     private String code;
-    private Set<Measurement> measurementSet;
+    private Set<Measurement> measurements;
 
     public int getId() {
         return id;
@@ -36,11 +36,11 @@ public class MeasurementType implements Serializable {
         this.code = code;
     }
 
-    public Set<Measurement> getMeasurementSet() {
-        return measurementSet;
+    public Set<Measurement> getMeasurements() {
+        return measurements;
     }
 
-    public void setMeasurementSet(Set<Measurement> measurementSet) {
-        this.measurementSet = measurementSet;
+    public void setMeasurements(Set<Measurement> measurements) {
+        this.measurements = measurements;
     }
 }

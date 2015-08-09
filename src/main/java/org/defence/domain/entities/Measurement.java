@@ -11,8 +11,7 @@ public class Measurement implements Serializable {
     private String code;
     private String name;
     private String shortName;
-    private MeasurementType type;
-    private Set<Characteristic> characteristicSet;
+    private Set<Characteristic> characteristics;
 
     public int getId() {
         return id;
@@ -46,19 +45,11 @@ public class Measurement implements Serializable {
         this.code = code;
     }
 
-    public MeasurementType getType() {
-        return type;
+    public Set<Characteristic> getCharacteristics() {
+        return characteristics;
     }
 
-    public void setType(MeasurementType type) {
-        this.type = type;
-    }
-
-    public Set<Characteristic> getCharacteristicSet() {
-        return characteristicSet;
-    }
-
-    public void setCharacteristicSet(Set<Characteristic> characteristicSet) {
-        this.characteristicSet = characteristicSet;
+    public void setCharacteristics(Set<Characteristic> characteristics) {
+        this.characteristics = characteristics;
     }
 }

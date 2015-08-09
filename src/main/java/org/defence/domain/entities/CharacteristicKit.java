@@ -10,8 +10,7 @@ import java.util.Set;
 public class CharacteristicKit implements Serializable {
     private int id;
     private String name;
-    private Set<Characteristic> characteristicSet = new HashSet<Characteristic>();
-    private Set<Value> valueSet = new HashSet<Value>();
+    private Set<Characteristic> characteristics = new HashSet<Characteristic>();
 
     public CharacteristicKit() {
     }
@@ -32,19 +31,11 @@ public class CharacteristicKit implements Serializable {
         this.name = name;
     }
 
-    public Set<Characteristic> getCharacteristicSet() {
-        return characteristicSet;
+    public Set<Characteristic> getCharacteristics() {
+        return characteristics;
     }
 
-    public void setCharacteristicSet(Set<Characteristic> characteristicSet) {
-        this.characteristicSet = characteristicSet;
-    }
-
-    public Set<Value> getValueSet() {
-        return valueSet;
-    }
-
-    public void setValueSet(Set<Value> valueSet) {
-        this.valueSet = valueSet;
+    public void setCharacteristics(Set<Characteristic> characteristics) {
+        this.characteristics = characteristics;
     }
 }
