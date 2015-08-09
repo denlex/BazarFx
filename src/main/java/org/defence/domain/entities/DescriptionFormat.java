@@ -8,10 +8,18 @@ import java.util.Set;
  */
 public class DescriptionFormat {
     private int id;
-    private String name;
     private String code;
+    private String name;
     private Set<CharacteristicKit> characteristicKits = new HashSet<CharacteristicKit>();
     private Set<CatalogDescription> catalogDescriptions = new HashSet<CatalogDescription>();
+
+    public DescriptionFormat() {
+    }
+
+    public DescriptionFormat(String code, String name) {
+        this.code = code;
+        this.name = name;
+    }
 
     public int getId() {
         return id;

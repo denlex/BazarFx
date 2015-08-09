@@ -10,7 +10,19 @@ import java.util.Set;
 public class CatalogDescription implements Serializable {
     private int id;
     private String name;
-    private Set<CharacteristicsValue> values = new HashSet<CharacteristicsValue>();
+    private Set<CharacteristicValue> values = new HashSet<CharacteristicValue>();
+
+    public CatalogDescription() {
+    }
+
+    public CatalogDescription(String name) {
+        this.name = name;
+    }
+
+    public CatalogDescription(String name, Set<CharacteristicValue> values) {
+        this.name = name;
+        this.values = values;
+    }
 
     public int getId() {
         return id;
@@ -28,11 +40,11 @@ public class CatalogDescription implements Serializable {
         this.name = name;
     }
 
-    public Set<CharacteristicsValue> getValues() {
+    public Set<CharacteristicValue> getValues() {
         return values;
     }
 
-    public void setValues(Set<CharacteristicsValue> values) {
+    public void setValues(Set<CharacteristicValue> values) {
         this.values = values;
     }
 }

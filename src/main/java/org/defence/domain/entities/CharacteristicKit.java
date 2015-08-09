@@ -15,6 +15,15 @@ public class CharacteristicKit implements Serializable {
     public CharacteristicKit() {
     }
 
+    public CharacteristicKit(String name) {
+        this.name = name;
+    }
+
+    public CharacteristicKit(String name, Set<Characteristic> characteristics) {
+        this.name = name;
+        this.characteristics = characteristics;
+    }
+
     public int getId() {
         return id;
     }

@@ -1,6 +1,5 @@
 package org.defence;
 
-import com.aquafx_project.AquaFx;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -39,7 +38,7 @@ public class MainApp extends Application {
         stage.setTitle("JavaFX and Maven");
 
 //        AquaFx.style();
-        AquaFx.class.getResource("mac_os.css").toExternalForm();
+//        AquaFx.class.getResource("mac_os.css").toExternalForm();
 
         final Scene scene = new Scene(root);
         scene.getStylesheets().add((getClass().getResource("/css/styles.css")).toExternalForm());
