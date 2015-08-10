@@ -9,6 +9,7 @@ public class Characteristic implements Serializable {
     private int id;
     private String code;
     private String name;
+    private Measurement measurement;
 
     public Characteristic() {
     }
@@ -40,5 +41,13 @@ public class Characteristic implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Measurement getMeasurement() {
+        return measurement;
+    }
+
+    public void setMeasurement(Measurement measurement) {
+        this.measurement = measurement;
     }
 }

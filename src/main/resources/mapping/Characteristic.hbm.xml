@@ -10,5 +10,6 @@
 
         <property name="code" column="CODE" type="string"/>
         <property name="name" column="NAME" type="string"/>
+        <many-to-one name="measurement" class="Measurement" unique="true" not-null="true"/>
     </class>
 </hibernate-mapping>

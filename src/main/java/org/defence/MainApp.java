@@ -1,5 +1,6 @@
 package org.defence;
 
+import com.aquafx_project.AquaFx;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -34,11 +35,11 @@ public class MainApp extends Application {
 //        String fxmlFile = "/fxml/hello.fxml";
         String fxmlFile = "/fxml/hello.fxml";
         FXMLLoader loader = new FXMLLoader();
-        Parent root = (Parent) loader.load(getClass().getResourceAsStream(fxmlFile));
+        Parent root = loader.load(getClass().getResourceAsStream(fxmlFile));
         stage.setTitle("JavaFX and Maven");
 
-//        AquaFx.style();
-//        AquaFx.class.getResource("mac_os.css").toExternalForm();
+        AquaFx.style();
+        AquaFx.class.getResource("mac_os.css").toExternalForm();
 
         final Scene scene = new Scene(root);
         scene.getStylesheets().add((getClass().getResource("/css/styles.css")).toExternalForm());

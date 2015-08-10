@@ -40,6 +40,7 @@
     <orderEntry type="library" name="Maven: postgresql:postgresql:9.2-1002.jdbc4" level="project" />
     <orderEntry type="library" name="Maven: org.controlsfx:controlsfx:8.40.9" level="project" />
     <orderEntry type="library" name="Maven: org.controlsfx:openjfx-dialogs:1.0.3" level="project" />
-    <orderEntry type="library" name="Maven: com.aquafx_project:aquafx:0.1" level="project" />
+    <orderEntry type="library" name="Maven: com.aquafx-project:aquafx:0.2" level="project" />
+    <orderEntry type="library" name="Maven: com.guigarage:stylemanager:0.1b2" level="project" />
   </component>
 </module>

@@ -73,9 +73,9 @@
             <version>8.40.9</version>
         </dependency>
         <dependency>
-            <groupId>com.aquafx_project</groupId>
+            <groupId>com.aquafx-project</groupId>
             <artifactId>aquafx</artifactId>
-            <version>0.1</version>
+            <version>0.2</version>
         </dependency>
     </dependencies>
 </project>

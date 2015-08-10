@@ -11,11 +11,5 @@
         <property name="code" column="CODE" type="string"/>
         <property name="name" column="NAME" type="string"/>
         <property name="shortName" column="SHORT_NAME" type="string"/>
-
-        <set name="characteristics" table="CHARACTERISTIC"
-             inverse="false" lazy="true" fetch="select" cascade="all">
-            <key column="MEASUREMENT_ID" />
-            <one-to-many class="Characteristic" />
-        </set>
     </class>
 </hibernate-mapping>

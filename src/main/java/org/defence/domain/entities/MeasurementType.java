@@ -8,8 +8,8 @@ import java.util.Set;
  */
 public class MeasurementType implements Serializable {
     private int id;
-    private String name;
     private String code;
+    private String name;
     private Set<Measurement> measurements;
 
     public int getId() {
@@ -20,20 +20,20 @@ public class MeasurementType implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getCode() {
         return code;
     }
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Set<Measurement> getMeasurements() {
