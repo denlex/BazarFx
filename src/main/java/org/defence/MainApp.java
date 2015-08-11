@@ -1,6 +1,5 @@
 package org.defence;
 
-import com.aquafx_project.AquaFx;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -33,7 +32,8 @@ public class MainApp extends Application {
 
 
 //        String fxmlFile = "/fxml/hello.fxml";
-        String fxmlFile = "/fxml/hello.fxml";
+//        String fxmlFile = "/fxml/hello.fxml";
+        String fxmlFile = "/fxml/NewCharacteristic.fxml";
         FXMLLoader loader = new FXMLLoader();
         Parent root = loader.load(getClass().getResourceAsStream(fxmlFile));
         stage.setTitle("JavaFX and Maven");
