@@ -38,15 +38,17 @@ public class MainApp extends Application {
         Parent root = loader.load(getClass().getResourceAsStream(fxmlFile));
         stage.setTitle("JavaFX and Maven");
 
-        AquaFx.style();
-        AquaFx.class.getResource("mac_os.css").toExternalForm();
+//        AquaFx.style();
+//        AquaFx.class.getResource("mac_os.css").toExternalForm();
 
         final Scene scene = new Scene(root);
-        scene.getStylesheets().add((getClass().getResource("/css/styles.css")).toExternalForm());
+        scene.getStylesheets().add((getClass().getResource("/css/TreeView.css")).toExternalForm());
+        scene.getStylesheets().add((getClass().getResource("/css/SplitPanel.css")).toExternalForm());
+ //       scene.getStylesheets().add((getClass().getResource("/css/Button.css")).toExternalForm());
         scene.setFill(null);
         stage.setScene(scene);
-        stage.setMinHeight(600);
-        stage.setMinWidth(800);
+//        stage.setMinHeight(600);
+//        stage.setMinWidth(800);
         stage.setResizable(true);
         stage.show();
     }

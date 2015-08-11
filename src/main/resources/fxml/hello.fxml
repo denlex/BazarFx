@@ -1,89 +1,144 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="400.0" prefWidth="600.0"
-          xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+          prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8"
+          xmlns:fx="http://javafx.com/fxml/1">
     <columnConstraints>
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="100.0"/>
-        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="100.0" />
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
     </columnConstraints>
     <rowConstraints>
-        <RowConstraints/>
-        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+        <RowConstraints />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
     </rowConstraints>
     <children>
         <MenuBar GridPane.columnSpan="2147483647" GridPane.valignment="TOP">
             <menus>
-                <Menu mnemonicParsing="false" text="_File">
+                <Menu mnemonicParsing="false" text="Файл">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Close"/>
+                        <MenuItem mnemonicParsing="false" text="Обновить" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" text="Выход" />
                     </items>
                 </Menu>
-                <Menu mnemonicParsing="false" text="_Edit">
+            <Menu mnemonicParsing="false" text="Справочники">
+              <items>
+                  <MenuItem mnemonicParsing="false" text="Единицы измерения" />
+                  <MenuItem mnemonicParsing="false" text="Характеристики" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                <MenuItem mnemonicParsing="false" text="Организации" />
+              </items>
+            </Menu>
+                <Menu mnemonicParsing="false" text="Вид">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Delete"/>
+                  <CheckMenuItem mnemonicParsing="false" text="Основной информационный массив" />
+                  <CheckMenuItem mnemonicParsing="false" text="Сопоставительный анализ" />
                     </items>
                 </Menu>
-                <Menu mnemonicParsing="false" text="_Help">
+            <Menu mnemonicParsing="false" text="Поиск">
+              <items>
+                  <MenuItem mnemonicParsing="false" text="Произвольный поиск" />
+                <MenuItem mnemonicParsing="false" text="Типовые запросы" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" text="Конструктор запросов" />
+              </items>
+            </Menu>
+                <Menu mnemonicParsing="false" text="Отчеты">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="About"/>
+                  <MenuItem mnemonicParsing="false" text="КО" />
+                  <MenuItem mnemonicParsing="false" text="СФО" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" text="Журнал входа в систему" />
                     </items>
                 </Menu>
+            <Menu mnemonicParsing="false" text="Внешние данные">
+              <items>
+                  <MenuItem mnemonicParsing="false" text="Импорт" />
+                <MenuItem mnemonicParsing="false" text="Экспорт" />
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Режим">
+              <items>
+                  <MenuItem mnemonicParsing="false" text="Пользователь" />
+                <MenuItem mnemonicParsing="false" text="Редактор" />
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Дополнительно">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Настройка" />
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Резервное восстановление">
+              <items>
+                  <MenuItem mnemonicParsing="false" text="Сохранение данных в архив" />
+                <MenuItem mnemonicParsing="false" text="Загрузка данных из архива" />
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Помощь">
+              <items>
+                  <MenuItem mnemonicParsing="false" text="Справка" />
+                <MenuItem mnemonicParsing="false" text="О программе" />
+              </items>
+            </Menu>
             </menus>
         </MenuBar>
-        <SplitPane dividerPositions="0.17224080267558528" GridPane.columnSpan="2147483647" GridPane.rowIndex="1"
-                   GridPane.rowSpan="2147483647">
+        <SplitPane dividerPositions="0.17224080267558528" GridPane.columnSpan="2147483647" GridPane.rowIndex="1" GridPane.rowSpan="2147483647">
             <items>
                 <GridPane minWidth="100">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" prefWidth="100.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" prefWidth="100.0" />
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints minHeight="150.0" prefHeight="150.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="150.0" prefHeight="150.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
                         <TreeView>
                             <contextMenu>
                                 <ContextMenu>
                                     <items>
-                                        <MenuItem text="ddsf"></MenuItem>
+                                        <MenuItem text="ddsf" />
                                     </items>
                                 </ContextMenu>
                             </contextMenu>
-                            <TreeItem expanded="true" value="Hierarchy">
-                                <children>
-                                    <TreeItem value="Colors">
-                                        <children>
-                                            <TreeItem value="Red"></TreeItem>
-                                            <TreeItem value="Green"></TreeItem>
-                                            <TreeItem value="Blue"></TreeItem>
-                                        </children>
-                                    </TreeItem>
-                                    <TreeItem expanded="true" value="Cars">
-                                        <children>
-                                            <TreeItem value="Volvo"></TreeItem>
-                                            <TreeItem value="BMW"></TreeItem>
-                                            <TreeItem value="Skoda"></TreeItem>
-                                        </children>
-                                    </TreeItem>
-                                </children>
-                            </TreeItem>
+                           <root>
+                               <TreeItem expanded="true" value="Hierarchy">
+                                   <children>
+                                       <TreeItem value="Colors">
+                                           <children>
+                                               <TreeItem value="Red" />
+                                               <TreeItem value="Green" />
+                                               <TreeItem value="Blue" />
+                                           </children>
+                                       </TreeItem>
+                                       <TreeItem expanded="true" value="Cars">
+                                           <children>
+                                               <TreeItem value="Volvo" />
+                                               <TreeItem value="BMW" />
+                                               <TreeItem value="Skoda" />
+                                           </children>
+                                       </TreeItem>
+                                   </children>
+                               </TreeItem>
+                           </root>
                         </TreeView>
                     </children>
                 </GridPane>
-                <GridPane style="-fx-background-color: maroon">
+                <GridPane>
                     <columnConstraints>
-                        <ColumnConstraints hgrow="ALWAYS" fillWidth="true"/>
+                        <ColumnConstraints fillWidth="true" hgrow="ALWAYS" />
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints minHeight="150.0" prefHeight="30.0" vgrow="ALWAYS"/>
+                        <RowConstraints minHeight="150.0" prefHeight="30.0" vgrow="ALWAYS" />
                     </rowConstraints>
                     <children>
-                        <GridPane style="-fx-background-color: yellowgreen">
+                        <GridPane>
                             <children>
                                 <fx:include source="/fxml/Form.fxml" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS"/>
                             </children>

@@ -1,0 +1,74 @@
+/*******************************************************************************
+ *                                                                             *
+ * TreeView                                                                    *
+ *                                                                             *
+ ******************************************************************************/
+
+.tree-view {
+    -fx-background-color: white;
+    -fx-background-insets: 0.5;
+    -fx-border-color: rgb(156.0, 156.0, 156.0) rgb(190.0, 190.0, 190.0) rgb(190.0, 190.0, 190.0) rgb(190.0, 190.0, 190.0);
+    -fx-border-width: 1.0;
+    -fx-border-insets: 0.0;
+}
+
+.tree-cell {
+    -fx-background-color: white;
+    -fx-padding: 0.083333em;
+    -fx-text-fill: -fx-text-base-color;
+    -fx-indent: 13.0;
+}
+
+.tree-cell .label {
+    -fx-padding: 0.0em 0.0em 0.0em 0.25em;
+}
+
+.tree-view:focused > .virtual-flow > .clipped-container > .sheet > .tree-cell:filled:focused:selected,
+.tree-view:focused > .virtual-flow > .clipped-container > .sheet > .tree-cell:filled:selected,
+.tree-view:focused > .virtual-flow > .clipped-container > .sheet > .tree-cell:filled:selected:hover,
+.tree-view:focused > .virtual-flow > .clipped-container > .sheet > .tree-cell:filled:focused:selected:hover {
+    -fx-background-color: rgb(60.0, 119.0, 212.0);
+    -fx-text-fill: white;
+}
+
+.tree-cell > .tree-disclosure-node,
+.tree-table-row-cell > .tree-disclosure-node {
+    -fx-padding: 4.0;
+    -fx-background-color: transparent;
+}
+
+.tree-cell > .tree-disclosure-node > .arrow,
+.tree-table-row-cell > .tree-disclosure-node > .arrow {
+    -fx-background-color: rgb(134.0, 134.0, 134.0);
+    -fx-padding: 0.25em 0.333333em 0.153846em 0.333333em;
+    -fx-background-insets: 0.0 0.5 0.0 0.5;
+    -fx-shape: "M 0 -4 L 8 0 L 0 4 z";
+    -fx-scale-shape: false;
+}
+
+.tree-cell:expanded > .tree-disclosure-node > .arrow,
+.tree-table-row-cell:expanded > .tree-disclosure-node > .arrow {
+    -fx-rotate: 90.0;
+}
+
+.tree-view > .virtual-flow > .clipped-container > .sheet > .tree-cell:filled:hover,
+.tree-table-row-cell:filled:hover,
+.tree-view > .virtual-flow > .clipped-container > .sheet > .tree-cell:filled:selected:hover,
+.tree-table-row-cell:filled:selected:hover {
+    -fx-background-color: -fx-cell-hover-color;
+    -fx-text-fill: -fx-text-base-color;
+}
+
+.tree-view > .virtual-flow > .clipped-container > .sheet > .tree-cell:filled:selected > .tree-disclosure-node > .arrow,
+.tree-view > .virtual-flow > .clipped-container > .sheet > .tree-cell:selected > .tree-disclosure-node > .arrow,
+.tree-cell:filled:hover > .tree-disclosure-node > .arrow,
+.tree-table-row-cell:filled:hover > .tree-disclosure-node > .arrow {
+    -fx-background-color: rgb(134.0, 134.0, 134.0);
+}
+
+.tree-view:focused > .virtual-flow > .clipped-container > .sheet > .tree-cell:filled:selected:focused > .tree-disclosure-node > .arrow,
+.tree-view:focused > .virtual-flow > .clipped-container > .sheet > .tree-cell:filled:selected:hover:focused > .tree-disclosure-node > .arrow,
+.tree-table-view:focused > .virtual-flow > .clipped-container > .sheet > .tree-table-row-cell:filled:selected:hover > .tree-disclosure-node > .arrow,
+.tree-table-view:focused > .virtual-flow > .clipped-container > .sheet > .tree-table-row-cell:filled:selected > .tree-disclosure-node > .arrow {
+    -fx-background-color: white;
+}

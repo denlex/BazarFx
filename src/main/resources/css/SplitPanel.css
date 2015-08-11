@@ -1,0 +1,49 @@
+/*******************************************************************************
+ *                                                                             *
+ * SplitPane                                                                   *
+ *                                                                             *
+ ******************************************************************************/
+.tab-pane > * > .split-pane,
+.split-pane > * > .tab-pane,
+.split-pane > * > .table-view,
+.split-pane > * > .list-view,
+.split-pane > * > .tree-view,
+.split-pane > * > .scroll-pane,
+.split-pane > * > .split-pane {
+    -fx-border-width: 0.0;
+    -fx-padding: 0.0;
+}
+
+.split-pane {
+    -fx-border-color: rgb(175.0, 175.0, 175.0);
+    -fx-border-width: 1.0;
+    -fx-background-color: white;
+    -fx-padding: 0.0;
+}
+
+.split-pane > .split-pane-divider {
+    -fx-padding: 0.0em 0.307692em 0.0em 0.307692em;
+}
+
+/* horizontal the two nodes are placed to the left/right of each other. */
+.split-pane:horizontal > .split-pane-divider {
+    -fx-border-color: transparent rgb(180.0, 180.0, 180.0) transparent rgb(180.0, 180.0, 180.0);
+    -fx-border-width: 1.0;
+    -fx-background-color: linear-gradient(to right, rgb(252.0, 252.0, 252.0), rgb(224.0, 224.0, 224.0));
+}
+
+/* vertical the two nodes are placed on top of each other. */
+.split-pane:vertical > .split-pane-divider {
+    -fx-border-color:  rgb(180.0, 180.0, 180.0) transparent rgb(180.0, 180.0, 180.0) transparent;
+    -fx-border-width: 1.0;
+    -fx-background-color: linear-gradient(rgb(252.0, 252.0, 252.0), rgb(224.0, 224.0, 224.0));
+}
+
+.split-pane > .split-pane-divider > .horizontal-grabber,
+.split-pane > .split-pane-divider > .vertical-grabber {
+    -fx-padding: 0.153846em;
+    -fx-background-color: radial-gradient(focus-angle 90.0deg, focus-distance 15.0%,
+    center 75.0% 50.0%, radius 65.0%, rgb(203.0, 203.0, 203.0), rgb(167.0, 167.0, 167.0));
+    -fx-background-insets: 0.0;
+    -fx-shape: "m 7.3638763,7.3678179 c 0,1.9327203 -1.7375658,3.4995001 -3.8809619,3.4995001 -2.143396,0 -3.88096185,-1.5667798 -3.88096185,-3.4995001 0,-1.9327204 1.73756585,-3.4994998 3.88096185,-3.4994998 2.1340502,0 3.8677202,1.5536502 3.8808881,3.4779066";
+}
