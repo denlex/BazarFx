@@ -2,15 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="36caf25f-12fc-4d96-9fae-41a9386c9166" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/fxml/NewClass.fxml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/css/SplitPanel.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/css/TreeView.css" />
-      <change type="DELETED" beforePath="C:\BazarJava\BazarFx\src\main\resources\css\styles.css" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BazarFx.iml" afterPath="$PROJECT_DIR$/BazarFx.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/css/Button.css" afterPath="$PROJECT_DIR$/src/main/resources/css/Button.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/fxml/Form.fxml" afterPath="$PROJECT_DIR$/src/main/resources/fxml/Form.fxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/defence/MainApp.java" afterPath="$PROJECT_DIR$/src/main/java/org/defence/MainApp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/fxml/hello.fxml" afterPath="$PROJECT_DIR$/src/main/resources/fxml/hello.fxml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/fxml/NewClass.fxml" afterPath="$PROJECT_DIR$/src/main/resources/fxml/NewClass.fxml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <list id="44f70448-3c83-427f-8fa7-e13db5c82c07" name="New changelist" comment="" />
@@ -88,27 +80,27 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="hello.fxml" pinned="false" current-in-tab="true">
+      <file leaf-file-name="hello.fxml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/resources/fxml/hello.fxml">
           <provider editor-type-id="JavaFX-Scene-Builder">
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.0">
+            <state vertical-scroll-proportion="-47.96552">
               <caret line="142" column="62" selection-start-line="142" selection-start-column="58" selection-end-line="142" selection-end-column="62" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="NewClass.fxml" pinned="false" current-in-tab="false">
+      <file leaf-file-name="NewClass.fxml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/resources/fxml/NewClass.fxml">
           <provider editor-type-id="JavaFX-Scene-Builder">
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-57.448277">
-              <caret line="98" column="15" selection-start-line="98" selection-start-column="15" selection-end-line="98" selection-end-column="15" />
+            <state vertical-scroll-proportion="2.6257668">
+              <caret line="94" column="0" selection-start-line="94" selection-start-column="0" selection-end-line="94" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -918,7 +910,7 @@
       <workItem from="1439147023524" duration="4558000" />
       <workItem from="1439182442358" duration="145000" />
       <workItem from="1439182591718" duration="10470000" />
-      <workItem from="1439264096196" duration="16455000" />
+      <workItem from="1439264096196" duration="19355000" />
     </task>
     <task id="LOCAL-00001" summary="Подчистил сущности проекта - удалил ненужные">
       <created>1439185105487</created>
@@ -926,11 +918,17 @@
       <option name="project" value="LOCAL" />
       <updated>1439185105487</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Создал форму для добавления нового класса NewClfss, добавил стили кнопок">
+      <created>1439286840326</created>
+      <option name="number" value="00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1439286840326</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="81167000" />
+    <option name="totallyTimeSpent" value="84067000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -943,7 +941,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -953,8 +951,8 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3289183" sideWeight="0.5026697" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19287078" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4020443" sideWeight="0.49733028" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.0102214655" sideWeight="0.4969743" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.62521297" sideWeight="0.49733028" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.0102214655" sideWeight="0.4969743" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32879046" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23169956" sideWeight="0.50441504" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1015,7 +1013,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Созданы сущности для полного добавления КО (без учета ввода УН)&#10; Протестировано добавление КО (МИГ-29)" />
     <MESSAGE value="Подчистил сущности проекта - удалил ненужные" />
-    <option name="LAST_COMMIT_MESSAGE" value="Подчистил сущности проекта - удалил ненужные" />
+    <MESSAGE value="Создал форму для добавления нового класса NewClfss, добавил стили кнопок" />
+    <option name="LAST_COMMIT_MESSAGE" value="Создал форму для добавления нового класса NewClfss, добавил стили кнопок" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1349,6 +1348,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="2" column="35" selection-start-line="2" selection-start-column="35" selection-end-line="2" selection-end-column="35" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1418,24 +1418,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/fxml/NewClass.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-57.448277">
-          <caret line="98" column="15" selection-start-line="98" selection-start-column="15" selection-end-line="98" selection-end-column="15" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/fxml/hello.fxml">
       <provider editor-type-id="JavaFX-Scene-Builder">
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.0">
+        <state vertical-scroll-proportion="-47.96552">
           <caret line="142" column="62" selection-start-line="142" selection-start-column="58" selection-end-line="142" selection-end-column="62" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/fxml/NewClass.fxml">
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="2.6257668">
+          <caret line="94" column="0" selection-start-line="94" selection-start-column="0" selection-end-line="94" selection-end-column="0" />
           <folding />
         </state>
       </provider>
