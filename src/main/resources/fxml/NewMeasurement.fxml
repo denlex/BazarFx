@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Text?>
 
 <AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="org.defence.controllers.NewCharacteristic">
+            fx:controller="org.defence.controllers.NewMeasurement">
     <children>
         <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
                   stylesheets="/css/Button.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
@@ -50,6 +50,9 @@
                               text="Наименование:">
                         </Text>
                         <TextField fx:id="nameTextField" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                        <Text GridPane.columnIndex="0" GridPane.rowIndex="2" strokeType="OUTSIDE" strokeWidth="0.0"
+                              text="Тип характеристики:"/>\
+                        <ComboBox fx:id="measurementTypeComboBox"></ComboBox>
                     </children>
                 </GridPane>
                 <AnchorPane GridPane.rowIndex="2">

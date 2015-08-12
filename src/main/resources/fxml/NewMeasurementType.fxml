@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Text?>
 
 <AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="org.defence.controllers.NewCharacteristic">
+            fx:controller="org.defence.controllers.NewMeasurementTypeController">
     <children>
         <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
                   stylesheets="/css/Button.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
@@ -29,7 +29,7 @@
                 <StackPane style="-fx-background-color: #4A6C9B" GridPane.rowIndex="0" GridPane.halignment="CENTER"
                            GridPane.valignment="TOP">
                     <children>
-                        <Label text="Добавление новой характеристики" textFill="white"
+                        <Label text="Добавление нового типа единицы измерения" textFill="white"
                                GridPane.halignment="CENTER">
                             <font>
                                 <Font name="Cambria" size="18.0"/>
@@ -52,12 +52,17 @@
                         <TextField fx:id="nameTextField" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
                     </children>
                 </GridPane>
-                <AnchorPane GridPane.rowIndex="2">
+                <StackPane GridPane.rowIndex="2" style="-fx-pref-height: 200pt" alignment="CENTER_LEFT">
+                    <children>
+                        <Label fx:id="messageLabel" textFill="brown" />
+                    </children>
+                </StackPane>
+                <AnchorPane GridPane.rowIndex="3">
                     <children>
                         <Button fx:id="okBtn" mnemonicParsing="false" prefWidth="120.0" text="Принять"
                                 AnchorPane.rightAnchor="150"
                                 AnchorPane.bottomAnchor="15"/>
-                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="120.0" text="Отмена"
+                        <Button fx:id="cancelBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="120.0" text="Отмена"
                                 AnchorPane.rightAnchor="15" AnchorPane.bottomAnchor="15"/>
                     </children>
                 </AnchorPane>

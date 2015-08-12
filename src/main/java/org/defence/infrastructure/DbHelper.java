@@ -78,6 +78,58 @@ public class DbHelper {
     private static List<CharacteristicEntry> characteristicEntries = new ArrayList<CharacteristicEntry>();
     private static Map<Integer, CharacteristicType> characteristicTypes = new HashMap<Integer, CharacteristicType>();
 
+    public DbHelper() {
+        factory = new Configuration().configure().buildSessionFactory();
+    }
+
+    public static void terminateDbConnection() {
+        if (!factory.isClosed()) {
+            factory.close();
+            System.out.println("Connection was closed");
+        }
+    }
+
+    public boolean exportCharacteristic(Characteristic characteristic) {
+        Session session = factory.openSession();
+        Transaction transaction = session.beginTransaction();
+        session.save(characteristic);
+        transaction.commit();
+        session.close();
+
+        return true;
+    }
+
+    public boolean exportMeasurementType(MeasurementType measurementType) {
+        Session session = factory.openSession();
+        Transaction transaction = session.beginTransaction();
+        session.save(measurementType);
+        transaction.commit();
+        session.close();
+
+        return true;
+    }
+
+    public List<MeasurementType> importAllMeasurementTypes() {
+        Session session = factory.openSession();
+        Transaction transaction = session.beginTransaction();
+        List<MeasurementType> resul = session.createQuery("from MeasurementType ").list();
+        session.close();
+
+        return resul;
+    }
+
+    public List<Characteristic> importAllCharacteristics() {
+        Session session = factory.openSession();
+        Transaction transaction = session.beginTransaction();
+        List<Characteristic> result = session.createQuery("from Characteristic ").list();
+        transaction.commit();
+        session.close();
+
+        return result;
+    }
+
+
+
     public static int importEntityIntoTable() throws Exception {
         int counter = 0;
 
@@ -284,7 +336,6 @@ public class DbHelper {
 //----------------------------------------------------------------------------------------------------------------------
 
     public static void main(String[] args) throws Exception {
-        factory = new Configuration().configure().buildSessionFactory();
 
         int result = importMeasurementsIntoTable();
         System.out.format("%s measurements were loaded\n", result);

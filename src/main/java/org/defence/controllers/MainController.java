@@ -1,5 +1,6 @@
 package org.defence.controllers;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -9,6 +10,7 @@ import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.MenuItem;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -21,8 +23,19 @@ import java.util.ResourceBundle;
  */
 public class MainController implements Initializable {
     @FXML
+    private MenuItem exitBtn;
+
+    @FXML
     private Button btn;
     Group root = new Group();
+
+    private void exitBtnRegisterEvents() {
+        exitBtn.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                Platform.exit();
+            }
+        });
+    }
 
     @FXML
     public void onClickMethod() {
@@ -58,7 +71,7 @@ public class MainController implements Initializable {
 
 
     public void initialize(URL location, ResourceBundle resources) {
-
+        exitBtnRegisterEvents();
     }
 }
 
