@@ -12,6 +12,19 @@ public class MeasurementType implements Serializable {
     private String name;
     private Set<Measurement> measurements;
 
+    public MeasurementType() {
+    }
+
+    public MeasurementType(String code, String name) {
+        this(code, name, null);
+    }
+
+    public MeasurementType(String code, String name, Set<Measurement> measurements) {
+        this.code = code;
+        this.name = name;
+        this.measurements = measurements;
+    }
+
     public int getId() {
         return id;
     }

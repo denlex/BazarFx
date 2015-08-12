@@ -4,6 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import com.sun.javafx.scene.control.skin.SplitPaneSkin.Content?>
 <GridPane style="-fx-background-color: tomato" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <TabPane GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" tabClosingPolicy="ALL_TABS">
@@ -15,9 +16,11 @@
                                     style="-fx-background-color: lime"/>
                     </content>
                 </Tab>
-                <Tab text="Untitled Tab 2" closable="true">
+                <Tab text="Untitled Tab 2" closable="true" style="-fx-background-color: magenta;">
                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <Label style="-fx-text-fill: lightseagreen">sdfdsfsdf</Label>
+                        </AnchorPane>
                     </content>
                 </Tab>
             </tabs>

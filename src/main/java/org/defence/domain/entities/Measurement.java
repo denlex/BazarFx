@@ -11,6 +11,15 @@ public class Measurement implements Serializable {
     private String name;
     private String shortName;
 
+    public Measurement() {
+    }
+
+    public Measurement(String code, String name, String shortName) {
+        this.code = code;
+        this.name = name;
+        this.shortName = shortName;
+    }
+
     public int getId() {
         return id;
     }

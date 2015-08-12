@@ -13,6 +13,19 @@ public class CharacteristicType implements Serializable {
     private String name;
     private Set<Characteristic> characteristics = new HashSet<Characteristic>();
 
+    public CharacteristicType() {
+    }
+
+    public CharacteristicType(String code, String name) {
+        this(code, name, null);
+    }
+
+    public CharacteristicType(String code, String name, Set<Characteristic> characteristics) {
+        this.code = code;
+        this.name = name;
+        this.characteristics = characteristics;
+    }
+
     public int getId() {
         return id;
     }
