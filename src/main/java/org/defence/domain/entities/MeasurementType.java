@@ -1,11 +1,5 @@
 package org.defence.domain.entities;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableSet;
-
 import java.io.Serializable;
 import java.util.Set;
 
@@ -13,10 +7,10 @@ import java.util.Set;
  * Created by root on 22.07.15.
  */
 public class MeasurementType implements Serializable {
-    private IntegerProperty id;
-    private StringProperty code;
-    private StringProperty name;
-    private ObservableSet<Measurement> measurements;
+    private int id;
+    private String code;
+    private String name;
+    private Set<Measurement> measurements;
 
     public MeasurementType() {
     }
@@ -26,53 +20,40 @@ public class MeasurementType implements Serializable {
     }
 
     public MeasurementType(String code, String name, Set<Measurement> measurements) {
-        this.code = new SimpleStringProperty(code);
-        this.name = new SimpleStringProperty(name);
-        this.measurements = FXCollections.emptyObservableSet();
+        this.code = code;
+        this.name = name;
+        this.measurements = measurements;
     }
 
     public int getId() {
-        return id.get();
-    }
-
-    public void setId(int id) {
-        this.id.set(id);
-    }
-
-    public IntegerProperty idProperty() {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getCode() {
-        return code.get();
-    }
-
-    public void setCode(String code) {
-        this.code.set(code);
-    }
-
-    public StringProperty codeProperty() {
         return code;
     }
 
+    public void setCode(String code) {
+        this.code = code;
+    }
+
     public String getName() {
-        return name.get();
-    }
-
-    public void setName(String name) {
-        this.name.set(name);
-    }
-
-    public StringProperty nameProperty() {
         return name;
     }
 
-    public ObservableSet<Measurement> getMeasurements() {
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Set<Measurement> getMeasurements() {
         return measurements;
     }
 
-    public void setMeasurements(ObservableSet<Measurement> measurements) {
-        this.measurements.addAll(measurements);
+    public void setMeasurements(Set<Measurement> measurements) {
+        this.measurements = measurements;
     }
-
 }
