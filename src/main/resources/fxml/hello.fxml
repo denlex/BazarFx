@@ -208,9 +208,9 @@
                                                                         valignment="TOP" vgrow="ALWAYS"/>
                                                     </rowConstraints>
                                                     <children>
-                                                        <!--<fx:include source="/fxml/NewMeasurement.fxml"
+                                                        <fx:include source="/fxml/NewMeasurement.fxml"
                                                                     GridPane.hgrow="ALWAYS"
-                                                                    GridPane.vgrow="ALWAYS"/>-->
+                                                                    GridPane.vgrow="ALWAYS"/>
                                                     </children>
                                                 </GridPane>
                                             </content>

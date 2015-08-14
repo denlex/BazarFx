@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="org.defence.tests.entities">
+    <class name="Person" table="PERSON">
+        <id name="id" column="ID">
+            <generator class="native"/>
+        </id>
+        <property name="firstName" column="NUMBER" type="string"/>
+        <property name="lastName" column="NAME" type="string"/>
+        <property name="age" column="NAME" type="int"/>
+        <set name="certificates">
+            <key column="PERSON_ID"></key>
+            <one-to-many class="Certificate"/>
+        </set>
+    </class>
+</hibernate-mapping>

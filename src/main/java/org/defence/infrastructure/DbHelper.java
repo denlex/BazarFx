@@ -1,5 +1,7 @@
 package org.defence.infrastructure;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableSet;
 import org.defence.domain.entities.Characteristic;
 import org.defence.domain.entities.CharacteristicType;
 import org.defence.domain.entities.Measurement;
@@ -11,7 +13,10 @@ import org.hibernate.cfg.Configuration;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -200,7 +205,7 @@ public class DbHelper {
 
     private static void importMeasurementTypes() throws ExceptionInInitializerError {
         if (measurementEntries.size() > 0) {
-            Set<Measurement> measurements = new HashSet<Measurement>();
+            ObservableSet<Measurement> measurements = FXCollections.emptyObservableSet();
 
             // loading measurementTypes into MeasurementType table
             for (final Map.Entry<Integer, MeasurementType> entry : measurementTypes.entrySet()) {
