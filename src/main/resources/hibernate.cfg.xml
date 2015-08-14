@@ -18,16 +18,17 @@
 
       <!--<mapping resource="mapping/AssertedName.hbm.xml"/>-->
       <!--<mapping resource="mapping/CatalogClass.hbm.xml"/>-->
-      <mapping resource="mapping/CatalogDescription.hbm.xml"/>
+
+      <!--<mapping resource="mapping/CatalogDescription.hbm.xml"/>
       <mapping resource="mapping/Characteristic.hbm.xml"/>
       <mapping resource="mapping/CharacteristicKit.hbm.xml"/>
       <mapping resource="mapping/CharacteristicType.hbm.xml"/>
       <mapping resource="mapping/CharacteristicValue.hbm.xml"/>
       <mapping resource="mapping/DescriptionFormat.hbm.xml"/>
       <mapping resource="mapping/Measurement.hbm.xml"/>
-      <mapping resource="mapping/MeasurementType.hbm.xml"/>
+      <mapping resource="mapping/MeasurementType.hbm.xml"/>-->
 
-      <!--<mapping resource="mapping/Certificate.hbm.xml"/>-->
-      <!--<mapping resource="mapping/Employee.hbm.xml"/>-->
+      <mapping resource="mapping/Certificate.hbm.xml"/>
+      <mapping resource="mapping/Person.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>
