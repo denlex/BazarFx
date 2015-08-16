@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.*?>
+<?import java.lang.String?>
+
+<GridPane prefHeight="500" prefWidth="300" stylesheets="/css/MainWindow.css"
+          xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" gridLinesVisible="true"
+          >
+    <columnConstraints>
+        <ColumnConstraints minWidth="300" hgrow="ALWAYS"/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints minHeight="500" vgrow="ALWAYS"/>
+    </rowConstraints>
+    <children>
+        <GridPane GridPane.rowIndex="0" alignment="TOP_CENTER">
+            <GridPane.margin>
+                <Insets top="50" bottom="50"/>
+            </GridPane.margin>
+            <columnConstraints>
+                <ColumnConstraints/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints/>
+            </rowConstraints>
+            <children>
+                <ListView fx:id="personsViewList">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="132"/>
+                            <String fx:value="132"/>
+                            <String fx:value="132"/>
+                        </FXCollections>
+                    </items>
+                    <!--                    <GridPane.margin>
+                                            <Insets top="50" bottom="50" left="30" right="30"/>
+                                        </GridPane.margin>-->
+                </ListView>
+            </children>
+        </GridPane>
+    </children>
+</GridPane>

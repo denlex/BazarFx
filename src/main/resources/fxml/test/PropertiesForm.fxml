@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<GridPane prefHeight="600" prefWidth="500" stylesheets="/css/MainWindow.css"
+          xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="org.defence.controllers.test.PersonController">
+    <columnConstraints>
+        <ColumnConstraints hgrow="ALWAYS"/>
+        <ColumnConstraints hgrow="ALWAYS"/>
+    </columnConstraints>
+    <children>
+        <StackPane GridPane.rowIndex="0" GridPane.columnSpan="2" style="-fx-background-color: #4A6C9B">
+            <Label text="Добавление новой характеристики" textFill="white">
+                <font>
+                    <Font name="Cambria" size="18.0"/>
+                </font>
+                <font>
+                    <Font name="Cambria" size="18.0"/>
+                </font>
+            </Label>
+        </StackPane>
+        <!--<fx:include GridPane.columnIndex="0" GridPane.rowIndex="1" source="/fxml/test/Person.fxml"/>-->
+        <!--<fx:include GridPane.columnIndex="1" GridPane.rowIndex="1" source="/fxml/test/PersonsView.fxml"/>-->
+        <GridPane prefHeight="500" prefWidth="300" GridPane.columnIndex="0" GridPane.rowIndex="1">
+            <columnConstraints>
+                <ColumnConstraints minWidth="300" hgrow="ALWAYS"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="500" vgrow="ALWAYS"/>
+            </rowConstraints>
+            <children>
+                <GridPane GridPane.rowIndex="0" alignment="TOP_CENTER">
+                    <GridPane.margin>
+                        <Insets top="50" bottom="50"/>
+                    </GridPane.margin>
+                    <children>
+                        <Label GridPane.rowIndex="1" text="Имя">
+                            <GridPane.margin>
+                                <Insets top="10" bottom="10" right="10" left="10"/>
+                            </GridPane.margin>
+                        </Label>
+                        <TextField fx:id="firstNameTextField" GridPane.rowIndex="1" GridPane.columnIndex="1">
+                            <GridPane.margin>
+                                <Insets top="10" bottom="10" right="10" left="10"/>
+                            </GridPane.margin>
+                        </TextField>
+
+                        <Label GridPane.rowIndex="2" text="Фамилия">
+                            <GridPane.margin>
+                                <Insets top="10" bottom="10" right="10" left="10"/>
+                            </GridPane.margin>
+                        </Label>
+                        <TextField fx:id="lastNameTextField" GridPane.rowIndex="2" GridPane.columnIndex="1">
+                            <GridPane.margin>
+                                <Insets top="10" bottom="10" right="10" left="10"/>
+                            </GridPane.margin>
+                        </TextField>
+
+                        <Label GridPane.rowIndex="3" text="Возраст">
+                            <GridPane.margin>
+                                <Insets top="10" bottom="10" right="10" left="10"/>
+                            </GridPane.margin>
+                        </Label>
+                        <TextField fx:id="ageTextField" GridPane.rowIndex="3" GridPane.columnIndex="1">
+                            <GridPane.margin>
+                                <Insets top="10" bottom="10" right="10" left="10"/>
+                            </GridPane.margin>
+                        </TextField>
+                        <Button fx:id="addPersonBtn" GridPane.rowIndex="4" GridPane.columnSpan="2"
+                                text="Добавить человека"
+                                GridPane.halignment="CENTER" style="-fx-cursor: hand">
+                            <padding>
+                                <Insets left="30" right="30" top="10" bottom="10"/>
+                            </padding>
+                            <GridPane.margin>
+                                <Insets top="50"/>
+                            </GridPane.margin>
+                        </Button>
+                    </children>
+                </GridPane>
+            </children>
+        </GridPane>
+        <GridPane prefHeight="500" prefWidth="300" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <columnConstraints>
+                <ColumnConstraints minWidth="300" hgrow="ALWAYS"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="500" vgrow="ALWAYS"/>
+            </rowConstraints>
+            <children>
+                <GridPane GridPane.rowIndex="0" alignment="TOP_CENTER">
+                    <GridPane.margin>
+                        <Insets top="50" bottom="50"/>
+                    </GridPane.margin>
+                    <columnConstraints>
+                        <ColumnConstraints/>
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints/>
+                    </rowConstraints>
+                    <children>
+                        <ListView fx:id="personsViewList">
+                            <items>
+                                <!--<FXCollections fx:factory="observableArrayList">
+                                    <String fx:value="132"/>
+                                    <String fx:value="132"/>
+                                    <String fx:value="132"/>
+                                </FXCollections>-->
+                            </items>
+                            <!--                    <GridPane.margin>
+                                                    <Insets top="50" bottom="50" left="30" right="30"/>
+                                                </GridPane.margin>-->
+                        </ListView>
+                    </children>
+                </GridPane>
+            </children>
+        </GridPane>
+    </children>
+</GridPane>

@@ -17,9 +17,11 @@ public class Certificate implements Serializable {
     private ObjectProperty<LocalDate> receptionDate;
 
     public Certificate() {
+        id = new SimpleIntegerProperty();
     }
 
     public Certificate(String name, Date receptionDate) {
+        this();
         this.name = new SimpleStringProperty(name);
         DateStringConverter dateStringConverter = new DateStringConverter();
         this.receptionDate = new SimpleObjectProperty<LocalDate>(LocalDate.parse(receptionDate.toString()));

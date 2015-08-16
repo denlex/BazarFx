@@ -1,8 +1,6 @@
 package org.defence.tests.entities;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SetProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 import javafx.collections.ObservableSet;
 
 import java.io.Serializable;
@@ -16,6 +14,22 @@ public class Person implements Serializable {
     private StringProperty lastName;
     private IntegerProperty age;
     private SetProperty<Certificate> certificates;
+
+    public Person() {
+        id = new SimpleIntegerProperty();
+    }
+
+    public Person(String firstName, String lastName, Integer age) {
+        this(firstName, lastName, age, null);
+    }
+
+    public Person(String firstName, String lastName, Integer age, SetProperty<Certificate> certificates) {
+        this();
+        this.firstName = new SimpleStringProperty(firstName);
+        this.lastName = new SimpleStringProperty(lastName);
+        this.age = new SimpleIntegerProperty(age);
+        this.certificates = new SimpleSetProperty<>(certificates);
+    }
 
     public int getId() {
         return id.get();

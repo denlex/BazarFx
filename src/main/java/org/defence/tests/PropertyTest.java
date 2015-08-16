@@ -16,18 +16,22 @@ public class PropertyTest extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        String fxmlFile = "/fxml/PropertiesForm.fxml";
+        String fxmlFile = "/fxml/test/PropertiesForm.fxml";
         FXMLLoader loader = new FXMLLoader();
         Parent root = loader.load(getClass().getResourceAsStream(fxmlFile));
+//        CustomControl control = new CustomControl();
         stage.setTitle("JavaFX and Maven");
 
         final Scene scene = new Scene(root);
 
-        scene.setFill(null);
+//        scene.setFill(null);
         stage.setScene(scene);
-        stage.setMinHeight(600);
-        stage.setMinWidth(1000);
+        stage.setWidth(600);
+        stage.setHeight(500);
+        stage.setMinWidth(600);
+        stage.setMinHeight(500);
         stage.setResizable(true);
+        stage.setMaximized(false);
         stage.show();
     }
 }

@@ -7,9 +7,9 @@
         <id name="id" column="ID">
             <generator class="native"/>
         </id>
-        <property name="firstName" column="NUMBER" type="string"/>
-        <property name="lastName" column="NAME" type="string"/>
-        <property name="age" column="NAME" type="int"/>
+        <property name="firstName" column="FIRST_NAME" type="string"/>
+        <property name="lastName" column="LAST_NAME" type="string"/>
+        <property name="age" column="AGE" type="int"/>
         <set name="certificates">
             <key column="PERSON_ID"></key>
             <one-to-many class="Certificate"/>
