@@ -31,7 +31,7 @@ public class NewCharacteristic implements Initializable {
         okBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Characteristic characteristic = new Characteristic(codeTextField.getText(), nameTextField.getText());
+                Characteristic characteristic = new Characteristic(codeTextField.getText(), nameTextField.getText(), null);
                 dbHelper.exportCharacteristic(characteristic);
             }
         });

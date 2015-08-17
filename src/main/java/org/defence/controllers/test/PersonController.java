@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import org.defence.tests.entities.Certificate;
 import org.defence.tests.entities.Person;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -15,8 +16,7 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.ResourceBundle;
+import java.util.*;
 
 /**
  * Created by root on 15.08.15.
@@ -44,9 +44,18 @@ public class PersonController implements Initializable {
 
     private void addPersonBtnRegisterEvents() {
         addPersonBtn.setOnAction(event -> {
+            Set<Certificate> certificates = new HashSet<Certificate>();
+            certificates.add(new Certificate("Java Developer", new Date()));
+            certificates.add(new Certificate("C# Developer", new Date()));
 
             Person person = new Person(firstNameTextField.getText(), lastNameTextField.getText(),
-                    Integer.parseInt(ageTextField.getText()));
+                    Integer.parseInt(ageTextField.getText()), certificates);
+
+//            person.certificatesProperty().add(new Certificate("Java Developer", new Date()));
+            /*if (person.certificatesProperty().get() != null) {
+                System.out.println("NOT EQUAL NULL");
+            }*/
+
             persons.add(person);
 
             Session session = factory.openSession();

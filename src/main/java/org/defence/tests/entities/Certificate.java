@@ -1,10 +1,8 @@
 package org.defence.tests.entities;
 
 import javafx.beans.property.*;
-import javafx.util.converter.DateStringConverter;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -14,7 +12,7 @@ public class Certificate implements Serializable {
 
     private IntegerProperty id;
     private StringProperty name;
-    private ObjectProperty<LocalDate> receptionDate;
+    private ObjectProperty<Date> receptionDate;
 
     public Certificate() {
         id = new SimpleIntegerProperty();
@@ -23,8 +21,7 @@ public class Certificate implements Serializable {
     public Certificate(String name, Date receptionDate) {
         this();
         this.name = new SimpleStringProperty(name);
-        DateStringConverter dateStringConverter = new DateStringConverter();
-        this.receptionDate = new SimpleObjectProperty<LocalDate>(LocalDate.parse(receptionDate.toString()));
+        this.receptionDate = new SimpleObjectProperty<>(receptionDate);
     }
 
     public int getId() {
@@ -51,15 +48,15 @@ public class Certificate implements Serializable {
         this.name.set(name);
     }
 
-    public LocalDate getReceptionDate() {
+    public Date getReceptionDate() {
         return receptionDate.get();
     }
 
-    public ObjectProperty<LocalDate> receptionDateProperty() {
+    public ObjectProperty<Date> receptionDateProperty() {
         return receptionDate;
     }
 
-    public void setReceptionDate(LocalDate receptionDate) {
+    public void setReceptionDate(Date receptionDate) {
         this.receptionDate.set(receptionDate);
     }
 }

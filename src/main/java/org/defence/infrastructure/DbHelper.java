@@ -1,9 +1,12 @@
 package org.defence.infrastructure;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableSet;
 import org.defence.domain.entities.Characteristic;
 import org.defence.domain.entities.CharacteristicType;
 import org.defence.domain.entities.Measurement;
 import org.defence.domain.entities.MeasurementType;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -112,10 +115,12 @@ public class DbHelper {
     public List<MeasurementType> importAllMeasurementTypes() {
         Session session = factory.openSession();
         Transaction transaction = session.beginTransaction();
-        List<MeasurementType> result = session.createQuery("from MeasurementType ").list();
+        Query query = session.createQuery("from MeasurementType ");
+//        List<MeasurementType> result = session.createQuery("from MeasurementType").list();
+        query.list();
         session.close();
 
-        return result;
+        return null;
     }
 
     public List<Characteristic> importAllCharacteristics() {
@@ -136,7 +141,7 @@ public class DbHelper {
         return counter;
     }
 
-    public static int importMeasurementsIntoTable() throws Exception {
+    public static int exportMeasurementsIntoTable() throws Exception {
         int counter = 0;
         BufferedReader reader = new BufferedReader(new FileReader(MEASUREMENTS));
         String line;
@@ -150,7 +155,7 @@ public class DbHelper {
             parseMeasurementTypeFromLine(line);
         }
 
-        importMeasurementTypes();
+        exportMeasurementTypes();
 
         return counter;
     }
@@ -198,11 +203,11 @@ public class DbHelper {
         return true;
     }
 
-    private static void importMeasurementTypes() throws ExceptionInInitializerError {
+    private static void exportMeasurementTypes() throws ExceptionInInitializerError {
         if (measurementEntries.size() > 0) {
-            Set<Measurement> measurements = new HashSet<>();
+            ObservableSet<Measurement> measurements = FXCollections.observableSet(new HashSet<>());
 
-            // loading measurementTypes into MeasurementType table
+            // export measurementTypes into MeasurementType table
             for (final Map.Entry<Integer, MeasurementType> entry : measurementTypes.entrySet()) {
                 List<MeasurementEntry> list = measurementEntries.stream().filter(
                         p -> p.getGroupId() == entry.getKey()).collect(Collectors.toList());
@@ -339,7 +344,7 @@ public class DbHelper {
         if (factory == null) {
             factory = new Configuration().configure().buildSessionFactory();
         }
-        int result = importMeasurementsIntoTable();
+        int result = exportMeasurementsIntoTable();
         System.out.format("%s measurements were loaded\n", result);
 
         factory.close();

@@ -1,9 +1,11 @@
 package org.defence.tests.entities;
 
+import com.sun.javafx.collections.ObservableSetWrapper;
 import javafx.beans.property.*;
 import javafx.collections.ObservableSet;
 
 import java.io.Serializable;
+import java.util.Set;
 
 /**
  * Created by root on 8/14/15.
@@ -23,12 +25,12 @@ public class Person implements Serializable {
         this(firstName, lastName, age, null);
     }
 
-    public Person(String firstName, String lastName, Integer age, SetProperty<Certificate> certificates) {
+    public Person(String firstName, String lastName, Integer age, Set<Certificate> certificates) {
         this();
         this.firstName = new SimpleStringProperty(firstName);
         this.lastName = new SimpleStringProperty(lastName);
         this.age = new SimpleIntegerProperty(age);
-        this.certificates = new SimpleSetProperty<>(certificates);
+        this.certificates = new SimpleSetProperty<>(new ObservableSetWrapper<>(certificates));
     }
 
     public int getId() {

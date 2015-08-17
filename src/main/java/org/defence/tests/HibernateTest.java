@@ -1,5 +1,7 @@
 package org.defence.tests;
 
+import javafx.beans.property.SimpleSetProperty;
+import javafx.collections.FXCollections;
 import org.defence.domain.entities.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -23,11 +25,11 @@ public class HibernateTest {
             throw new ExceptionInInitializerError(ex);
         }
 
-        Characteristic maxSpeed = new Characteristic("01", "Макс. скорость полета");
-        Characteristic maxHeight = new Characteristic("02", "Макс. высота полета");
-        Characteristic maxDistance = new Characteristic("03", "Макс. дальность полета");
-        Characteristic moatWidth = new Characteristic("04", "Ширана преодолеваемого рва");
-        Characteristic speedOnRoad = new Characteristic("05", "Скорость по трассе");
+        Characteristic maxSpeed = new Characteristic("01", "Макс. скорость полета", null);
+        Characteristic maxHeight = new Characteristic("02", "Макс. высота полета", null);
+        Characteristic maxDistance = new Characteristic("03", "Макс. дальность полета", null);
+        Characteristic moatWidth = new Characteristic("04", "Ширана преодолеваемого рва", null);
+        Characteristic speedOnRoad = new Characteristic("05", "Скорость по трассе", null);
 
         Set<Characteristic> migCharacteristics = new HashSet<Characteristic>();
         migCharacteristics.add(maxDistance);
@@ -50,9 +52,9 @@ public class HibernateTest {
         Set<CatalogDescription> catalogDescriptions = new HashSet<CatalogDescription>();
         catalogDescriptions.add(mig29);
 
-        DescriptionFormat destroyer = new DescriptionFormat("001", "Истребители");
-        destroyer.setCharacteristicKits(characteristicKits);
-        destroyer.setCatalogDescriptions(catalogDescriptions);
+        DescriptionFormat destroyer = new DescriptionFormat("001", "Истребители", null, null);
+        destroyer.setCharacteristicKits(new SimpleSetProperty<>(FXCollections.observableSet(characteristicKits)));
+        destroyer.setCatalogDescriptions(new SimpleSetProperty<>(FXCollections.observableSet(catalogDescriptions)));
 
         Session session = factory.openSession();
         Transaction transaction = session.beginTransaction();

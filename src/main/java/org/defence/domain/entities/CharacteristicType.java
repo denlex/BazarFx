@@ -1,60 +1,81 @@
 package org.defence.domain.entities;
 
+import javafx.beans.property.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableSet;
+
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.Set;
 
 /**
  * Created by root on 22.07.15.
  */
 public class CharacteristicType implements Serializable {
-    private int id;
-    private String code;
-    private String name;
-    private Set<Characteristic> characteristics = new HashSet<Characteristic>();
+    private IntegerProperty id;
+    private StringProperty code;
+    private StringProperty name;
+    private SetProperty<Characteristic> characteristics;// = new SimpleSetProperty<>(FXCollections.observableSet());
 
-    public CharacteristicType() {
+    protected CharacteristicType() {
+        id = new SimpleIntegerProperty();
     }
 
-    public CharacteristicType(String code, String name) {
-        this(code, name, null);
+    protected CharacteristicType(String code, String name) {
+        this();
+        this.code = new SimpleStringProperty(code);
+        this.name = new SimpleStringProperty(name);
     }
 
     public CharacteristicType(String code, String name, Set<Characteristic> characteristics) {
-        this.code = code;
-        this.name = name;
-        this.characteristics = characteristics;
+        this(code, name);
+        this.characteristics = new SimpleSetProperty<>(FXCollections.observableSet(characteristics));
     }
 
     public int getId() {
+        return id.get();
+    }
+
+    public IntegerProperty idProperty() {
         return id;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.id.set(id);
     }
 
     public String getCode() {
+        return code.get();
+    }
+
+    public StringProperty codeProperty() {
         return code;
     }
 
     public void setCode(String code) {
-        this.code = code;
+        this.code.set(code);
     }
 
     public String getName() {
+        return name.get();
+    }
+
+    public StringProperty nameProperty() {
         return name;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name.set(name);
     }
 
-    public Set<Characteristic> getCharacteristics() {
+    public ObservableSet<Characteristic> getCharacteristics() {
+        return characteristics.get();
+    }
+
+    public SetProperty<Characteristic> characteristicsProperty() {
         return characteristics;
     }
 
-    public void setCharacteristics(Set<Characteristic> characteristics) {
-        this.characteristics = characteristics;
+    public void setCharacteristics(ObservableSet<Characteristic> characteristics) {
+        this.characteristics.set(characteristics);
     }
 }

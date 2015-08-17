@@ -42,7 +42,7 @@ public class NewMeasurementTypeController implements Initializable {
             public void handle(ActionEvent event) {
                 /*JOptionPane.showMessageDialog(null, "Code:\t" + codeTextField.getText()
                     + "\nName: \t" + nameTextField.getText());*/
-                MeasurementType measurementType = new MeasurementType(codeTextField.getText(), nameTextField.getText());
+                MeasurementType measurementType = new MeasurementType(codeTextField.getText(), nameTextField.getText(), null);
                 if ( dbHelper.exportMeasurementType(measurementType) ) {
                     messageLabel.setText("Тип измерения успешно добавлен");
 
