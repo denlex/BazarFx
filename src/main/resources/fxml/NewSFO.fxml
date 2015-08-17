@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<GridPane minHeight="-Infinity" minWidth="-Infinity" stylesheets="/css/Button.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <GridPane minHeight="-Infinity" minWidth="-Infinity" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
+            <children>
+                <StackPane style="-fx-background-color: #4A6C9B" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="TOP">
+                    <children>
+                        <Label text="Добавление нового СФО" textFill="white" GridPane.halignment="CENTER">
+                            <font>
+                                <Font name="Cambria" size="18.0" />
+                            </font>
+                            <StackPane.margin>
+                                <Insets left="50" right="50" />
+                            </StackPane.margin>
+                        </Label>
+                    </children>
+                </StackPane>
+                <GridPane alignment="BOTTOM_RIGHT" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                    <children>
+                        <Button alignment="CENTER_RIGHT" minHeight="30.0" minWidth="120" prefHeight="30" prefWidth="120" text="Применить" textAlignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                        </Button>
+                        <Button alignment="CENTER_RIGHT" minHeight="30" minWidth="120" prefHeight="30" prefWidth="120.0" text="Отмена" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="0">
+                        </Button>
+                    </children>
+                    <columnConstraints>
+                        <ColumnConstraints />
+                        <ColumnConstraints maxWidth="46.0" minWidth="10.0" prefWidth="10.0" />
+                        <ColumnConstraints maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="1.7976931348623157E308" prefHeight="40.0" />
+                    </rowConstraints>
+                </GridPane>
+                <GridPane GridPane.columnIndex="0" GridPane.rowIndex="1">
+                    <children>
+                        <Label text="Номер СФО:" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                            <GridPane.margin>
+                                <Insets left="10.0" />
+                            </GridPane.margin>
+                        </Label>
+                        <TextField minWidth="150" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                            <GridPane.margin>
+                                <Insets bottom="10" left="10.0" right="15" top="10" />
+                            </GridPane.margin>
+                        </TextField>
+                        <Label alignment="CENTER" text="Наименование СФО" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                            <GridPane.margin>
+                                <Insets left="10.0" />
+                            </GridPane.margin>
+                        </Label>
+                        <TextField GridPane.columnIndex="1" GridPane.rowIndex="2">
+                            <GridPane.margin>
+                                <Insets bottom="10" left="10.0" right="15" top="10" />
+                            </GridPane.margin>
+                        </TextField>
+                    </children>
+                    <children>
+                        <TabPane tabClosingPolicy="ALL_TABS" GridPane.columnIndex="0" GridPane.columnSpan="6" GridPane.rowIndex="3" GridPane.valignment="TOP">
+                            <tabs>
+                                <Tab closable="false" text="Информация о документе">
+                                    <content>
+                                        <GridPane GridPane.hgrow="ALWAYS" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
+                                            <children>
+                                                <StackPane alignment="CENTER" style="-fx-background-color: #4A6C9B" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                                                    <children>
+                                                        <Label text="Этапы готовности документа" textFill="white">
+                                                            <font>
+                                                                <Font size="18.0" />
+                                                            </font>
+                                                        </Label>
+                                                    </children>
+                                                </StackPane>
+                                                <RadioButton text="Документ в БДСК отсутствует" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                                                    <GridPane.margin>
+                                                        <Insets bottom="10.0" left="10.0" top="10.0" />
+                                                    </GridPane.margin>
+                                                    <opaqueInsets>
+                                                        <Insets left="10.0" />
+                                                    </opaqueInsets>
+                                                    <toggleGroup>
+                                                        <ToggleGroup fx:id="myTestGroup" />
+                                                    </toggleGroup>
+                                                </RadioButton>
+                                                <RadioButton text="Документ в стадии формирования" toggleGroup="$myTestGroup" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                                                    <GridPane.margin>
+                                                        <Insets left="10.0" />
+                                                    </GridPane.margin>
+                                                    <opaqueInsets>
+                                                        <Insets left="10.0" />
+                                                    </opaqueInsets>
+                                                </RadioButton>
+                                                <RadioButton text="Документ сформирован" toggleGroup="$myTestGroup" GridPane.columnIndex="0" GridPane.rowIndex="3">
+                                                    <GridPane.margin>
+                                                        <Insets left="10.0" />
+                                                    </GridPane.margin>
+                                                    <opaqueInsets>
+                                                        <Insets left="10.0" />
+                                                    </opaqueInsets>
+                                                </RadioButton>
+                                                <RadioButton text="Документ сформирован и утвержден" toggleGroup="$myTestGroup" GridPane.columnIndex="0" GridPane.rowIndex="4">
+                                                    <GridPane.margin>
+                                                        <Insets left="10.0" />
+                                                    </GridPane.margin>
+                                                    <opaqueInsets>
+                                                        <Insets left="10.0" />
+                                                    </opaqueInsets>
+                                                </RadioButton>
+                                                <StackPane alignment="CENTER" style="-fx-background-color: #4A6C9B" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                                                    <children>
+                                                        <Label text="Дополнительная информация о документе" textFill="white">
+                                                            <font>
+                                                                <Font size="14.0" />
+                                                            </font>
+                                                        </Label>
+                                                    </children>
+                                                </StackPane>
+                                                <!--Панель для отображени компонентов в "Дополнительная информация об организации"-->
+                                                <GridPane GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                    <children>
+                                                        <Label maxWidth="200.0" text="Утверждающая организация">
+                                                            <GridPane.margin>
+                                                                <Insets />
+                                                            </GridPane.margin>
+                                                        </Label>
+                                                        <ComboBox maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0">
+                                                            <GridPane.margin>
+                                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                            </GridPane.margin>
+                                                        </ComboBox>
+                                                    </children>
+                                                    <columnConstraints>
+                                                        <ColumnConstraints maxWidth="200.0" prefWidth="180.0" />
+                                                        <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" />
+                                                    </columnConstraints>
+                                                    <rowConstraints>
+                                                        <RowConstraints />
+                                                    </rowConstraints>
+                                                </GridPane>
+                                                <GridPane GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                    <children>
+                                                        <Label maxWidth="200.0" text="Организация-разработчик">
+                                                            <GridPane.margin>
+                                                                <Insets />
+                                                            </GridPane.margin>
+                                                        </Label>
+                                                        <ComboBox maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0">
+                                                            <GridPane.margin>
+                                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                            </GridPane.margin>
+                                                        </ComboBox>
+                                                    </children>
+                                                    <columnConstraints>
+                                                        <ColumnConstraints maxWidth="200.0" prefWidth="180.0" />
+                                                        <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" />
+                                                    </columnConstraints>
+                                                    <rowConstraints>
+                                                        <RowConstraints />
+                                                    </rowConstraints>
+                                                </GridPane>
+                                                <GridPane GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                                    <children>
+                                                        <Label maxWidth="200.0" text="Дата принятия">
+                                                            <GridPane.margin>
+                                                                <Insets />
+                                                            </GridPane.margin>
+                                                        </Label>
+                                                        <DatePicker maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0">
+                                                            <GridPane.margin>
+                                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                            </GridPane.margin>
+                                                        </DatePicker>
+                                                    </children>
+                                                    <columnConstraints>
+                                                        <ColumnConstraints maxWidth="200.0" prefWidth="180.0" />
+                                                        <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" />
+                                                    </columnConstraints>
+                                                    <rowConstraints>
+                                                        <RowConstraints />
+                                                    </rowConstraints>
+                                                </GridPane>
+                                                <GridPane GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                                    <children>
+                                                        <Label maxWidth="200.0" text="Дата введения в действие">
+                                                            <GridPane.margin>
+                                                                <Insets />
+                                                            </GridPane.margin>
+                                                        </Label>
+                                                        <DatePicker maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0">
+                                                            <GridPane.margin>
+                                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                            </GridPane.margin>
+                                                        </DatePicker>
+                                                    </children>
+                                                    <columnConstraints>
+                                                        <ColumnConstraints maxWidth="200.0" prefWidth="180.0" />
+                                                        <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" />
+                                                    </columnConstraints>
+                                                    <rowConstraints>
+                                                        <RowConstraints />
+                                                    </rowConstraints>
+                                                </GridPane>
+                                            </children>
+                                            <columnConstraints>
+                                                <ColumnConstraints hgrow="ALWAYS" maxWidth="500.0" />
+                                                <ColumnConstraints hgrow="ALWAYS" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                                <RowConstraints prefHeight="30.0" />
+                                                <RowConstraints valignment="CENTER" />
+                                                <RowConstraints valignment="CENTER" />
+                                                <RowConstraints valignment="CENTER" />
+                                                <RowConstraints valignment="CENTER" />
+                                            </rowConstraints>
+                                        </GridPane>
+                                    </content>
+                                </Tab>
+                                <Tab closable="false" text="Загрузка изображения">
+                                    <content>
+                                        <GridPane>
+                                            <children>
+                                                <ImageView fitHeight="250.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
+                                                </ImageView>
+                                                <Button mnemonicParsing="false" prefWidth="300.0" text="Загрузка изображения" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                                                    <GridPane.margin>
+                                                        <Insets left="10.0" right="10.0" top="20.0" />
+                                                    </GridPane.margin>
+                                                </Button>
+                                            </children>
+                                 <columnConstraints>
+                                    <ColumnConstraints />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints />
+                                    <RowConstraints />
+                                 </rowConstraints>
+                                        </GridPane>
+                                    </content>
+                                </Tab>
+                            </tabs>
+                        </TabPane>
+                    </children>
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="ALWAYS" maxWidth="130.0" prefWidth="130.0" />
+                        <ColumnConstraints hgrow="ALWAYS" />
+                        <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" />
+                        <ColumnConstraints />
+                        <ColumnConstraints />
+                        <ColumnConstraints />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints />
+                        <RowConstraints minHeight="30.0" valignment="CENTER" />
+                        <RowConstraints minHeight="30.0" valignment="CENTER" vgrow="NEVER" />
+                        <RowConstraints vgrow="ALWAYS" />
+                    </rowConstraints>
+                </GridPane>
+            </children>
+            <columnConstraints>
+                <ColumnConstraints hgrow="ALWAYS" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints maxHeight="50.0" valignment="TOP" vgrow="ALWAYS" />
+                <RowConstraints vgrow="ALWAYS" />
+                <RowConstraints minHeight="50.0" prefHeight="40.0" />
+            </rowConstraints>
+        </GridPane>
+    </children>
+    <columnConstraints>
+        <ColumnConstraints />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints vgrow="ALWAYS" />
+    </rowConstraints>
+</GridPane>
