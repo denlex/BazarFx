@@ -107,7 +107,7 @@
                         <RowConstraints/>
                     </rowConstraints>
                     <children>
-                        <ListView fx:id="personsViewList">
+                        <ListView fx:id="personsListView">
                             <items>
                                 <!--<FXCollections fx:factory="observableArrayList">
                                     <String fx:value="132"/>

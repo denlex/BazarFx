@@ -1,7 +1,5 @@
 package org.defence.infrastructure;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableSet;
 import org.defence.domain.entities.Characteristic;
 import org.defence.domain.entities.CharacteristicType;
 import org.defence.domain.entities.Measurement;
@@ -13,10 +11,7 @@ import org.hibernate.cfg.Configuration;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -117,10 +112,10 @@ public class DbHelper {
     public List<MeasurementType> importAllMeasurementTypes() {
         Session session = factory.openSession();
         Transaction transaction = session.beginTransaction();
-        List<MeasurementType> resul = session.createQuery("from MeasurementType ").list();
+        List<MeasurementType> result = session.createQuery("from MeasurementType ").list();
         session.close();
 
-        return resul;
+        return result;
     }
 
     public List<Characteristic> importAllCharacteristics() {
@@ -205,7 +200,7 @@ public class DbHelper {
 
     private static void importMeasurementTypes() throws ExceptionInInitializerError {
         if (measurementEntries.size() > 0) {
-            ObservableSet<Measurement> measurements = FXCollections.emptyObservableSet();
+            Set<Measurement> measurements = new HashSet<>();
 
             // loading measurementTypes into MeasurementType table
             for (final Map.Entry<Integer, MeasurementType> entry : measurementTypes.entrySet()) {
@@ -341,7 +336,9 @@ public class DbHelper {
 //----------------------------------------------------------------------------------------------------------------------
 
     public static void main(String[] args) throws Exception {
-
+        if (factory == null) {
+            factory = new Configuration().configure().buildSessionFactory();
+        }
         int result = importMeasurementsIntoTable();
         System.out.format("%s measurements were loaded\n", result);
 
