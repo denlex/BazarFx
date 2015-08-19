@@ -1,7 +1,6 @@
 package org.defence.controllers.test;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -97,16 +96,7 @@ public class PersonController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         factory = new Configuration().configure().buildSessionFactory();
         persons = FXCollections.observableArrayList(new ArrayList<>());
-        persons.addListener(new ListChangeListener<Person>() {
-            @Override
-            public void onChanged(Change<? extends Person> c) {
-                while (c.next()) {
-                    if (c.wasPermutated()) {
-                        System.out.println();
-                    }
-                }
-            }
-        });
+
         personsListView.setItems(persons);
         personsListViewRegisterEvents();
         addPersonBtnRegisterEvents();
