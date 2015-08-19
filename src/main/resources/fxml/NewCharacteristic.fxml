@@ -10,55 +10,57 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="org.defence.controllers.NewCharacteristic">
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.defence.controllers.NewCharacteristic">
     <children>
-        <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-                  stylesheets="/css/Button.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                  AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8"
-                  xmlns:fx="http://javafx.com/fxml/1" gridLinesVisible="true">
+        <GridPane gridLinesVisible="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" stylesheets="/css/Button.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
             <columnConstraints>
-                <ColumnConstraints hgrow="ALWAYS" minWidth="10.0"/>
+                <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" />
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints minHeight="50.0" maxHeight="50" vgrow="ALWAYS"/>
-                <RowConstraints minHeight="300.0" vgrow="ALWAYS"/>
-                <RowConstraints minHeight="50.0" maxHeight="50" vgrow="ALWAYS"/>
+                <RowConstraints maxHeight="50" minHeight="50.0" vgrow="ALWAYS" />
+                <RowConstraints minHeight="300.0" vgrow="ALWAYS" />
+                <RowConstraints maxHeight="50" minHeight="50.0" vgrow="ALWAYS" />
             </rowConstraints>
             <children>
-                <StackPane style="-fx-background-color: #4A6C9B" GridPane.rowIndex="0" GridPane.halignment="CENTER"
-                           GridPane.valignment="TOP">
+                <StackPane style="-fx-background-color: #4A6C9B" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="TOP">
                     <children>
-                        <Label text="Добавление новой характеристики" textFill="white"
-                               GridPane.halignment="CENTER">
+                        <Label text="Добавление новой характеристики" textFill="white" GridPane.halignment="CENTER">
                             <font>
-                                <Font name="Cambria" size="18.0"/>
+                                <Font name="Cambria" size="18.0" />
                             </font>
                             <StackPane.margin>
-                                <Insets left="50" right="50"/>
+                                <Insets left="50" right="50" />
                             </StackPane.margin>
                         </Label>
                     </children>
                 </StackPane>
-                <GridPane GridPane.rowIndex="1" style="-fx-vgap: 10; -fx-hgap: 20; -fx-padding: 20">
+                <GridPane style="-fx-vgap: 10; -fx-hgap: 20; -fx-padding: 20" GridPane.rowIndex="1">
                     <children>
-                        <Text GridPane.columnIndex="0" GridPane.rowIndex="0" strokeType="OUTSIDE" strokeWidth="0.0"
-                              text="Код:"/>
-                        <TextField fx:id="codeTextField" GridPane.columnIndex="1" GridPane.rowIndex="0">
-                        </TextField>
-                        <Text GridPane.columnIndex="0" GridPane.rowIndex="1" strokeType="OUTSIDE" strokeWidth="0.0"
-                              text="Наименование:">
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Код:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                        <TextField  fx:id="codeTextField" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin></TextField>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Наименование:" GridPane.columnIndex="0" GridPane.rowIndex="1">
                         </Text>
-                        <TextField fx:id="nameTextField" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                        <TextField fx:id="nameTextField" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin></TextField>
                     </children>
+               <columnConstraints>
+                  <ColumnConstraints maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="ALWAYS" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints />
+                  <RowConstraints />
+               </rowConstraints>
                 </GridPane>
                 <AnchorPane GridPane.rowIndex="2">
                     <children>
-                        <Button fx:id="okBtn" mnemonicParsing="false" prefWidth="120.0" text="Принять"
-                                AnchorPane.rightAnchor="150"
-                                AnchorPane.bottomAnchor="15"/>
-                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="120.0" text="Отмена"
-                                AnchorPane.rightAnchor="15" AnchorPane.bottomAnchor="15"/>
+                        <Button fx:id="okBtn" alignment="CENTER" mnemonicParsing="false" prefWidth="120.0" text="Принять" AnchorPane.bottomAnchor="15" AnchorPane.rightAnchor="150" />
+                        <Button alignment="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="120.0" text="Отмена" AnchorPane.bottomAnchor="15" AnchorPane.rightAnchor="15" />
                     </children>
                 </AnchorPane>
             </children>

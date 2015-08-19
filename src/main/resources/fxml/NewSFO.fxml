@@ -119,7 +119,7 @@
                                                     <children>
                                                         <Label text="Дополнительная информация о документе" textFill="white">
                                                             <font>
-                                                                <Font size="14.0" />
+                                                                <Font size="18.0" />
                                                             </font>
                                                         </Label>
                                                     </children>
@@ -211,7 +211,7 @@
                                                 </GridPane>
                                             </children>
                                             <columnConstraints>
-                                                <ColumnConstraints hgrow="ALWAYS" maxWidth="500.0" />
+                                                <ColumnConstraints hgrow="ALWAYS" maxWidth="300.0" minWidth="300.0" prefWidth="300.0" />
                                                 <ColumnConstraints hgrow="ALWAYS" />
                                             </columnConstraints>
                                             <rowConstraints>
@@ -269,7 +269,7 @@
                 <ColumnConstraints hgrow="ALWAYS" />
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints maxHeight="50.0" valignment="TOP" vgrow="ALWAYS" />
+                <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" valignment="TOP" vgrow="ALWAYS" />
                 <RowConstraints vgrow="ALWAYS" />
                 <RowConstraints minHeight="50.0" prefHeight="40.0" />
             </rowConstraints>

@@ -26,7 +26,7 @@
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="TOP" vgrow="ALWAYS"/>
                             </rowConstraints>
                             <children>
-                                <fx:include source="/fxml/NewClass.fxml" GridPane.hgrow="ALWAYS"
+                                <fx:include source="/fxml/Class.fxml" GridPane.hgrow="ALWAYS"
                                             GridPane.vgrow="ALWAYS"/>
                             </children>
                         </GridPane>
