@@ -6,11 +6,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.paint.Color;
 import org.defence.domain.entities.MeasurementType;
 import org.defence.infrastructure.DbHelper;
+import org.defence.viewmodel.MeasurementTypeViewModel;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -32,9 +34,14 @@ public class NewMeasurementTypeController implements Initializable {
     private TextField nameTextField;
 
     @FXML
+    TableView<MeasurementType> typesTableView;
+
+    @FXML
     private Label messageLabel;
 
     private DbHelper dbHelper = new DbHelper();
+
+    private MeasurementTypeViewModel viewModel;
 
     private void setOkBtnRegisterEvents() {
         okBtn.setOnAction(new EventHandler<ActionEvent>() {
@@ -62,13 +69,32 @@ public class NewMeasurementTypeController implements Initializable {
             public void handle(ActionEvent event) {
                 /*JOptionPane.showMessageDialog(null, "Code:\t" + codeTextField.getText()
                     + "\nName: \t" + nameTextField.getText());*/
-
             }
         });
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        /*ValidationSupport validationSupport = new ValidationSupport();
+        Validator<String> validator = new Validator<String>() {
+            @Override
+            public ValidationResult apply(Control control, String s) {
+                boolean condition = s != null ? !s.matches("[a-z]") : false;
+
+                return ValidationResult.fromMessageIf(control, "not a number", Severity.ERROR, condition);
+            }
+        };
+
+        validationSupport.registerValidator(nameTextField, true, validator);*/
+
+        viewModel = new MeasurementTypeViewModel();
+
+        nameTextField.textProperty().bindBidirectional(viewModel.nameProperty());
+        codeTextField.textProperty().bindBidirectional(viewModel.codeProperty());
+        okBtn.disableProperty().bind(viewModel.isActionPossibleProperty());
+
+//        typesTableView.itemsProperty().bindBidirectional();
+
         setOkBtnRegisterEvents();
         setCancelBtnRegisterEvents();
     }
