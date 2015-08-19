@@ -12,6 +12,9 @@ public class MeasurementTypeViewModel extends AbstractViewModel<MeasurementType>
     private final StringProperty name = new SimpleStringProperty();
     private final StringProperty code = new SimpleStringProperty();
     private final ReadOnlyBooleanWrapper actionPossible = new ReadOnlyBooleanWrapper();
+
+    private final IntegerProperty age = new SimpleIntegerProperty();
+
     BooleanBinding nameInvalid = new BooleanBinding() {
         @Override
         protected boolean computeValue() {
@@ -65,5 +68,20 @@ public class MeasurementTypeViewModel extends AbstractViewModel<MeasurementType>
 
     public ReadOnlyBooleanProperty isActionPossibleProperty() {
         return actionPossible.getReadOnlyProperty();
+    }
+
+    public boolean validAgeInput(String input) {
+        // must support partial entry while editing, including empty string
+        // accept any integer from 0 - 135 (arbitrary upper bound example)
+        String regex = "([0-9]{0,2})|(1[0-2][0-9])|(13[0-5])";
+        return input.matches(regex);
+    }
+
+    public Integer getAge() {
+        return age.get();
+    }
+
+    public IntegerProperty ageProperty() {
+        return age;
     }
 }

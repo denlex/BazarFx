@@ -4,18 +4,17 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.paint.Color;
+import javafx.util.converter.IntegerStringConverter;
 import org.defence.domain.entities.MeasurementType;
 import org.defence.infrastructure.DbHelper;
 import org.defence.viewmodel.MeasurementTypeViewModel;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.function.UnaryOperator;
 
 /**
  * Created by root on 8/12/15.
@@ -32,6 +31,9 @@ public class NewMeasurementTypeController implements Initializable {
 
     @FXML
     private TextField nameTextField;
+
+    @FXML
+    private TextField age;
 
     @FXML
     TableView<MeasurementType> typesTableView;
@@ -88,6 +90,26 @@ public class NewMeasurementTypeController implements Initializable {
         validationSupport.registerValidator(nameTextField, true, validator);*/
 
         viewModel = new MeasurementTypeViewModel();
+
+        UnaryOperator<TextFormatter.Change> filter = (TextFormatter.Change change) -> {
+            System.out.println(change.getControlNewText());
+
+            if (viewModel.validAgeInput(change.getControlNewText())) {
+                // accept
+                System.out.println("accept");
+                return change ;
+            } else {
+                // reject
+                System.out.println("null");
+
+                return null ;
+            }
+        };
+
+        System.out.println("Inside initialization method");
+        TextFormatter<Integer> ageFormatter = new TextFormatter<>(new IntegerStringConverter(), null, filter);
+        age.setTextFormatter(ageFormatter);
+        ageFormatter.valueProperty().bindBidirectional(viewModel.ageProperty().asObject());
 
         nameTextField.textProperty().bindBidirectional(viewModel.nameProperty());
         codeTextField.textProperty().bindBidirectional(viewModel.codeProperty());

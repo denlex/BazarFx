@@ -61,8 +61,8 @@ public class MainApp extends Application {
 
         scene.setFill(null);
         stage.setScene(scene);
-        stage.setMinHeight(600);
-        stage.setMinWidth(1000);
+        stage.setMinHeight(500);
+        stage.setMinWidth(700);
         stage.setResizable(true);
         stage.show();
     }

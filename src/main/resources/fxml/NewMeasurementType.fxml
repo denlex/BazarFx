@@ -4,19 +4,20 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<GridPane stylesheets="/css/Button.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane stylesheets="/css/Button.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="org.defence.controllers.NewMeasurementTypeController">
     <children>
         <GridPane GridPane.columnIndex="0" GridPane.rowIndex="0">
             <children>
                 <GridPane alignment="BASELINE_RIGHT" GridPane.columnIndex="0" GridPane.rowIndex="2">
                     <children>
-                        <Button alignment="CENTER" minHeight="30.0" minWidth="120.0" prefHeight="30" prefWidth="120.0"
+                        <Button fx:id="okBtn" alignment="CENTER" minHeight="30.0" minWidth="120.0" prefHeight="30" prefWidth="120.0"
                                 text="Добавить" textAlignment="CENTER">
                         </Button>
                         <Button alignment="CENTER" minHeight="30" minWidth="120.0" prefHeight="30" prefWidth="120.0"
                                 text="Удалить" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="0">
                         </Button>
-                        <Button alignment="CENTER" minHeight="30" minWidth="120.0" prefHeight="30" prefWidth="120.0"
+                        <Button fx:id="cancelBtn" alignment="CENTER" minHeight="30" minWidth="120.0" prefHeight="30" prefWidth="120.0"
                                 text="Отмена" textAlignment="CENTER" GridPane.columnIndex="4" GridPane.rowIndex="0">
                         </Button>
                     </children>
@@ -51,7 +52,7 @@
                                 <Insets left="10.0"/>
                             </GridPane.margin>
                         </Label>
-                        <TextField GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.vgrow="ALWAYS">
+                        <TextField fx:id="codeTextField" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.vgrow="ALWAYS">
                             <GridPane.margin>
                                 <Insets right="10.0"/>
                             </GridPane.margin>
@@ -61,12 +62,23 @@
                                 <Insets left="10.0"/>
                             </GridPane.margin>
                         </Label>
-                        <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
+                        <TextField fx:id="nameTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
                             <GridPane.margin>
                                 <Insets right="10.0"/>
                             </GridPane.margin>
                         </TextField>
-                        <GridPane GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="3">
+
+                        <Label text="Возраст:" GridPane.columnIndex="0" GridPane.rowIndex="3">
+                            <GridPane.margin>
+                                <Insets left="10.0"/>
+                            </GridPane.margin>
+                        </Label>
+                        <TextField fx:id="age" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS">
+                            <GridPane.margin>
+                                <Insets right="10.0"/>
+                            </GridPane.margin>
+                        </TextField>
+                        <GridPane GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="4">
                             <children>
                                 <TableView fx:id="tableView">
                                     <columns>
