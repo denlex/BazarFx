@@ -68,7 +68,7 @@
                             </GridPane.margin>
                         </TextField>
 
-                        <Label text="Возраст:" GridPane.columnIndex="0" GridPane.rowIndex="3">
+                        <!--<Label text="Возраст:" GridPane.columnIndex="0" GridPane.rowIndex="3">
                             <GridPane.margin>
                                 <Insets left="10.0"/>
                             </GridPane.margin>
@@ -77,18 +77,18 @@
                             <GridPane.margin>
                                 <Insets right="10.0"/>
                             </GridPane.margin>
-                        </TextField>
-                        <GridPane GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="4">
+                        </TextField>-->
+                        <GridPane GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="3">
                             <children>
-                                <TableView fx:id="tableView">
-                                    <columns>
+                                <TableView fx:id="typesTableView">
+                                    <!--<columns>
                                         <TableColumn maxWidth="1.7976931348623157E308" minWidth="100.0"
                                                      prefWidth="100.0" text="Код">
                                         </TableColumn>
                                         <TableColumn maxWidth="1.7976931348623157E308" minWidth="300.0"
                                                      prefWidth="280.0" text="Наименование ">
                                         </TableColumn>
-                                    </columns>
+                                    </columns>-->
                                 </TableView>
                             </children>
                             <columnConstraints>

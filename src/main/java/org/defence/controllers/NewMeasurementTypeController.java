@@ -1,20 +1,21 @@
 package org.defence.controllers;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.paint.Color;
-import javafx.util.converter.IntegerStringConverter;
+import javafx.scene.control.cell.PropertyValueFactory;
 import org.defence.domain.entities.MeasurementType;
 import org.defence.infrastructure.DbHelper;
 import org.defence.viewmodel.MeasurementTypeViewModel;
+import org.defence.viewmodel.TypesViewModel;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.function.UnaryOperator;
 
 /**
  * Created by root on 8/12/15.
@@ -33,17 +34,15 @@ public class NewMeasurementTypeController implements Initializable {
     private TextField nameTextField;
 
     @FXML
-    private TextField age;
-
-    @FXML
-    TableView<MeasurementType> typesTableView;
+    TableView<MeasurementTypeViewModel> typesTableView;
 
     @FXML
     private Label messageLabel;
 
     private DbHelper dbHelper = new DbHelper();
 
-    private MeasurementTypeViewModel viewModel;
+    //    private MeasurementTypeViewModel viewModel;
+    private TypesViewModel typesViewModel;
 
     private void setOkBtnRegisterEvents() {
         okBtn.setOnAction(new EventHandler<ActionEvent>() {
@@ -52,7 +51,7 @@ public class NewMeasurementTypeController implements Initializable {
                 /*JOptionPane.showMessageDialog(null, "Code:\t" + codeTextField.getText()
                     + "\nName: \t" + nameTextField.getText());*/
                 MeasurementType measurementType = new MeasurementType(codeTextField.getText(), nameTextField.getText());
-                if ( dbHelper.exportMeasurementType(measurementType) ) {
+                /*if ( dbHelper.exportMeasurementType(measurementType) ) {
                     messageLabel.setText("Тип измерения успешно добавлен");
 
                     DropShadow effect = new DropShadow();
@@ -60,13 +59,19 @@ public class NewMeasurementTypeController implements Initializable {
                     effect.setOffsetY(1);
                     effect.setColor(Color.WHITE);
                     messageLabel.setEffect(effect);
+                }*/
+
+                /*if (viewModel != null) {
+                    viewModel.getTypes().add(measurementType);
                 }
+
+                showCollection(viewModel.getTypes());*/
             }
         });
     }
 
     private void setCancelBtnRegisterEvents() {
-        okBtn.setOnAction(new EventHandler<ActionEvent>() {
+        cancelBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 /*JOptionPane.showMessageDialog(null, "Code:\t" + codeTextField.getText()
@@ -77,47 +82,52 @@ public class NewMeasurementTypeController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        /*ValidationSupport validationSupport = new ValidationSupport();
-        Validator<String> validator = new Validator<String>() {
-            @Override
-            public ValidationResult apply(Control control, String s) {
-                boolean condition = s != null ? !s.matches("[a-z]") : false;
 
-                return ValidationResult.fromMessageIf(control, "not a number", Severity.ERROR, condition);
-            }
-        };
+//        viewModel = new MeasurementTypeViewModel();
 
-        validationSupport.registerValidator(nameTextField, true, validator);*/
-
-        viewModel = new MeasurementTypeViewModel();
-
-        UnaryOperator<TextFormatter.Change> filter = (TextFormatter.Change change) -> {
+        /*UnaryOperator<TextFormatter.Change> filter = (TextFormatter.Change change) -> {
             System.out.println(change.getControlNewText());
 
             if (viewModel.validAgeInput(change.getControlNewText())) {
                 // accept
-                System.out.println("accept");
                 return change ;
             } else {
                 // reject
-                System.out.println("null");
-
                 return null ;
             }
         };
 
-        System.out.println("Inside initialization method");
         TextFormatter<Integer> ageFormatter = new TextFormatter<>(new IntegerStringConverter(), null, filter);
         age.setTextFormatter(ageFormatter);
-        ageFormatter.valueProperty().bindBidirectional(viewModel.ageProperty().asObject());
+        ageFormatter.valueProperty().bindBidirectional(viewModel.ageProperty().asObject());*/
 
-        nameTextField.textProperty().bindBidirectional(viewModel.nameProperty());
+        MeasurementTypeViewModel viewModel = new MeasurementTypeViewModel();
         codeTextField.textProperty().bindBidirectional(viewModel.codeProperty());
+        nameTextField.textProperty().bindBidirectional(viewModel.nameProperty());
+
+        typesViewModel = new TypesViewModel(viewModel);
+
         okBtn.disableProperty().bind(viewModel.isActionPossibleProperty());
 
-//        typesTableView.itemsProperty().bindBidirectional();
+        okBtn.onActionProperty().bindBidirectional(typesViewModel.btnProperty());
 
-        setOkBtnRegisterEvents();
+        ObjectProperty<ObservableList<MeasurementTypeViewModel>> typesProp = new SimpleObjectProperty<>(typesViewModel.getTypes());
+        typesTableView.itemsProperty().bindBidirectional(typesProp);
+
+//        setOkBtnRegisterEvents();
+
+        initializeTableView();
         setCancelBtnRegisterEvents();
+    }
+
+    private void initializeTableView() {
+        // Define rendering of the list of values in ComboBox drop down.
+
+        TableColumn<MeasurementTypeViewModel, String> codeCol = new TableColumn<>("Code");
+        codeCol.setCellValueFactory(new PropertyValueFactory("code"));
+        TableColumn<MeasurementTypeViewModel, String> nameCol = new TableColumn<>("Name");
+        nameCol.setCellValueFactory(new PropertyValueFactory("name"));
+
+        typesTableView.getColumns().addAll(codeCol, nameCol);
     }
 }

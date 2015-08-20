@@ -2,7 +2,6 @@ package org.defence.viewmodel;
 
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.*;
-import javafx.collections.ObservableSet;
 import org.defence.domain.entities.MeasurementType;
 
 /**
@@ -14,6 +13,7 @@ public class MeasurementTypeViewModel extends AbstractViewModel<MeasurementType>
     private final ReadOnlyBooleanWrapper actionPossible = new ReadOnlyBooleanWrapper();
 
     private final IntegerProperty age = new SimpleIntegerProperty();
+    private final ListProperty<MeasurementType> types = new SimpleListProperty<>();
 
     BooleanBinding nameInvalid = new BooleanBinding() {
         @Override
@@ -22,12 +22,14 @@ public class MeasurementTypeViewModel extends AbstractViewModel<MeasurementType>
         }
     };
 
-    private final SetProperty<MeasurementType> types = new SimpleSetProperty<>();
-
-//    private final Property<SetProperty<MeasurementType>>
 
     public MeasurementTypeViewModel() {
         actionPossible.bind(name.isEmpty().or(code.isEmpty()));
+    }
+
+    public MeasurementTypeViewModel(String code, String name) {
+        this.code.set(code);
+        this.name.set(name);
     }
 
     public String getName() {
@@ -54,18 +56,6 @@ public class MeasurementTypeViewModel extends AbstractViewModel<MeasurementType>
         this.code.set(code);
     }
 
-    public ReadOnlyBooleanWrapper actionPossibleProperty() {
-        return actionPossible;
-    }
-
-    public ObservableSet<MeasurementType> getTypes() {
-        return types.get();
-    }
-
-    public SetProperty<MeasurementType> typesProperty() {
-        return types;
-    }
-
     public ReadOnlyBooleanProperty isActionPossibleProperty() {
         return actionPossible.getReadOnlyProperty();
     }
@@ -83,5 +73,13 @@ public class MeasurementTypeViewModel extends AbstractViewModel<MeasurementType>
 
     public IntegerProperty ageProperty() {
         return age;
+    }
+
+    public javafx.collections.ObservableList<MeasurementType> getTypes() {
+        return types.get();
+    }
+
+    public ListProperty<MeasurementType> typesProperty() {
+        return types;
     }
 }
