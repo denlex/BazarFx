@@ -20,7 +20,7 @@ public class NewMeasurementController implements Initializable {
     @FXML
     private ComboBox<MeasurementType> measurementTypeComboBox;
 
-    private DbHelper dbHelper = new DbHelper();
+    private DbHelper dbHelper = DbHelper.getInstance();
 
     private void measurementTypeComboBoxRegisterEvents() {
         measurementTypeComboBox.setOnAction(event -> {

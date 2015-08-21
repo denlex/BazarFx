@@ -18,7 +18,7 @@ public class CharacteristicsController implements Initializable {
     @FXML
     private TableView<Characteristic> characteristicsTableView;
 
-    DbHelper dbHelper = new DbHelper();
+    DbHelper dbHelper = DbHelper.getInstance();
 
     private void characteristicsTableViewRegisterEvents() {
     }

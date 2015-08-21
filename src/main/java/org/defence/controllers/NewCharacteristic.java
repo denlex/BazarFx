@@ -25,7 +25,7 @@ public class NewCharacteristic implements Initializable {
     @FXML
     private TextField nameTextField;
 
-    private DbHelper dbHelper = new DbHelper();
+    private DbHelper dbHelper = DbHelper.getInstance();
 
     private void setOkBtnRegisterEvents() {
         okBtn.setOnAction(new EventHandler<ActionEvent>() {
