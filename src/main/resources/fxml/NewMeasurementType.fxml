@@ -72,6 +72,13 @@
                                     <columns>
                                         <TableColumn maxWidth="1.7976931348623157E308" minWidth="100.0"
                                                      prefWidth="100.0" text="Код">
+                                            <contextMenu>
+                                                <ContextMenu>
+                                                    <items>
+                                                       <MenuItem mnemonicParsing="false" text="Опа опа опапа" />
+                                                    </items>
+                                                </ContextMenu>
+                                            </contextMenu>
                                         </TableColumn>
                                         <TableColumn maxWidth="1.7976931348623157E308" minWidth="300.0"
                                                      prefWidth="280.0" text="Наименование ">
