@@ -68,6 +68,8 @@ class CharacteristicEntry extends Entry {
 }
 
 public class DbHelper {
+    private static DbHelper instance;
+
     private static SessionFactory factory;
     private static final String CHARACTERISTICS = "/home/contragent/Desktop/Characteristics.csv";
     private static final String GROUPS_CHARACTERISTICS = "/home/contragent/Desktop/GroupsCharacteristics.csv";
@@ -78,8 +80,16 @@ public class DbHelper {
     private static List<CharacteristicEntry> characteristicEntries = new ArrayList<CharacteristicEntry>();
     private static Map<Integer, CharacteristicType> characteristicTypes = new HashMap<Integer, CharacteristicType>();
 
-    public DbHelper() {
+    private DbHelper() {
         factory = new Configuration().configure().buildSessionFactory();
+    }
+
+    public static DbHelper getInstance() {
+        if (instance == null) {
+            instance = new DbHelper();
+        }
+
+        return instance;
     }
 
     public static void terminateDbConnection() {
