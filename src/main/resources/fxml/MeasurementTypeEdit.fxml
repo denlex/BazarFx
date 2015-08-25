@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="120.0" minWidth="400.0" stylesheets="/css/Button.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+ <children>
+     <StackPane style="-fx-background-color: #4A6C9B" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="0">
+         <children>
+             <Label text="Редактирование единицы измерения" textFill="WHITE">
+               <font>
+                  <Font name="Cambria" size="18.0" />
+               </font></Label>
+         </children>
+     </StackPane>
+     <Label text="Код:" GridPane.columnIndex="0" GridPane.rowIndex="1">
+         <padding>
+            <Insets left="10.0" />
+         </padding></Label>
+     <TextField GridPane.columnIndex="1" GridPane.rowIndex="1">
+         <GridPane.margin>
+            <Insets right="10.0" />
+         </GridPane.margin></TextField>
+     <Label text="Наименование:" GridPane.columnIndex="0" GridPane.rowIndex="2">
+         <GridPane.margin>
+            <Insets left="10.0" />
+         </GridPane.margin></Label>
+     <TextField GridPane.columnIndex="1" GridPane.rowIndex="2">
+         <GridPane.margin>
+            <Insets right="10.0" />
+         </GridPane.margin></TextField>
+ </children>
+
+  <columnConstraints>
+    <ColumnConstraints hgrow="NEVER" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+    <ColumnConstraints hgrow="ALWAYS" minWidth="-Infinity" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="50.0" minHeight="40.0" prefHeight="50.0" vgrow="NEVER" />
+      <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="NEVER" />
+    <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="NEVER" />
+  </rowConstraints>
+</GridPane>

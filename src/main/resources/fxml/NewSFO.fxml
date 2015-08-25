@@ -27,9 +27,9 @@
                 </StackPane>
                 <GridPane alignment="BOTTOM_RIGHT" GridPane.columnIndex="0" GridPane.rowIndex="2">
                     <children>
-                        <Button alignment="CENTER_RIGHT" minHeight="30.0" minWidth="120" prefHeight="30" prefWidth="120" text="Применить" textAlignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                        <Button alignment="CENTER" minHeight="30.0" minWidth="120" prefHeight="30" prefWidth="120" text="Применить" textAlignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="0">
                         </Button>
-                        <Button alignment="CENTER_RIGHT" minHeight="30" minWidth="120" prefHeight="30" prefWidth="120.0" text="Отмена" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="0">
+                        <Button alignment="CENTER" minHeight="30" minWidth="120" prefHeight="30" prefWidth="120.0" text="Отмена" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="0">
                         </Button>
                     </children>
                     <columnConstraints>
@@ -40,6 +40,9 @@
                     <rowConstraints>
                         <RowConstraints maxHeight="1.7976931348623157E308" prefHeight="40.0" />
                     </rowConstraints>
+               <GridPane.margin>
+                  <Insets right="10.0" />
+               </GridPane.margin>
                 </GridPane>
                 <GridPane GridPane.columnIndex="0" GridPane.rowIndex="1">
                     <children>

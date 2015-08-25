@@ -96,6 +96,9 @@
             <rowConstraints>
                 <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" />
             </rowConstraints>
+         <padding>
+            <Insets right="10.0" />
+         </padding>
         </GridPane>
 
     </children>
