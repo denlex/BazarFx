@@ -112,18 +112,53 @@ public class DbHelper {
     public boolean exportMeasurementType(MeasurementType measurementType) {
         Session session = factory.openSession();
         Transaction transaction = session.beginTransaction();
-        session.save(measurementType);
-        transaction.commit();
-        session.close();
+
+        try {
+            session.save(measurementType);
+            transaction.commit();
+        } catch (Exception ex) {
+            transaction.rollback();
+            return false;
+        } finally {
+            session.close();
+        }
+
+        return true;
+    }
+
+    public MeasurementType getMeasurementTypeById(int id) {
+        Session session = factory.openSession();
+        return (MeasurementType) session.get(MeasurementType.class, id);
+    }
+
+    public boolean removeMeasurementType(MeasurementType measurementType) {
+        Session session = factory.openSession();
+        Transaction transaction = session.beginTransaction();
+
+        try {
+            session.delete(measurementType);
+            transaction.commit();
+        } catch (Exception ex) {
+            transaction.rollback();
+            return false;
+        } finally {
+            session.close();
+        }
 
         return true;
     }
 
     public List<MeasurementType> importAllMeasurementTypes() {
         Session session = factory.openSession();
-        Transaction transaction = session.beginTransaction();
-        List<MeasurementType> result = session.createQuery("from MeasurementType ").list();
-        session.close();
+        List<MeasurementType> result = null;
+
+        try {
+            result = session.createQuery("from MeasurementType ").list();
+        } catch (Exception ex) {
+
+        } finally {
+            session.close();
+        }
 
         return result;
     }

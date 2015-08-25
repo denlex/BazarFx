@@ -82,6 +82,7 @@
                             <children>
                                 <TableView fx:id="typesTableView">
                                     <columns>
+                                        <TableColumn fx:id="idTableColumn" text="ID"/>
                                         <TableColumn fx:id="codeTableColumn" maxWidth="1.7976931348623157E308" minWidth="100.0"
                                                      prefWidth="100.0" text="Код">
                                         </TableColumn>

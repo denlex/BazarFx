@@ -26,7 +26,7 @@
                     <items>
                         <MenuItem mnemonicParsing="false" text="Обновить"/>
                         <SeparatorMenuItem mnemonicParsing="false"/>
-                        <MenuItem fx:id="exitBtn" mnemonicParsing="true" text="Выход" >
+                        <MenuItem fx:id="exitBtn" mnemonicParsing="true" text="Выход">
                             <accelerator>
                                 <KeyCombination fx:value="Ctrl+Q">
                                 </KeyCombination>
@@ -147,7 +147,7 @@
                     <children>
                         <GridPane>
                             <children>
-                                <TabPane tabClosingPolicy="ALL_TABS" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS"
+                                <TabPane fx:id="tabs" tabClosingPolicy="ALL_TABS" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS"
                                          GridPane.hgrow="ALWAYS">
                                     <tabs>
                                         <Tab text="Добавление класс">
@@ -171,12 +171,12 @@
                                                 </GridPane>
                                             </content>
                                         </Tab>
-                                        <Tab text="Добавление типа единицы измерения">
+                                        <Tab fx:id="measurementTypeTab" text="Добавление типа единицы измерения">
                                             <content>
                                                 <GridPane maxHeight="1.7976931348623157E308"
                                                           maxWidth="1.7976931348623157E308"
                                                           GridPane.valignment="TOP" GridPane.vgrow="ALWAYS"
-                                                          GridPane.hgrow="ALWAYS">
+                                                          GridPane.hgrow="ALWAYS" gridLinesVisible="true">
                                                     <columnConstraints>
                                                         <ColumnConstraints hgrow="ALWAYS" minWidth="10.0"
                                                                            prefWidth="100.0"/>
@@ -188,7 +188,8 @@
                                                     <children>
                                                         <fx:include source="/fxml/NewMeasurementType.fxml"
                                                                     GridPane.hgrow="ALWAYS"
-                                                                    GridPane.vgrow="ALWAYS"/>
+                                                                    GridPane.vgrow="ALWAYS" GridPane.rowIndex="0"/>
+                                                        <Button fx:id="cancelMesTypeBtn" GridPane.rowIndex="1">Отмена</Button>
                                                     </children>
                                                 </GridPane>
                                             </content>

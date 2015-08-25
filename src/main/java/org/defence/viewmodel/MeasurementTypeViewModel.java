@@ -8,6 +8,8 @@ import org.defence.domain.entities.MeasurementType;
  * Created by root on 8/19/15.
  */
 public class MeasurementTypeViewModel extends AbstractViewModel<MeasurementType> {
+
+    private final IntegerProperty id = new SimpleIntegerProperty();
     private final StringProperty name = new SimpleStringProperty();
     private final StringProperty code = new SimpleStringProperty();
     private final ReadOnlyBooleanWrapper actionPossible = new ReadOnlyBooleanWrapper();
@@ -22,7 +24,6 @@ public class MeasurementTypeViewModel extends AbstractViewModel<MeasurementType>
         }
     };
 
-
     public MeasurementTypeViewModel() {
         actionPossible.bind(name.isEmpty().or(code.isEmpty()));
     }
@@ -35,6 +36,18 @@ public class MeasurementTypeViewModel extends AbstractViewModel<MeasurementType>
     public MeasurementTypeViewModel(String code, String name) {
         this.code.set(code);
         this.name.set(name);
+    }
+
+    public void setId(int id) {
+        this.id.set(id);
+    }
+
+    public int getId() {
+        return id.get();
+    }
+
+    public IntegerProperty idProperty() {
+        return id;
     }
 
     public String getName() {
@@ -87,4 +100,17 @@ public class MeasurementTypeViewModel extends AbstractViewModel<MeasurementType>
     public ListProperty<MeasurementType> typesProperty() {
         return types;
     }
+
+    /*@Override
+    public boolean equals(Object obj) {
+
+        if (obj == null && !(obj instanceof MeasurementTypeViewModel)) {
+            return false;
+        }
+
+        return getId() == ((MeasurementTypeViewModel) obj).getId();
+
+//        return getCode().equals(((MeasurementTypeViewModel) obj).getCode())
+//                && getName().equals(((MeasurementTypeViewModel) obj).getName()) ? true : false;
+    }*/
 }

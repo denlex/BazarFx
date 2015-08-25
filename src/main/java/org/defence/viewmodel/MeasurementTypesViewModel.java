@@ -7,10 +7,13 @@ import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import org.defence.domain.entities.MeasurementType;
 import org.defence.infrastructure.DbHelper;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 
 /**
@@ -32,26 +35,47 @@ public class MeasurementTypesViewModel {
         type = new SimpleObjectProperty<>(viewModel);
 
         types = new SimpleListProperty<>(new ObservableListWrapper<>(new ArrayList<>()));
-
-//        selectedRow = new SimpleObjectProperty<>();
+//        types = new SimpleListProperty<>(new ObservableListWrapper<>(new ArrayList(dbHelper.importAllMeasurementTypes())));
 
         addBtn = new SimpleObjectProperty<>(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-
-                dbHelper.exportMeasurementType(new MeasurementType(type.get().getCode(), type.get().getName()));
-                types.get().add(new MeasurementTypeViewModel(viewModel));
+                if (dbHelper.exportMeasurementType(new MeasurementType(type.get().getCode(), type.get().getName()))) {
+                    types.get().add(new MeasurementTypeViewModel(viewModel));
+                }
             }
         });
 
-        deleteBtn = new SimpleObjectProperty<>(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
+        deleteBtn = new SimpleObjectProperty<>(event -> {
 
-//                dbHelper.exportMeasurementType(new MeasurementType(type.get().getCode(), type.get().getName()));
-//                types.get().add(new MeasurementTypeViewModel(type.get().getCode(), type.get().getName()));
-                System.out.println(selectedRow.get().getCode());
-//                System.out.println(selectedRow.get().getSelectedItem().getName());
+            if (getSelectedRow() == null) {
+                return;
+            }
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Удаление типа единицы измерения");
+            alert.setHeaderText(null);
+            alert.setContentText("Вы действительно хотите удалить тип:\nНаименование:   " + getSelectedRow().getName());
+
+            ButtonType yes = new ButtonType("Удалить");
+            ButtonType no = new ButtonType("Отмена");
+
+            alert.getButtonTypes().setAll(yes, no);
+
+            Optional<ButtonType> result = alert.showAndWait();
+
+            if (result.get() == yes) {
+                for (MeasurementTypeViewModel type : types) {
+                    if (type.equals(getSelectedRow())) {
+
+                        dbHelper.getMeasurementTypeById(getSelectedRow().getId());
+
+                        if (dbHelper.removeMeasurementType(type.model)) {
+                            types.get().remove(type);
+                        }
+                        break;
+                    }
+                }
             }
         });
     }
@@ -87,10 +111,6 @@ public class MeasurementTypesViewModel {
     public ObjectProperty<EventHandler<ActionEvent>> deleteBtnProperty() {
         return deleteBtn;
     }
-
-    /*public void setType(MeasurementTypeViewModel type) {
-        this.type.set(type);
-    }*/
 
     public MeasurementTypeViewModel getSelectedRow() {
         return selectedRow.get();

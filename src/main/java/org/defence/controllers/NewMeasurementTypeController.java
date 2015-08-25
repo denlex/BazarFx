@@ -1,13 +1,10 @@
 package org.defence.controllers;
 
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import org.defence.domain.entities.MeasurementType;
 import org.defence.viewmodel.MeasurementTypeViewModel;
 import org.defence.viewmodel.MeasurementTypesViewModel;
 
@@ -37,6 +34,9 @@ public class NewMeasurementTypeController implements Initializable {
     TableView<MeasurementTypeViewModel> typesTableView;
 
     @FXML
+    TableColumn<MeasurementTypeViewModel, Integer> idTableColumn;
+
+    @FXML
     TableColumn<MeasurementTypeViewModel, String> codeTableColumn;
 
     @FXML
@@ -45,22 +45,7 @@ public class NewMeasurementTypeController implements Initializable {
     @FXML
     private Label messageLabel;
 
-    private MeasurementTypeViewModel typeViewModel;
-
     private MeasurementTypesViewModel measurementTypesViewModel;
-
-    private void setOkBtnRegisterEvents() {
-        addBtn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                MeasurementType measurementType = new MeasurementType(codeTextField.getText(), nameTextField.getText());
-                /*if ( dbHelper.exportMeasurementType(measurementType) ) {
-                    messageLabel.setText("Тип измерения успешно добавлен");
-
-                }*/
-            }
-        });
-    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -90,11 +75,11 @@ public class NewMeasurementTypeController implements Initializable {
         // make addBtn disable if codeTextField and nameTextField are empty
         addBtn.disableProperty().bind(typeViewModel.isActionPossibleProperty());
         addBtn.onActionProperty().bindBidirectional(measurementTypesViewModel.addBtnProperty());
-        deleteBtn.onActionProperty().bindBidirectional(measurementTypesViewModel.deleteBtnProperty());
 
         // binding ObservableCollection "Types" on the TableView
         typesTableView.itemsProperty().bindBidirectional(new SimpleObjectProperty<>(measurementTypesViewModel.getTypes()));
 
+        deleteBtn.onActionProperty().bindBidirectional(measurementTypesViewModel.deleteBtnProperty());
 //        measurementTypesViewModel.selectedRowProperty().bindBidirectional(typesTableView.selectionModelProperty().get().selectedItemProperty());
 
 //        typesTableView.selectionModelProperty().bindBidirectional(measurementTypesViewModel.selectedRowProperty());
@@ -103,7 +88,15 @@ public class NewMeasurementTypeController implements Initializable {
     }
 
     private void initializeTableView() {
+        idTableColumn.setCellValueFactory(new PropertyValueFactory("id"));
         codeTableColumn.setCellValueFactory(new PropertyValueFactory("code"));
         nameTableColumn.setCellValueFactory(new PropertyValueFactory("name"));
+
+        typesTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            measurementTypesViewModel.selectedRowProperty().unbind();
+            measurementTypesViewModel.selectedRowProperty().bindBidirectional(new SimpleObjectProperty<>(newValue));
+        });
+
+
     }
 }

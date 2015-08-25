@@ -11,6 +11,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -24,6 +26,15 @@ import java.util.ResourceBundle;
 public class MainController implements Initializable {
     @FXML
     private MenuItem exitBtn;
+
+    @FXML
+    TabPane tabs;
+
+    @FXML
+    Tab measurementTypeTab;
+
+    @FXML
+    private Button cancelMesTypeBtn;
 
     @FXML
     private Button btn;
@@ -72,6 +83,13 @@ public class MainController implements Initializable {
 
     public void initialize(URL location, ResourceBundle resources) {
         exitBtnRegisterEvents();
+
+        cancelMesTypeBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                tabs.getTabs().remove(measurementTypeTab);
+            }
+        });
     }
 }
 
