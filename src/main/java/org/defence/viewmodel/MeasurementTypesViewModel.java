@@ -13,6 +13,7 @@ import org.defence.domain.entities.MeasurementType;
 import org.defence.infrastructure.DbHelper;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -34,15 +35,19 @@ public class MeasurementTypesViewModel {
     public MeasurementTypesViewModel(MeasurementTypeViewModel viewModel) {
         type = new SimpleObjectProperty<>(viewModel);
 
-        types = new SimpleListProperty<>(new ObservableListWrapper<>(new ArrayList<>()));
-//        types = new SimpleListProperty<>(new ObservableListWrapper<>(new ArrayList(dbHelper.importAllMeasurementTypes())));
+        List<MeasurementTypeViewModel> typeList = new ArrayList<>();
+        for (MeasurementType type : dbHelper.importAllMeasurementTypes()) {
+            typeList.add(new MeasurementTypeViewModel(type));
+        }
+
+        types = new SimpleListProperty<>(new ObservableListWrapper(typeList));
 
         addBtn = new SimpleObjectProperty<>(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if (dbHelper.exportMeasurementType(new MeasurementType(type.get().getCode(), type.get().getName()))) {
+                /*if (dbHelper.exportMeasurementType(new MeasurementType(type.get().getCode(), type.get().getName()))) {
                     types.get().add(new MeasurementTypeViewModel(viewModel));
-                }
+                }*/
             }
         });
 
@@ -68,7 +73,6 @@ public class MeasurementTypesViewModel {
                 for (MeasurementTypeViewModel type : types) {
                     if (type.equals(getSelectedRow())) {
 
-                        dbHelper.getMeasurementTypeById(getSelectedRow().getId());
 
                         if (dbHelper.removeMeasurementType(type.model)) {
                             types.get().remove(type);
@@ -120,4 +124,7 @@ public class MeasurementTypesViewModel {
         return selectedRow;
     }
 
+    public void setSelectedRow(MeasurementTypeViewModel selectedRow) {
+        this.selectedRow.set(selectedRow);
+    }
 }

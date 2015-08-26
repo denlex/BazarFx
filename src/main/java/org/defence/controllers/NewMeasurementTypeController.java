@@ -1,6 +1,10 @@
 package org.defence.controllers;
 
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.StringProperty;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -8,6 +12,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import org.defence.viewmodel.MeasurementTypeViewModel;
 import org.defence.viewmodel.MeasurementTypesViewModel;
 
+import javax.swing.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -34,13 +39,13 @@ public class NewMeasurementTypeController implements Initializable {
     TableView<MeasurementTypeViewModel> typesTableView;
 
     @FXML
-    TableColumn<MeasurementTypeViewModel, Integer> idTableColumn;
+    TableColumn<MeasurementTypeViewModel, IntegerProperty> idTableColumn;
 
     @FXML
-    TableColumn<MeasurementTypeViewModel, String> codeTableColumn;
+    TableColumn<MeasurementTypeViewModel, StringProperty> codeTableColumn;
 
     @FXML
-    TableColumn<MeasurementTypeViewModel, String> nameTableColumn;
+    TableColumn<MeasurementTypeViewModel, StringProperty> nameTableColumn;
 
     @FXML
     private Label messageLabel;
@@ -85,6 +90,13 @@ public class NewMeasurementTypeController implements Initializable {
 //        typesTableView.selectionModelProperty().bindBidirectional(measurementTypesViewModel.selectedRowProperty());
 
         initializeTableView();
+
+        cancelBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                JOptionPane.showMessageDialog(null, typesTableView.getItems().get(0).getName());
+            }
+        });
     }
 
     private void initializeTableView() {
@@ -96,7 +108,6 @@ public class NewMeasurementTypeController implements Initializable {
             measurementTypesViewModel.selectedRowProperty().unbind();
             measurementTypesViewModel.selectedRowProperty().bindBidirectional(new SimpleObjectProperty<>(newValue));
         });
-
 
     }
 }

@@ -28,9 +28,18 @@ public class MeasurementTypeViewModel extends AbstractViewModel<MeasurementType>
         actionPossible.bind(name.isEmpty().or(code.isEmpty()));
     }
 
-    public MeasurementTypeViewModel(MeasurementTypeViewModel viewModel) {
+    private MeasurementTypeViewModel(MeasurementTypeViewModel viewModel) {
         code.set(viewModel.getCode());
         name.set(viewModel.getName());
+    }
+
+    public MeasurementTypeViewModel(MeasurementType measurementType) {
+        this.model = measurementType;
+    }
+
+    public MeasurementTypeViewModel(int id, String code, String name) {
+        this(code, name);
+        this.id.set(id);
     }
 
     public MeasurementTypeViewModel(String code, String name) {
