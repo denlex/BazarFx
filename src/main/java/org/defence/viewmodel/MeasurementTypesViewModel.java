@@ -45,9 +45,13 @@ public class MeasurementTypesViewModel {
         addBtn = new SimpleObjectProperty<>(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                /*if (dbHelper.exportMeasurementType(new MeasurementType(type.get().getCode(), type.get().getName()))) {
-                    types.get().add(new MeasurementTypeViewModel(viewModel));
-                }*/
+                MeasurementType typeEntity = new MeasurementType(type.get().getCode(), type.get().getName());
+
+                if (dbHelper.exportMeasurementType(typeEntity) != false) {
+                    types.get().add(new MeasurementTypeViewModel(typeEntity));
+                    type.get().setCode(null);
+                    type.get().setName(null);
+                }
             }
         });
 
@@ -72,9 +76,7 @@ public class MeasurementTypesViewModel {
             if (result.get() == yes) {
                 for (MeasurementTypeViewModel type : types) {
                     if (type.equals(getSelectedRow())) {
-
-
-                        if (dbHelper.removeMeasurementType(type.model)) {
+                        if (dbHelper.removeMeasurementType(type.getId())) {
                             types.get().remove(type);
                         }
                         break;

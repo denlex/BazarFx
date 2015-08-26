@@ -34,7 +34,9 @@ public class MeasurementTypeViewModel extends AbstractViewModel<MeasurementType>
     }
 
     public MeasurementTypeViewModel(MeasurementType measurementType) {
-        this.model = measurementType;
+        id.set(measurementType.getId());
+        name.set(measurementType.getName());
+        code.set(measurementType.getCode());
     }
 
     public MeasurementTypeViewModel(int id, String code, String name) {
@@ -110,7 +112,7 @@ public class MeasurementTypeViewModel extends AbstractViewModel<MeasurementType>
         return types;
     }
 
-    /*@Override
+    @Override
     public boolean equals(Object obj) {
 
         if (obj == null && !(obj instanceof MeasurementTypeViewModel)) {
@@ -121,5 +123,5 @@ public class MeasurementTypeViewModel extends AbstractViewModel<MeasurementType>
 
 //        return getCode().equals(((MeasurementTypeViewModel) obj).getCode())
 //                && getName().equals(((MeasurementTypeViewModel) obj).getName()) ? true : false;
-    }*/
+    }
 }

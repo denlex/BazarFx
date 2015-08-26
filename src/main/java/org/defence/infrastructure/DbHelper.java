@@ -4,6 +4,7 @@ import org.defence.domain.entities.Characteristic;
 import org.defence.domain.entities.CharacteristicType;
 import org.defence.domain.entities.Measurement;
 import org.defence.domain.entities.MeasurementType;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -75,10 +76,10 @@ public class DbHelper {
     private static final String GROUPS_CHARACTERISTICS = "/home/contragent/Desktop/GroupsCharacteristics.csv";
     private static final String GROUPS_MEASUREMENTS = "/home/contragent/Desktop/GroupsMeasurements.csv";
     private static final String MEASUREMENTS = "/home/contragent/Desktop/Measurements.csv";
-    private static List<MeasurementEntry> measurementEntries = new ArrayList<MeasurementEntry>();
-    private static Map<Integer, MeasurementType> measurementTypes = new HashMap<Integer, MeasurementType>();
-    private static List<CharacteristicEntry> characteristicEntries = new ArrayList<CharacteristicEntry>();
-    private static Map<Integer, CharacteristicType> characteristicTypes = new HashMap<Integer, CharacteristicType>();
+    private static List<MeasurementEntry> measurementEntries = new ArrayList<>();
+    private static Map<Integer, MeasurementType> measurementTypes = new HashMap<>();
+    private static List<CharacteristicEntry> characteristicEntries = new ArrayList<>();
+    private static Map<Integer, CharacteristicType> characteristicTypes = new HashMap<>();
 
     private DbHelper() {
         factory = new Configuration().configure().buildSessionFactory();
@@ -131,12 +132,15 @@ public class DbHelper {
         return (MeasurementType) session.get(MeasurementType.class, id);
     }
 
-    public boolean removeMeasurementType(MeasurementType measurementType) {
+    public boolean removeMeasurementType(int id) {
         Session session = factory.openSession();
         Transaction transaction = session.beginTransaction();
 
+        Query query = session.createQuery("from MeasurementType where id = :id");
+        query.setParameter("id", id);
+
         try {
-            session.delete(measurementType);
+            session.delete(query.list().get(0));
             transaction.commit();
         } catch (Exception ex) {
             transaction.rollback();
@@ -150,17 +154,7 @@ public class DbHelper {
 
     public List<MeasurementType> importAllMeasurementTypes() {
         Session session = factory.openSession();
-        List<MeasurementType> result = null;
-
-        try {
-            result = session.createQuery("from MeasurementType ").list();
-        } catch (Exception ex) {
-
-        } finally {
-            session.close();
-        }
-
-        return result;
+        return session.createQuery("from MeasurementType").list();
     }
 
     public List<Characteristic> importAllCharacteristics() {
@@ -172,7 +166,6 @@ public class DbHelper {
 
         return result;
     }
-
 
 
     public static int importEntityIntoTable() throws Exception {
