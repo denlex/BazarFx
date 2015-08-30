@@ -1,14 +1,15 @@
-package org.defence.controllers;
+package org.defence.views;
 
 import com.sun.javafx.collections.ObservableListWrapper;
+import de.saxsys.mvvmfx.FxmlView;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.util.StringConverter;
 import org.defence.domain.entities.MeasurementType;
 import org.defence.infrastructure.DbHelper;
+import org.defence.viewmodels.MeasurementViewModel;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -16,7 +17,7 @@ import java.util.ResourceBundle;
 /**
  * Created by root on 8/12/15.
  */
-public class NewMeasurementController implements Initializable {
+public class MeasurementView implements FxmlView<MeasurementViewModel> {
     @FXML
     private ComboBox<MeasurementType> measurementTypeComboBox;
 
@@ -74,8 +75,7 @@ public class NewMeasurementController implements Initializable {
         return measurementTypeComboBox.getItems().size();
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize() {
         importMeasurementTypesIntoComboBox();
         measurementTypeComboBoxRegisterEvents();
     }

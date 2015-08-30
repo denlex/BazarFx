@@ -1,4 +1,4 @@
-package org.defence.viewmodel;
+package org.defence.viewmodels;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;

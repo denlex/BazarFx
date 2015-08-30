@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import de.jensd.fx.fontawesome.*?>
+
+<GridPane minWidth="1000.0" prefHeight="700.0" prefWidth="1200.0" stylesheets="@/css/styles.css"
+          xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="org.defence.views.TestView">
+    <children>
+        <TableView GridPane.rowIndex="0">
+            <columns>
+                <TableColumn prefWidth="200" text="Наименование"/>
+                <TableColumn prefWidth="200" text="Автор"/>
+                <TableColumn prefWidth="200" text="Год издания"/>
+            </columns>
+        </TableView>
+        <HBox GridPane.rowIndex="1" alignment="CENTER_LEFT">
+            <children>
+                <Label>Название:</Label>
+                <TextField fx:id="titleTextField" prefWidth="200">
+                    <HBox.margin>
+                        <Insets right="30"/>
+                    </HBox.margin>
+                </TextField>
+
+                <Label>Автор:</Label>
+                <TextField fx:id="authorTextField" prefWidth="200">
+                    <HBox.margin>
+                        <Insets right="30"/>
+                    </HBox.margin>
+                </TextField>
+
+                <Label>Год издания:</Label>
+                <TextField fx:id="yearTextField" prefWidth="100">
+                    <HBox.margin>
+                        <Insets right="30"/>
+                    </HBox.margin>
+                </TextField>
+
+                <Button fx:id="okButton" defaultButton="true">Добавить</Button>
+            </children>
+        </HBox>
+    </children>
+    <columnConstraints>
+        <ColumnConstraints hgrow="ALWAYS"/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints vgrow="ALWAYS"/>
+    </rowConstraints>
+</GridPane>

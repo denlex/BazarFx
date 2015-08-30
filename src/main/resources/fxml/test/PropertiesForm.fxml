@@ -11,7 +11,7 @@
 
 <GridPane prefHeight="600" prefWidth="500" stylesheets="/css/MainWindow.css"
           xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-        fx:controller="org.defence.controllers.test.PersonController">
+        fx:controller="org.defence.views.test.PersonView">
     <columnConstraints>
         <ColumnConstraints hgrow="ALWAYS"/>
         <ColumnConstraints hgrow="ALWAYS"/>

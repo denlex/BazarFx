@@ -1,13 +1,14 @@
-package org.defence.controllers;
+package org.defence.views;
 
+import de.saxsys.mvvmfx.FxmlView;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import org.defence.domain.entities.Characteristic;
 import org.defence.infrastructure.DbHelper;
+import org.defence.viewmodels.CharacteristicsViewModel;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -15,7 +16,7 @@ import java.util.ResourceBundle;
 /**
  * Created by root on 8/12/15.
  */
-public class NewCharacteristic implements Initializable {
+public class CharacteristicView implements FxmlView<CharacteristicsViewModel> {
     @FXML
     private Button okBtn;
 
@@ -37,8 +38,7 @@ public class NewCharacteristic implements Initializable {
         });
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize() {
         setOkBtnRegisterEvents();
     }
 }

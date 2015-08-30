@@ -1,5 +1,6 @@
-package org.defence.viewmodel;
+package org.defence.viewmodels;
 
+import de.saxsys.mvvmfx.ViewModel;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.*;
 import org.defence.domain.entities.MeasurementType;
@@ -7,7 +8,7 @@ import org.defence.domain.entities.MeasurementType;
 /**
  * Created by root on 8/19/15.
  */
-public class MeasurementTypeViewModel extends AbstractViewModel<MeasurementType> {
+public class MeasurementTypeViewModel implements ViewModel {
 
     private final IntegerProperty id = new SimpleIntegerProperty();
     private final StringProperty name = new SimpleStringProperty();

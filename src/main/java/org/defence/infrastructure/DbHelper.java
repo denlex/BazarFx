@@ -94,6 +94,10 @@ public class DbHelper {
     }
 
     public static void terminateDbConnection() {
+        if (factory == null) {
+            return;
+        }
+
         if (!factory.isClosed()) {
             factory.close();
             System.out.println("Connection was closed");

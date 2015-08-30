@@ -1,4 +1,4 @@
-package org.defence.controllers.test;
+package org.defence.views.test;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

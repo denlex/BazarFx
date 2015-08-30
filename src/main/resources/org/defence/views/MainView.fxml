@@ -6,7 +6,7 @@
 
 <?import javafx.scene.input.KeyCombination?>
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" xmlns="http://javafx.com/javafx/8"
-          xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.defence.controllers.MainController"
+          xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.defence.views.MainView"
           stylesheets="/css/MainWindow.css">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="100.0"/>
@@ -147,10 +147,11 @@
                     <children>
                         <GridPane>
                             <children>
-                                <TabPane fx:id="tabs" tabClosingPolicy="ALL_TABS" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS"
+                                <TabPane fx:id="tabs" tabClosingPolicy="ALL_TABS" GridPane.valignment="TOP"
+                                         GridPane.vgrow="ALWAYS"
                                          GridPane.hgrow="ALWAYS">
                                     <tabs>
-                                        <Tab text="Добавление класс">
+                                        <!--<Tab text="Добавление класс">
                                             <content>
                                                 <GridPane maxHeight="1.7976931348623157E308"
                                                           maxWidth="1.7976931348623157E308"
@@ -165,12 +166,13 @@
                                                                         valignment="TOP" vgrow="ALWAYS"/>
                                                     </rowConstraints>
                                                     <children>
-                                                        <fx:include source="/fxml/Class.fxml" GridPane.hgrow="ALWAYS"
+                                                        <fx:include source="/org/defence/views/Class.fxml"
+                                                                    GridPane.hgrow="ALWAYS"
                                                                     GridPane.vgrow="ALWAYS"/>
                                                     </children>
                                                 </GridPane>
                                             </content>
-                                        </Tab>
+                                        </Tab>-->
                                         <Tab fx:id="measurementTypeTab" text="Добавление типа единицы измерения">
                                             <content>
                                                 <GridPane maxHeight="1.7976931348623157E308"
@@ -186,15 +188,16 @@
                                                                         valignment="TOP" vgrow="ALWAYS"/>
                                                     </rowConstraints>
                                                     <children>
-                                                        <fx:include source="/fxml/NewMeasurementType.fxml"
+                                                        <fx:include source="/org/defence/views/MeasurementTypesView.fxml"
                                                                     GridPane.hgrow="ALWAYS"
                                                                     GridPane.vgrow="ALWAYS" GridPane.rowIndex="0"/>
-                                                        <Button fx:id="cancelMesTypeBtn" GridPane.rowIndex="1">Отмена</Button>
+                                                        <Button fx:id="cancelMesTypeBtn" GridPane.rowIndex="1">Отмена
+                                                        </Button>
                                                     </children>
                                                 </GridPane>
                                             </content>
                                         </Tab>
-                                        <Tab text="Добавление единицы измерения">
+                                        <!--<Tab text="Добавление единицы измерения">
                                             <content>
                                                 <GridPane maxHeight="1.7976931348623157E308"
                                                           maxWidth="1.7976931348623157E308"
@@ -209,7 +212,7 @@
                                                                         valignment="TOP" vgrow="ALWAYS"/>
                                                     </rowConstraints>
                                                     <children>
-                                                        <fx:include source="/fxml/NewMeasurement.fxml"
+                                                        <fx:include source="/org/defence/views/NewMeasurement.fxml"
                                                                     GridPane.hgrow="ALWAYS"
                                                                     GridPane.vgrow="ALWAYS"/>
                                                     </children>
@@ -231,7 +234,7 @@
                                                                         valignment="TOP" vgrow="ALWAYS"/>
                                                     </rowConstraints>
                                                     <children>
-                                                        <fx:include source="/fxml/NewCharacteristic.fxml"
+                                                        <fx:include source="/org/defence/views/NewCharacteristic.fxml"
                                                                     GridPane.hgrow="ALWAYS"
                                                                     GridPane.vgrow="ALWAYS"/>
                                                     </children>
@@ -253,7 +256,7 @@
                                                                         valignment="TOP" vgrow="ALWAYS"/>
                                                     </rowConstraints>
                                                     <children>
-                                                        <fx:include source="/fxml/Characteristics.fxml"
+                                                        <fx:include source="/org/defence/views/Characteristics.fxml"
                                                                     GridPane.hgrow="ALWAYS"
                                                                     GridPane.vgrow="ALWAYS"/>
                                                     </children>
@@ -275,7 +278,7 @@
                                                                         valignment="TOP" vgrow="ALWAYS"/>
                                                     </rowConstraints>
                                                     <children>
-                                                        <fx:include source="/fxml/NewSFO.fxml"
+                                                        <fx:include source="/org/defence/views/NewSFO.fxml"
                                                                     GridPane.hgrow="ALWAYS"
                                                                     GridPane.vgrow="ALWAYS"/>
                                                     </children>
@@ -297,13 +300,13 @@
                                                                         valignment="TOP" vgrow="ALWAYS"/>
                                                     </rowConstraints>
                                                     <children>
-                                                        <fx:include source="/fxml/CatalogOrganization.fxml"
+                                                        <fx:include source="/org/defence/views/CatalogOrganization.fxml"
                                                                     GridPane.hgrow="ALWAYS"
                                                                     GridPane.vgrow="ALWAYS"/>
                                                     </children>
                                                 </GridPane>
                                             </content>
-                                        </Tab>
+                                        </Tab>-->
                                     </tabs>
                                 </TabPane>
                             </children>

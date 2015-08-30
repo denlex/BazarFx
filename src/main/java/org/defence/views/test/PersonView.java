@@ -1,27 +1,26 @@
-package org.defence.controllers.test;
+package org.defence.views.test;
 
+import de.saxsys.mvvmfx.internal.viewloader.View;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import org.defence.tests.entities.Person;
+import org.defence.viewmodels.tests.PersonViewModel;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 
 /**
  * Created by root on 15.08.15.
  */
-public class PersonController implements Initializable {
+public class PersonView implements View<PersonViewModel> {
     private SessionFactory factory;
 
     @FXML
@@ -92,8 +91,7 @@ public class PersonController implements Initializable {
         });*/
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize() {
         factory = new Configuration().configure().buildSessionFactory();
         persons = FXCollections.observableArrayList(new ArrayList<>());
 

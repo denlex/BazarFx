@@ -1,12 +1,13 @@
-package org.defence.controllers;
+package org.defence.views;
 
 import com.sun.javafx.collections.ObservableListWrapper;
+import de.saxsys.mvvmfx.FxmlView;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.TableView;
 import org.defence.domain.entities.Characteristic;
 import org.defence.infrastructure.DbHelper;
+import org.defence.viewmodels.CharacteristicViewModel;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -14,7 +15,7 @@ import java.util.ResourceBundle;
 /**
  * Created by root on 8/12/15.
  */
-public class CharacteristicsController implements Initializable {
+public class CharacteristicsView implements FxmlView<CharacteristicViewModel> {
     @FXML
     private TableView<Characteristic> characteristicsTableView;
 
@@ -27,7 +28,7 @@ public class CharacteristicsController implements Initializable {
         return new ObservableListWrapper<Characteristic>(dbHelper.importAllCharacteristics());
     }
 
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize() {
         characteristicsTableView.setItems(getAllCharacteristics());
 
         characteristicsTableViewRegisterEvents();

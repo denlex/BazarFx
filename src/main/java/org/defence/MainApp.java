@@ -1,14 +1,18 @@
 package org.defence;
 
+import de.saxsys.mvvmfx.FluentViewLoader;
+import de.saxsys.mvvmfx.ViewTuple;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import org.defence.infrastructure.DbHelper;
+import org.defence.viewmodels.MainViewModel;
+import org.defence.views.MainView;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -32,24 +36,22 @@ public class MainApp extends Application {
     }
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage primaryStage) throws Exception {
+        primaryStage.setTitle("Library JavaFX");
+        primaryStage.setMinWidth(1200);
+        primaryStage.setMaxWidth(1200);
+        primaryStage.setMinHeight(700);
 
+        ViewTuple<MainView, MainViewModel> viewTuple = FluentViewLoader.fxmlView(MainView.class).load();
 
-//        String fxmlFile = "/fxml/hello.fxml";
-        String fxmlFile = "/fxml/hello.fxml";
-//        String fxmlFile = "/fxml/NewCharacteristic.fxml";
-        FXMLLoader loader = new FXMLLoader();
-        Parent root = loader.load(getClass().getResourceAsStream(fxmlFile));
-        stage.setTitle("JavaFX and Maven");
+        Parent root = viewTuple.getView();
+        Scene scene = new Scene(root);
+        scene.setFill(Color.TRANSPARENT);
 
-//        AquaFx.style();
-//        AquaFx.class.getResource("mac_os.css").toExternalForm();
-
-        final Scene scene = new Scene(root);
         scene.getStylesheets().add((getClass().getResource("/css/TreeView.css")).toExternalForm());
         scene.getStylesheets().add((getClass().getResource("/css/SplitPanel.css")).toExternalForm());
- //       scene.getStylesheets().add((getClass().getResource("/css/Button.css")).toExternalForm());
-        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+
+        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent event) {
 //                JOptionPane.showMessageDialog(null, "Exit!");
@@ -60,10 +62,12 @@ public class MainApp extends Application {
         });
 
         scene.setFill(null);
-        stage.setScene(scene);
-        stage.setMinHeight(500);
-        stage.setMinWidth(700);
-        stage.setResizable(true);
-        stage.show();
+        primaryStage.setScene(scene);
+        primaryStage.setMinHeight(500);
+        primaryStage.setMinWidth(700);
+        primaryStage.setResizable(true);
+        primaryStage.show();
+
+//        FlatterFX.style(FlatterInputType.DEFAULT);
     }
 }

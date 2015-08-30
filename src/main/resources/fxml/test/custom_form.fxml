@@ -1,5 +1,5 @@
 <?import javafx.scene.layout.GridPane?>
-<?import org.defence.controllers.test.CustomControl.*?>
+<?import org.defence.views.test.CustomControl.*?>
 
 <fx:root type="javafx.scene.layout.GridPane" xmlns:fx="http://javafx.com/fxml">
     <children>
