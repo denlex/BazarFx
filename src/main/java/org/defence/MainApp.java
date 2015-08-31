@@ -37,6 +37,8 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        mainStage = primaryStage;
+
         primaryStage.setTitle("Library JavaFX");
         primaryStage.setMinWidth(1200);
         primaryStage.setMaxWidth(1200);
@@ -70,4 +72,6 @@ public class MainApp extends Application {
 
 //        FlatterFX.style(FlatterInputType.DEFAULT);
     }
+
+    public static Stage mainStage;
 }

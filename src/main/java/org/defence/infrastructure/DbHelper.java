@@ -106,19 +106,27 @@ public class DbHelper {
 
     public boolean exportCharacteristic(Characteristic characteristic) {
         Session session = factory.openSession();
-        Transaction transaction = session.beginTransaction();
-        session.save(characteristic);
-        transaction.commit();
-        session.close();
-
-        return true;
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            session.save(characteristic);
+            transaction.commit();
+            return true;
+        } catch (Exception ex) {
+            transaction.rollback();
+            ex.printStackTrace();
+            return false;
+        } finally {
+            session.close();
+        }
     }
 
     public boolean exportMeasurementType(MeasurementType measurementType) {
         Session session = factory.openSession();
-        Transaction transaction = session.beginTransaction();
+        Transaction transaction = null;
 
         try {
+            transaction = session.beginTransaction();
             session.save(measurementType);
             transaction.commit();
         } catch (Exception ex) {
@@ -133,21 +141,53 @@ public class DbHelper {
 
     public MeasurementType getMeasurementTypeById(int id) {
         Session session = factory.openSession();
-        return (MeasurementType) session.get(MeasurementType.class, id);
+        MeasurementType result = null;
+        try {
+            result = (MeasurementType) session.get(MeasurementType.class, id);
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            session.close();
+            return result;
+        }
     }
 
     public boolean removeMeasurementType(int id) {
         Session session = factory.openSession();
-        Transaction transaction = session.beginTransaction();
+        Transaction transaction = null;
 
         Query query = session.createQuery("from MeasurementType where id = :id");
         query.setParameter("id", id);
 
         try {
+            transaction = session.beginTransaction();
             session.delete(query.list().get(0));
             transaction.commit();
         } catch (Exception ex) {
             transaction.rollback();
+            ex.printStackTrace();
+            return false;
+        } finally {
+            session.close();
+        }
+
+        return true;
+    }
+
+    public boolean updateMeasurementType(Integer id, String code, String name) {
+        Session session = factory.openSession();
+        Transaction transaction = null;
+
+        try {
+            transaction = session.beginTransaction();
+
+//            session.get
+
+//            session.save(type);
+            transaction.commit();
+        } catch(Exception ex) {
+            transaction.rollback();
+            ex.printStackTrace();
             return false;
         } finally {
             session.close();
@@ -158,17 +198,30 @@ public class DbHelper {
 
     public List<MeasurementType> importAllMeasurementTypes() {
         Session session = factory.openSession();
-        return session.createQuery("from MeasurementType").list();
+        List<MeasurementType> result = null;
+
+        try {
+            result = session.createQuery("from MeasurementType order by id").list();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            session.close();
+            return result;
+        }
     }
 
     public List<Characteristic> importAllCharacteristics() {
         Session session = factory.openSession();
-        Transaction transaction = session.beginTransaction();
-        List<Characteristic> result = session.createQuery("from Characteristic ").list();
-        transaction.commit();
-        session.close();
+        List<Characteristic> result = null;
 
-        return result;
+        try {
+            result = session.createQuery("from Characteristic ").list();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            session.close();
+            return result;
+        }
     }
 
 

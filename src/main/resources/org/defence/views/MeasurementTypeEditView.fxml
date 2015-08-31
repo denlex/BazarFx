@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="120.0" minWidth="400.0" stylesheets="/css/Button.css"
+          xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="org.defence.views.MeasurementTypeEditView">
+    <children>
+        <StackPane style="-fx-background-color: #4A6C9B" GridPane.columnIndex="0" GridPane.columnSpan="2"
+                   GridPane.rowIndex="0">
+            <children>
+                <Label text="Редактирование единицы измерения" textFill="WHITE">
+                    <font>
+                        <Font name="Cambria" size="18.0"/>
+                    </font>
+                </Label>
+            </children>
+        </StackPane>
+        <GridPane GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="1" GridPane.hgrow="ALWAYS">
+            <children>
+                <Label text="Код:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                <TextField fx:id="codeTextField" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                <Label text="Наименование:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                <TextField fx:id="nameTextField" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+            </children>
+            <GridPane.margin>
+                <Insets right="10" left="10" top="10"/>
+            </GridPane.margin>
+            <columnConstraints>
+                <ColumnConstraints minWidth="120" hgrow="NEVER"/>
+                <ColumnConstraints hgrow="ALWAYS"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="40" vgrow="NEVER"/>
+                <RowConstraints minHeight="40" vgrow="NEVER"/>
+            </rowConstraints>
+        </GridPane>
+        <AnchorPane GridPane.columnSpan="2" GridPane.rowIndex="2">
+            <children>
+                <Button fx:id="yesBtn" minWidth="100" AnchorPane.rightAnchor="120" GridPane.halignment="RIGHT"
+                        onAction="#saveButtonClick">Применить
+                </Button>
+                <Button fx:id="noBtn" minWidth="100" AnchorPane.rightAnchor="10" GridPane.halignment="RIGHT"
+                        onAction="#exitButtonClick">Отмена
+                </Button>
+            </children>
+        </AnchorPane>
+    </children>
+
+    <columnConstraints>
+        <ColumnConstraints hgrow="NEVER" maxWidth="150.0" minWidth="150.0" prefWidth="150.0"/>
+        <ColumnConstraints hgrow="ALWAYS" minWidth="-Infinity"/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints minHeight="50.0" vgrow="NEVER"/>
+        <RowConstraints minHeight="100.0" vgrow="NEVER"/>
+        <RowConstraints minHeight="35.0" vgrow="NEVER"/>
+    </rowConstraints>
+</GridPane>

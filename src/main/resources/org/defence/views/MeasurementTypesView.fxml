@@ -15,14 +15,19 @@
                                 prefWidth="120.0"
                                 text="Добавить" textAlignment="CENTER" defaultButton="true" onAction="#addButtonClick">
                         </Button>
+                        <Button fx:id="editBtn" alignment="CENTER" minHeight="30" minWidth="120.0" prefHeight="30"
+                                prefWidth="120.0"
+                                text="Изменить" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="0"
+                                onAction="#editButtonClick">
+                        </Button>
                         <Button fx:id="deleteBtn" alignment="CENTER" minHeight="30" minWidth="120.0" prefHeight="30"
                                 prefWidth="120.0"
-                                text="Удалить" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="0"
+                                text="Удалить" textAlignment="CENTER" GridPane.columnIndex="4" GridPane.rowIndex="0"
                                 onAction="#deleteButtonClick">
                         </Button>
                         <Button fx:id="cancelBtn" alignment="CENTER" minHeight="30" minWidth="120.0" prefHeight="30"
                                 prefWidth="120.0"
-                                text="Отмена" textAlignment="CENTER" GridPane.columnIndex="4" GridPane.rowIndex="0">
+                                text="Отмена" textAlignment="CENTER" GridPane.columnIndex="6" GridPane.rowIndex="0">
                         </Button>
                     </children>
                     <columnConstraints>
@@ -31,6 +36,7 @@
                         <ColumnConstraints maxWidth="120.0" minWidth="120.0" prefWidth="120.0"/>
                         <ColumnConstraints maxWidth="10.0" minWidth="10.0" prefWidth="10.0"/>
                         <ColumnConstraints maxWidth="120.0" minWidth="120.0" prefWidth="120.0"/>
+                        <ColumnConstraints maxWidth="10.0" minWidth="10.0" prefWidth="10.0"/>
                     </columnConstraints>
                     <rowConstraints>
                         <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0"/>
@@ -147,3 +153,6 @@
         <RowConstraints vgrow="ALWAYS"/>
     </rowConstraints>
 </GridPane>
+
+
+<!--TODO: Изменить название кнопки "Отмена"-->

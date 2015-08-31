@@ -1,9 +1,0 @@
-<?import javafx.scene.layout.GridPane?>
-<?import org.defence.views.test.CustomControl.*?>
-
-<fx:root type="javafx.scene.layout.GridPane" xmlns:fx="http://javafx.com/fxml">
-    <children>
-        <Form1 fx:id="form1"/>
-        <Form2 fx:id="form2"/>
-    </children>
-</fx:root>

@@ -1,5 +1,0 @@
-<?import javafx.scene.layout.GridPane?>
-<?import org.defence.views.test.CustomControl?>
-<GridPane prefWidth="300" prefHeight="200" style="-fx-background-color: lightseagreen">
-    <CustomControl/>
-</GridPane>

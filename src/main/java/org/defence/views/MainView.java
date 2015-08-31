@@ -49,6 +49,11 @@ public class MainView implements FxmlView<MainViewModel> {
             }
         });*/
     }
+
+    public void exitButtonClick() {
+        System.out.println("dsfsdf");
+        viewModel.getExitCommand().execute();
+    }
 }
 
 

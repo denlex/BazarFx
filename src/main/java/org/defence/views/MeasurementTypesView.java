@@ -1,15 +1,26 @@
 package org.defence.views;
 
+import de.saxsys.mvvmfx.FluentViewLoader;
 import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
+import de.saxsys.mvvmfx.ViewTuple;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import org.defence.MainApp;
+import org.defence.viewmodels.MeasurementTypeEditViewModel;
 import org.defence.viewmodels.MeasurementTypeViewModel;
 import org.defence.viewmodels.MeasurementTypesViewModel;
 
@@ -21,6 +32,9 @@ import javax.swing.*;
 public class MeasurementTypesView implements FxmlView<MeasurementTypesViewModel> {
     @FXML
     private Button addBtn;
+
+    @FXML
+    private Button editBtn;
 
     @FXML
     private Button deleteBtn;
@@ -110,5 +124,27 @@ public class MeasurementTypesView implements FxmlView<MeasurementTypesViewModel>
         typesTableView.scrollTo(lastRowIndex);
         typesTableView.selectionModelProperty().get().select(lastRowIndex);
         codeTextField.requestFocus();
+    }
+
+    public void editButtonClick() {
+
+        ViewTuple<MeasurementTypeEditView, MeasurementTypeEditViewModel> viewTuple = FluentViewLoader.fxmlView(MeasurementTypeEditView.class).load();
+        Parent root = viewTuple.getView();
+
+        Stage dialog = new Stage();
+        viewTuple.getCodeBehind().setStage(dialog);
+
+        viewTuple.getViewModel().idProperty().bindBidirectional(viewModel.selectedRowProperty().get().idProperty());
+        viewTuple.getViewModel().codeProperty().bindBidirectional(viewModel.selectedRowProperty().get().codeProperty());
+        viewTuple.getViewModel().nameProperty().bindBidirectional(viewModel.selectedRowProperty().get().nameProperty());
+
+//        dialog.setTitle("Редактирование типа единицы измерения");
+        dialog.initModality(Modality.WINDOW_MODAL);
+        dialog.initOwner(MainApp.mainStage);
+        dialog.setResizable(false);
+
+        Scene scene = new Scene(root);
+        dialog.setScene(scene);
+        dialog.showAndWait();
     }
 }
