@@ -13,8 +13,8 @@
             <children>
                 <GridPane alignment="BASELINE_RIGHT" GridPane.columnIndex="0" GridPane.rowIndex="2">
                     <children>
-                        <Button alignment="CENTER" minHeight="30.0" minWidth="120.0" prefHeight="30" prefWidth="120.0"
-                                text="Применить" textAlignment="CENTER">
+                        <Button fx:id="testButton" alignment="CENTER" minHeight="30.0" minWidth="120.0" prefHeight="30" prefWidth="120.0"
+                                text="Применить" textAlignment="CENTER" onAction="#testButtonClick">
                         </Button>
                         <Button alignment="CENTER" minHeight="30" minWidth="120.0" prefHeight="30" prefWidth="120.0"
                                 text="Отмена" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="0">

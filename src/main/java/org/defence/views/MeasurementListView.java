@@ -2,6 +2,7 @@ package org.defence.views;
 
 import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -47,6 +48,9 @@ public class MeasurementListView implements FxmlView<MeasurementListViewModel> {
 
     @FXML
     private TableColumn<MeasurementViewModel, String> nameTableColumn;
+
+    @FXML
+    private Button testButton;
 
     @InjectViewModel
     MeasurementListViewModel viewModel;
@@ -94,10 +98,10 @@ public class MeasurementListView implements FxmlView<MeasurementListViewModel> {
         codeTypeTableColumn.setCellValueFactory(new PropertyValueFactory("code"));
         nameTypeTableColumn.setCellValueFactory(new PropertyValueFactory("name"));
 
-//        typesTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-//            viewModel.selectedRowProperty().unbind();
-//            viewModel.selectedRowProperty().bindBidirectional(new SimpleObjectProperty<>(newValue));
-//        });
+        typesTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            viewModel.selectedTypeProperty().unbind();
+            viewModel.selectedTypeProperty().bindBidirectional(new SimpleObjectProperty<>(newValue));
+        });
     }
 
     private void initializeMeasurementsTableView() {
@@ -105,10 +109,14 @@ public class MeasurementListView implements FxmlView<MeasurementListViewModel> {
         idTableColumn.setCellValueFactory(new PropertyValueFactory("id"));
         codeTableColumn.setCellValueFactory(new PropertyValueFactory("code"));
         nameTableColumn.setCellValueFactory(new PropertyValueFactory("name"));
+
+    }
+
+    public void testButtonClick() {
+        viewModel.getTestCommand().execute();
     }
 
     public void initialize() {
-
         initializeTypesTableView();
         initializeMeasurementsTableView();
     }
