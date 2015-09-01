@@ -8,7 +8,6 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import org.defence.domain.entities.MeasurementType;
 import org.defence.infrastructure.DbHelper;
 
 /**
@@ -17,24 +16,45 @@ import org.defence.infrastructure.DbHelper;
 public class MeasurementTypeEditViewModel implements ViewModel {
 
     private final IntegerProperty id = new SimpleIntegerProperty();
-    private final StringProperty code = new SimpleStringProperty();
-    private final StringProperty name = new SimpleStringProperty();
+    private StringProperty code = new SimpleStringProperty();
+    private StringProperty name = new SimpleStringProperty();
+
+    private String cachedCode;
+    private String cachedName;
+
     private final DbHelper dbHelper = DbHelper.getInstance();
 
     private Command saveCommand;
+    private Command cancelCommand;
 
     public MeasurementTypeEditViewModel() {
+
+        System.out.println("code = " + code);
+        System.out.println("name = " + name);
+
         saveCommand = new DelegateCommand(() -> new Action() {
             @Override
             protected void action() throws Exception {
-                MeasurementType type = dbHelper.getMeasurementTypeById(id.getValue());
-                dbHelper.updateMeasurementType(type);
+//                MeasurementType type = dbHelper.getMeasurementTypeById(id.getValue());
+                dbHelper.updateMeasurementType(id.getValue(), code.getValue(), name.getValue());
+            }
+        });
+
+        cancelCommand = new DelegateCommand(() -> new Action() {
+            @Override
+            protected void action() throws Exception {
+                code.setValue(cachedCode);
+                name.setValue(cachedName);
             }
         });
     }
 
     public Command getSaveCommand() {
         return saveCommand;
+    }
+
+    public Command getCancelCommand() {
+        return cancelCommand;
     }
 
     public int getId() {
@@ -71,5 +91,21 @@ public class MeasurementTypeEditViewModel implements ViewModel {
 
     public void setName(String name) {
         this.name.set(name);
+    }
+
+    public String getCachedCode() {
+        return cachedCode;
+    }
+
+    public void setCachedCode(String cachedCode) {
+        this.cachedCode = cachedCode;
+    }
+
+    public String getCachedName() {
+        return cachedName;
+    }
+
+    public void setCachedName(String cachedName) {
+        this.cachedName = cachedName;
     }
 }

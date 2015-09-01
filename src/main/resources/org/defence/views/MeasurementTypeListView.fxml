@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 <GridPane stylesheets="/css/Button.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="org.defence.views.MeasurementTypesView">
+          fx:controller="org.defence.views.MeasurementTypeListView">
     <children>
         <GridPane GridPane.columnIndex="0" GridPane.rowIndex="0">
             <children>
@@ -97,19 +97,10 @@
                                         <TableColumn fx:id="idTableColumn" text="ID"/>
                                         <TableColumn fx:id="codeTableColumn" maxWidth="1.7976931348623157E308"
                                                      minWidth="100.0"
-                                                     prefWidth="100.0" text="Код">
-                                            <contextMenu>
-                                                <ContextMenu>
-                                                    <items>
-                                                        <MenuItem mnemonicParsing="false" text="Опа опа опапа"/>
-                                                    </items>
-                                                </ContextMenu>
-                                            </contextMenu>
-                                        </TableColumn>
+                                                     prefWidth="100.0" text="Код"/>
                                         <TableColumn fx:id="nameTableColumn" maxWidth="1.7976931348623157E308"
                                                      minWidth="300.0"
-                                                     prefWidth="280.0" text="Наименование ">
-                                        </TableColumn>
+                                                     prefWidth="280.0" text="Наименование "/>
                                     </columns>
                                 </TableView>
                             </children>

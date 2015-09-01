@@ -22,14 +22,14 @@ import javafx.stage.Stage;
 import org.defence.MainApp;
 import org.defence.viewmodels.MeasurementTypeEditViewModel;
 import org.defence.viewmodels.MeasurementTypeViewModel;
-import org.defence.viewmodels.MeasurementTypesViewModel;
+import org.defence.viewmodels.MeasurementTypeListViewModel;
 
 import javax.swing.*;
 
 /**
  * Created by root on 8/12/15.
  */
-public class MeasurementTypesView implements FxmlView<MeasurementTypesViewModel> {
+public class MeasurementTypeListView implements FxmlView<MeasurementTypeListViewModel> {
     @FXML
     private Button addBtn;
 
@@ -61,7 +61,7 @@ public class MeasurementTypesView implements FxmlView<MeasurementTypesViewModel>
     TableColumn<MeasurementTypeViewModel, StringProperty> nameTableColumn;
 
     @InjectViewModel
-    MeasurementTypesViewModel viewModel;
+    MeasurementTypeListViewModel viewModel;
 
     public void initialize() {
 
@@ -137,6 +137,9 @@ public class MeasurementTypesView implements FxmlView<MeasurementTypesViewModel>
         viewTuple.getViewModel().idProperty().bindBidirectional(viewModel.selectedRowProperty().get().idProperty());
         viewTuple.getViewModel().codeProperty().bindBidirectional(viewModel.selectedRowProperty().get().codeProperty());
         viewTuple.getViewModel().nameProperty().bindBidirectional(viewModel.selectedRowProperty().get().nameProperty());
+
+        viewTuple.getViewModel().setCachedCode(viewModel.selectedRowProperty().get().codeProperty().getValue());
+        viewTuple.getViewModel().setCachedName(viewModel.selectedRowProperty().get().nameProperty().getValue());
 
 //        dialog.setTitle("Редактирование типа единицы измерения");
         dialog.initModality(Modality.WINDOW_MODAL);

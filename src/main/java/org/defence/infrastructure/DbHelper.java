@@ -180,10 +180,10 @@ public class DbHelper {
 
         try {
             transaction = session.beginTransaction();
-
-//            session.get
-
-//            session.save(type);
+            MeasurementType type = (MeasurementType) session.get(MeasurementType.class, id);
+            type.setCode(code);
+            type.setName(name);
+            session.update(type);
             transaction.commit();
         } catch(Exception ex) {
             transaction.rollback();
@@ -202,6 +202,20 @@ public class DbHelper {
 
         try {
             result = session.createQuery("from MeasurementType order by id").list();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            session.close();
+            return result;
+        }
+    }
+
+    public List<Measurement> importAllMeasurements() {
+        Session session = factory.openSession();
+        List<Measurement> result = null;
+
+        try {
+            result = session.createQuery("from Measurement order by id").list();
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {

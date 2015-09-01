@@ -44,7 +44,7 @@
                         onAction="#saveButtonClick">Применить
                 </Button>
                 <Button fx:id="noBtn" minWidth="100" AnchorPane.rightAnchor="10" GridPane.halignment="RIGHT"
-                        onAction="#exitButtonClick">Отмена
+                        onAction="#cancelButtonClick">Отмена
                 </Button>
             </children>
         </AnchorPane>

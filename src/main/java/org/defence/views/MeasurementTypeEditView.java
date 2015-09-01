@@ -38,10 +38,11 @@ public class MeasurementTypeEditView implements FxmlView<MeasurementTypeEditView
 
     public void saveButtonClick() {
         viewModel.getSaveCommand().execute();
-        exitButtonClick();
+        stage.close();
     }
 
-    public void  exitButtonClick() {
+    public void cancelButtonClick() {
+        viewModel.getCancelCommand().execute();
         stage.close();
     }
 

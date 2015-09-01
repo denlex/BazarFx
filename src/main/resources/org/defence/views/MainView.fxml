@@ -188,7 +188,7 @@
                                                                         valignment="TOP" vgrow="ALWAYS"/>
                                                     </rowConstraints>
                                                     <children>
-                                                        <fx:include source="/org/defence/views/MeasurementTypesView.fxml"
+                                                        <fx:include source="/org/defence/views/MeasurementTypeListView.fxml"
                                                                     GridPane.hgrow="ALWAYS"
                                                                     GridPane.vgrow="ALWAYS" GridPane.rowIndex="0"/>
                                                         <Button fx:id="cancelMesTypeBtn" GridPane.rowIndex="1">Отмена
@@ -197,7 +197,7 @@
                                                 </GridPane>
                                             </content>
                                         </Tab>
-                                        <!--<Tab text="Добавление единицы измерения">
+                                        <Tab text="Добавление единицы измерения">
                                             <content>
                                                 <GridPane maxHeight="1.7976931348623157E308"
                                                           maxWidth="1.7976931348623157E308"
@@ -212,14 +212,14 @@
                                                                         valignment="TOP" vgrow="ALWAYS"/>
                                                     </rowConstraints>
                                                     <children>
-                                                        <fx:include source="/org/defence/views/NewMeasurement.fxml"
+                                                        <fx:include source="/org/defence/views/MeasurementListView.fxml"
                                                                     GridPane.hgrow="ALWAYS"
                                                                     GridPane.vgrow="ALWAYS"/>
                                                     </children>
                                                 </GridPane>
                                             </content>
                                         </Tab>
-                                        <Tab text="Добавление характеристики">
+                                        <!--<Tab text="Добавление характеристики">
                                             <content>
                                                 <GridPane maxHeight="1.7976931348623157E308"
                                                           maxWidth="1.7976931348623157E308"

@@ -23,7 +23,7 @@ import java.util.Optional;
 /**
  * Created by root on 8/20/15.
  */
-public class MeasurementTypesViewModel implements ViewModel {
+public class MeasurementTypeListViewModel implements ViewModel {
     private final ListProperty<MeasurementTypeViewModel> types = new SimpleListProperty<>();
     private final ObjectProperty<MeasurementTypeViewModel> type = new SimpleObjectProperty<>();
 
@@ -34,7 +34,7 @@ public class MeasurementTypesViewModel implements ViewModel {
     private Command addTypeCommand;
     private Command deleteTypeCommand;
 
-    public MeasurementTypesViewModel() {
+    public MeasurementTypeListViewModel() {
         List<MeasurementTypeViewModel> typeList = new ArrayList<>();
         for (MeasurementType type : dbHelper.importAllMeasurementTypes()) {
             typeList.add(new MeasurementTypeViewModel(type));
