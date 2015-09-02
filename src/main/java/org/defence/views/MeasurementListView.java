@@ -3,9 +3,12 @@ package org.defence.views;
 import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.util.StringConverter;
 import org.defence.domain.entities.MeasurementType;
 import org.defence.viewmodels.MeasurementListViewModel;
@@ -105,15 +108,35 @@ public class MeasurementListView implements FxmlView<MeasurementListViewModel> {
     }
 
     private void initializeMeasurementsTableView() {
+
         measurementsTableView.itemsProperty().bindBidirectional(viewModel.measurementsProperty());
         idTableColumn.setCellValueFactory(new PropertyValueFactory("id"));
         codeTableColumn.setCellValueFactory(new PropertyValueFactory("code"));
         nameTableColumn.setCellValueFactory(new PropertyValueFactory("name"));
 
+        measurementsTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            viewModel.selectedMeasurementProperty().unbind();
+//            viewModel.loadMeasurementsBySelectedType();
+            viewModel.selectedMeasurementProperty().bindBidirectional(new SimpleObjectProperty<>(newValue));
+        });
     }
 
     public void testButtonClick() {
         viewModel.getTestCommand().execute();
+    }
+
+    public void typesTableViewClick() {
+        viewModel.loadMeasurementsBySelectedType();
+    }
+
+    public void typesTableViewKeyUp(Event event) {
+        if (event.getEventType() == KeyEvent.KEY_RELEASED) {
+            KeyCode keyCode = ((KeyEvent) event).getCode();
+
+            if (keyCode.isNavigationKey() || keyCode.isArrowKey()) {
+                viewModel.loadMeasurementsBySelectedType();
+            }
+        }
     }
 
     public void initialize() {

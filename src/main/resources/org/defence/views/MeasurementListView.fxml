@@ -13,7 +13,8 @@
             <children>
                 <GridPane alignment="BASELINE_RIGHT" GridPane.columnIndex="0" GridPane.rowIndex="2">
                     <children>
-                        <Button fx:id="testButton" alignment="CENTER" minHeight="30.0" minWidth="120.0" prefHeight="30" prefWidth="120.0"
+                        <Button fx:id="testButton" alignment="CENTER" minHeight="30.0" minWidth="120.0" prefHeight="30"
+                                prefWidth="120.0"
                                 text="Применить" textAlignment="CENTER" onAction="#testButtonClick">
                         </Button>
                         <Button alignment="CENTER" minHeight="30" minWidth="120.0" prefHeight="30" prefWidth="120.0"
@@ -48,7 +49,8 @@
                                 <Insets left="10.0"/>
                             </GridPane.margin>
                         </Label>
-                        <TextField fx:id="codeTextField" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.vgrow="ALWAYS">
+                        <TextField fx:id="codeTextField" GridPane.columnIndex="1" GridPane.rowIndex="0"
+                                   GridPane.vgrow="ALWAYS">
                             <GridPane.margin>
                                 <Insets right="10.0"/>
                             </GridPane.margin>
@@ -58,7 +60,8 @@
                                 <Insets left="10.0"/>
                             </GridPane.margin>
                         </Label>
-                        <TextField fx:id="nameTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
+                        <TextField fx:id="nameTextField" GridPane.columnIndex="1" GridPane.rowIndex="2"
+                                   GridPane.vgrow="ALWAYS">
                             <GridPane.margin>
                                 <Insets right="10.0"/>
                             </GridPane.margin>
@@ -68,7 +71,8 @@
                                 <Insets left="10.0"/>
                             </GridPane.margin>
                         </Label>
-                        <ComboBox fx:id="measurementTypeComboBox" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="3"
+                        <ComboBox fx:id="measurementTypeComboBox" maxWidth="1.7976931348623157E308"
+                                  GridPane.columnIndex="1" GridPane.rowIndex="3"
                                   GridPane.vgrow="NEVER">
                             <GridPane.margin>
                                 <Insets right="10.0"/>
@@ -90,13 +94,19 @@
                                                         </Label>
                                                     </children>
                                                 </StackPane>
-                                                <TableView fx:id="typesTableView" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                                                <TableView fx:id="typesTableView" GridPane.columnIndex="0"
+                                                           GridPane.rowIndex="1"
+                                                           onKeyReleased="#typesTableViewKeyUp"
+                                                           onMouseClicked="#typesTableViewClick">
                                                     <columns>
                                                         <TableColumn fx:id="idTypeTableColumn" text="ID"/>
-                                                        <TableColumn fx:id="codeTypeTableColumn" maxWidth="1.7976931348623157E308"
+                                                        <TableColumn fx:id="codeTypeTableColumn"
+                                                                     maxWidth="1.7976931348623157E308"
                                                                      minWidth="50.0" prefWidth="50.0" text="Код"/>
-                                                        <TableColumn fx:id="nameTypeTableColumn" maxWidth="1.7976931348623157E308"
-                                                                     minWidth="150.0" prefWidth="150.0" text="Наименование "/>
+                                                        <TableColumn fx:id="nameTypeTableColumn"
+                                                                     maxWidth="1.7976931348623157E308"
+                                                                     minWidth="150.0" prefWidth="150.0"
+                                                                     text="Наименование "/>
                                                     </columns>
                                                 </TableView>
                                             </children>
@@ -120,13 +130,17 @@
                                                         </Label>
                                                     </children>
                                                 </StackPane>
-                                                <TableView fx:id="measurementsTableView" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                                                <TableView fx:id="measurementsTableView" GridPane.columnIndex="0"
+                                                           GridPane.rowIndex="1">
                                                     <columns>
                                                         <TableColumn fx:id="idTableColumn" text="ID"/>
-                                                        <TableColumn fx:id="codeTableColumn" maxWidth="1.7976931348623157E308"
+                                                        <TableColumn fx:id="codeTableColumn"
+                                                                     maxWidth="1.7976931348623157E308"
                                                                      minWidth="50.0" prefWidth="50.0" text="Код"/>
-                                                        <TableColumn fx:id="nameTableColumn" maxWidth="1.7976931348623157E308"
-                                                                     minWidth="150.0" prefWidth="150.0" text="Наименование "/>
+                                                        <TableColumn fx:id="nameTableColumn"
+                                                                     maxWidth="1.7976931348623157E308"
+                                                                     minWidth="150.0" prefWidth="150.0"
+                                                                     text="Наименование "/>
                                                     </columns>
                                                 </TableView>
                                             </children>

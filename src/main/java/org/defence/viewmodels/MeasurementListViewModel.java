@@ -16,6 +16,7 @@ import org.defence.infrastructure.DbHelper;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -26,7 +27,7 @@ public class MeasurementListViewModel implements ViewModel {
     private final ListProperty<MeasurementViewModel> measurements = new SimpleListProperty<>();
 
     private final ObjectProperty<MeasurementTypeViewModel> selectedType = new SimpleObjectProperty<>();
-    private final ObjectProperty<MeasurementTypeViewModel> selectedMeasurement = new SimpleObjectProperty<>();
+    private final ObjectProperty<MeasurementViewModel> selectedMeasurement = new SimpleObjectProperty<>();
 
     private DbHelper dbHelper = DbHelper.getInstance();
 
@@ -40,19 +41,34 @@ public class MeasurementListViewModel implements ViewModel {
 
         types.set(new ObservableListWrapper<>(typeList));
 
-        List<MeasurementViewModel> measurementList = new ArrayList<>();
-        for (Measurement measurement : dbHelper.importAllMeasurements()) {
-            measurementList.add(new MeasurementViewModel(measurement));
-        }
-
-        measurements.set(new ObservableListWrapper<>(measurementList));
+        loadMeasurementsBySelectedType();
 
         testCommand = new DelegateCommand(() -> new Action() {
             @Override
             protected void action() throws Exception {
-                JOptionPane.showMessageDialog(null, selectedType.get().codeProperty() + "\n" + selectedType.get().nameProperty());
+//                JOptionPane.showMessageDialog(null, selectedType.get().codeProperty() + "\n" + selectedType.get().nameProperty());
+                List<Measurement> list = dbHelper.getMeasurementsByMeasurementTypeId(selectedType.getValue().getId());
+                StringBuilder out = new StringBuilder();
+
+                for (Measurement elem : list) {
+                    out.append(elem.getName() + "\n");
+                }
+
+                JOptionPane.showMessageDialog(null, out.toString());
             }
         });
+    }
+
+    public void loadMeasurementsBySelectedType() {
+        if (selectedTypeProperty().get() != null) {
+            List<MeasurementViewModel> measurementList = new LinkedList<>();
+
+            for (Measurement measurement : dbHelper.getMeasurementsByMeasurementTypeId(selectedType.getValue().getId())) {
+                measurementList.add(new MeasurementViewModel(measurement));
+            }
+
+            measurements.set(new ObservableListWrapper<>(measurementList));
+        }
     }
 
     private ObservableList<MeasurementType> getAllMeasurementTypes() {
@@ -107,15 +123,15 @@ public class MeasurementListViewModel implements ViewModel {
         this.selectedType.set(selectedType);
     }
 
-    public MeasurementTypeViewModel getSelectedMeasurement() {
+    public MeasurementViewModel getSelectedMeasurement() {
         return selectedMeasurement.get();
     }
 
-    public ObjectProperty<MeasurementTypeViewModel> selectedMeasurementProperty() {
+    public ObjectProperty<MeasurementViewModel> selectedMeasurementProperty() {
         return selectedMeasurement;
     }
 
-    public void setSelectedMeasurement(MeasurementTypeViewModel selectedMeasurement) {
+    public void setSelectedMeasurement(MeasurementViewModel selectedMeasurement) {
         this.selectedMeasurement.set(selectedMeasurement);
     }
 
