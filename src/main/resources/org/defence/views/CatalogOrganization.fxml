@@ -8,10 +8,7 @@
     <children>
         <StackPane style="-fx-background-color: #4A6C9B" GridPane.columnIndex="0" GridPane.rowIndex="0">
             <children>
-                <Label text="Справочник организаций" textAlignment="CENTER" textFill="white">
-                    <font>
-                        <Font name="Candara" size="18.0"/>
-                    </font>
+                <Label stylesheets="/css/LableProperty.css" text="Справочник организаций" textAlignment="CENTER">
                 </Label>
             </children>
         </StackPane>
@@ -27,8 +24,7 @@
         </TableView>
                 <GridPane alignment="BASELINE_RIGHT" GridPane.columnIndex="0" GridPane.rowIndex="3">
                     <children>
-                        <Button alignment="CENTER" minHeight="30.0" minWidth="120.0" prefHeight="30" prefWidth="120.0"
-                                text="Применить" textAlignment="CENTER">
+                        <Button alignment="CENTER" text="Применить" textAlignment="CENTER">
                         </Button>
                         <!--               <Button alignment="CENTER" minHeight="30" minWidth="120.0" prefHeight="30" prefWidth="120.0" text="Отмена" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="0">
                                     </Button>-->

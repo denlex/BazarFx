@@ -11,23 +11,17 @@
             <children>
                 <GridPane alignment="BASELINE_RIGHT" GridPane.columnIndex="0" GridPane.rowIndex="2">
                     <children>
-                        <Button fx:id="addBtn" alignment="CENTER" minHeight="30.0" minWidth="120.0" prefHeight="30"
-                                prefWidth="120.0"
-                                text="Добавить" textAlignment="CENTER" defaultButton="true" onAction="#addButtonClick">
+                        <Button fx:id="addBtn" alignment="CENTER" text="Добавить" textAlignment="CENTER"
+                                defaultButton="true" onAction="#addButtonClick">
                         </Button>
-                        <Button fx:id="editBtn" alignment="CENTER" minHeight="30" minWidth="120.0" prefHeight="30"
-                                prefWidth="120.0"
-                                text="Изменить" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="0"
-                                onAction="#editButtonClick">
+                        <Button fx:id="editBtn" alignment="CENTER" text="Изменить" textAlignment="CENTER"
+                                GridPane.columnIndex="2" GridPane.rowIndex="0" onAction="#editButtonClick">
                         </Button>
-                        <Button fx:id="deleteBtn" alignment="CENTER" minHeight="30" minWidth="120.0" prefHeight="30"
-                                prefWidth="120.0"
-                                text="Удалить" textAlignment="CENTER" GridPane.columnIndex="4" GridPane.rowIndex="0"
-                                onAction="#deleteButtonClick">
+                        <Button fx:id="deleteBtn" alignment="CENTER" text="Удалить" textAlignment="CENTER"
+                                GridPane.columnIndex="4" GridPane.rowIndex="0" onAction="#deleteButtonClick">
                         </Button>
-                        <Button fx:id="cancelBtn" alignment="CENTER" minHeight="30" minWidth="120.0" prefHeight="30"
-                                prefWidth="120.0"
-                                text="Отмена" textAlignment="CENTER" GridPane.columnIndex="6" GridPane.rowIndex="0">
+                        <Button fx:id="cancelBtn" alignment="CENTER" text="Отмена" textAlignment="CENTER"
+                                GridPane.columnIndex="6" GridPane.rowIndex="0">
                         </Button>
                     </children>
                     <columnConstraints>
@@ -47,11 +41,8 @@
                 </GridPane>
                 <StackPane style="-fx-background-color: #4A6C9B" GridPane.columnIndex="0" GridPane.rowIndex="0">
                     <children>
-                        <Label text="Редактирование справочника типов единиц измерений" textFill="WHITE"
+                        <Label stylesheets="/css/LableProperty.css" text="Редактирование справочника типов единиц измерений"
                                StackPane.alignment="CENTER">
-                            <font>
-                                <Font name="Candara" size="18.0"/>
-                            </font>
                         </Label>
                     </children>
                 </StackPane>

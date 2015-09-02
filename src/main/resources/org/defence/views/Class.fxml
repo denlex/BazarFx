@@ -12,19 +12,13 @@
     <children>
         <StackPane style="-fx-background-color: #4A6C9B" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="0">
             <children>
-                <Label text="Загрузка изображения" textFill="white" GridPane.halignment="CENTER">
-                    <font>
-                        <Font name="Candara" size="18.0" />
-                    </font>
+                <Label stylesheets="/css/LableProperty.css" text="Загрузка изображения" GridPane.halignment="CENTER">
                 </Label>
             </children>
         </StackPane>
         <StackPane style="-fx-background-color: #4A6C9B" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="0">
             <children>
-                <Label text="Добавление нового класса" textFill="white" GridPane.halignment="CENTER">
-                    <font>
-                        <Font size="18.0" />
-                    </font>
+                <Label stylesheets="/css/LableProperty.css" text="Добавление нового класса" GridPane.halignment="CENTER">
                 </Label>
             </children>
         </StackPane>
@@ -43,7 +37,7 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </GridPane.margin>
                 </ImageView>
-                <Button alignment="CENTER" prefHeight="30.0" prefWidth="300" text="Загрузка изображения" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                <Button alignment="CENTER" style="-fx-pref-width: 300px"  text="Загрузка изображения" GridPane.columnIndex="0" GridPane.rowIndex="1">
                     <GridPane.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </GridPane.margin>
@@ -83,9 +77,9 @@
         </GridPane>
         <GridPane alignment="CENTER_RIGHT" GridPane.columnIndex="2" GridPane.rowIndex="2">
             <children>
-                <Button alignment="CENTER" contentDisplay="CENTER" minHeight="30.0" minWidth="120.0" prefHeight="30" prefWidth="120.0" text="Применить" textAlignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                <Button alignment="CENTER" contentDisplay="CENTER" text="Применить" textAlignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="0">
                 </Button>
-                <Button alignment="CENTER" minHeight="30" minWidth="120.0" prefHeight="30" prefWidth="120.0" text="Отмена" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="0">
+                <Button alignment="CENTER" text="Отмена" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="0">
                 </Button>
             </children>
             <columnConstraints>

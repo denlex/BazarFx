@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane stylesheets="/css/Button.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <GridPane GridPane.columnIndex="0" GridPane.rowIndex="0">
+            <children>
+                <GridPane alignment="BASELINE_RIGHT" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                    <children>
+                        <Button alignment="CENTER" minHeight="30.0" minWidth="120.0" prefHeight="30" prefWidth="120.0" text="Применить" textAlignment="CENTER">
+                        </Button>
+                        <Button alignment="CENTER" minHeight="30" minWidth="120.0" prefHeight="30" prefWidth="120.0" text="Отмена" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="0">
+                        </Button>
+                    </children>
+                    <columnConstraints>
+                        <ColumnConstraints maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
+                        <ColumnConstraints maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
+                        <ColumnConstraints maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" />
+                    </rowConstraints>
+               <padding>
+                  <Insets right="10.0" />
+               </padding>
+                </GridPane>
+                <StackPane style="-fx-background-color: #4A6C9B" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                    <children>
+                        <Label stylesheets="/css/LableProperty.css" text="Добавление новой единицы измерения"  StackPane.alignment="CENTER">
+<!--                     <font>
+                        <Font name="Candara" size="18.0" />
+                     </font>-->
+                        </Label>
+                    </children>
+                </StackPane>
+                <GridPane GridPane.columnIndex="0" GridPane.rowIndex="1">
+                    <children>
+                        <Label text="Код:" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin></Label>
+                        <TextField GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.vgrow="ALWAYS">
+                     <GridPane.margin>
+                        <Insets right="10.0" />
+                     </GridPane.margin></TextField>
+                        <Label text="Наименование:" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin></Label>
+                        <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
+                     <GridPane.margin>
+                        <Insets right="10.0" />
+                     </GridPane.margin></TextField>
+                        <Label text="Тип характеристики:" GridPane.columnIndex="0" GridPane.rowIndex="3">
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin></Label>
+                        <ComboBox maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.vgrow="NEVER">
+                     <GridPane.margin>
+                        <Insets right="10.0" />
+                     </GridPane.margin></ComboBox>
+                        <GridPane GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="4">
+                            <children>
+                                <SplitPane dividerPositions="0.5" orientation="HORIZONTAL">
+                                    <items>
+                                        <GridPane>
+                                            <children>
+                                                <StackPane style="-fx-background-color: #4A6C9B;" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                                                   <children>
+                                                       <Label text="Типы единиц измерения" textFill="WHITE">
+                                             <font>
+                                                <Font name="Candara" size="18.0" />
+                                             </font>
+                                          </Label>
+                                                   </children>
+                                                </StackPane>
+                                                <TableView GridPane.columnIndex="0" GridPane.rowIndex="1">
+
+                                                </TableView>
+                                            </children>
+                                 <columnConstraints>
+                                    <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="300.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" />
+                                    <RowConstraints />
+                                 </rowConstraints>
+                                        </GridPane>
+                                        <GridPane>
+                                            <children>
+                                                <StackPane style="-fx-background-color: #4A6C9B;" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                                                   <children>
+                                                       <Label text="Единицы измерения" textFill="WHITE">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Label>
+                                                   </children>
+                                                </StackPane>
+                                                <TableView GridPane.columnIndex="0" GridPane.rowIndex="1">
+                                                </TableView>
+                                            </children>
+                                 <columnConstraints>
+                                    <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="300.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" />
+                                    <RowConstraints />
+                                 </rowConstraints>
+                                        </GridPane>
+                                    </items>
+                                </SplitPane>
+                            </children>
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="ALWAYS" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints />
+                     </rowConstraints>
+                     <GridPane.margin>
+                        <Insets left="10.0" right="10.0" top="15.0" />
+                     </GridPane.margin>
+                        </GridPane>
+                    </children>
+               <columnConstraints>
+                  <ColumnConstraints maxWidth="130.0" minWidth="120.0" prefWidth="130.0" />
+                  <ColumnConstraints hgrow="ALWAYS" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="NEVER" />
+                  <RowConstraints />
+                  <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="NEVER" />
+                  <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="NEVER" />
+                  <RowConstraints vgrow="ALWAYS" />
+               </rowConstraints>
+                </GridPane>
+            </children>
+         <columnConstraints>
+            <ColumnConstraints hgrow="ALWAYS" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints vgrow="ALWAYS" />
+            <RowConstraints />
+         </rowConstraints>
+        </GridPane>
+    </children>
+   <columnConstraints>
+      <ColumnConstraints hgrow="ALWAYS" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints vgrow="ALWAYS" />
+   </rowConstraints>
+</GridPane>

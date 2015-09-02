@@ -15,10 +15,8 @@
             <children>
                 <StackPane style="-fx-background-color: #4A6C9B" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="TOP">
                     <children>
-                        <Label text="Добавление нового СФО" textFill="white" GridPane.halignment="CENTER">
-                            <font>
-                                <Font name="Cambria" size="18.0" />
-                            </font>
+                        <Label stylesheets="/css/LableProperty.css" text="Добавление нового СФО"
+                               GridPane.halignment="CENTER">
                             <StackPane.margin>
                                 <Insets left="50" right="50" />
                             </StackPane.margin>
@@ -27,9 +25,11 @@
                 </StackPane>
                 <GridPane alignment="BOTTOM_RIGHT" GridPane.columnIndex="0" GridPane.rowIndex="2">
                     <children>
-                        <Button alignment="CENTER" minHeight="30.0" minWidth="120" prefHeight="30" prefWidth="120" text="Применить" textAlignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                        <Button alignment="CENTER" text="Применить" textAlignment="CENTER"
+                                GridPane.columnIndex="0" GridPane.rowIndex="0">
                         </Button>
-                        <Button alignment="CENTER" minHeight="30" minWidth="120" prefHeight="30" prefWidth="120.0" text="Отмена" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="0">
+                        <Button alignment="CENTER" text="Отмена" textAlignment="CENTER"
+                                GridPane.columnIndex="2" GridPane.rowIndex="0">
                         </Button>
                     </children>
                     <columnConstraints>
@@ -76,10 +76,7 @@
                                             <children>
                                                 <StackPane alignment="CENTER" style="-fx-background-color: #4A6C9B" GridPane.columnIndex="0" GridPane.rowIndex="0">
                                                     <children>
-                                                        <Label text="Этапы готовности документа" textFill="white">
-                                                            <font>
-                                                                <Font size="18.0" />
-                                                            </font>
+                                                        <Label stylesheets="/css/LableProperty.css" text="Этапы готовности документа">
                                                         </Label>
                                                     </children>
                                                 </StackPane>
@@ -120,10 +117,7 @@
                                                 </RadioButton>
                                                 <StackPane alignment="CENTER" style="-fx-background-color: #4A6C9B" GridPane.columnIndex="1" GridPane.rowIndex="0">
                                                     <children>
-                                                        <Label text="Дополнительная информация о документе" textFill="white">
-                                                            <font>
-                                                                <Font size="18.0" />
-                                                            </font>
+                                                        <Label stylesheets="/css/LableProperty.css" text="Дополнительная информация о документе">
                                                         </Label>
                                                     </children>
                                                 </StackPane>
@@ -233,7 +227,7 @@
                                             <children>
                                                 <ImageView fitHeight="250.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
                                                 </ImageView>
-                                                <Button mnemonicParsing="false" prefWidth="300.0" text="Загрузка изображения" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                                                <Button mnemonicParsing="false" style="-fx-pref-width: 300px" text="Загрузка изображения" GridPane.columnIndex="0" GridPane.rowIndex="1">
                                                     <GridPane.margin>
                                                         <Insets left="10.0" right="10.0" top="20.0" />
                                                     </GridPane.margin>
