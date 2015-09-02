@@ -24,10 +24,7 @@
             <children>
                 <StackPane style="-fx-background-color: #4A6C9B" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="TOP">
                     <children>
-                        <Label text="Добавление новой характеристики" textFill="white" GridPane.halignment="CENTER">
-                            <font>
-                                <Font name="Cambria" size="18.0" />
-                            </font>
+                        <Label stylesheets="/css/LableProperty.css" text="Добавление новой характеристики" GridPane.halignment="CENTER">
                             <StackPane.margin>
                                 <Insets left="50" right="50" />
                             </StackPane.margin>
@@ -59,8 +56,8 @@
                 </GridPane>
                 <AnchorPane GridPane.rowIndex="2">
                     <children>
-                        <Button fx:id="okBtn" alignment="CENTER" mnemonicParsing="false" prefWidth="120.0" text="Принять" AnchorPane.bottomAnchor="15" AnchorPane.rightAnchor="150" />
-                        <Button alignment="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="120.0" text="Отмена" AnchorPane.bottomAnchor="15" AnchorPane.rightAnchor="15" />
+                        <Button fx:id="okBtn" alignment="CENTER" mnemonicParsing="false" text="Принять" AnchorPane.bottomAnchor="15" AnchorPane.rightAnchor="150" />
+                        <Button alignment="CENTER" mnemonicParsing="false" text="Отмена" AnchorPane.bottomAnchor="15" AnchorPane.rightAnchor="15" />
                     </children>
                 </AnchorPane>
             </children>

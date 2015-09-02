@@ -17,6 +17,10 @@
     -fx-font-family: "Candara";
     -fx-font-size: 12px;
     -fx-text-fill: white;
+    -fx-pref-width: 120px;
+    -fx-pref-height: 30px;
+    -fx-min-width: 120px;
+    -fx-min-height: 30px;
 }
 .button:pressed, .button:default:hover:pressed
 {
