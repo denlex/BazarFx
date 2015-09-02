@@ -15,10 +15,15 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.defence.MainApp;
-import org.defence.viewmodels.*;
+import org.defence.viewmodels.MeasurementCatalogViewModel;
+import org.defence.viewmodels.MeasurementTypeEditViewModel;
+import org.defence.viewmodels.MeasurementTypeViewModel;
+import org.defence.viewmodels.MeasurementViewModel;
 
 /**
  * Created by root on 8/12/15.
@@ -107,8 +112,22 @@ public class MeasurementCatalogView implements FxmlView<MeasurementCatalogViewMo
         dialog.setResizable(false);
 
         Scene scene = new Scene(root);
+        scene.addEventHandler(KeyEvent.ANY, event1 -> {
+            if (event1.getCode() == KeyCode.ESCAPE) {
+                dialog.close();
+            }
+        });
+
         dialog.setScene(scene);
         dialog.showAndWait();
+
+        // set current position in typesTableView
+        if (viewTuple.getCodeBehind().getModalResult() == DialogResult.OK) {
+            int lastRowIndex = viewModel.getTypes().size() - 1;
+            typesTableView.scrollTo(lastRowIndex);
+            typesTableView.selectionModelProperty().get().select(lastRowIndex);
+            typesTableView.requestFocus();
+        }
     }
 
     public void editTypeButtonClick(Event event) {
@@ -131,8 +150,16 @@ public class MeasurementCatalogView implements FxmlView<MeasurementCatalogViewMo
         dialog.setResizable(false);
 
         Scene scene = new Scene(root);
+        scene.addEventHandler(KeyEvent.ANY, event1 -> {
+            if (event1.getCode() == KeyCode.ESCAPE) {
+                dialog.close();
+            }
+        });
+
         dialog.setScene(scene);
         dialog.showAndWait();
+
+        typesTableView.requestFocus();
     }
 
 
@@ -146,6 +173,14 @@ public class MeasurementCatalogView implements FxmlView<MeasurementCatalogViewMo
 
             if (keyCode.isNavigationKey() || keyCode.isArrowKey()) {
                 viewModel.loadMeasurementsBySelectedType();
+            }
+        }
+    }
+
+    public void typesTableViewMouseRelease(MouseEvent event) {
+        if (event.getButton().equals(MouseButton.PRIMARY)) {
+            if (event.getClickCount() == 2) {
+                editTypeButtonClick(event);
             }
         }
     }

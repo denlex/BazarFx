@@ -6,50 +6,55 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="120.0" minWidth="400.0" stylesheets="/css/Button.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.defence.views.MeasurementTypeEditView">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="120.0" minWidth="400.0" stylesheets="/css/Button.css"
+          xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="org.defence.views.MeasurementTypeEditView">
     <children>
-        <StackPane style="-fx-background-color: #4A6C9B" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="0">
+        <StackPane style="-fx-background-color: #4A6C9B" GridPane.columnIndex="0" GridPane.columnSpan="2"
+                   GridPane.rowIndex="0">
             <children>
-                <Label stylesheets="/css/LabelProperty.css" text="Редактирование единицы измерения" >
+                <Label stylesheets="/css/LabelProperty.css" text="Редактирование единицы измерения">
                 </Label>
             </children>
         </StackPane>
         <GridPane GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
             <children>
-                <Label text="Код:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                <TextField fx:id="codeTextField" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-                <Label text="Наименование:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                <TextField fx:id="nameTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <Label text="Код:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                <TextField fx:id="codeTextField" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                <Label text="Наименование:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                <TextField fx:id="nameTextField" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
             </children>
             <GridPane.margin>
-                <Insets left="10" right="10" top="10" />
+                <Insets left="10" right="10" top="10"/>
             </GridPane.margin>
             <columnConstraints>
-                <ColumnConstraints hgrow="NEVER" minWidth="120" />
-                <ColumnConstraints hgrow="ALWAYS" />
+                <ColumnConstraints hgrow="NEVER" minWidth="120"/>
+                <ColumnConstraints hgrow="ALWAYS"/>
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints minHeight="40" vgrow="NEVER" />
-                <RowConstraints minHeight="40" vgrow="NEVER" />
+                <RowConstraints minHeight="40" vgrow="NEVER"/>
+                <RowConstraints minHeight="40" vgrow="NEVER"/>
             </rowConstraints>
         </GridPane>
         <AnchorPane GridPane.columnSpan="2" GridPane.rowIndex="2">
             <children>
-                <Button fx:id="yesBtn"  onAction="#saveButtonClick" AnchorPane.rightAnchor="140.0" GridPane.halignment="RIGHT">Применить
+                <Button fx:id="yesBtn" onAction="#saveButtonClick" AnchorPane.rightAnchor="140.0"
+                        GridPane.halignment="RIGHT" defaultButton="true">Применить
                 </Button>
-                <Button fx:id="noBtn"  onAction="#cancelButtonClick" AnchorPane.rightAnchor="10" GridPane.halignment="RIGHT">Отмена
+                <Button fx:id="noBtn" onAction="#cancelButtonClick" AnchorPane.rightAnchor="10"
+                        GridPane.halignment="RIGHT">Отмена
                 </Button>
             </children>
         </AnchorPane>
     </children>
 
     <columnConstraints>
-        <ColumnConstraints hgrow="NEVER" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" />
-        <ColumnConstraints hgrow="ALWAYS" minWidth="-Infinity" />
+        <ColumnConstraints hgrow="NEVER" maxWidth="150.0" minWidth="150.0" prefWidth="150.0"/>
+        <ColumnConstraints hgrow="ALWAYS" minWidth="-Infinity"/>
     </columnConstraints>
     <rowConstraints>
-        <RowConstraints minHeight="50.0" vgrow="NEVER" />
-        <RowConstraints minHeight="100.0" vgrow="NEVER" />
-        <RowConstraints minHeight="35.0" vgrow="NEVER" />
+        <RowConstraints minHeight="50.0" vgrow="NEVER"/>
+        <RowConstraints minHeight="100.0" vgrow="NEVER"/>
+        <RowConstraints minHeight="35.0" vgrow="NEVER"/>
     </rowConstraints>
 </GridPane>
