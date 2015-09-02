@@ -40,8 +40,8 @@ public class MainApp extends Application {
         mainStage = primaryStage;
 
         primaryStage.setTitle("Library JavaFX");
-        primaryStage.setMinWidth(1200);
-        primaryStage.setMaxWidth(1200);
+/*        primaryStage.setMinWidth(1200);
+        primaryStage.setMaxWidth(1200);*/
         primaryStage.setMinHeight(700);
 
         ViewTuple<MainView, MainViewModel> viewTuple = FluentViewLoader.fxmlView(MainView.class).load();
