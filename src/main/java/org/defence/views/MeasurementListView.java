@@ -1,17 +1,25 @@
 package org.defence.views;
 
+import de.saxsys.mvvmfx.FluentViewLoader;
 import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
+import de.saxsys.mvvmfx.ViewTuple;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.StringConverter;
+import org.defence.MainApp;
 import org.defence.domain.entities.MeasurementType;
 import org.defence.viewmodels.MeasurementListViewModel;
+import org.defence.viewmodels.MeasurementTypeEditViewModel;
 import org.defence.viewmodels.MeasurementTypeViewModel;
 import org.defence.viewmodels.MeasurementViewModel;
 
@@ -53,7 +61,13 @@ public class MeasurementListView implements FxmlView<MeasurementListViewModel> {
     private TableColumn<MeasurementViewModel, String> nameTableColumn;
 
     @FXML
-    private Button testButton;
+    private Button addTypeButton;
+
+    @FXML
+    private Button editTypeButton;
+
+    @FXML
+    private Button daleteTypeButton;
 
     @InjectViewModel
     MeasurementListViewModel viewModel;
@@ -119,6 +133,22 @@ public class MeasurementListView implements FxmlView<MeasurementListViewModel> {
 //            viewModel.loadMeasurementsBySelectedType();
             viewModel.selectedMeasurementProperty().bindBidirectional(new SimpleObjectProperty<>(newValue));
         });
+    }
+
+    public void addTypeButtonClick(Event event) {
+        ViewTuple<MeasurementTypeEditView, MeasurementTypeEditViewModel> viewTuple = FluentViewLoader.fxmlView(MeasurementTypeEditView.class).load();
+        Parent root = viewTuple.getView();
+
+        Stage dialog = new Stage();
+        viewTuple.getCodeBehind().setStage(dialog);
+
+        dialog.initModality(Modality.WINDOW_MODAL);
+        dialog.initOwner(MainApp.mainStage);
+        dialog.setResizable(false);
+
+        Scene scene = new Scene(root);
+        dialog.setScene(scene);
+        dialog.showAndWait();
     }
 
     public void testButtonClick() {
