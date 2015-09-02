@@ -4,7 +4,10 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<GridPane stylesheets="/css/Button.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+
+
+<!--<?import org.defence.tests.DenchikTableView?>-->
+<GridPane stylesheets="/css/Button.css" xmlns:1="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="org.defence.controllers.NewMeasurementTypeController">
     <children>
         <GridPane GridPane.columnIndex="0" GridPane.rowIndex="0">
