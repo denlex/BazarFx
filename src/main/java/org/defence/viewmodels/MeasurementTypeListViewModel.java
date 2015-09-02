@@ -36,7 +36,7 @@ public class MeasurementTypeListViewModel implements ViewModel {
 
     public MeasurementTypeListViewModel() {
         List<MeasurementTypeViewModel> typeList = new ArrayList<>();
-        for (MeasurementType type : dbHelper.importAllMeasurementTypes()) {
+        for (MeasurementType type : dbHelper.getAllMeasurementTypes()) {
             typeList.add(new MeasurementTypeViewModel(type));
         }
 
@@ -47,7 +47,7 @@ public class MeasurementTypeListViewModel implements ViewModel {
             protected void action() throws Exception {
                 MeasurementType typeEntity = new MeasurementType(type.get().getCode(), type.get().getName());
 
-                if (dbHelper.exportMeasurementType(typeEntity) != false) {
+                if (dbHelper.addMeasurementType(typeEntity) != false) {
                     types.get().add(new MeasurementTypeViewModel(typeEntity));
                     type.get().setCode(null);
                     type.get().setName(null);

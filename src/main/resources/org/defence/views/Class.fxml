@@ -12,13 +12,13 @@
     <children>
         <StackPane style="-fx-background-color: #4A6C9B" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="0">
             <children>
-                <Label stylesheets="/css/LableProperty.css" text="Загрузка изображения" GridPane.halignment="CENTER">
+                <Label stylesheets="/css/LabelProperty.css" text="Загрузка изображения" GridPane.halignment="CENTER">
                 </Label>
             </children>
         </StackPane>
         <StackPane style="-fx-background-color: #4A6C9B" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="0">
             <children>
-                <Label stylesheets="/css/LableProperty.css" text="Добавление нового класса" GridPane.halignment="CENTER">
+                <Label stylesheets="/css/LabelProperty.css" text="Добавление нового класса" GridPane.halignment="CENTER">
                 </Label>
             </children>
         </StackPane>

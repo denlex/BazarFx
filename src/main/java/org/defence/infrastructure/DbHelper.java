@@ -121,13 +121,31 @@ public class DbHelper {
         }
     }
 
-    public boolean exportMeasurementType(MeasurementType measurementType) {
+    public boolean addMeasurementType(MeasurementType measurementType) {
         Session session = factory.openSession();
         Transaction transaction = null;
 
         try {
             transaction = session.beginTransaction();
             session.save(measurementType);
+            transaction.commit();
+        } catch (Exception ex) {
+            transaction.rollback();
+            return false;
+        } finally {
+            session.close();
+        }
+
+        return true;
+    }
+
+    public boolean addMeasurementType(String code, String name) {
+        Session session = factory.openSession();
+        Transaction transaction = null;
+
+        try {
+            transaction = session.beginTransaction();
+            session.save(new MeasurementType(code, name));
             transaction.commit();
         } catch (Exception ex) {
             transaction.rollback();
@@ -196,7 +214,7 @@ public class DbHelper {
         return true;
     }
 
-    public List<MeasurementType> importAllMeasurementTypes() {
+    public List<MeasurementType> getAllMeasurementTypes() {
         Session session = factory.openSession();
         List<MeasurementType> result = null;
 

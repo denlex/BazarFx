@@ -31,11 +31,13 @@ public class MeasurementListViewModel implements ViewModel {
 
     private DbHelper dbHelper = DbHelper.getInstance();
 
+    private Command addTypeCommand;
+    private Command deleteTypeCommand;
     private Command testCommand;
 
     public MeasurementListViewModel() {
         List<MeasurementTypeViewModel> typeList = new ArrayList<>();
-        for (MeasurementType type : dbHelper.importAllMeasurementTypes()) {
+        for (MeasurementType type : dbHelper.getAllMeasurementTypes()) {
             typeList.add(new MeasurementTypeViewModel(type));
         }
 
@@ -57,6 +59,53 @@ public class MeasurementListViewModel implements ViewModel {
                 JOptionPane.showMessageDialog(null, out.toString());
             }
         });
+
+        /*
+        addTypeCommand = new DelegateCommand(() -> new Action() {
+            @Override
+            protected void action() throws Exception {
+                MeasurementType typeEntity = new MeasurementType(type.get().getCode(), type.get().getName());
+
+                if (dbHelper.addMeasurementType(typeEntity) != false) {
+                    types.get().add(new MeasurementTypeViewModel(typeEntity));
+                    type.get().setCode(null);
+                    type.get().setName(null);
+                }
+            }
+        });
+
+        deleteTypeCommand = new DelegateCommand(() -> new Action() {
+            @Override
+            protected void action() throws Exception {
+                if (getSelectedType() == null) {
+                    return;
+                }
+
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Удаление типа единицы измерения");
+                alert.setHeaderText(null);
+                alert.setContentText("Вы действительно хотите удалить тип:\nНаименование:   " + getSelectedRow().getName());
+
+                ButtonType yes = new ButtonType("Удалить");
+                ButtonType no = new ButtonType("Отмена");
+
+                alert.getButtonTypes().setAll(yes, no);
+
+                Optional<ButtonType> result = alert.showAndWait();
+
+                if (result.get() == yes) {
+                    for (MeasurementTypeViewModel type : types) {
+                        if (type.equals(getSelectedRow())) {
+                            if (dbHelper.removeMeasurementType(type.getId())) {
+                                types.get().remove(type);
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+        });
+        */
     }
 
     public void loadMeasurementsBySelectedType() {
@@ -72,7 +121,7 @@ public class MeasurementListViewModel implements ViewModel {
     }
 
     private ObservableList<MeasurementType> getAllMeasurementTypes() {
-        return new ObservableListWrapper<>(dbHelper.importAllMeasurementTypes());
+        return new ObservableListWrapper<>(dbHelper.getAllMeasurementTypes());
     }
 
     private int importMeasurementTypesIntoComboBox() {

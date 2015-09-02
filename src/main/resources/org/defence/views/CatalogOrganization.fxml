@@ -8,7 +8,7 @@
     <children>
         <StackPane style="-fx-background-color: #4A6C9B" GridPane.columnIndex="0" GridPane.rowIndex="0">
             <children>
-                <Label stylesheets="/css/LableProperty.css" text="Справочник организаций" textAlignment="CENTER">
+                <Label stylesheets="/css/LabelProperty.css" text="Справочник организаций" textAlignment="CENTER">
                 </Label>
             </children>
         </StackPane>

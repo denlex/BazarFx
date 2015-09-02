@@ -24,7 +24,7 @@
             <children>
                 <StackPane style="-fx-background-color: #4A6C9B" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="TOP">
                     <children>
-                        <Label stylesheets="/css/LableProperty.css" text="Добавление новой характеристики" GridPane.halignment="CENTER">
+                        <Label stylesheets="/css/LabelProperty.css" text="Добавление новой характеристики" GridPane.halignment="CENTER">
                             <StackPane.margin>
                                 <Insets left="50" right="50" />
                             </StackPane.margin>
