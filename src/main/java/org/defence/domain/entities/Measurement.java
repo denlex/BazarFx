@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by root on 22.07.15.
  */
-public class Measurement implements Serializable {
+public class Measurement implements Serializable, Comparable<Measurement> {
     private int id;
     private String code;
     private String name;
@@ -50,5 +50,10 @@ public class Measurement implements Serializable {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    @Override
+    public int compareTo(Measurement o) {
+        return id == o.getId() ? 0 : id > o.getId() ? 1 : -1;
     }
 }

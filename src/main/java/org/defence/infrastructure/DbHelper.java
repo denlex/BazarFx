@@ -144,7 +144,7 @@ public class DbHelper {
         MeasurementType result = null;
         try {
             result = (MeasurementType) session.get(MeasurementType.class, id);
-        } catch(Exception ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
             session.close();
@@ -185,7 +185,7 @@ public class DbHelper {
             type.setName(name);
             session.update(type);
             transaction.commit();
-        } catch(Exception ex) {
+        } catch (Exception ex) {
             transaction.rollback();
             ex.printStackTrace();
             return false;
@@ -216,6 +216,23 @@ public class DbHelper {
 
         try {
             result = session.createQuery("from Measurement order by id").list();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            session.close();
+            return result;
+        }
+    }
+
+    public List<Measurement> getMeasurementsByMeasurementTypeId(Integer id) {
+        Session session = factory.openSession();
+        List<Measurement> result = null;
+
+        try {
+            MeasurementType type = (MeasurementType) session.createQuery("from MeasurementType where id = :id").setParameter("id", id).uniqueResult();
+
+            result = new LinkedList<>();
+            result.addAll(type.getMeasurements().stream().sorted().collect(Collectors.toList()));
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
