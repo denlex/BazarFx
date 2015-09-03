@@ -12,7 +12,10 @@ import org.defence.infrastructure.DbHelper;
  */
 public class MeasurementEditViewModel implements ViewModel {
 
-    private final ObjectProperty<MeasurementViewModel> measurement = new SimpleObjectProperty<>();
+    private final IntegerProperty id = new SimpleIntegerProperty();
+    private final StringProperty code = new SimpleStringProperty();
+    private final StringProperty name = new SimpleStringProperty();
+    private final StringProperty shortName = new SimpleStringProperty();
 
     private String cachedCode;
     private String cachedName;
@@ -29,15 +32,20 @@ public class MeasurementEditViewModel implements ViewModel {
         saveCommand = new DelegateCommand(() -> new Action() {
             @Override
             protected void action() throws Exception {
-                MeasurementViewModel m = measurement.getValue();
 
-                if (m.getId() == 0) {
+                Integer typeId = parentViewModel.getSelectedType().getId();
+
+                if (typeId == null || typeId == 0) {
+                    return;
+                }
+
+                if (id.getValue() == 0) {
                     // add measurement
-                    dbHelper.addMeasurement(m.getCode(), m.getName(), m.getShortName());
+                    dbHelper.addMeasurement(typeId, code.getValue(), name.getValue(), shortName.getValue());
                 } else {
                     // change exist measurement
                     // TODO: Сделать проверку на пустой ввод данных о типе измерения
-                    dbHelper.updateMeasurement(m.getId(), m.getCode(), m.getName(), m.getShortName());
+                    dbHelper.updateMeasurement(typeId, id.getValue(), code.getValue(), name.getValue(), shortName.getValue());
                 }
 
                 parentViewModel.loadMeasurementsBySelectedType();
@@ -52,16 +60,52 @@ public class MeasurementEditViewModel implements ViewModel {
         });
     }
 
-    public MeasurementViewModel getMeasurement() {
-        return measurement.get();
+    public int getId() {
+        return id.get();
     }
 
-    public ObjectProperty<MeasurementViewModel> measurementProperty() {
-        return measurement;
+    public IntegerProperty idProperty() {
+        return id;
     }
 
-    public void setMeasurement(MeasurementViewModel measurement) {
-        this.measurement.set(measurement);
+    public void setId(int id) {
+        this.id.set(id);
+    }
+
+    public String getCode() {
+        return code.get();
+    }
+
+    public StringProperty codeProperty() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code.set(code);
+    }
+
+    public String getName() {
+        return name.get();
+    }
+
+    public StringProperty nameProperty() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name.set(name);
+    }
+
+    public String getShortName() {
+        return shortName.get();
+    }
+
+    public StringProperty shortNameProperty() {
+        return shortName;
+    }
+
+    public void setShortName(String shortName) {
+        this.shortName.set(shortName);
     }
 
     public String getCachedCode() {

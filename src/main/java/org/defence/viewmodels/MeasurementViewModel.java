@@ -25,6 +25,7 @@ public class MeasurementViewModel implements ViewModel {
         id.setValue(measurement.getId());
         code.setValue(measurement.getCode());
         name.setValue(measurement.getName());
+        shortName.setValue(measurement.getShortName());
     }
 
     public int getId() {

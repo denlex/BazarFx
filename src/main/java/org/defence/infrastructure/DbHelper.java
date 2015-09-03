@@ -157,13 +157,15 @@ public class DbHelper {
         return true;
     }
 
-    public void addMeasurement(String code, String name, String shortName) {
+    public void addMeasurement(Integer typeId, String code, String name, String shortName) {
         Session session = factory.openSession();
         Transaction transaction = null;
 
         try {
             transaction = session.beginTransaction();
-            session.save(new Measurement(code, name, shortName));
+            MeasurementType type = (MeasurementType) session.get(MeasurementType.class, typeId);
+            type.getMeasurements().add(new Measurement(code, name, shortName));
+            session.save(type);
             transaction.commit();
         } catch (Exception ex) {
             transaction.rollback();
@@ -173,16 +175,24 @@ public class DbHelper {
         }
     }
 
-    public boolean updateMeasurement(Integer id, String code, String name, String shortName) {
+    public boolean updateMeasurement(Integer typeId, Integer id, String code, String name, String shortName) {
         Session session = factory.openSession();
         Transaction transaction = null;
 
         try {
             transaction = session.beginTransaction();
-            Measurement measurement = (Measurement) session.get(Measurement.class, id);
+            MeasurementType type = (MeasurementType) session.get(MeasurementType.class, typeId);
+            Measurement measurement = type.getMeasurements().stream().filter(p -> p.getId() == id).findFirst().get();
+
+            if (measurement == null) {
+                transaction.rollback();
+                return false;
+            }
+
             measurement.setCode(code);
             measurement.setName(name);
-            measurement.setName(shortName);
+            measurement.setShortName(shortName);
+
             session.update(measurement);
             transaction.commit();
         } catch (Exception ex) {

@@ -31,12 +31,6 @@ public class MeasurementTypeEditView implements FxmlView<MeasurementTypeEditView
     private Stage stage;
     private DialogResult dialogResult = DialogResult.CANCEL;
 
-    public void initialize() {
-
-        codeTextField.textProperty().bindBidirectional(viewModel.typeProperty().get().codeProperty());
-        nameTextField.textProperty().bindBidirectional(viewModel.typeProperty().get().nameProperty());
-    }
-
     public void saveButtonClick() {
         viewModel.getSaveCommand().execute();
         dialogResult = DialogResult.OK;
@@ -56,5 +50,10 @@ public class MeasurementTypeEditView implements FxmlView<MeasurementTypeEditView
     @Override
     public DialogResult getModalResult() {
         return dialogResult;
+    }
+
+    public void initialize() {
+        codeTextField.textProperty().bindBidirectional(viewModel.codeProperty());
+        nameTextField.textProperty().bindBidirectional(viewModel.nameProperty());
     }
 }

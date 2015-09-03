@@ -52,6 +52,9 @@ public class MeasurementCatalogView implements FxmlView<MeasurementCatalogViewMo
     private TableColumn<MeasurementViewModel, String> nameTableColumn;
 
     @FXML
+    private TableColumn<MeasurementViewModel, String> shortNameTableColumn;
+
+    @FXML
     private Button addTypeButton;
 
     @FXML
@@ -89,6 +92,7 @@ public class MeasurementCatalogView implements FxmlView<MeasurementCatalogViewMo
         idTableColumn.setCellValueFactory(new PropertyValueFactory("id"));
         codeTableColumn.setCellValueFactory(new PropertyValueFactory("code"));
         nameTableColumn.setCellValueFactory(new PropertyValueFactory("name"));
+        shortNameTableColumn.setCellValueFactory(new PropertyValueFactory("shortName"));
 
         measurementsTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             viewModel.selectedMeasurementProperty().unbind();
@@ -130,38 +134,13 @@ public class MeasurementCatalogView implements FxmlView<MeasurementCatalogViewMo
     public void editTypeButtonClick(Event event) {
         ViewTuple<MeasurementTypeEditView, MeasurementTypeEditViewModel> viewTuple = FluentViewLoader.fxmlView(MeasurementTypeEditView.class).load();
         viewTuple.getViewModel().setParentViewModel(viewModel);
-        Parent root = viewTuple.getView();
-
-        Stage dialog = new Stage();
-        viewTuple.getCodeBehind().setStage(dialog);
 
         Property<MeasurementTypeViewModel> t = viewModel.selectedTypeProperty();
-        viewTuple.getViewModel().typeProperty().bindBidirectional(t);
-        viewTuple.getViewModel().setCachedCode(t.getValue().getCode());
-        viewTuple.getViewModel().setCachedName(t.getValue().getName());
+        viewTuple.getViewModel().idProperty().bindBidirectional(t.getValue().idProperty());
+        viewTuple.getViewModel().codeProperty().bindBidirectional(t.getValue().codeProperty());
+        viewTuple.getViewModel().nameProperty().bindBidirectional(t.getValue().nameProperty());
 
-        dialog.initModality(Modality.WINDOW_MODAL);
-        dialog.initOwner(MainApp.mainStage);
-        dialog.setResizable(false);
-
-        Scene scene = new Scene(root);
-        scene.addEventHandler(KeyEvent.ANY, event1 -> {
-            if (event1.getCode() == KeyCode.ESCAPE) {
-                dialog.close();
-            }
-        });
-
-        dialog.setScene(scene);
-        dialog.showAndWait();
-
-        typesTableView.requestFocus();
-    }
-
-    public void addMeasurementButtonClick(Event event) {
-        ViewTuple<MeasurementEditView, MeasurementEditViewModel> viewTuple = FluentViewLoader.fxmlView(MeasurementEditView.class).load();
-        viewTuple.getViewModel().setParentViewModel(viewModel);
         Parent root = viewTuple.getView();
-
         Stage dialog = new Stage();
         viewTuple.getCodeBehind().setStage(dialog);
 
@@ -181,14 +160,13 @@ public class MeasurementCatalogView implements FxmlView<MeasurementCatalogViewMo
 
         // set current position in typesTableView
         if (viewTuple.getCodeBehind().getModalResult() == DialogResult.OK) {
-            int lastRowIndex = viewModel.getTypes().size() - 1;
-            typesTableView.scrollTo(lastRowIndex);
-            typesTableView.selectionModelProperty().get().select(lastRowIndex);
-            typesTableView.requestFocus();
+            typesTableView.refresh();
         }
+
+        typesTableView.requestFocus();
     }
 
-    private void editMeasurementButtonClick(MouseEvent event) {
+    public void addMeasurementButtonClick(Event event) {
         ViewTuple<MeasurementEditView, MeasurementEditViewModel> viewTuple = FluentViewLoader.fxmlView(MeasurementEditView.class).load();
         viewTuple.getViewModel().setParentViewModel(viewModel);
         Parent root = viewTuple.getView();
@@ -196,18 +174,13 @@ public class MeasurementCatalogView implements FxmlView<MeasurementCatalogViewMo
         Stage dialog = new Stage();
         viewTuple.getCodeBehind().setStage(dialog);
 
-        Property<MeasurementViewModel> m = viewModel.selectedMeasurementProperty();
-        viewTuple.getViewModel().measurementProperty().bindBidirectional(m);
-        viewTuple.getViewModel().setCachedCode(m.getValue().codeProperty().getValue());
-        viewTuple.getViewModel().setCachedName(m.getValue().nameProperty().getValue());
-
         dialog.initModality(Modality.WINDOW_MODAL);
         dialog.initOwner(MainApp.mainStage);
         dialog.setResizable(false);
 
         Scene scene = new Scene(root);
-        scene.addEventHandler(KeyEvent.ANY, event1 -> {
-            if (event1.getCode() == KeyCode.ESCAPE) {
+        scene.addEventHandler(KeyEvent.ANY, keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ESCAPE) {
                 dialog.close();
             }
         });
@@ -215,7 +188,58 @@ public class MeasurementCatalogView implements FxmlView<MeasurementCatalogViewMo
         dialog.setScene(scene);
         dialog.showAndWait();
 
-        typesTableView.requestFocus();
+        // set current position in measurementsTableView
+        if (viewTuple.getCodeBehind().getModalResult() == DialogResult.OK) {
+            int lastRowIndex = viewModel.getMeasurements().size() - 1;
+            measurementsTableView.scrollTo(lastRowIndex);
+            measurementsTableView.selectionModelProperty().get().select(lastRowIndex);
+            measurementsTableView.requestFocus();
+        }
+    }
+
+    public void editMeasurementButtonClick(Event event) {
+        Property<MeasurementViewModel> m = viewModel.selectedMeasurementProperty();
+
+        // if item in measurementTableView was not selected
+        if (m.getValue() == null) {
+            return;
+        }
+
+        ViewTuple<MeasurementEditView, MeasurementEditViewModel> viewTuple = FluentViewLoader.fxmlView(MeasurementEditView.class).load();
+        viewTuple.getViewModel().setParentViewModel(viewModel);
+        Parent root = viewTuple.getView();
+
+        Stage dialog = new Stage();
+        viewTuple.getCodeBehind().setStage(dialog);
+
+
+        viewTuple.getViewModel().idProperty().bindBidirectional(m.getValue().idProperty());
+        viewTuple.getViewModel().codeProperty().bindBidirectional(m.getValue().codeProperty());
+        viewTuple.getViewModel().nameProperty().bindBidirectional(m.getValue().nameProperty());
+        viewTuple.getViewModel().shortNameProperty().bindBidirectional(m.getValue().shortNameProperty());
+        /*viewTuple.getViewModel().setCachedCode(m.getValue().codeProperty().getValue());
+        viewTuple.getViewModel().setCachedName(m.getValue().nameProperty().getValue());*/
+
+        dialog.initModality(Modality.WINDOW_MODAL);
+        dialog.initOwner(MainApp.mainStage);
+        dialog.setResizable(false);
+
+        Scene scene = new Scene(root);
+        scene.addEventHandler(KeyEvent.ANY, keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ESCAPE) {
+                dialog.close();
+            }
+        });
+
+        dialog.setScene(scene);
+        dialog.showAndWait();
+
+        // set current position in measurementsTableView
+        if (viewTuple.getCodeBehind().getModalResult() == DialogResult.OK) {
+            measurementsTableView.refresh();
+        }
+
+        measurementsTableView.requestFocus();
     }
 
     public void typesTableViewClick() {
@@ -248,10 +272,15 @@ public class MeasurementCatalogView implements FxmlView<MeasurementCatalogViewMo
         }
     }
 
-
-
     public void initialize() {
         initializeTypesTableView();
         initializeMeasurementsTableView();
+
+        editTypeButton.disableProperty().bind(viewModel.selectedTypeProperty().isNull());
+        deleteTypeButton.disableProperty().bind(viewModel.selectedTypeProperty().isNull());
+
+        addMeasurementButton.disableProperty().bind(viewModel.selectedTypeProperty().isNull());
+        editMeasurementButton.disableProperty().bind(viewModel.selectedMeasurementProperty().isNull());
+        deleteMeasurementButton.disableProperty().bind(viewModel.selectedMeasurementProperty().isNull());
     }
 }

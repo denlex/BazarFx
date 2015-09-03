@@ -23,8 +23,7 @@
                 <TextField fx:id="codeTextField" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
                 <Label text="Наименование:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
                 <TextField fx:id="nameTextField" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-                <Label text="Сокращ.наим-е:" GridPane.columnIndex="0" GridPane.rowIndex="2">
-                </Label>
+                <Label text="Сокращ.наим-е:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
                 <TextField fx:id="shortNameTextField" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
             </children>
             <GridPane.margin>
@@ -43,7 +42,8 @@
         <AnchorPane GridPane.columnSpan="2" GridPane.rowIndex="2">
             <children>
                 <Button fx:id="yesBtn" onAction="#saveButtonClick" AnchorPane.bottomAnchor="10.0"
-                        AnchorPane.rightAnchor="140.0" AnchorPane.topAnchor="10.0" GridPane.halignment="RIGHT">Применить
+                        AnchorPane.rightAnchor="140.0" AnchorPane.topAnchor="10.0" GridPane.halignment="RIGHT"
+                        defaultButton="true">Применить
                 </Button>
                 <Button fx:id="noBtn" onAction="#cancelButtonClick" AnchorPane.bottomAnchor="10.0"
                         AnchorPane.rightAnchor="10" AnchorPane.topAnchor="10.0" GridPane.halignment="RIGHT">Отмена
