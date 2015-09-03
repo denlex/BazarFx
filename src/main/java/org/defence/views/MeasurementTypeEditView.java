@@ -11,7 +11,7 @@ import org.defence.viewmodels.MeasurementTypeEditViewModel;
 /**
  * Created by root on 8/31/15.
  */
-public class MeasurementTypeEditView implements FxmlView<MeasurementTypeEditViewModel> {
+public class MeasurementTypeEditView implements FxmlView<MeasurementTypeEditViewModel>, Returnable {
 
     @FXML
     private TextField codeTextField;
@@ -29,6 +29,7 @@ public class MeasurementTypeEditView implements FxmlView<MeasurementTypeEditView
     MeasurementTypeEditViewModel viewModel;
 
     private Stage stage;
+    private DialogResult dialogResult = DialogResult.CANCEL;
 
     public void initialize() {
 
@@ -38,15 +39,22 @@ public class MeasurementTypeEditView implements FxmlView<MeasurementTypeEditView
 
     public void saveButtonClick() {
         viewModel.getSaveCommand().execute();
+        dialogResult = DialogResult.OK;
         stage.close();
     }
 
     public void cancelButtonClick() {
         viewModel.getCancelCommand().execute();
+        dialogResult = DialogResult.CANCEL;
         stage.close();
     }
 
     public void setStage(Stage stage) {
         this.stage = stage;
+    }
+
+    @Override
+    public DialogResult getModalResult() {
+        return dialogResult;
     }
 }

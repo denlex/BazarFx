@@ -41,7 +41,7 @@
                 </GridPane>
                 <StackPane style="-fx-background-color: #4A6C9B" GridPane.columnIndex="0" GridPane.rowIndex="0">
                     <children>
-                        <Label stylesheets="/css/LableProperty.css" text="Редактирование справочника типов единиц измерений"
+                        <Label stylesheets="/css/LabelProperty.css" text="Редактирование справочника типов единиц измерений"
                                StackPane.alignment="CENTER">
                         </Label>
                     </children>

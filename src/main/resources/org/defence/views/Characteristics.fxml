@@ -13,7 +13,7 @@
             <children>
                 <StackPane style="-fx-background-color: #4A6C9B" GridPane.columnIndex="0" GridPane.rowIndex="0">
                     <children>
-                        <Label stylesheets="/css/LableProperty.css" text="Справочник характеристик" StackPane.alignment="CENTER">
+                        <Label stylesheets="/css/LabelProperty.css" text="Справочник характеристик" StackPane.alignment="CENTER">
                         </Label>
                     </children>
                 </StackPane>
@@ -27,7 +27,7 @@
                                             <children>
                                                 <StackPane style="-fx-background-color: #4A6C9B;" GridPane.columnIndex="0" GridPane.rowIndex="0">
                                                     <children>
-                                                        <Label stylesheets="/css/LableProperty.css" text="Типы характеристик">
+                                                        <Label stylesheets="/css/LabelProperty.css" text="Типы характеристик">
                                                         </Label>
                                                     </children>
                                                 </StackPane>
@@ -57,7 +57,7 @@
                                             <children>
                                                 <StackPane style="-fx-background-color: #4A6C9B;" GridPane.columnIndex="0" GridPane.rowIndex="0">
                                                     <children>
-                                                        <Label stylesheets="/css/LableProperty.css" text="Характеристики">
+                                                        <Label stylesheets="/css/LabelProperty.css" text="Характеристики">
                                                         </Label>
                                                     </children>
                                                 </StackPane>

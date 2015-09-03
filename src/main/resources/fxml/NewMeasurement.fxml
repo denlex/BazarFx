@@ -31,7 +31,7 @@
                 </GridPane>
                 <StackPane style="-fx-background-color: #4A6C9B" GridPane.columnIndex="0" GridPane.rowIndex="0">
                     <children>
-                        <Label stylesheets="/css/LableProperty.css" text="Добавление новой единицы измерения"  StackPane.alignment="CENTER">
+                        <Label stylesheets="/css/LabelProperty.css" text="Добавление новой единицы измерения"  StackPane.alignment="CENTER">
 <!--                     <font>
                         <Font name="Candara" size="18.0" />
                      </font>-->

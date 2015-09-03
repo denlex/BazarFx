@@ -15,7 +15,7 @@
             <children>
                 <StackPane style="-fx-background-color: #4A6C9B" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="TOP">
                     <children>
-                        <Label stylesheets="/css/LableProperty.css" text="Добавление нового СФО"
+                        <Label stylesheets="/css/LabelProperty.css" text="Добавление нового СФО"
                                GridPane.halignment="CENTER">
                             <StackPane.margin>
                                 <Insets left="50" right="50" />
@@ -76,7 +76,7 @@
                                             <children>
                                                 <StackPane alignment="CENTER" style="-fx-background-color: #4A6C9B" GridPane.columnIndex="0" GridPane.rowIndex="0">
                                                     <children>
-                                                        <Label stylesheets="/css/LableProperty.css" text="Этапы готовности документа">
+                                                        <Label stylesheets="/css/LabelProperty.css" text="Этапы готовности документа">
                                                         </Label>
                                                     </children>
                                                 </StackPane>
@@ -117,7 +117,7 @@
                                                 </RadioButton>
                                                 <StackPane alignment="CENTER" style="-fx-background-color: #4A6C9B" GridPane.columnIndex="1" GridPane.rowIndex="0">
                                                     <children>
-                                                        <Label stylesheets="/css/LableProperty.css" text="Дополнительная информация о документе">
+                                                        <Label stylesheets="/css/LabelProperty.css" text="Дополнительная информация о документе">
                                                         </Label>
                                                     </children>
                                                 </StackPane>

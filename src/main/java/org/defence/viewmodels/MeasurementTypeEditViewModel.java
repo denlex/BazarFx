@@ -27,24 +27,46 @@ public class MeasurementTypeEditViewModel implements ViewModel {
     private Command saveCommand;
     private Command cancelCommand;
 
-    public MeasurementTypeEditViewModel() {
+    private MeasurementCatalogViewModel parentViewModel;
 
-        System.out.println("code = " + code);
-        System.out.println("name = " + name);
+    public MeasurementTypeEditViewModel() {
 
         saveCommand = new DelegateCommand(() -> new Action() {
             @Override
             protected void action() throws Exception {
-//                MeasurementType type = dbHelper.getMeasurementTypeById(id.getValue());
-                dbHelper.updateMeasurementType(id.getValue(), code.getValue(), name.getValue());
+                if (id.getValue() == 0) {
+                    // add measurement type
+                    if (dbHelper.addMeasurementType(code.getValue(), name.getValue())) {
+                        if (parentViewModel != null) {
+                            System.out.println(parentViewModel.getClass().getName());
+                        }
+                    }
+                } else {
+                    // change exist measurement type
+                    // TODO: Сделать проверку на пустой ввод данных о типе измерения
+                    dbHelper.updateMeasurementType(id.getValue(), code.getValue(), name.getValue());
+                }
+
+                parentViewModel.loadAllTypes();
+
+                /*
+                * simple addition to typesList
+                if (id.getValue() == 0) {
+                    parentViewModel.getTypes().add(new MeasurementTypeViewModel(code.getValue(), name.getValue()));
+                } else {
+                    parentViewModel.getTypes().stream().findFirst().filter(measurementTypeViewModel -> measurementTypeViewModel.getId() == id.getValue());
+                }*/
             }
         });
 
         cancelCommand = new DelegateCommand(() -> new Action() {
             @Override
             protected void action() throws Exception {
-                code.setValue(cachedCode);
-                name.setValue(cachedName);
+                // if dialog is opened in modification mode (editing)
+                if (id.getValue() != null) {
+                    code.setValue(cachedCode);
+                    name.setValue(cachedName);
+                }
             }
         });
     }
@@ -107,5 +129,13 @@ public class MeasurementTypeEditViewModel implements ViewModel {
 
     public void setCachedName(String cachedName) {
         this.cachedName = cachedName;
+    }
+
+    public MeasurementCatalogViewModel getParentViewModel() {
+        return parentViewModel;
+    }
+
+    public void setParentViewModel(MeasurementCatalogViewModel parentViewModel) {
+        this.parentViewModel = parentViewModel;
     }
 }
