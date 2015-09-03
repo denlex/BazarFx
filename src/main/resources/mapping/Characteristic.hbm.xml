@@ -10,6 +10,12 @@
 
         <property name="code" column="CODE" type="string"/>
         <property name="name" column="NAME" type="string"/>
-        <many-to-one name="measurement" class="Measurement" unique="true" not-null="false"/>
+        <!--<many-to-one name="measurement" class="Measurement" unique="true" not-null="false"/>-->
+
+        <set name="measurements" table="MEASUREMENT"
+             inverse="false" lazy="true" fetch="select" cascade="all">
+            <key column="CHARACTERISTIC_ID"/>
+            <one-to-many class="Measurement"/>
+        </set>
     </class>
 </hibernate-mapping>

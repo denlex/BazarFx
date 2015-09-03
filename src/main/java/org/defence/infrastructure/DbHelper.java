@@ -157,6 +157,45 @@ public class DbHelper {
         return true;
     }
 
+    public void addMeasurement(String code, String name, String shortName) {
+        Session session = factory.openSession();
+        Transaction transaction = null;
+
+        try {
+            transaction = session.beginTransaction();
+            session.save(new Measurement(code, name, shortName));
+            transaction.commit();
+        } catch (Exception ex) {
+            transaction.rollback();
+            ex.printStackTrace();
+        } finally {
+            session.close();
+        }
+    }
+
+    public boolean updateMeasurement(Integer id, String code, String name, String shortName) {
+        Session session = factory.openSession();
+        Transaction transaction = null;
+
+        try {
+            transaction = session.beginTransaction();
+            Measurement measurement = (Measurement) session.get(Measurement.class, id);
+            measurement.setCode(code);
+            measurement.setName(name);
+            measurement.setName(shortName);
+            session.update(measurement);
+            transaction.commit();
+        } catch (Exception ex) {
+            transaction.rollback();
+            ex.printStackTrace();
+            return false;
+        } finally {
+            session.close();
+        }
+
+        return true;
+    }
+
     public MeasurementType getMeasurementTypeById(int id) {
         Session session = factory.openSession();
         MeasurementType result = null;

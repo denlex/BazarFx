@@ -4,10 +4,7 @@ import de.saxsys.mvvmfx.ViewModel;
 import de.saxsys.mvvmfx.utils.commands.Action;
 import de.saxsys.mvvmfx.utils.commands.Command;
 import de.saxsys.mvvmfx.utils.commands.DelegateCommand;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 import org.defence.infrastructure.DbHelper;
 
 /**
@@ -15,9 +12,11 @@ import org.defence.infrastructure.DbHelper;
  */
 public class MeasurementTypeEditViewModel implements ViewModel {
 
-    private final IntegerProperty id = new SimpleIntegerProperty();
+    /*private final IntegerProperty id = new SimpleIntegerProperty();
     private StringProperty code = new SimpleStringProperty();
-    private StringProperty name = new SimpleStringProperty();
+    private StringProperty name = new SimpleStringProperty();*/
+
+    private final ObjectProperty<MeasurementTypeViewModel> type = new SimpleObjectProperty<>();
 
     private String cachedCode;
     private String cachedName;
@@ -34,9 +33,11 @@ public class MeasurementTypeEditViewModel implements ViewModel {
         saveCommand = new DelegateCommand(() -> new Action() {
             @Override
             protected void action() throws Exception {
-                if (id.getValue() == 0) {
+                MeasurementTypeViewModel t = type.getValue();
+
+                if (t.getId() == 0) {
                     // add measurement type
-                    if (dbHelper.addMeasurementType(code.getValue(), name.getValue())) {
+                    if (dbHelper.addMeasurementType(t.getCode(), t.getName())) {
                         if (parentViewModel != null) {
                             System.out.println(parentViewModel.getClass().getName());
                         }
@@ -44,7 +45,7 @@ public class MeasurementTypeEditViewModel implements ViewModel {
                 } else {
                     // change exist measurement type
                     // TODO: Сделать проверку на пустой ввод данных о типе измерения
-                    dbHelper.updateMeasurementType(id.getValue(), code.getValue(), name.getValue());
+                    dbHelper.updateMeasurementType(t.getId(), t.getCode(), t.getName());
                 }
 
                 parentViewModel.loadAllTypes();
@@ -62,10 +63,12 @@ public class MeasurementTypeEditViewModel implements ViewModel {
         cancelCommand = new DelegateCommand(() -> new Action() {
             @Override
             protected void action() throws Exception {
+                MeasurementTypeViewModel t = type.get();
+
                 // if dialog is opened in modification mode (editing)
-                if (id.getValue() != null) {
-                    code.setValue(cachedCode);
-                    name.setValue(cachedName);
+                if (t.idProperty().getValue() != null) {
+                    t.setCode(cachedCode);
+                    t.setName(cachedName);
                 }
             }
         });
@@ -79,40 +82,16 @@ public class MeasurementTypeEditViewModel implements ViewModel {
         return cancelCommand;
     }
 
-    public int getId() {
-        return id.get();
+    public MeasurementTypeViewModel getType() {
+        return type.get();
     }
 
-    public IntegerProperty idProperty() {
-        return id;
+    public ObjectProperty<MeasurementTypeViewModel> typeProperty() {
+        return type;
     }
 
-    public void setId(int id) {
-        this.id.set(id);
-    }
-
-    public String getCode() {
-        return code.get();
-    }
-
-    public StringProperty codeProperty() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code.set(code);
-    }
-
-    public String getName() {
-        return name.get();
-    }
-
-    public StringProperty nameProperty() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name.set(name);
+    public void setType(MeasurementTypeViewModel type) {
+        this.type.set(type);
     }
 
     public String getCachedCode() {

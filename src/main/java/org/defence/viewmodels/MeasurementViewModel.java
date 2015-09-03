@@ -15,6 +15,7 @@ public class MeasurementViewModel implements ViewModel {
     private final IntegerProperty id = new SimpleIntegerProperty();
     private final StringProperty code = new SimpleStringProperty();
     private final StringProperty name = new SimpleStringProperty();
+    private final StringProperty shortName = new SimpleStringProperty();
 
 
     public MeasurementViewModel() {
@@ -60,5 +61,17 @@ public class MeasurementViewModel implements ViewModel {
 
     public void setName(String name) {
         this.name.set(name);
+    }
+
+    public String getShortName() {
+        return shortName.get();
+    }
+
+    public StringProperty shortNameProperty() {
+        return shortName;
+    }
+
+    public void setShortName(String shortName) {
+        this.shortName.set(shortName);
     }
 }

@@ -39,7 +39,8 @@
                                                 </StackPane>
                                                 <TableView fx:id="typesTableView" GridPane.columnIndex="0"
                                                            GridPane.rowIndex="1" onMouseClicked="#typesTableViewClick"
-                                                           onKeyReleased="#typesTableViewKeyUp" onMouseReleased="#typesTableViewMouseRelease">
+                                                           onKeyReleased="#typesTableViewKeyUp"
+                                                           onMouseReleased="#typesTableViewMouseRelease">
                                                     <columns>
                                                         <TableColumn fx:id="idTypeTableColumn" text="ID"/>
                                                         <TableColumn fx:id="codeTypeTableColumn"
@@ -121,7 +122,8 @@
                                                         <Button fx:id="addMeasurementButton" text="Добавить"
                                                                 AnchorPane.bottomAnchor="10.0"
                                                                 AnchorPane.rightAnchor="270.0"
-                                                                AnchorPane.topAnchor="10.0">
+                                                                AnchorPane.topAnchor="10.0"
+                                                                onAction="#addMeasurementButtonClick">
                                                         </Button>
                                                     </children>
                                                 </AnchorPane>

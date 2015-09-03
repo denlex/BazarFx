@@ -33,8 +33,8 @@ public class MeasurementTypeEditView implements FxmlView<MeasurementTypeEditView
 
     public void initialize() {
 
-        codeTextField.textProperty().bindBidirectional(viewModel.codeProperty());
-        nameTextField.textProperty().bindBidirectional(viewModel.nameProperty());
+        codeTextField.textProperty().bindBidirectional(viewModel.typeProperty().get().codeProperty());
+        nameTextField.textProperty().bindBidirectional(viewModel.typeProperty().get().nameProperty());
     }
 
     public void saveButtonClick() {
