@@ -4,20 +4,18 @@ import de.saxsys.mvvmfx.ViewModel;
 import de.saxsys.mvvmfx.utils.commands.Action;
 import de.saxsys.mvvmfx.utils.commands.Command;
 import de.saxsys.mvvmfx.utils.commands.DelegateCommand;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 import org.defence.infrastructure.DbHelper;
 
 /**
- * Created by root on 8/31/15.
+ * Created by root on 9/3/15.
  */
-public class MeasurementTypeEditViewModel implements ViewModel {
+public class MeasurementEditViewModel implements ViewModel {
 
     private final IntegerProperty id = new SimpleIntegerProperty();
-    private StringProperty code = new SimpleStringProperty();
-    private StringProperty name = new SimpleStringProperty();
+    private final StringProperty code = new SimpleStringProperty();
+    private final StringProperty name = new SimpleStringProperty();
+    private final StringProperty shortName = new SimpleStringProperty();
 
     private String cachedCode;
     private String cachedName;
@@ -27,30 +25,30 @@ public class MeasurementTypeEditViewModel implements ViewModel {
     private Command saveCommand;
     private Command cancelCommand;
 
-    private MeasurementCatalogViewModel parentViewModel;
+    MeasurementCatalogViewModel parentViewModel;
 
-    public MeasurementTypeEditViewModel() {
+    public MeasurementEditViewModel() {
+
         saveCommand = new DelegateCommand(() -> new Action() {
             @Override
             protected void action() throws Exception {
 
-                if (id.getValue() == 0) {
-                    // add measurement type
-                    if (dbHelper.addMeasurementType(code.getValue(), name.getValue())) {
-                        System.out.println("type was added");
+                Integer typeId = parentViewModel.getSelectedType().getId();
 
-                        if (parentViewModel != null) {
-                            System.out.println(parentViewModel.getClass().getName());
-                        }
-                    }
-                } else {
-                    // change exist measurement type
-                    // TODO: Сделать проверку на пустой ввод данных о типе измерения
-                    System.out.println("Type was changed");
-                    dbHelper.updateMeasurementType(id.getValue(), code.getValue(), name.getValue());
+                if (typeId == null || typeId == 0) {
+                    return;
                 }
 
-                parentViewModel.loadAllTypes();
+                if (id.getValue() == 0) {
+                    // add measurement
+                    dbHelper.addMeasurement(typeId, code.getValue(), name.getValue(), shortName.getValue());
+                } else {
+                    // change exist measurement
+                    // TODO: Сделать проверку на пустой ввод данных о типе измерения
+                    dbHelper.updateMeasurement(typeId, id.getValue(), code.getValue(), name.getValue(), shortName.getValue());
+                }
+
+                parentViewModel.loadMeasurementsBySelectedType();
             }
         });
 
@@ -60,14 +58,6 @@ public class MeasurementTypeEditViewModel implements ViewModel {
 
             }
         });
-    }
-
-    public Command getSaveCommand() {
-        return saveCommand;
-    }
-
-    public Command getCancelCommand() {
-        return cancelCommand;
     }
 
     public int getId() {
@@ -106,6 +96,18 @@ public class MeasurementTypeEditViewModel implements ViewModel {
         this.name.set(name);
     }
 
+    public String getShortName() {
+        return shortName.get();
+    }
+
+    public StringProperty shortNameProperty() {
+        return shortName;
+    }
+
+    public void setShortName(String shortName) {
+        this.shortName.set(shortName);
+    }
+
     public String getCachedCode() {
         return cachedCode;
     }
@@ -120,6 +122,22 @@ public class MeasurementTypeEditViewModel implements ViewModel {
 
     public void setCachedName(String cachedName) {
         this.cachedName = cachedName;
+    }
+
+    public Command getSaveCommand() {
+        return saveCommand;
+    }
+
+    public void setSaveCommand(Command saveCommand) {
+        this.saveCommand = saveCommand;
+    }
+
+    public Command getCancelCommand() {
+        return cancelCommand;
+    }
+
+    public void setCancelCommand(Command cancelCommand) {
+        this.cancelCommand = cancelCommand;
     }
 
     public MeasurementCatalogViewModel getParentViewModel() {

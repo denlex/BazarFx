@@ -14,7 +14,7 @@
                 <StackPane style="-fx-background-color: #4A6C9B" GridPane.columnIndex="0">
                     <children>
                         <!-- TODO: изменить пути к файлу стилей через @ (тут и далее по файлу) -->
-                        <Label stylesheets="/css/LabelProperty.css" text="Добавление новой единицы измерения"
+                        <Label stylesheets="/css/LabelProperty.css" text="Редактирование единицы измерения"
                                StackPane.alignment="CENTER">
                         </Label>
                     </children>
@@ -38,8 +38,10 @@
                                                     </children>
                                                 </StackPane>
                                                 <TableView fx:id="typesTableView" GridPane.columnIndex="0"
-                                                           GridPane.rowIndex="1" onMouseClicked="#typesTableViewClick"
-                                                           onKeyReleased="#typesTableViewKeyUp" onMouseReleased="#typesTableViewMouseRelease">
+                                                           GridPane.rowIndex="1" onMouseClicked="#typesTableViewClicked"
+                                                           onKeyPressed="#typesTableViewKeyPressed"
+                                                           onKeyReleased="#typesTableViewKeyReleased"
+                                                           onMouseReleased="#typesTableViewMouseReleased">
                                                     <columns>
                                                         <TableColumn fx:id="idTypeTableColumn" text="ID"/>
                                                         <TableColumn fx:id="codeTypeTableColumn"
@@ -57,7 +59,7 @@
                                                                 AnchorPane.bottomAnchor="10.0"
                                                                 AnchorPane.rightAnchor="140.0"
                                                                 AnchorPane.topAnchor="10.0"
-                                                                onAction="#editTypeButtonClick">
+                                                                onAction="#editTypeButtonClicked">
                                                         </Button>
                                                         <Button fx:id="deleteTypeButton" text="Удалить"
                                                                 AnchorPane.bottomAnchor="10.0"
@@ -68,7 +70,7 @@
                                                                 AnchorPane.bottomAnchor="10.0"
                                                                 AnchorPane.rightAnchor="270.0"
                                                                 AnchorPane.topAnchor="10.0"
-                                                                onAction="#addTypeButtonClick">
+                                                                onAction="#addTypeButtonClicked">
                                                         </Button>
                                                     </children>
                                                 </AnchorPane>
@@ -94,7 +96,9 @@
                                                     </children>
                                                 </StackPane>
                                                 <TableView fx:id="measurementsTableView" GridPane.columnIndex="0"
-                                                           GridPane.rowIndex="1">
+                                                           GridPane.rowIndex="1"
+                                                           onKeyPressed="#measurementsTableViewKeyPressed"
+                                                           onMouseReleased="#measurementsTableViewMouseRelease">
                                                     <columns>
                                                         <TableColumn fx:id="idTableColumn" text="ID"/>
                                                         <TableColumn fx:id="codeTableColumn"
@@ -102,7 +106,10 @@
                                                                      prefWidth="50.0" text="Код"/>
                                                         <TableColumn fx:id="nameTableColumn"
                                                                      maxWidth="1.7976931348623157E308" minWidth="150.0"
-                                                                     prefWidth="150.0" text="Наименование "/>
+                                                                     prefWidth="150.0" text="Наименование"/>
+                                                        <TableColumn fx:id="shortNameTableColumn"
+                                                                     maxWidth="1.7976931348623157E308" minWidth="150.0"
+                                                                     prefWidth="150.0" text="Сокращ.наимен."/>
                                                     </columns>
                                                 </TableView>
                                                 <AnchorPane GridPane.columnIndex="0" GridPane.halignment="RIGHT"
@@ -111,17 +118,20 @@
                                                         <Button fx:id="editMeasurementButton" text="Изменить"
                                                                 AnchorPane.bottomAnchor="10.0"
                                                                 AnchorPane.rightAnchor="140.0"
-                                                                AnchorPane.topAnchor="10.0">
+                                                                AnchorPane.topAnchor="10.0"
+                                                                onAction="#editMeasurementButtonClicked">
                                                         </Button>
                                                         <Button fx:id="deleteMeasurementButton" text="Удалить"
                                                                 AnchorPane.bottomAnchor="10.0"
                                                                 AnchorPane.rightAnchor="10.0"
-                                                                AnchorPane.topAnchor="10.0">
+                                                                AnchorPane.topAnchor="10.0"
+                                                                onAction="#deleteMeasurementButtonClicked">
                                                         </Button>
                                                         <Button fx:id="addMeasurementButton" text="Добавить"
                                                                 AnchorPane.bottomAnchor="10.0"
                                                                 AnchorPane.rightAnchor="270.0"
-                                                                AnchorPane.topAnchor="10.0">
+                                                                AnchorPane.topAnchor="10.0"
+                                                                onAction="#addMeasurementButtonClicked">
                                                         </Button>
                                                     </children>
                                                 </AnchorPane>

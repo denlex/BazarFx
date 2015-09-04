@@ -6,12 +6,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import org.defence.viewmodels.MeasurementTypeEditViewModel;
+import org.defence.viewmodels.MeasurementEditViewModel;
 
 /**
- * Created by root on 8/31/15.
+ * Created by root on 9/3/15.
  */
-public class MeasurementTypeEditView implements FxmlView<MeasurementTypeEditViewModel>, Returnable {
+public class MeasurementEditView implements FxmlView<MeasurementEditViewModel>, Returnable {
 
     @FXML
     private TextField codeTextField;
@@ -20,16 +20,31 @@ public class MeasurementTypeEditView implements FxmlView<MeasurementTypeEditView
     private TextField nameTextField;
 
     @FXML
+    private TextField shortNameTextField;
+
+    @FXML
     private Button yesBtn;
 
     @FXML
     private Button noBtn;
 
     @InjectViewModel
-    MeasurementTypeEditViewModel viewModel;
+    MeasurementEditViewModel viewModel;
 
     private Stage stage;
     private DialogResult dialogResult = DialogResult.CANCEL;
+
+    public MeasurementEditView() {
+    }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
+
+    @Override
+    public DialogResult getModalResult() {
+        return dialogResult;
+    }
 
     public void saveButtonClicked() {
         viewModel.getSaveCommand().execute();
@@ -43,17 +58,10 @@ public class MeasurementTypeEditView implements FxmlView<MeasurementTypeEditView
         stage.close();
     }
 
-    public void setStage(Stage stage) {
-        this.stage = stage;
-    }
-
-    @Override
-    public DialogResult getModalResult() {
-        return dialogResult;
-    }
-
     public void initialize() {
+
         codeTextField.textProperty().bindBidirectional(viewModel.codeProperty());
         nameTextField.textProperty().bindBidirectional(viewModel.nameProperty());
+        shortNameTextField.textProperty().bindBidirectional(viewModel.shortNameProperty());
     }
 }

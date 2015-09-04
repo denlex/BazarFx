@@ -157,6 +157,55 @@ public class DbHelper {
         return true;
     }
 
+    public void addMeasurement(Integer typeId, String code, String name, String shortName) {
+        Session session = factory.openSession();
+        Transaction transaction = null;
+
+        try {
+            transaction = session.beginTransaction();
+            MeasurementType type = (MeasurementType) session.get(MeasurementType.class, typeId);
+            type.getMeasurements().add(new Measurement(code, name, shortName));
+            session.save(type);
+            transaction.commit();
+        } catch (Exception ex) {
+            transaction.rollback();
+            ex.printStackTrace();
+        } finally {
+            session.close();
+        }
+    }
+
+    public boolean updateMeasurement(Integer typeId, Integer id, String code, String name, String shortName) {
+        Session session = factory.openSession();
+        Transaction transaction = null;
+
+        try {
+            transaction = session.beginTransaction();
+            MeasurementType type = (MeasurementType) session.get(MeasurementType.class, typeId);
+            Measurement measurement = type.getMeasurements().stream().filter(p -> p.getId() == id).findFirst().get();
+
+            if (measurement == null) {
+                transaction.rollback();
+                return false;
+            }
+
+            measurement.setCode(code);
+            measurement.setName(name);
+            measurement.setShortName(shortName);
+
+            session.update(measurement);
+            transaction.commit();
+        } catch (Exception ex) {
+            transaction.rollback();
+            ex.printStackTrace();
+            return false;
+        } finally {
+            session.close();
+        }
+
+        return true;
+    }
+
     public MeasurementType getMeasurementTypeById(int id) {
         Session session = factory.openSession();
         MeasurementType result = null;
@@ -378,6 +427,25 @@ public class DbHelper {
         transaction.commit();
     }
 
+    public boolean deleteMeasurement(Integer id) {
+        Session session = factory.openSession();
+        Transaction transaction = null;
+
+        try {
+            transaction = session.beginTransaction();
+            Measurement measurement = (Measurement) session.get(Measurement.class, id);
+            session.delete(measurement);
+            transaction.commit();
+        } catch (Exception ex) {
+            transaction.rollback();
+            ex.printStackTrace();
+            return false;
+        } finally {
+            session.close();
+        }
+
+        return true;
+    }
 //----------------------------------------------------------------------------------------------------------------------
     /*public static int importCharacteristicsIntoTable() throws Exception {
         int counter = 0;

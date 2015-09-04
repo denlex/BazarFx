@@ -1,6 +1,8 @@
 package org.defence.domain.entities;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by root on 22.07.15.
@@ -9,7 +11,7 @@ public class Characteristic implements Serializable {
     private int id;
     private String code;
     private String name;
-    private Measurement measurement;
+    private Set<Measurement> measurements = new HashSet<>();
 
     public Characteristic() {
     }
@@ -43,11 +45,11 @@ public class Characteristic implements Serializable {
         this.name = name;
     }
 
-    public Measurement getMeasurement() {
-        return measurement;
+    public Set<Measurement> getMeasurements() {
+        return measurements;
     }
 
-    public void setMeasurement(Measurement measurement) {
-        this.measurement = measurement;
+    public void setMeasurements(Set<Measurement> measurements) {
+        this.measurements = measurements;
     }
 }

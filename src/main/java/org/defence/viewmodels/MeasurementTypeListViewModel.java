@@ -11,6 +11,7 @@ import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import org.defence.domain.entities.MeasurementType;
 import org.defence.infrastructure.DbHelper;
@@ -71,6 +72,7 @@ public class MeasurementTypeListViewModel implements ViewModel {
                 ButtonType no = new ButtonType("Отмена");
 
                 alert.getButtonTypes().setAll(yes, no);
+                ((Button) alert.getDialogPane().lookupButton(yes)).setDefaultButton(true);
 
                 Optional<ButtonType> result = alert.showAndWait();
 
