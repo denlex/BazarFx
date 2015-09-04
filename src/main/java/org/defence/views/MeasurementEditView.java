@@ -46,13 +46,13 @@ public class MeasurementEditView implements FxmlView<MeasurementEditViewModel>, 
         return dialogResult;
     }
 
-    public void saveButtonClick() {
+    public void saveButtonClicked() {
         viewModel.getSaveCommand().execute();
         dialogResult = DialogResult.OK;
         stage.close();
     }
 
-    public void cancelButtonClick() {
+    public void cancelButtonClicked() {
         viewModel.getCancelCommand().execute();
         dialogResult = DialogResult.CANCEL;
         stage.close();

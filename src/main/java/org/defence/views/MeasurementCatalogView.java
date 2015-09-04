@@ -100,7 +100,7 @@ public class MeasurementCatalogView implements FxmlView<MeasurementCatalogViewMo
         });
     }
 
-    public void addTypeButtonClick(Event event) {
+    public void addTypeButtonClicked(Event event) {
         ViewTuple<MeasurementTypeEditView, MeasurementTypeEditViewModel> viewTuple = FluentViewLoader.fxmlView(MeasurementTypeEditView.class).load();
         viewTuple.getViewModel().setParentViewModel(viewModel);
         Parent root = viewTuple.getView();
@@ -131,7 +131,7 @@ public class MeasurementCatalogView implements FxmlView<MeasurementCatalogViewMo
         }
     }
 
-    public void editTypeButtonClick(Event event) {
+    public void editTypeButtonClicked(Event event) {
         ViewTuple<MeasurementTypeEditView, MeasurementTypeEditViewModel> viewTuple = FluentViewLoader.fxmlView(MeasurementTypeEditView.class).load();
         viewTuple.getViewModel().setParentViewModel(viewModel);
 
@@ -155,18 +155,23 @@ public class MeasurementCatalogView implements FxmlView<MeasurementCatalogViewMo
             }
         });
 
+
+        int selectedItemIndex = typesTableView.getSelectionModel().getFocusedIndex();
+
         dialog.setScene(scene);
         dialog.showAndWait();
 
-        // set current position in typesTableView
+        // if types were modified, then refresh typesTableView
         if (viewTuple.getCodeBehind().getModalResult() == DialogResult.OK) {
             typesTableView.refresh();
         }
 
+        typesTableView.scrollTo(selectedItemIndex);
+        typesTableView.selectionModelProperty().get().select(selectedItemIndex);
         typesTableView.requestFocus();
     }
 
-    public void addMeasurementButtonClick(Event event) {
+    public void addMeasurementButtonClicked(Event event) {
         ViewTuple<MeasurementEditView, MeasurementEditViewModel> viewTuple = FluentViewLoader.fxmlView(MeasurementEditView.class).load();
         viewTuple.getViewModel().setParentViewModel(viewModel);
         Parent root = viewTuple.getView();
@@ -197,7 +202,7 @@ public class MeasurementCatalogView implements FxmlView<MeasurementCatalogViewMo
         }
     }
 
-    public void editMeasurementButtonClick(Event event) {
+    public void editMeasurementButtonClicked(Event event) {
         Property<MeasurementViewModel> m = viewModel.selectedMeasurementProperty();
 
         // if item in measurementTableView was not selected
@@ -231,35 +236,34 @@ public class MeasurementCatalogView implements FxmlView<MeasurementCatalogViewMo
             }
         });
 
+        int selectedItemIndex = measurementsTableView.getSelectionModel().getFocusedIndex();
+
         dialog.setScene(scene);
         dialog.showAndWait();
 
-        // set current position in measurementsTableView
+        // if measurements were modified, then refresh measurementsTableView
         if (viewTuple.getCodeBehind().getModalResult() == DialogResult.OK) {
             measurementsTableView.refresh();
         }
 
+        measurementsTableView.scrollTo(selectedItemIndex);
+        measurementsTableView.selectionModelProperty().get().select(selectedItemIndex);
         measurementsTableView.requestFocus();
     }
 
-    public void typesTableViewClick() {
+    public void deleteMeasurementButtonClicked(Event event) {
+        viewModel.getDeleteMeasurementCommand().execute();
+        measurementsTableView.requestFocus();
+    }
+
+    public void typesTableViewClicked() {
         viewModel.loadMeasurementsBySelectedType();
     }
 
-    public void typesTableViewKeyUp(Event event) {
-        if (event.getEventType() == KeyEvent.KEY_RELEASED) {
-            KeyCode keyCode = ((KeyEvent) event).getCode();
-
-            if (keyCode.isNavigationKey() || keyCode.isArrowKey()) {
-                viewModel.loadMeasurementsBySelectedType();
-            }
-        }
-    }
-
-    public void typesTableViewMouseRelease(MouseEvent event) {
+    public void typesTableViewMouseReleased(MouseEvent event) {
         if (event.getButton().equals(MouseButton.PRIMARY)) {
             if (event.getClickCount() == 2) {
-                editTypeButtonClick(event);
+                editTypeButtonClicked(event);
             }
         }
     }
@@ -267,8 +271,51 @@ public class MeasurementCatalogView implements FxmlView<MeasurementCatalogViewMo
     public void measurementsTableViewMouseRelease(MouseEvent event) {
         if (event.getButton().equals(MouseButton.PRIMARY)) {
             if (event.getClickCount() == 2) {
-                editMeasurementButtonClick(event);
+                editMeasurementButtonClicked(event);
             }
+        }
+    }
+
+    public void typesTableViewKeyReleased(KeyEvent event) {
+        KeyCode keyCode = event.getCode();
+
+        if (keyCode.isNavigationKey() || keyCode.isArrowKey()) {
+            viewModel.loadMeasurementsBySelectedType();
+            return;
+        }
+    }
+
+    public void typesTableViewKeyPressed(KeyEvent event) {
+        /*if (event.getCode() == KeyCode.DELETE) {
+            deleteMeasurementButtonClicked(event);
+        }*/
+
+        KeyCode keyCode = event.getCode();
+
+        if (keyCode == KeyCode.INSERT) {
+            addTypeButtonClicked(event);
+            return;
+        }
+
+        if (keyCode == KeyCode.ENTER) {
+            editTypeButtonClicked(event);
+            return;
+        }
+    }
+
+    public void measurementsTableViewKeyPressed(KeyEvent event) {
+        KeyCode keyCode = event.getCode();
+
+        if (keyCode == KeyCode.INSERT) {
+            addMeasurementButtonClicked(event);
+        }
+
+        if (keyCode == KeyCode.DELETE) {
+            deleteMeasurementButtonClicked(event);
+        }
+
+        if (keyCode == KeyCode.ENTER) {
+            editMeasurementButtonClicked(event);
         }
     }
 

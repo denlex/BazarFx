@@ -427,6 +427,25 @@ public class DbHelper {
         transaction.commit();
     }
 
+    public boolean deleteMeasurement(Integer id) {
+        Session session = factory.openSession();
+        Transaction transaction = null;
+
+        try {
+            transaction = session.beginTransaction();
+            Measurement measurement = (Measurement) session.get(Measurement.class, id);
+            session.delete(measurement);
+            transaction.commit();
+        } catch (Exception ex) {
+            transaction.rollback();
+            ex.printStackTrace();
+            return false;
+        } finally {
+            session.close();
+        }
+
+        return true;
+    }
 //----------------------------------------------------------------------------------------------------------------------
     /*public static int importCharacteristicsIntoTable() throws Exception {
         int counter = 0;

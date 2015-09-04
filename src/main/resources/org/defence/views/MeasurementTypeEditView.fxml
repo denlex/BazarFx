@@ -38,10 +38,10 @@
         </GridPane>
         <AnchorPane GridPane.columnSpan="2" GridPane.rowIndex="2">
             <children>
-                <Button fx:id="yesBtn" onAction="#saveButtonClick" AnchorPane.rightAnchor="140.0"
+                <Button fx:id="yesBtn" onAction="#saveButtonClicked" AnchorPane.rightAnchor="140.0"
                         GridPane.halignment="RIGHT" defaultButton="true">Применить
                 </Button>
-                <Button fx:id="noBtn" onAction="#cancelButtonClick" AnchorPane.rightAnchor="10"
+                <Button fx:id="noBtn" onAction="#cancelButtonClicked" AnchorPane.rightAnchor="10"
                         GridPane.halignment="RIGHT">Отмена
                 </Button>
             </children>

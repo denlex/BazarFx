@@ -4,9 +4,9 @@ import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -23,10 +23,10 @@ public class MainView implements FxmlView<MainViewModel> {
     TabPane tabs;
 
     @FXML
-    Tab measurementTypeTab;
+    Tab measurementsTab;
 
-    @FXML
-    private Button cancelMesTypeBtn;
+    /*@FXML
+    private Button cancelMesTypeBtn;*/
 
     @InjectViewModel
     private MainViewModel viewModel;
@@ -39,6 +39,11 @@ public class MainView implements FxmlView<MainViewModel> {
         });
     }
 
+    public void exitButtonClicked(Event event) {
+        viewModel.getExitCommand().execute();
+    }
+
+
     public void initialize() {
 //        exitBtnRegisterEvents();
 
@@ -48,11 +53,6 @@ public class MainView implements FxmlView<MainViewModel> {
                 tabs.getTabs().remove(measurementTypeTab);
             }
         });*/
-    }
-
-    public void exitButtonClick() {
-        System.out.println("dsfsdf");
-        viewModel.getExitCommand().execute();
     }
 }
 

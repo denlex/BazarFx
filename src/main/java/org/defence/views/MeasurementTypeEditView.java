@@ -31,13 +31,13 @@ public class MeasurementTypeEditView implements FxmlView<MeasurementTypeEditView
     private Stage stage;
     private DialogResult dialogResult = DialogResult.CANCEL;
 
-    public void saveButtonClick() {
+    public void saveButtonClicked() {
         viewModel.getSaveCommand().execute();
         dialogResult = DialogResult.OK;
         stage.close();
     }
 
-    public void cancelButtonClick() {
+    public void cancelButtonClicked() {
         viewModel.getCancelCommand().execute();
         dialogResult = DialogResult.CANCEL;
         stage.close();
