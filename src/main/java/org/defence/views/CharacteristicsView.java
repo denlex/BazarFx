@@ -9,9 +9,6 @@ import org.defence.domain.entities.Characteristic;
 import org.defence.infrastructure.DbHelper;
 import org.defence.viewmodels.CharacteristicViewModel;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 /**
  * Created by root on 8/12/15.
  */
@@ -29,6 +26,7 @@ public class CharacteristicsView implements FxmlView<CharacteristicViewModel> {
     }
 
     public void initialize() {
+
         characteristicsTableView.setItems(getAllCharacteristics());
 
         characteristicsTableViewRegisterEvents();

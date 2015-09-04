@@ -173,7 +173,7 @@
                                                 </GridPane>
                                             </content>
                                         </Tab>-->
-                                        <Tab fx:id="measurementsTab" text="Справочник единиц измерения">
+                                        <!--<Tab fx:id="measurementsTab" text="Справочник единиц измерения">
                                             <content>
                                                 <GridPane maxHeight="1.7976931348623157E308"
                                                           maxWidth="1.7976931348623157E308"
@@ -194,7 +194,7 @@
                                                     </children>
                                                 </GridPane>
                                             </content>
-                                        </Tab>
+                                        </Tab>-->
                                         <!--<Tab text="Справочник характеристик">
                                             <content>
                                                 <GridPane maxHeight="1.7976931348623157E308"
@@ -217,7 +217,7 @@
                                                 </GridPane>
                                             </content>
                                         </Tab>-->
-                                      <!--  <Tab text="Добавление характеристики">
+                                      <Tab text="Добавление характеристики">
                                             <content>
                                                 <GridPane maxHeight="1.7976931348623157E308"
                                                           maxWidth="1.7976931348623157E308"
@@ -232,14 +232,14 @@
                                                                         valignment="TOP" vgrow="ALWAYS"/>
                                                     </rowConstraints>
                                                     <children>
-                                                        <fx:include source="/org/defence/views/Class.fxml"
+                                                        <fx:include source="/org/defence/views/CharacteristicEditView.fxml"
                                                                     GridPane.hgrow="ALWAYS"
                                                                     GridPane.vgrow="ALWAYS"/>
                                                     </children>
                                                 </GridPane>
                                             </content>
                                         </Tab>
-                                        <Tab text="Добавление СФО">
+                                        <!--  <Tab text="Добавление СФО">
                                             <content>
                                                 <GridPane maxHeight="1.7976931348623157E308"
                                                           maxWidth="1.7976931348623157E308"
