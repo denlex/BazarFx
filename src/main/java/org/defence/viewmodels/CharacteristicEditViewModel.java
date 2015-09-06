@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class CharacteristicEditViewModel implements ViewModel {
     private ListProperty<MeasurementTypeViewModel> types = new SimpleListProperty<>();
-    private DbHelper dbHelper;
+    private final DbHelper dbHelper = DbHelper.getInstance();
 
     public CharacteristicEditViewModel() {
         List<MeasurementTypeViewModel> typeList = new LinkedList<>();

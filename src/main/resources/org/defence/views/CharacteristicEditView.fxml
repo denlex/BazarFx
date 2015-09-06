@@ -50,13 +50,14 @@
                                 <Insets/>
                             </GridPane.margin>
                         </TextField>
-                        <CheckBoxTableView fx:id="testTableView" GridPane.columnSpan="2" GridPane.rowIndex="2">
+                        <TableView fx:id="measurementsTableView" GridPane.columnSpan="2" GridPane.rowIndex="2">
                             <columns>
                                 <TableColumn fx:id="idTableColumn" prefWidth="150" text="ID"/>
                                 <TableColumn fx:id="codeTableColumn" prefWidth="150" text="Code"/>
                                 <TableColumn fx:id="nameTableColumn" prefWidth="150" text="Name"/>
+                                <TableColumn fx:id="checkBoxTableColumn" prefWidth="150" text="isDependant"/>
                             </columns>
-                        </CheckBoxTableView>
+                        </TableView>
                     </children>
                     <columnConstraints>
                         <ColumnConstraints minWidth="150.0" prefWidth="150.0"/>

@@ -291,7 +291,7 @@ public class DbHelper {
         }
     }
 
-    public List<Measurement> getMeasurementsByMeasurementTypeId(Integer id) {
+    public List<Measurement> getMeasurementsByTypeId(Integer id) {
         Session session = factory.openSession();
         List<Measurement> result = null;
 
@@ -300,6 +300,23 @@ public class DbHelper {
 
             result = new LinkedList<>();
             result.addAll(type.getMeasurements().stream().sorted().collect(Collectors.toList()));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            session.close();
+            return result;
+        }
+    }
+
+    public List<Characteristic> getCharacteristicsByTypeId(Integer id) {
+        Session session = factory.openSession();
+        List<Characteristic> result = null;
+
+        try {
+            CharacteristicType type = (CharacteristicType) session.createQuery("from CharacteristicType where id = :id").setParameter("id", id).uniqueResult();
+
+            result = new LinkedList<>();
+            result.addAll(type.getCharacteristics().stream().sorted().collect(Collectors.toList()));
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
@@ -556,4 +573,6 @@ public class DbHelper {
 
         factory.close();
     }
+
+
 }

@@ -7,9 +7,10 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
-import org.defence.control.CheckBoxTableView;
 import org.defence.domain.entities.Characteristic;
 import org.defence.infrastructure.DbHelper;
 import org.defence.viewmodels.CharacteristicEditViewModel;
@@ -38,7 +39,10 @@ public class CharacteristicEditView implements FxmlView<CharacteristicEditViewMo
     private TableColumn<MeasurementTypeViewModel, String> nameTableColumn;
 
     @FXML
-    private CheckBoxTableView<MeasurementTypeViewModel> testTableView;
+    private TableColumn<MeasurementTypeViewModel, Boolean> checkBoxTableColumn;
+
+    @FXML
+    private TableView<MeasurementTypeViewModel> measurementsTableView;
 
     @InjectViewModel
     CharacteristicEditViewModel viewModel;
@@ -56,12 +60,18 @@ public class CharacteristicEditView implements FxmlView<CharacteristicEditViewMo
     }
 
     private void initializeTableView() {
-        testTableView.itemsProperty().bindBidirectional(viewModel.typesProperty());
+        measurementsTableView.setEditable(true);
+
+        measurementsTableView.itemsProperty().bindBidirectional(viewModel.typesProperty());
         idTableColumn.setCellValueFactory(new PropertyValueFactory("id"));
         codeTableColumn.setCellValueFactory(new PropertyValueFactory("code"));
         nameTableColumn.setCellValueFactory(new PropertyValueFactory("name"));
+        checkBoxTableColumn.setCellFactory(param -> new CheckBoxTableCell<>());
+        checkBoxTableColumn.setCellValueFactory(new PropertyValueFactory<>("isBelong"));
 
-        /*testTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+//        measurementsTableView.addLastColumn();
+
+        /*measurementsTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             viewModel.selectedTypeProperty().unbind();
             viewModel.selectedTypeProperty().bindBidirectional(new SimpleObjectProperty<>(newValue));
         });*/

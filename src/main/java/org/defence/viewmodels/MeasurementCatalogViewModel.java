@@ -127,7 +127,7 @@ public class MeasurementCatalogViewModel implements ViewModel {
         if (selectedTypeProperty().get() != null) {
             List<MeasurementViewModel> measurementList = new LinkedList<>();
 
-            for (Measurement measurement : dbHelper.getMeasurementsByMeasurementTypeId(selectedType.getValue().getId())) {
+            for (Measurement measurement : dbHelper.getMeasurementsByTypeId(selectedType.getValue().getId())) {
                 measurementList.add(new MeasurementViewModel(measurement));
             }
 

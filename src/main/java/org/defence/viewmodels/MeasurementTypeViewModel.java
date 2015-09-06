@@ -14,6 +14,7 @@ public class MeasurementTypeViewModel implements ViewModel {
     private final StringProperty name = new SimpleStringProperty();
     private final StringProperty code = new SimpleStringProperty();
     private final ReadOnlyBooleanWrapper actionPossible = new ReadOnlyBooleanWrapper();
+    private final BooleanProperty isBelong = new SimpleBooleanProperty();
 
     private final IntegerProperty age = new SimpleIntegerProperty();
     private final ListProperty<MeasurementType> types = new SimpleListProperty<>();
@@ -103,6 +104,18 @@ public class MeasurementTypeViewModel implements ViewModel {
 
     public IntegerProperty ageProperty() {
         return age;
+    }
+
+    public boolean getIsBelong() {
+        return isBelong.get();
+    }
+
+    public BooleanProperty isBelongProperty() {
+        return isBelong;
+    }
+
+    public void setIsBelong(boolean isBelong) {
+        this.isBelong.set(isBelong);
     }
 
     public javafx.collections.ObservableList<MeasurementType> getTypes() {
