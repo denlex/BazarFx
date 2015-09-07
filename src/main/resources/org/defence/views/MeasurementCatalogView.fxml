@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.text.*?>
-<?import java.lang.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
 <GridPane stylesheets="/css/Button.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="org.defence.views.MeasurementCatalogView">
     <children>
@@ -37,11 +34,12 @@
                                                         </Label>
                                                     </children>
                                                 </StackPane>
-                                                <TableView fx:id="typesTableView" GridPane.columnIndex="0"
-                                                           GridPane.rowIndex="1" onMouseClicked="#typesTableViewClicked"
+                                                <TableView fx:id="typesTableView"
                                                            onKeyPressed="#typesTableViewKeyPressed"
                                                            onKeyReleased="#typesTableViewKeyReleased"
-                                                           onMouseReleased="#typesTableViewMouseReleased">
+                                                           onMouseClicked="#typesTableViewClicked"
+                                                           onMouseReleased="#typesTableViewMouseReleased"
+                                                           GridPane.columnIndex="0" GridPane.rowIndex="1">
                                                     <columns>
                                                         <TableColumn fx:id="idTypeTableColumn" text="ID"/>
                                                         <TableColumn fx:id="codeTypeTableColumn"
@@ -55,23 +53,26 @@
                                                 <AnchorPane GridPane.columnIndex="0" GridPane.halignment="RIGHT"
                                                             GridPane.rowIndex="2">
                                                     <children>
-                                                        <Button fx:id="editTypeButton" text="Изменить"
-                                                                AnchorPane.bottomAnchor="10.0"
+                                                        <Button fx:id="editTypeButton" onAction="#editTypeButtonClicked"
+                                                                text="Изменить" AnchorPane.bottomAnchor="10.0"
                                                                 AnchorPane.rightAnchor="140.0"
-                                                                AnchorPane.topAnchor="10.0"
-                                                                onAction="#editTypeButtonClicked">
+                                                                AnchorPane.topAnchor="10.0">
                                                         </Button>
                                                         <Button fx:id="deleteTypeButton" text="Удалить"
                                                                 AnchorPane.bottomAnchor="10.0"
                                                                 AnchorPane.rightAnchor="10.0"
                                                                 AnchorPane.topAnchor="10.0">
                                                         </Button>
-                                                        <Button fx:id="addTypeButton" text="Добавить"
-                                                                AnchorPane.bottomAnchor="10.0"
+                                                        <Button fx:id="addTypeButton" onAction="#addTypeButtonClicked"
+                                                                text="Добавить" AnchorPane.bottomAnchor="10.0"
                                                                 AnchorPane.rightAnchor="270.0"
-                                                                AnchorPane.topAnchor="10.0"
-                                                                onAction="#addTypeButtonClicked">
+                                                                AnchorPane.topAnchor="10.0">
                                                         </Button>
+                                                        <Button fx:id="reportButton" onAction="#hndlOpenFile"
+                                                                layoutY="10.0" mnemonicParsing="false" text="Отчет"
+                                                                AnchorPane.bottomAnchor="10.0"
+                                                                AnchorPane.rightAnchor="400.0"
+                                                                AnchorPane.topAnchor="10.0"/>
                                                     </children>
                                                 </AnchorPane>
                                             </children>
@@ -95,10 +96,10 @@
                                                         </Label>
                                                     </children>
                                                 </StackPane>
-                                                <TableView fx:id="measurementsTableView" GridPane.columnIndex="0"
-                                                           GridPane.rowIndex="1"
+                                                <TableView fx:id="measurementsTableView"
                                                            onKeyPressed="#measurementsTableViewKeyPressed"
-                                                           onMouseReleased="#measurementsTableViewMouseRelease">
+                                                           onMouseReleased="#measurementsTableViewMouseRelease"
+                                                           GridPane.columnIndex="0" GridPane.rowIndex="1">
                                                     <columns>
                                                         <TableColumn fx:id="idTableColumn" text="ID"/>
                                                         <TableColumn fx:id="codeTableColumn"
@@ -115,23 +116,23 @@
                                                 <AnchorPane GridPane.columnIndex="0" GridPane.halignment="RIGHT"
                                                             GridPane.rowIndex="2">
                                                     <children>
-                                                        <Button fx:id="editMeasurementButton" text="Изменить"
+                                                        <Button fx:id="editMeasurementButton"
+                                                                onAction="#editMeasurementButtonClicked" text="Изменить"
                                                                 AnchorPane.bottomAnchor="10.0"
                                                                 AnchorPane.rightAnchor="140.0"
-                                                                AnchorPane.topAnchor="10.0"
-                                                                onAction="#editMeasurementButtonClicked">
+                                                                AnchorPane.topAnchor="10.0">
                                                         </Button>
-                                                        <Button fx:id="deleteMeasurementButton" text="Удалить"
-                                                                AnchorPane.bottomAnchor="10.0"
+                                                        <Button fx:id="deleteMeasurementButton"
+                                                                onAction="#deleteMeasurementButtonClicked"
+                                                                text="Удалить" AnchorPane.bottomAnchor="10.0"
                                                                 AnchorPane.rightAnchor="10.0"
-                                                                AnchorPane.topAnchor="10.0"
-                                                                onAction="#deleteMeasurementButtonClicked">
+                                                                AnchorPane.topAnchor="10.0">
                                                         </Button>
-                                                        <Button fx:id="addMeasurementButton" text="Добавить"
+                                                        <Button fx:id="addMeasurementButton"
+                                                                onAction="#addMeasurementButtonClicked" text="Добавить"
                                                                 AnchorPane.bottomAnchor="10.0"
                                                                 AnchorPane.rightAnchor="270.0"
-                                                                AnchorPane.topAnchor="10.0"
-                                                                onAction="#addMeasurementButtonClicked">
+                                                                AnchorPane.topAnchor="10.0">
                                                         </Button>
                                                     </children>
                                                 </AnchorPane>

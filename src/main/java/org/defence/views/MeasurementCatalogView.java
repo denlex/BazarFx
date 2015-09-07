@@ -18,10 +18,24 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.defence.MainApp;
 import org.defence.viewmodels.*;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.io.File;
+import java.sql.Connection;
+import java.util.HashMap;
 
 /**
  * Created by root on 8/12/15.
@@ -71,6 +85,9 @@ public class MeasurementCatalogView implements FxmlView<MeasurementCatalogViewMo
 
     @FXML
     private Button deleteMeasurementButton;
+
+    @FXML
+    private Button reportButton;
 
     @InjectViewModel
     MeasurementCatalogViewModel viewModel;
@@ -316,6 +333,36 @@ public class MeasurementCatalogView implements FxmlView<MeasurementCatalogViewMo
 
         if (keyCode == KeyCode.ENTER) {
             editMeasurementButtonClicked(event);
+        }
+    }
+
+    public void reportButtonClicked(Event event) {
+        Ireport ir = new Ireport();
+        ir.sourceFileName = "C:\\BazarJava\\BazarFx\\src\\main\\resources\\reports\\reportBazar.jrxml";
+/*        try {
+            ir.fill();
+        } catch (JRException e) {
+            e.printStackTrace();
+        }*/
+
+    }
+    @FXML
+    public void hndlOpenFile(Event event) {
+        FileChooser fileChooser = new FileChooser();//Класс работы с диалогом выборки и сохранения
+        fileChooser.setTitle("Save Document");//Заголовок диалога
+        FileChooser.ExtensionFilter extFilter =
+                new FileChooser.ExtensionFilter("Word document (*.doc)", "*.doc");//Расширение
+        fileChooser.getExtensionFilters().add(extFilter);
+        File file = fileChooser.showSaveDialog(null);//Указываем текущую сцену CodeNote.mainStage
+        if (file != null) {
+            //Save
+            Ireport ir = new Ireport();
+            ir.sourceFileName = "C:\\BazarJava\\BazarFx\\src\\main\\resources\\reports\\reportBazar.jrxml";
+            try {
+                ir.fill(file.getAbsolutePath());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
