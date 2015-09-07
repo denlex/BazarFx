@@ -16,7 +16,6 @@ public class MeasurementTypeViewModel implements ViewModel {
     private final ReadOnlyBooleanWrapper actionPossible = new ReadOnlyBooleanWrapper();
     private final BooleanProperty isBelong = new SimpleBooleanProperty();
 
-    private final IntegerProperty age = new SimpleIntegerProperty();
     private final ListProperty<MeasurementType> types = new SimpleListProperty<>();
 
     BooleanBinding nameInvalid = new BooleanBinding() {
@@ -96,14 +95,6 @@ public class MeasurementTypeViewModel implements ViewModel {
         // accept any integer from 0 - 135 (arbitrary upper bound example)
         String regex = "([0-9]{0,2})|(1[0-2][0-9])|(13[0-5])";
         return input.matches(regex);
-    }
-
-    public Integer getAge() {
-        return age.get();
-    }
-
-    public IntegerProperty ageProperty() {
-        return age;
     }
 
     public boolean getIsBelong() {

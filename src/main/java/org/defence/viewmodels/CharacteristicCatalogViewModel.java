@@ -32,6 +32,7 @@ public class CharacteristicCatalogViewModel implements ViewModel {
     private final ObjectProperty<CharacteristicViewModel> selectedCharacteristic = new SimpleObjectProperty<>();
 
     private final DbHelper dbHelper = DbHelper.getInstance();
+//    private final DbHelper dbHelper = null;
     private Command deleteCharacteristicCommand;
 
     public CharacteristicCatalogViewModel() {
@@ -52,8 +53,8 @@ public class CharacteristicCatalogViewModel implements ViewModel {
                 Optional<ButtonType> result = alert.showAndWait();
 
                 if (result.get() == yes) {
-                    dbHelper.deleteMeasurement(getSelectedCharacteristic().getId());
-                    loadCharacteristicBySelectedType();
+                    dbHelper.deleteCharacteristic(getSelectedCharacteristic().getId());
+                    loadCharacteristicsBySelectedType();
                 }
             }
         });
@@ -118,20 +119,22 @@ public class CharacteristicCatalogViewModel implements ViewModel {
 
     public void loadAllTypes() {
         List<CharacteristicTypeViewModel> typeList = new LinkedList<>();
+        List<CharacteristicType> allTypes = dbHelper.getAllCharacteristicTypes();
 
-        for (CharacteristicType type : dbHelper.getAllCharacteristicTypes()) {
+        for (CharacteristicType type : allTypes) {
             typeList.add(new CharacteristicTypeViewModel(type));
         }
 
         types.set(new ObservableListWrapper<>(typeList));
     }
 
-    public void loadCharacteristicBySelectedType() {
+    public void loadCharacteristicsBySelectedType() {
         // if user selected any type in typeTableView
         if (selectedTypeProperty().get() != null) {
             List<CharacteristicViewModel> characteristicList = new LinkedList<>();
+            List<Characteristic> filteredCharacteristics = dbHelper.getCharacteristicsByTypeId(getSelectedType().getId());
 
-            for (Characteristic characteristic : dbHelper.getCharacteristicsByTypeId(selectedType.getValue().getId())) {
+            for (Characteristic characteristic : filteredCharacteristics) {
                 characteristicList.add(new CharacteristicViewModel(characteristic));
             }
 

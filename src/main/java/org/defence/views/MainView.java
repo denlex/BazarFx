@@ -22,8 +22,11 @@ public class MainView implements FxmlView<MainViewModel> {
     @FXML
     TabPane tabs;
 
+    /*@FXML
+    Tab measurementsTab;*/
+
     @FXML
-    Tab measurementsTab;
+    Tab characteristicsTab;
 
     /*@FXML
     private Button cancelMesTypeBtn;*/

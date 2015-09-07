@@ -1,9 +1,8 @@
 package org.defence.viewmodels;
 
-import com.sun.javafx.collections.ObservableSetWrapper;
 import de.saxsys.mvvmfx.ViewModel;
 import javafx.beans.property.*;
-import javafx.collections.ObservableList;
+import javafx.collections.ObservableSet;
 import org.defence.domain.entities.CharacteristicType;
 
 /**
@@ -58,15 +57,15 @@ public class CharacteristicTypeViewModel implements ViewModel {
         this.name.set(name);
     }
 
-    public ObservableList<CharacteristicViewModel> getCharacteristics() {
+    public ObservableSet<CharacteristicViewModel> getCharacteristics() {
         return characteristics.get();
     }
 
-    public ListProperty<CharacteristicViewModel> characteristicsProperty() {
+    public SetProperty<CharacteristicViewModel> characteristicsProperty() {
         return characteristics;
     }
 
-    public void setCharacteristics(ObservableList<CharacteristicViewModel> characteristics) {
+    public void setCharacteristics(ObservableSet<CharacteristicViewModel> characteristics) {
         this.characteristics.set(characteristics);
     }
 }

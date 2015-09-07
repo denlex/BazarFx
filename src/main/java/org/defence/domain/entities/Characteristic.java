@@ -11,7 +11,7 @@ public class Characteristic implements Serializable {
     private int id;
     private String code;
     private String name;
-    private Set<Characteristic> characteristics = new HashSet<>();
+    private Set<Measurement> measurements = new HashSet<>();
 
     public Characteristic() {
     }
@@ -45,11 +45,11 @@ public class Characteristic implements Serializable {
         this.name = name;
     }
 
-    public Set<Characteristic> getCharacteristics() {
-        return characteristics;
+    public Set<Measurement> getMeasurements() {
+        return measurements;
     }
 
-    public void setCharacteristics(Set<Characteristic> characteristics) {
-        this.characteristics = characteristics;
+    public void setMeasurements(Set<Measurement> measurements) {
+        this.measurements = measurements;
     }
 }

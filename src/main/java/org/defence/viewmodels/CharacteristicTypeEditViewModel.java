@@ -1,28 +1,22 @@
 package org.defence.viewmodels;
 
-import com.sun.javafx.collections.ObservableListWrapper;
 import de.saxsys.mvvmfx.ViewModel;
 import de.saxsys.mvvmfx.utils.commands.Action;
 import de.saxsys.mvvmfx.utils.commands.Command;
 import de.saxsys.mvvmfx.utils.commands.DelegateCommand;
-import javafx.beans.property.*;
-import javafx.collections.ObservableList;
-import org.defence.domain.entities.Measurement;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import org.defence.infrastructure.DbHelper;
 
-import java.util.LinkedList;
-import java.util.List;
-
 /**
- * Created by root on 30.08.15.
+ * Created by root on 9/7/15.
  */
-public class CharacteristicEditViewModel implements ViewModel {
+public class CharacteristicTypeEditViewModel implements ViewModel {
     private final IntegerProperty id = new SimpleIntegerProperty();
-    private final StringProperty code = new SimpleStringProperty();
-    private final StringProperty name = new SimpleStringProperty();
-    private final ListProperty<MeasurementViewModel> measurements = new SimpleListProperty<>();
-
-    private final ObjectProperty<MeasurementViewModel> selectedMeasurement = new SimpleObjectProperty<>();
+    private StringProperty code = new SimpleStringProperty();
+    private StringProperty name = new SimpleStringProperty();
 
     private String cachedCode;
     private String cachedName;
@@ -32,40 +26,30 @@ public class CharacteristicEditViewModel implements ViewModel {
     private Command saveCommand;
     private Command cancelCommand;
 
-    CharacteristicCatalogViewModel parentViewModel;
+    private CharacteristicCatalogViewModel parentViewModel;
 
-    public CharacteristicEditViewModel() {
-
-        List<Measurement> allMeasurements = dbHelper.getAllMeasurements();
-        List<MeasurementViewModel> list = new LinkedList<>();
-
-        for (Measurement measurement : allMeasurements) {
-            list.add(new MeasurementViewModel(measurement));
-        }
-
-
-        measurements.setValue(new ObservableListWrapper<>(list));
-
+    public CharacteristicTypeEditViewModel() {
         saveCommand = new DelegateCommand(() -> new Action() {
             @Override
             protected void action() throws Exception {
 
-                Integer typeId = parentViewModel.getSelectedType().getId();
-
-                if (typeId == null || typeId == 0) {
-                    return;
-                }
-
                 if (id.getValue() == 0) {
-                    // add measurement
-                    dbHelper.addCharacteristic(typeId, code.getValue(), name.getValue());
+                    // add characteristic type
+                    if (dbHelper.addCharacteristicType(code.getValue(), name.getValue())) {
+                        System.out.println("type was added");
+
+                        if (parentViewModel != null) {
+                            System.out.println(parentViewModel.getClass().getName());
+                        }
+                    }
                 } else {
-                    // change exist measurement
+                    // change exist characteristic type
                     // TODO: Сделать проверку на пустой ввод данных о типе измерения
-                    dbHelper.updateCharacteristic(typeId, id.getValue(), code.getValue(), name.getValue());
+                    System.out.println("Type was changed");
+                    dbHelper.updateCharacteristicType(id.getValue(), code.getValue(), name.getValue());
                 }
 
-                parentViewModel.loadCharacteristicsBySelectedType();
+                parentViewModel.loadAllTypes();
             }
         });
 
@@ -151,29 +135,5 @@ public class CharacteristicEditViewModel implements ViewModel {
 
     public void setParentViewModel(CharacteristicCatalogViewModel parentViewModel) {
         this.parentViewModel = parentViewModel;
-    }
-
-    public ObservableList<MeasurementViewModel> getMeasurements() {
-        return measurements.get();
-    }
-
-    public ListProperty<MeasurementViewModel> measurementsProperty() {
-        return measurements;
-    }
-
-    public void setMeasurements(ObservableList<MeasurementViewModel> measurements) {
-        this.measurements.set(measurements);
-    }
-
-    public MeasurementViewModel getSelectedMeasurement() {
-        return selectedMeasurement.get();
-    }
-
-    public ObjectProperty<MeasurementViewModel> selectedMeasurementProperty() {
-        return selectedMeasurement;
-    }
-
-    public void setSelectedMeasurement(MeasurementViewModel selectedMeasurement) {
-        this.selectedMeasurement.set(selectedMeasurement);
     }
 }

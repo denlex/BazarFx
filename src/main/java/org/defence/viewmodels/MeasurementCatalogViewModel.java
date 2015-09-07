@@ -114,8 +114,9 @@ public class MeasurementCatalogViewModel implements ViewModel {
 
     public void loadAllTypes() {
         List<MeasurementTypeViewModel> typeList = new LinkedList<>();
+        List<MeasurementType> allTypes = dbHelper.getAllMeasurementTypes();
 
-        for (MeasurementType type : dbHelper.getAllMeasurementTypes()) {
+        for (MeasurementType type : allTypes) {
             typeList.add(new MeasurementTypeViewModel(type));
         }
 
@@ -126,8 +127,9 @@ public class MeasurementCatalogViewModel implements ViewModel {
         // if user selected any type in typeTableView
         if (selectedTypeProperty().get() != null) {
             List<MeasurementViewModel> measurementList = new LinkedList<>();
+            List<Measurement> filteredMeasurements = dbHelper.getMeasurementsByTypeId(selectedType.getValue().getId());
 
-            for (Measurement measurement : dbHelper.getMeasurementsByTypeId(selectedType.getValue().getId())) {
+            for (Measurement measurement : filteredMeasurements) {
                 measurementList.add(new MeasurementViewModel(measurement));
             }
 

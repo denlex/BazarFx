@@ -4,7 +4,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Text?>
-<?import org.defence.control.CheckBoxTableView?>
 <AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="org.defence.views.CharacteristicEditView">
     <children>
@@ -71,9 +70,10 @@
                 <AnchorPane GridPane.rowIndex="3">
                     <children>
                         <Button fx:id="okBtn" alignment="CENTER" mnemonicParsing="false" text="Принять"
-                                AnchorPane.bottomAnchor="15" AnchorPane.rightAnchor="150"/>
+                                AnchorPane.bottomAnchor="15" AnchorPane.rightAnchor="150"
+                                onAction="#saveButtonClicked"/>
                         <Button alignment="CENTER" mnemonicParsing="false" text="Отмена" AnchorPane.bottomAnchor="15"
-                                AnchorPane.rightAnchor="15"/>
+                                AnchorPane.rightAnchor="15" onAction="#cancelButtonClicked"/>
                     </children>
                 </AnchorPane>
             </children>

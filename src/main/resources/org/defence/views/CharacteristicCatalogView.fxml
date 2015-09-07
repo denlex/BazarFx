@@ -5,7 +5,6 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Font?>
 
 <GridPane stylesheets="/css/Button.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="org.defence.views.CharacteristicCatalogView">
@@ -47,23 +46,28 @@
                                                                      prefWidth="50.0" text="Код"/>
                                                         <TableColumn fx:id="nameTypeTableColumn"
                                                                      maxWidth="1.7976931348623157E308" minWidth="150.0"
-                                                                     prefWidth="150.0" text="Наименование "/>
+                                                                     prefWidth="150.0" text="Наименование"/>
                                                     </columns>
                                                 </TableView>
                                                 <AnchorPane GridPane.columnIndex="0" GridPane.halignment="RIGHT"
                                                             GridPane.rowIndex="2">
                                                     <children>
-                                                        <Button text="Изменить" AnchorPane.bottomAnchor="10.0"
+                                                        <Button fx:id="editTypeButton" text="Изменить"
+                                                                AnchorPane.bottomAnchor="10.0"
                                                                 AnchorPane.rightAnchor="140.0"
-                                                                AnchorPane.topAnchor="10.0">
+                                                                AnchorPane.topAnchor="10.0"
+                                                                onAction="#editTypeButtonClicked">
                                                         </Button>
-                                                        <Button text="Удалить" AnchorPane.bottomAnchor="10.0"
+                                                        <Button fx:id="deleteTypeButton" text="Удалить"
+                                                                AnchorPane.bottomAnchor="10.0"
                                                                 AnchorPane.rightAnchor="10.0"
                                                                 AnchorPane.topAnchor="10.0">
                                                         </Button>
-                                                        <Button text="Добавить" AnchorPane.bottomAnchor="10.0"
+                                                        <Button fx:id="addTypeButton" text="Добавить"
+                                                                AnchorPane.bottomAnchor="10.0"
                                                                 AnchorPane.rightAnchor="270.0"
-                                                                AnchorPane.topAnchor="10.0">
+                                                                AnchorPane.topAnchor="10.0"
+                                                                onAction="#addTypeButtonClicked">
                                                         </Button>
                                                     </children>
                                                 </AnchorPane>
@@ -88,7 +92,9 @@
                                                     </children>
                                                 </StackPane>
                                                 <TableView fx:id="characteristicsTableView" GridPane.columnIndex="0"
-                                                           GridPane.rowIndex="1">
+                                                           GridPane.rowIndex="1"
+                                                           onKeyPressed="#characteristicsTableViewKeyPressed"
+                                                           onMouseReleased="#characteristicsTableViewMouseRelease">
                                                     <columns>
                                                         <TableColumn fx:id="idTableColumn" text="ID"/>
                                                         <TableColumn fx:id="codeTableColumn"
@@ -97,25 +103,28 @@
                                                         <TableColumn fx:id="nameTableColumn"
                                                                      maxWidth="1.7976931348623157E308" minWidth="150.0"
                                                                      prefWidth="150.0" text="Наименование"/>
-                                                        <TableColumn fx:id="shortNameTableColumn"
-                                                                     maxWidth="1.7976931348623157E308" minWidth="150.0"
-                                                                     prefWidth="150.0" text="Сокращ.наимен."/>
                                                     </columns>
                                                 </TableView>
                                                 <AnchorPane GridPane.columnIndex="0" GridPane.halignment="RIGHT"
                                                             GridPane.rowIndex="2">
                                                     <children>
-                                                        <Button text="Изменить" AnchorPane.bottomAnchor="10.0"
+                                                        <Button fx:id="editCharacteristicButton" text="Изменить"
+                                                                AnchorPane.bottomAnchor="10.0"
                                                                 AnchorPane.rightAnchor="140.0"
-                                                                AnchorPane.topAnchor="10.0">
+                                                                AnchorPane.topAnchor="10.0"
+                                                                onAction="#editCharacteristicButtonClicked">
                                                         </Button>
-                                                        <Button text="Удалить" AnchorPane.bottomAnchor="10.0"
+                                                        <Button fx:id="deleteCharacteristicButton" text="Удалить"
+                                                                AnchorPane.bottomAnchor="10.0"
                                                                 AnchorPane.rightAnchor="10.0"
-                                                                AnchorPane.topAnchor="10.0">
+                                                                AnchorPane.topAnchor="10.0"
+                                                                onAction="#deleteCharacteristicButtonClicked">
                                                         </Button>
-                                                        <Button text="Добавить" AnchorPane.bottomAnchor="10.0"
+                                                        <Button fx:id="addCharacteristicButton" text="Добавить"
+                                                                AnchorPane.bottomAnchor="10.0"
                                                                 AnchorPane.rightAnchor="270.0"
-                                                                AnchorPane.topAnchor="10.0">
+                                                                AnchorPane.topAnchor="10.0"
+                                                                onAction="#addCharacteristicButtonClicked">
                                                         </Button>
                                                     </children>
                                                 </AnchorPane>

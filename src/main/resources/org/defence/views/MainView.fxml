@@ -195,7 +195,7 @@
                                                 </GridPane>
                                             </content>
                                         </Tab>-->
-                                        <!--<Tab text="Справочник характеристик">
+                                        <Tab fx:id="characteristicsTab" text="Справочник характеристик">
                                             <content>
                                                 <GridPane maxHeight="1.7976931348623157E308"
                                                           maxWidth="1.7976931348623157E308"
@@ -216,8 +216,8 @@
                                                     </children>
                                                 </GridPane>
                                             </content>
-                                        </Tab>-->
-                                      <Tab text="Добавление характеристики">
+                                        </Tab>
+                                      <!--<Tab text="Добавление характеристики">
                                             <content>
                                                 <GridPane maxHeight="1.7976931348623157E308"
                                                           maxWidth="1.7976931348623157E308"
@@ -238,7 +238,7 @@
                                                     </children>
                                                 </GridPane>
                                             </content>
-                                        </Tab>
+                                        </Tab>-->
                                         <!--  <Tab text="Добавление СФО">
                                             <content>
                                                 <GridPane maxHeight="1.7976931348623157E308"
