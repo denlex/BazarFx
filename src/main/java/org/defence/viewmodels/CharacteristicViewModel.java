@@ -26,14 +26,18 @@ public class CharacteristicViewModel implements ViewModel {
         name.setValue(characteristic.getName());
         measurements.setValue(new ObservableSetWrapper<>(characteristic.getMeasurements()));
 
-        measurements.addListener((observable, oldValue, newValue) -> {
-            StringBuilder text = new StringBuilder();
-            for (Measurement elem : newValue) {
-                text.append(elem);
-                text.append(";");
-            }
-            measurementText.setValue(text.toString());
-        });
+        StringBuilder text = new StringBuilder();
+        for (Measurement elem : measurements.getValue()) {
+            text.append(elem.getName());
+            text.append(";");
+        }
+
+        // if last index of text is ';', then delete this character
+        if (text.length() > 1 && text.charAt(text.length() - 1) == ';') {
+            text.deleteCharAt(text.length() - 1);
+        }
+
+        measurementText.setValue(text.toString());
     }
 
     public int getId() {
