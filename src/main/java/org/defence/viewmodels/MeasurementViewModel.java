@@ -73,4 +73,16 @@ public class MeasurementViewModel implements ViewModel {
     public void setShortName(String shortName) {
         this.shortName.set(shortName);
     }
+
+    public boolean getIsBelong() {
+        return isBelong.get();
+    }
+
+    public BooleanProperty isBelongProperty() {
+        return isBelong;
+    }
+
+    public void setIsBelong(boolean isBelong) {
+        this.isBelong.set(isBelong);
+    }
 }

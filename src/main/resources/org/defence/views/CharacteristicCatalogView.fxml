@@ -103,6 +103,9 @@
                                                         <TableColumn fx:id="nameTableColumn"
                                                                      maxWidth="1.7976931348623157E308" minWidth="150.0"
                                                                      prefWidth="150.0" text="Наименование"/>
+                                                        <TableColumn fx:id="measurementsTableColumn"
+                                                                     maxWidth="1.7976931348623157E308" minWidth="150.0"
+                                                                     prefWidth="150.0" text="Ед.измер."/>
                                                     </columns>
                                                 </TableView>
                                                 <AnchorPane GridPane.columnIndex="0" GridPane.halignment="RIGHT"

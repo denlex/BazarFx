@@ -51,7 +51,7 @@ public class CharacteristicEditView implements FxmlView<CharacteristicEditViewMo
     private void initializeTableView() {
         measurementsTableView.setEditable(true);
 
-        measurementsTableView.itemsProperty().bindBidirectional(viewModel.measurementsProperty());
+        measurementsTableView.itemsProperty().bindBidirectional(viewModel.allMeasurementsProperty());
         idTableColumn.setCellValueFactory(new PropertyValueFactory("id"));
         codeTableColumn.setCellValueFactory(new PropertyValueFactory("code"));
         nameTableColumn.setCellValueFactory(new PropertyValueFactory("name"));
@@ -88,6 +88,10 @@ public class CharacteristicEditView implements FxmlView<CharacteristicEditViewMo
         viewModel.getCancelCommand().execute();
         dialogResult = DialogResult.CANCEL;
         stage.close();
+    }
+
+    public void initializeStage() {
+        stage.onShownProperty().bindBidirectional(viewModel.shownWindowProperty());
     }
 
     public void initialize() {

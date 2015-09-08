@@ -15,6 +15,7 @@ public class CharacteristicViewModel implements ViewModel {
     private final StringProperty code = new SimpleStringProperty();
     private final StringProperty name = new SimpleStringProperty();
     private final SetProperty<Measurement> measurements = new SimpleSetProperty<>();
+    private final StringProperty measurementText = new SimpleStringProperty();
 
     public CharacteristicViewModel() {
     }
@@ -24,6 +25,15 @@ public class CharacteristicViewModel implements ViewModel {
         code.setValue(characteristic.getCode());
         name.setValue(characteristic.getName());
         measurements.setValue(new ObservableSetWrapper<>(characteristic.getMeasurements()));
+
+        measurements.addListener((observable, oldValue, newValue) -> {
+            StringBuilder text = new StringBuilder();
+            for (Measurement elem : newValue) {
+                text.append(elem);
+                text.append(";");
+            }
+            measurementText.setValue(text.toString());
+        });
     }
 
     public int getId() {
@@ -72,5 +82,17 @@ public class CharacteristicViewModel implements ViewModel {
 
     public void setMeasurements(ObservableSet<Measurement> measurements) {
         this.measurements.set(measurements);
+    }
+
+    public String getMeasurementText() {
+        return measurementText.get();
+    }
+
+    public StringProperty measurementTextProperty() {
+        return measurementText;
+    }
+
+    public void setMeasurementText(String measurementText) {
+        this.measurementText.set(measurementText);
     }
 }

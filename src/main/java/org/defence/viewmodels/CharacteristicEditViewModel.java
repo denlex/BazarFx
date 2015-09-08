@@ -7,6 +7,9 @@ import de.saxsys.mvvmfx.utils.commands.Command;
 import de.saxsys.mvvmfx.utils.commands.DelegateCommand;
 import javafx.beans.property.*;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
+import javafx.stage.WindowEvent;
+import org.defence.domain.entities.Characteristic;
 import org.defence.domain.entities.Measurement;
 import org.defence.infrastructure.DbHelper;
 
@@ -22,7 +25,10 @@ public class CharacteristicEditViewModel implements ViewModel {
     private final StringProperty name = new SimpleStringProperty();
     private final ListProperty<MeasurementViewModel> measurements = new SimpleListProperty<>();
 
+    private final ListProperty<MeasurementViewModel> allMeasurements = new SimpleListProperty<>();
     private final ObjectProperty<MeasurementViewModel> selectedMeasurement = new SimpleObjectProperty<>();
+
+    private ObjectProperty<EventHandler<WindowEvent>> shownWindow;// = new SimpleObjectProperty<>();
 
     private String cachedCode;
     private String cachedName;
@@ -36,15 +42,29 @@ public class CharacteristicEditViewModel implements ViewModel {
 
     public CharacteristicEditViewModel() {
 
-        List<Measurement> allMeasurements = dbHelper.getAllMeasurements();
+        List<Measurement> allMeasurementsFromDb = dbHelper.getAllMeasurements();
         List<MeasurementViewModel> list = new LinkedList<>();
 
-        for (Measurement measurement : allMeasurements) {
+        for (Measurement measurement : allMeasurementsFromDb) {
             list.add(new MeasurementViewModel(measurement));
         }
 
+        allMeasurements.setValue(new ObservableListWrapper<>(list));
 
-        measurements.setValue(new ObservableListWrapper<>(list));
+        shownWindow = new SimpleObjectProperty<>(event -> {
+            // if modification open window mode (not creation new characteristic)
+            if (id != null && id.getValue() != 0) {
+                Characteristic current = dbHelper.getCharacteristicById(id.getValue());
+                for (Measurement elem : current.getMeasurements()) {
+                    MeasurementViewModel m = allMeasurements.getValue().stream().filter(p -> p.getId() == elem.getId()).findFirst().get();
+
+                    m.setIsBelong(true);
+                }
+//            measurements.setValue(new ObservableListWrapper<>(list));
+            } else {
+
+            }
+        });
 
         saveCommand = new DelegateCommand(() -> new Action() {
             @Override
@@ -56,13 +76,20 @@ public class CharacteristicEditViewModel implements ViewModel {
                     return;
                 }
 
+                List<Integer> measurementIdList = new LinkedList<>();
+                for (MeasurementViewModel elem : allMeasurements) {
+                    if (elem.getIsBelong()) {
+                        measurementIdList.add(elem.getId());
+                    }
+                }
+
                 if (id.getValue() == 0) {
                     // add measurement
-                    dbHelper.addCharacteristic(typeId, code.getValue(), name.getValue());
+                    dbHelper.addCharacteristic(typeId, code.getValue(), name.getValue(), measurementIdList);
                 } else {
                     // change exist measurement
                     // TODO: Сделать проверку на пустой ввод данных о типе измерения
-                    dbHelper.updateCharacteristic(typeId, id.getValue(), code.getValue(), name.getValue());
+                    dbHelper.updateCharacteristic(typeId, id.getValue(), code.getValue(), name.getValue(), measurementIdList);
                 }
 
                 parentViewModel.loadCharacteristicsBySelectedType();
@@ -175,5 +202,29 @@ public class CharacteristicEditViewModel implements ViewModel {
 
     public void setSelectedMeasurement(MeasurementViewModel selectedMeasurement) {
         this.selectedMeasurement.set(selectedMeasurement);
+    }
+
+    public ObservableList<MeasurementViewModel> getAllMeasurements() {
+        return allMeasurements.get();
+    }
+
+    public ListProperty<MeasurementViewModel> allMeasurementsProperty() {
+        return allMeasurements;
+    }
+
+    public void setAllMeasurements(ObservableList<MeasurementViewModel> allMeasurements) {
+        this.allMeasurements.set(allMeasurements);
+    }
+
+    public EventHandler<WindowEvent> getShownWindow() {
+        return shownWindow.get();
+    }
+
+    public ObjectProperty<EventHandler<WindowEvent>> shownWindowProperty() {
+        return shownWindow;
+    }
+
+    public void setShownWindow(EventHandler<WindowEvent> shownWindow) {
+        this.shownWindow.set(shownWindow);
     }
 }

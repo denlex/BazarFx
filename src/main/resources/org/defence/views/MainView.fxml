@@ -173,7 +173,7 @@
                                                 </GridPane>
                                             </content>
                                         </Tab>-->
-                                        <!--<Tab fx:id="measurementsTab" text="Справочник единиц измерения">
+                                        <Tab fx:id="measurementsTab" text="Справочник единиц измерения">
                                             <content>
                                                 <GridPane maxHeight="1.7976931348623157E308"
                                                           maxWidth="1.7976931348623157E308"
@@ -194,7 +194,7 @@
                                                     </children>
                                                 </GridPane>
                                             </content>
-                                        </Tab>-->
+                                        </Tab>
                                         <Tab fx:id="characteristicsTab" text="Справочник характеристик">
                                             <content>
                                                 <GridPane maxHeight="1.7976931348623157E308"

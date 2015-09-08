@@ -53,6 +53,9 @@ public class CharacteristicCatalogView implements FxmlView<CharacteristicCatalog
     private TableColumn<CharacteristicViewModel, String> nameTableColumn;
 
     @FXML
+    private TableColumn<CharacteristicViewModel, String> measurementsTableColumn;
+
+    @FXML
     private Button addTypeButton;
 
     @FXML
@@ -90,6 +93,7 @@ public class CharacteristicCatalogView implements FxmlView<CharacteristicCatalog
         idTableColumn.setCellValueFactory(new PropertyValueFactory("id"));
         codeTableColumn.setCellValueFactory(new PropertyValueFactory("code"));
         nameTableColumn.setCellValueFactory(new PropertyValueFactory("name"));
+        measurementsTableColumn.setCellValueFactory(new PropertyValueFactory("measurementText"));
 
         characteristicsTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             viewModel.selectedCharacteristicProperty().unbind();
@@ -175,6 +179,7 @@ public class CharacteristicCatalogView implements FxmlView<CharacteristicCatalog
 
         Stage dialog = new Stage();
         viewTuple.getCodeBehind().setStage(dialog);
+        viewTuple.getCodeBehind().initializeStage();
 
         dialog.initModality(Modality.WINDOW_MODAL);
         dialog.initOwner(MainApp.mainStage);
@@ -213,7 +218,7 @@ public class CharacteristicCatalogView implements FxmlView<CharacteristicCatalog
 
         Stage dialog = new Stage();
         viewTuple.getCodeBehind().setStage(dialog);
-
+        viewTuple.getCodeBehind().initializeStage();
 
         viewTuple.getViewModel().idProperty().bindBidirectional(m.getValue().idProperty());
         viewTuple.getViewModel().codeProperty().bindBidirectional(m.getValue().codeProperty());
