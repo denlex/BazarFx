@@ -260,10 +260,16 @@ public class DbHelper {
             Characteristic characteristic = type.getCharacteristics().stream().filter(p -> p.getId() == id).findFirst().get();
 
             // getting characteristic measurements
-            List<Measurement> measurements
-                    = session.createQuery("from Measurement m where m.id in (:measurementIdList)").setParameterList("measurementIdList",
-                    measurementIdList).list();
-            characteristic.setMeasurements(new HashSet<>(measurements));
+            List<Measurement> measurements = null;
+
+            // if there is no any measurement belongs to characteristic
+            if (measurementIdList != null && measurementIdList.size() != 0) {
+                measurements = session.createQuery("from Measurement m where m.id in (:measurementIdList)").setParameterList("measurementIdList",
+                        measurementIdList).list();
+                characteristic.setMeasurements(new HashSet<>(measurements));
+            } else {
+                characteristic.setMeasurements(null);
+            }
 
             if (characteristic == null) {
                 transaction.rollback();
@@ -602,6 +608,7 @@ public class DbHelper {
         try {
             transaction = session.beginTransaction();
             Characteristic characteristic = (Characteristic) session.get(Characteristic.class, id);
+            characteristic.getMeasurements().clear();
             session.delete(characteristic);
             transaction.commit();
         } catch (Exception ex) {

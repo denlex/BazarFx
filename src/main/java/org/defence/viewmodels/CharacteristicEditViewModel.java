@@ -51,6 +51,7 @@ public class CharacteristicEditViewModel implements ViewModel {
 
         allMeasurements.setValue(new ObservableListWrapper<>(list));
 
+        // filling checkBoxes in table with corresponded values
         shownWindow = new SimpleObjectProperty<>(event -> {
             // if modification open window mode (not creation new characteristic)
             if (id != null && id.getValue() != 0) {
@@ -60,7 +61,6 @@ public class CharacteristicEditViewModel implements ViewModel {
 
                     m.setIsBelong(true);
                 }
-//            measurements.setValue(new ObservableListWrapper<>(list));
             } else {
 
             }

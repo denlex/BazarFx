@@ -28,7 +28,7 @@ public class CharacteristicViewModel implements ViewModel {
 
         StringBuilder text = new StringBuilder();
         for (Measurement elem : measurements.getValue()) {
-            text.append(elem.getName());
+            text.append(elem.getShortName());
             text.append(";");
         }
 
