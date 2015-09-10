@@ -16,6 +16,7 @@ public class CharacteristicViewModel implements ViewModel {
     private final StringProperty name = new SimpleStringProperty();
     private final SetProperty<Measurement> measurements = new SimpleSetProperty<>();
     private final StringProperty measurementText = new SimpleStringProperty();
+    private final BooleanProperty isBelong = new SimpleBooleanProperty();
 
     public CharacteristicViewModel() {
     }
@@ -98,5 +99,17 @@ public class CharacteristicViewModel implements ViewModel {
 
     public void setMeasurementText(String measurementText) {
         this.measurementText.set(measurementText);
+    }
+
+    public boolean getIsBelong() {
+        return isBelong.get();
+    }
+
+    public BooleanProperty isBelongProperty() {
+        return isBelong;
+    }
+
+    public void setIsBelong(boolean isBelong) {
+        this.isBelong.set(isBelong);
     }
 }

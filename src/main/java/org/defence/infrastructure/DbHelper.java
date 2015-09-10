@@ -1,9 +1,6 @@
 package org.defence.infrastructure;
 
-import org.defence.domain.entities.Characteristic;
-import org.defence.domain.entities.CharacteristicType;
-import org.defence.domain.entities.Measurement;
-import org.defence.domain.entities.MeasurementType;
+import org.defence.domain.entities.*;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -219,6 +216,30 @@ public class DbHelper {
         }
     }
 
+    public void addCharacteristicKit(Integer formatId, String name, List<Integer> characteristicIdList) {
+        Session session = factory.openSession();
+        Transaction transaction = null;
+
+        try {
+            transaction = session.beginTransaction();
+            DescriptionFormat format = (DescriptionFormat) session.get(DescriptionFormat.class, formatId);
+
+            // getting characteristic measurements
+            List<Characteristic> characteristics
+                    = session.createQuery("from Characteristic m where m.id in (:characteristicIdList)").setParameterList("characteristicIdList",
+                    characteristicIdList).list();
+
+            format.getCharacteristicKits().add(new CharacteristicKit(name, new HashSet<>(characteristics)));
+            session.save(format);
+            transaction.commit();
+        } catch (Exception ex) {
+            transaction.rollback();
+            ex.printStackTrace();
+        } finally {
+            session.close();
+        }
+    }
+
     public boolean updateMeasurement(Integer typeId, Integer id, String code, String name, String shortName) {
         Session session = factory.openSession();
         Transaction transaction = null;
@@ -259,8 +280,8 @@ public class DbHelper {
             CharacteristicType type = (CharacteristicType) session.get(CharacteristicType.class, typeId);
             Characteristic characteristic = type.getCharacteristics().stream().filter(p -> p.getId() == id).findFirst().get();
 
-            // getting characteristic measurements
-            List<Measurement> measurements = null;
+            // getting measurement list of characteristic
+            List<Measurement> measurements;
 
             // if there is no any measurement belongs to characteristic
             if (measurementIdList != null && measurementIdList.size() != 0) {
@@ -280,6 +301,47 @@ public class DbHelper {
             characteristic.setName(name);
 
             session.update(characteristic);
+            transaction.commit();
+        } catch (Exception ex) {
+            transaction.rollback();
+            ex.printStackTrace();
+            return false;
+        } finally {
+            session.close();
+        }
+
+        return true;
+    }
+
+    public boolean updateCharacteristicKit(Integer formatId, Integer id, String name, List<Integer> characteristicIdList) {
+        Session session = factory.openSession();
+        Transaction transaction = null;
+
+        try {
+            transaction = session.beginTransaction();
+            DescriptionFormat descriptionFormat = (DescriptionFormat) session.get(DescriptionFormat.class, formatId);
+            CharacteristicKit characteristicKit = descriptionFormat.getCharacteristicKits().stream().filter(p -> p.getId() == id).findFirst().get();
+
+            // getting measurement list of characteristic
+            List<Characteristic> characteristics;
+
+            // if there is no any measurement belongs to characteristic
+            if (characteristicIdList != null && characteristicIdList.size() != 0) {
+                characteristics = session.createQuery("from Characteristic m where m.id in (:characteristicIdList)").setParameterList("characteristicIdList",
+                        characteristicIdList).list();
+                characteristicKit.setCharacteristics(new HashSet<>(characteristics));
+            } else {
+                characteristicKit.setCharacteristics(null);
+            }
+
+            if (characteristicKit == null) {
+                transaction.rollback();
+                return false;
+            }
+
+            characteristicKit.setName(name);
+
+            session.update(characteristicKit);
             transaction.commit();
         } catch (Exception ex) {
             transaction.rollback();
@@ -390,7 +452,21 @@ public class DbHelper {
         List<CharacteristicType> result = null;
 
         try {
-            result = session.createQuery("from CharacteristicType Type order by id").list();
+            result = session.createQuery("from CharacteristicType order by id").list();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            session.close();
+            return result;
+        }
+    }
+
+    public List<Characteristic> getAllCharacteristics() {
+        Session session = factory.openSession();
+        List<Characteristic> result = null;
+
+        try {
+            result = session.createQuery("from Characteristic order by id").list();
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
@@ -440,6 +516,20 @@ public class DbHelper {
 
         try {
             result = (Characteristic) session.createQuery("from Characteristic where id = :id").setParameter("id", id).uniqueResult();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            session.close();
+            return result;
+        }
+    }
+
+    public CharacteristicKit getCharacteristicKitById(Integer id) {
+        Session session = factory.openSession();
+        CharacteristicKit result = null;
+
+        try {
+            result = (CharacteristicKit) session.createQuery("from CharacteristicKit where id = :id").setParameter("id", id).uniqueResult();
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
