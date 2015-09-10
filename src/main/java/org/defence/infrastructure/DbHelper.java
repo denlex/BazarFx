@@ -192,7 +192,7 @@ public class DbHelper {
         }
     }
 
-    public void addCharacteristic(Integer typeId, String code, String name, List<Integer> measurementIdList) {
+    public boolean addCharacteristic(Integer typeId, String code, String name, List<Integer> measurementIdList) {
         Session session = factory.openSession();
         Transaction transaction = null;
 
@@ -200,23 +200,42 @@ public class DbHelper {
             transaction = session.beginTransaction();
             CharacteristicType type = (CharacteristicType) session.get(CharacteristicType.class, typeId);
 
-            // getting characteristic measurements
+            /*// getting characteristic measurements
             List<Measurement> measurements
                     = session.createQuery("from Measurement m where m.id in (:measurementIdList)").setParameterList("measurementIdList",
-                    measurementIdList).list();
+                    measurementIdList).list();*/
 
-            type.getCharacteristics().add(new Characteristic(code, name, new HashSet<>(measurements)));
+            Characteristic characteristic = new Characteristic(code, name, null);
+
+            // getting measurement list of characteristic
+            List<Measurement> measurements;
+
+            // if there is no any measurement belongs to characteristic
+            if (measurementIdList != null && measurementIdList.size() != 0) {
+                measurements = session.createQuery("from Measurement m where m.id in (:measurementIdList)").setParameterList("measurementIdList",
+                        measurementIdList).list();
+                characteristic.setMeasurements(new HashSet<>(measurements));
+            }
+
+            if (characteristic == null) {
+                transaction.rollback();
+                return false;
+            }
+
+            type.getCharacteristics().add(characteristic);
             session.save(type);
             transaction.commit();
         } catch (Exception ex) {
             transaction.rollback();
             ex.printStackTrace();
+            return false;
         } finally {
             session.close();
         }
+        return true;
     }
 
-    public void addCharacteristicKit(Integer formatId, String name, List<Integer> characteristicIdList) {
+    public boolean addCharacteristicKit(Integer formatId, String name, List<Integer> characteristicIdList) {
         Session session = factory.openSession();
         Transaction transaction = null;
 
@@ -224,20 +243,34 @@ public class DbHelper {
             transaction = session.beginTransaction();
             DescriptionFormat format = (DescriptionFormat) session.get(DescriptionFormat.class, formatId);
 
-            // getting characteristic measurements
+            /*// getting characteristic measurements
             List<Characteristic> characteristics
                     = session.createQuery("from Characteristic m where m.id in (:characteristicIdList)").setParameterList("characteristicIdList",
-                    characteristicIdList).list();
+                    characteristicIdList).list();*/
 
-            format.getCharacteristicKits().add(new CharacteristicKit(name, new HashSet<>(characteristics)));
+            CharacteristicKit characteristicKit = new CharacteristicKit(name, null);
+
+            // getting measurement list of characteristic
+            List<Characteristic> characteristics;
+
+            // if there is no any measurement belongs to characteristic
+            if (characteristicIdList != null && characteristicIdList.size() != 0) {
+                characteristics = session.createQuery("from Characteristic m where m.id in (:characteristicIdList)").setParameterList("characteristicIdList",
+                        characteristicIdList).list();
+                characteristicKit.setCharacteristics(new HashSet<>(characteristics));
+            }
+
+            format.getCharacteristicKits().add(characteristicKit);
             session.save(format);
             transaction.commit();
         } catch (Exception ex) {
             transaction.rollback();
             ex.printStackTrace();
+            return false;
         } finally {
             session.close();
         }
+        return true;
     }
 
     public boolean updateMeasurement(Integer typeId, Integer id, String code, String name, String shortName) {
