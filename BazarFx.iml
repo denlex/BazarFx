@@ -25,10 +25,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="com.aquafx-project:aquafx:0.2" level="project" />
-    <orderEntry type="library" name="Maven: org.controlsfx:controlsfx:8.40.9" level="project" />
-    <orderEntry type="library" name="Maven: org.controlsfx:openjfx-dialogs:1.0.3" level="project" />
-    <orderEntry type="library" name="Maven: com.aquafx-project:aquafx:0.2" level="project" />
-    <orderEntry type="library" name="Maven: com.guigarage:stylemanager:0.1b2" level="project" />
     <orderEntry type="library" name="Maven: org.hibernate:hibernate-entitymanager:4.3.9.Final" level="project" />
     <orderEntry type="library" name="Maven: org.jboss.logging:jboss-logging:3.1.3.GA" level="project" />
     <orderEntry type="library" name="Maven: org.jboss.logging:jboss-logging-annotations:1.2.0.Beta1" level="project" />
@@ -42,6 +38,14 @@
     <orderEntry type="library" name="Maven: antlr:antlr:2.7.7" level="project" />
     <orderEntry type="library" name="Maven: org.jboss:jandex:1.1.0.Final" level="project" />
     <orderEntry type="library" name="Maven: postgresql:postgresql:9.2-1002.jdbc4" level="project" />
+    <orderEntry type="library" name="Maven: de.saxsys:mvvmfx:1.3.1" level="project" />
+    <orderEntry type="library" name="Maven: net.jodah:typetools:0.4.1" level="project" />
+    <orderEntry type="library" name="Maven: eu.lestard:doc-annotations:0.2" level="project" />
+    <orderEntry type="library" name="Maven: com.guigarage:flatter:0.7" level="project" />
+    <orderEntry type="library" name="Maven: eu.lestard:easy-di:0.3.0" level="project" />
+    <orderEntry type="library" name="Maven: javax.inject:javax.inject:1" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.12" level="project" />
+    <orderEntry type="library" name="Maven: de.jensd:fontawesomefx:8.0.5" level="project" />
     <orderEntry type="library" name="Maven: org.controlsfx:controlsfx:8.40.9" level="project" />
     <orderEntry type="library" name="Maven: org.controlsfx:openjfx-dialogs:1.0.3" level="project" />
     <orderEntry type="library" name="Maven: com.aquafx-project:aquafx:0.2" level="project" />

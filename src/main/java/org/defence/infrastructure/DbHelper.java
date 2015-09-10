@@ -73,6 +73,8 @@ public class DbHelper {
 
     private static SessionFactory factory;
     private static final String CHARACTERISTICS = "/home/contragent/Desktop/Characteristics.csv";
+
+//    private static final String CHARACTERISTICS = "Characteristics.csv";
     private static final String GROUPS_CHARACTERISTICS = "/home/contragent/Desktop/GroupsCharacteristics.csv";
     private static final String GROUPS_MEASUREMENTS = "/home/contragent/Desktop/GroupsMeasurements.csv";
     private static final String MEASUREMENTS = "/home/contragent/Desktop/Measurements.csv";
@@ -157,6 +159,24 @@ public class DbHelper {
         return true;
     }
 
+    public boolean addCharacteristicType(String code, String name) {
+        Session session = factory.openSession();
+        Transaction transaction = null;
+
+        try {
+            transaction = session.beginTransaction();
+            session.save(new CharacteristicType(code, name));
+            transaction.commit();
+        } catch (Exception ex) {
+            transaction.rollback();
+            return false;
+        } finally {
+            session.close();
+        }
+
+        return true;
+    }
+
     public void addMeasurement(Integer typeId, String code, String name, String shortName) {
         Session session = factory.openSession();
         Transaction transaction = null;
@@ -165,6 +185,30 @@ public class DbHelper {
             transaction = session.beginTransaction();
             MeasurementType type = (MeasurementType) session.get(MeasurementType.class, typeId);
             type.getMeasurements().add(new Measurement(code, name, shortName));
+            session.save(type);
+            transaction.commit();
+        } catch (Exception ex) {
+            transaction.rollback();
+            ex.printStackTrace();
+        } finally {
+            session.close();
+        }
+    }
+
+    public void addCharacteristic(Integer typeId, String code, String name, List<Integer> measurementIdList) {
+        Session session = factory.openSession();
+        Transaction transaction = null;
+
+        try {
+            transaction = session.beginTransaction();
+            CharacteristicType type = (CharacteristicType) session.get(CharacteristicType.class, typeId);
+
+            // getting characteristic measurements
+            List<Measurement> measurements
+                    = session.createQuery("from Measurement m where m.id in (:measurementIdList)").setParameterList("measurementIdList",
+                    measurementIdList).list();
+
+            type.getCharacteristics().add(new Characteristic(code, name, new HashSet<>(measurements)));
             session.save(type);
             transaction.commit();
         } catch (Exception ex) {
@@ -194,6 +238,48 @@ public class DbHelper {
             measurement.setShortName(shortName);
 
             session.update(measurement);
+            transaction.commit();
+        } catch (Exception ex) {
+            transaction.rollback();
+            ex.printStackTrace();
+            return false;
+        } finally {
+            session.close();
+        }
+
+        return true;
+    }
+
+    public boolean updateCharacteristic(Integer typeId, Integer id, String code, String name, List<Integer> measurementIdList) {
+        Session session = factory.openSession();
+        Transaction transaction = null;
+
+        try {
+            transaction = session.beginTransaction();
+            CharacteristicType type = (CharacteristicType) session.get(CharacteristicType.class, typeId);
+            Characteristic characteristic = type.getCharacteristics().stream().filter(p -> p.getId() == id).findFirst().get();
+
+            // getting characteristic measurements
+            List<Measurement> measurements = null;
+
+            // if there is no any measurement belongs to characteristic
+            if (measurementIdList != null && measurementIdList.size() != 0) {
+                measurements = session.createQuery("from Measurement m where m.id in (:measurementIdList)").setParameterList("measurementIdList",
+                        measurementIdList).list();
+                characteristic.setMeasurements(new HashSet<>(measurements));
+            } else {
+                characteristic.setMeasurements(null);
+            }
+
+            if (characteristic == null) {
+                transaction.rollback();
+                return false;
+            }
+
+            characteristic.setCode(code);
+            characteristic.setName(name);
+
+            session.update(characteristic);
             transaction.commit();
         } catch (Exception ex) {
             transaction.rollback();
@@ -263,6 +349,28 @@ public class DbHelper {
         return true;
     }
 
+    public boolean updateCharacteristicType(Integer id, String code, String name) {
+        Session session = factory.openSession();
+        Transaction transaction = null;
+
+        try {
+            transaction = session.beginTransaction();
+            CharacteristicType type = (CharacteristicType) session.get(CharacteristicType.class, id);
+            type.setCode(code);
+            type.setName(name);
+            session.update(type);
+            transaction.commit();
+        } catch (Exception ex) {
+            transaction.rollback();
+            ex.printStackTrace();
+            return false;
+        } finally {
+            session.close();
+        }
+
+        return true;
+    }
+
     public List<MeasurementType> getAllMeasurementTypes() {
         Session session = factory.openSession();
         List<MeasurementType> result = null;
@@ -277,12 +385,12 @@ public class DbHelper {
         }
     }
 
-    public List<Measurement> importAllMeasurements() {
+    public List<CharacteristicType> getAllCharacteristicTypes() {
         Session session = factory.openSession();
-        List<Measurement> result = null;
+        List<CharacteristicType> result = null;
 
         try {
-            result = session.createQuery("from Measurement order by id").list();
+            result = session.createQuery("from CharacteristicType Type order by id").list();
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
@@ -291,7 +399,7 @@ public class DbHelper {
         }
     }
 
-    public List<Measurement> getMeasurementsByMeasurementTypeId(Integer id) {
+    public List<Measurement> getMeasurementsByTypeId(Integer id) {
         Session session = factory.openSession();
         List<Measurement> result = null;
 
@@ -300,6 +408,52 @@ public class DbHelper {
 
             result = new LinkedList<>();
             result.addAll(type.getMeasurements().stream().sorted().collect(Collectors.toList()));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            session.close();
+            return result;
+        }
+    }
+
+    public List<Characteristic> getCharacteristicsByTypeId(Integer id) {
+        Session session = factory.openSession();
+        List<Characteristic> result = null;
+
+        try {
+            CharacteristicType type = (CharacteristicType) session.createQuery("from CharacteristicType where id = :id").setParameter("id", id).uniqueResult();
+
+//            result = new LinkedList<>();
+//            result.addAll(type.getCharacteristics().stream().sorted().collect(Collectors.toList()));
+            result = type.getCharacteristics().stream().sorted().collect(Collectors.toList());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            session.close();
+            return result;
+        }
+    }
+
+    public Characteristic getCharacteristicById(Integer id) {
+        Session session = factory.openSession();
+        Characteristic result = null;
+
+        try {
+            result = (Characteristic) session.createQuery("from Characteristic where id = :id").setParameter("id", id).uniqueResult();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            session.close();
+            return result;
+        }
+    }
+
+    public List<Measurement> getAllMeasurements() {
+        Session session = factory.openSession();
+        List<Measurement> result = null;
+
+        try {
+            result = session.createQuery("from Measurement order by name").list();
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
@@ -446,9 +600,34 @@ public class DbHelper {
 
         return true;
     }
+
+    public boolean deleteCharacteristic(Integer id) {
+        Session session = factory.openSession();
+        Transaction transaction = null;
+
+        try {
+            transaction = session.beginTransaction();
+            Characteristic characteristic = (Characteristic) session.get(Characteristic.class, id);
+            characteristic.getMeasurements().clear();
+            session.delete(characteristic);
+            transaction.commit();
+        } catch (Exception ex) {
+            transaction.rollback();
+            ex.printStackTrace();
+            return false;
+        } finally {
+            session.close();
+        }
+
+        return true;
+    }
 //----------------------------------------------------------------------------------------------------------------------
-    /*public static int importCharacteristicsIntoTable() throws Exception {
+    public static int importCharacteristicsIntoTable() throws Exception {
         int counter = 0;
+//        URL test = DbHelper.class.getResource(CHARACTERISTICS);
+
+//        String fileName = DbHelper.class.getResource(CHARACTERISTICS).getFile();
+
         BufferedReader reader = new BufferedReader(new FileReader(CHARACTERISTICS));
         String line;
 
@@ -507,11 +686,11 @@ public class DbHelper {
         }
 
         return true;
-    }*/
+    }
 
-    /*private static void importCharacteristicTypes() {
+    private static void importCharacteristicTypes() {
         if (measurementEntries.size() > 0) {
-            Set<Characteristic> characteristics = new HashSet<Characteristic>();
+            Set<Characteristic> characteristics = new HashSet<>();
 
             // loading measurementTypes into CharacteristicType table
             for (final Map.Entry<Integer, CharacteristicType> entry : characteristicTypes.entrySet()) {
@@ -524,10 +703,10 @@ public class DbHelper {
                     break;
                 }
 
-                for (CharacteristicEntry characteristic : list) {
+                /*for (CharacteristicEntry characteristic : list) {
                     characteristics.add(characteristic.getMeasurement());
                     System.out.println("\t" + characteristic.getMeasurement().getName() + "; " + characteristic.getMeasurement().getShortName());
-                }
+                }*/
 
                 entry.getValue().setCharacteristics(characteristics);
                 loadCharacteristicType(entry);
@@ -536,7 +715,7 @@ public class DbHelper {
 
             System.out.println("\nMEASUREMENTS were loaded\n");
         }
-    }*/
+    }
 
     private static void loadCharacteristicType(Map.Entry<Integer, CharacteristicType> entry) {
         Session session = factory.openSession();
@@ -551,9 +730,13 @@ public class DbHelper {
         if (factory == null) {
             factory = new Configuration().configure().buildSessionFactory();
         }
-        int result = importMeasurementsIntoTable();
-        System.out.format("%s measurements were loaded\n", result);
+        /*int result = importMeasurementsIntoTable();
+        System.out.format("%s measurements were loaded\n", result);*/
+
+        int result = importCharacteristicsIntoTable();
 
         factory.close();
     }
+
+
 }

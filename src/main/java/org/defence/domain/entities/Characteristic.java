@@ -7,7 +7,7 @@ import java.util.Set;
 /**
  * Created by root on 22.07.15.
  */
-public class Characteristic implements Serializable {
+public class Characteristic implements Serializable, Comparable<Characteristic> {
     private int id;
     private String code;
     private String name;
@@ -20,6 +20,12 @@ public class Characteristic implements Serializable {
         this.code = code;
         this.name = name;
     }
+
+    public Characteristic(String code, String name, Set<Measurement> measurements) {
+        this(code, name);
+        this.measurements = measurements;
+    }
+
 
     public int getId() {
         return id;
@@ -51,5 +57,10 @@ public class Characteristic implements Serializable {
 
     public void setMeasurements(Set<Measurement> measurements) {
         this.measurements = measurements;
+    }
+
+    @Override
+    public int compareTo(Characteristic o) {
+        return this.name.compareToIgnoreCase(o.getName());
     }
 }

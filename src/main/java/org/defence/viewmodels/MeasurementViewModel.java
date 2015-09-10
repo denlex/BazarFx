@@ -1,10 +1,7 @@
 package org.defence.viewmodels;
 
 import de.saxsys.mvvmfx.ViewModel;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 import org.defence.domain.entities.Measurement;
 
 /**
@@ -16,6 +13,7 @@ public class MeasurementViewModel implements ViewModel {
     private final StringProperty code = new SimpleStringProperty();
     private final StringProperty name = new SimpleStringProperty();
     private final StringProperty shortName = new SimpleStringProperty();
+    private final BooleanProperty isBelong = new SimpleBooleanProperty();
 
 
     public MeasurementViewModel() {
@@ -74,5 +72,17 @@ public class MeasurementViewModel implements ViewModel {
 
     public void setShortName(String shortName) {
         this.shortName.set(shortName);
+    }
+
+    public boolean getIsBelong() {
+        return isBelong.get();
+    }
+
+    public BooleanProperty isBelongProperty() {
+        return isBelong;
+    }
+
+    public void setIsBelong(boolean isBelong) {
+        this.isBelong.set(isBelong);
     }
 }
