@@ -50,9 +50,15 @@ public class HibernateTest {
         Set<CatalogDescription> catalogDescriptions = new HashSet<CatalogDescription>();
         catalogDescriptions.add(mig29);
 
+		AssertedName assertedName = new AssertedName("code", "Миги");
+		assertedName.setCatalogDescriptions(catalogDescriptions);
+
+		Set<AssertedName> assertedNames = new HashSet<>();
+		assertedNames.add(assertedName);
+
         DescriptionFormat destroyer = new DescriptionFormat("001", "Истребители");
         destroyer.setCharacteristicKits(characteristicKits);
-        destroyer.setCatalogDescriptions(catalogDescriptions);
+        destroyer.setAssertedNames(assertedNames);
 
         Session session = factory.openSession();
         Transaction transaction = session.beginTransaction();

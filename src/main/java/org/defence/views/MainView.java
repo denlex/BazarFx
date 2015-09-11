@@ -8,8 +8,9 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TreeView;
+import org.defence.viewmodels.DescriptionFormatViewModel;
 import org.defence.viewmodels.MainViewModel;
 
 /**
@@ -22,14 +23,8 @@ public class MainView implements FxmlView<MainViewModel> {
     @FXML
     TabPane tabs;
 
-    /*@FXML
-    Tab measurementsTab;*/
-
-    @FXML
-    Tab characteristicsTab;
-
-    /*@FXML
-    private Button cancelMesTypeBtn;*/
+	@FXML
+	TreeView<DescriptionFormatViewModel> formatsTreeView;
 
     @InjectViewModel
     private MainViewModel viewModel;
@@ -56,6 +51,7 @@ public class MainView implements FxmlView<MainViewModel> {
                 tabs.getTabs().remove(measurementTypeTab);
             }
         });*/
+//        new DescriptionFormatEditView().initializeStage();
     }
 }
 

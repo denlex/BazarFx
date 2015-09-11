@@ -32,7 +32,7 @@ public class CharacteristicKitEditViewModel implements ViewModel {
     private Command saveCommand;
     private final DbHelper dbHelper = DbHelper.getInstance();
 
-    private CharacteristicCatalogViewModel parentViewModel;
+    private DescriptionFormatEditViewModel parentViewModel;
 
     public CharacteristicKitEditViewModel() {
         List<Characteristic> allCharacteristicsFromDb = dbHelper.getAllCharacteristics();
@@ -62,33 +62,27 @@ public class CharacteristicKitEditViewModel implements ViewModel {
         saveCommand = new DelegateCommand(() -> new Action() {
             @Override
             protected void action() throws Exception {
-                // TODO: Заменить на id выбранного формата описания
-                Integer formatId = 1;//parentViewModel.getSelectedType().getId();
 
-                if (formatId == null || formatId == 0) {
-                    return;
-                }
+				List<Integer> characteristicIdList = new LinkedList<>();
+				for (CharacteristicViewModel elem : allCharacteristics) {
+					if (elem.getIsBelong()) {
+						characteristicIdList.add(elem.getId());
+					}
+				}
 
-                List<Integer> characteristicIdList = new LinkedList<>();
-                for (CharacteristicViewModel elem : allCharacteristics) {
-                    if (elem.getIsBelong()) {
-                        characteristicIdList.add(elem.getId());
-                    }
-                }
+				if (id.getValue() == 0) {
+					// add characteristicKit
+					dbHelper.addCharacteristicKit(name.getValue(), characteristicIdList);
+				} else {
+					// change exist characteristicKit
+					// TODO: Сделать проверку на пустой ввод данных о типе измерения
+					dbHelper.updateCharacteristicKit(id.getValue(), name.getValue(), characteristicIdList);
+				}
 
-                if (id.getValue() == 0) {
-                    // add characteristic
-                    dbHelper.addCharacteristicKit(formatId, name.getValue(), characteristicIdList);
-                } else {
-                    // change exist measurement
-                    // TODO: Сделать проверку на пустой ввод данных о типе измерения
-                    dbHelper.updateCharacteristicKit(formatId, id.getValue(), name.getValue(), characteristicIdList);
-                }
-
-                // TODO: реализовать возможность обновления списка наборов характеристик
+				// TODO: реализовать возможность обновления списка наборов характеристик
 //                parentViewModel.loadCharacteristicKitsBySelectedFormat();
-            }
-        });
+			}
+		});
     }
 
     public int getId() {
@@ -158,4 +152,8 @@ public class CharacteristicKitEditViewModel implements ViewModel {
     public void setSaveCommand(Command saveCommand) {
         this.saveCommand = saveCommand;
     }
+
+	public void setParentViewModel(DescriptionFormatEditViewModel parentViewModel) {
+		this.parentViewModel = parentViewModel;
+	}
 }

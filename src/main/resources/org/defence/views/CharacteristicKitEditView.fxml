@@ -52,10 +52,10 @@
         <AnchorPane GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="4">
             <children>
                 <Button text="Применить" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="140.0"
-                        AnchorPane.topAnchor="10.0">
+                        AnchorPane.topAnchor="10.0" onAction="#saveCharacteristicKitClicked">
                 </Button>
                 <Button text="Отмена" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0"
-                        AnchorPane.topAnchor="10.0">
+                        AnchorPane.topAnchor="10.0" onAction="#cancelButtonClicked">
                 </Button>
             </children>
         </AnchorPane>

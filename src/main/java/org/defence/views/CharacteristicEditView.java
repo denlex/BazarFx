@@ -80,7 +80,6 @@ public class CharacteristicEditView implements FxmlView<CharacteristicEditViewMo
     }
 
     public void cancelButtonClicked() {
-        viewModel.getCancelCommand().execute();
         dialogResult = DialogResult.CANCEL;
         stage.close();
     }

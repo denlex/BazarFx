@@ -1,7 +1,7 @@
 package org.defence.views;
 
+import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
-import de.saxsys.mvvmfx.internal.viewloader.View;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
@@ -16,7 +16,7 @@ import org.defence.viewmodels.CharacteristicViewModel;
 /**
  * Created by root on 9/10/15.
  */
-public class CharacteristicKitEditView implements View<CharacteristicKitEditViewModel>, Returnable {
+public class CharacteristicKitEditView implements FxmlView<CharacteristicKitEditViewModel>, Returnable {
     @FXML
     TextField nameTextField;
 
@@ -62,8 +62,16 @@ public class CharacteristicKitEditView implements View<CharacteristicKitEditView
     }
 
     public void saveCharacteristicKitClicked() {
+        viewModel.getSaveCommand().execute();
+		dialogResult = DialogResult.OK;
+		// TODO: Откомментировать, когда появится справочник наборов характеристик
+//		stage.close();
+	}
 
-    }
+	public void cancelButtonClicked() {
+		dialogResult = DialogResult.CANCEL;
+		stage.close();
+	}
 
     public void initializeStage() {
         stage.onShownProperty().bindBidirectional(viewModel.shownWindowProperty());

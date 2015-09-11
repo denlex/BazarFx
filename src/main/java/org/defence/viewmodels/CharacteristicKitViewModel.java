@@ -3,6 +3,7 @@ package org.defence.viewmodels;
 import de.saxsys.mvvmfx.ViewModel;
 import javafx.beans.property.*;
 import javafx.collections.ObservableList;
+import org.defence.domain.entities.CharacteristicKit;
 
 /**
  * Created by root on 9/10/15.
@@ -15,6 +16,11 @@ public class CharacteristicKitViewModel implements ViewModel {
 
     public CharacteristicKitViewModel() {
 
+    }
+
+    public CharacteristicKitViewModel(CharacteristicKit characteristicKit) {
+        this.setId(characteristicKit.getId());
+        this.setName(characteristicKit.getName());
     }
 
     public int getId() {
