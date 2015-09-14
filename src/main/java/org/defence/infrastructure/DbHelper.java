@@ -602,6 +602,20 @@ public class DbHelper {
 		}
 	}
 
+	public List<DescriptionFormat> getAllDescriptionFormats() {
+		Session session = factory.openSession();
+		List<DescriptionFormat> result = null;
+
+		try {
+			result = session.createQuery("from DescriptionFormat order by name").list();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			session.close();
+			return result;
+		}
+	}
+
 	public List<Measurement> getMeasurementsByTypeId(Integer id) {
 		Session session = factory.openSession();
 		List<Measurement> result = null;

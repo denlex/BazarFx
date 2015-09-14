@@ -3,13 +3,13 @@ package org.defence.views;
 import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.TreeView;
+import javafx.scene.control.*;
+import javafx.util.Callback;
 import org.defence.viewmodels.DescriptionFormatViewModel;
 import org.defence.viewmodels.MainViewModel;
 
@@ -25,6 +25,7 @@ public class MainView implements FxmlView<MainViewModel> {
 
 	@FXML
 	TreeView<DescriptionFormatViewModel> formatsTreeView;
+
 
     @InjectViewModel
     private MainViewModel viewModel;
@@ -46,13 +47,30 @@ public class MainView implements FxmlView<MainViewModel> {
 //        exitBtnRegisterEvents();
 
         /*cancelMesTypeBtn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
+			@Override
             public void handle(ActionEvent event) {
                 tabs.getTabs().remove(measurementTypeTab);
             }
         });*/
 //        new DescriptionFormatEditView().initializeStage();
-    }
+
+		DescriptionFormatViewModel root = new DescriptionFormatViewModel("code", "ROOT");
+		TreeItem<DescriptionFormatViewModel> rootItem = new TreeItem<>(root);
+
+		formatsTreeView.rootProperty().bindBidirectional(new SimpleObjectProperty<>(rootItem));
+		formatsTreeView.setCellFactory(new Callback<TreeView<DescriptionFormatViewModel>, TreeCell<DescriptionFormatViewModel>>() {
+			@Override
+			public TreeCell<DescriptionFormatViewModel> call(TreeView<DescriptionFormatViewModel> param) {
+				return null;
+			}
+		});
+
+		//https://docs.oracle.com/javafx/2/ui_controls/tree-view.htm
+		System.out.println("Inside main view");
+
+//		formatsTreeView.proper
+//        formatsTreeView.cellFactoryProperty().bindBidirectional(viewModel.formatsProperty());
+	}
 }
 
 

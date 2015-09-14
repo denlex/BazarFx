@@ -3,6 +3,7 @@ package org.defence.viewmodels;
 import de.saxsys.mvvmfx.ViewModel;
 import javafx.beans.property.*;
 import javafx.collections.ObservableList;
+import org.defence.domain.entities.Characteristic;
 import org.defence.domain.entities.CharacteristicKit;
 
 /**
@@ -12,7 +13,7 @@ public class CharacteristicKitViewModel implements ViewModel {
     private final IntegerProperty id = new SimpleIntegerProperty();
     private final StringProperty name = new SimpleStringProperty();
     private final BooleanProperty isBelong = new SimpleBooleanProperty();
-    private final ListProperty<CharacteristicViewModel> characteristics = new SimpleListProperty<>();
+    private final ListProperty<Characteristic> characteristics = new SimpleListProperty<>();
 
     public CharacteristicKitViewModel() {
 
@@ -21,6 +22,7 @@ public class CharacteristicKitViewModel implements ViewModel {
     public CharacteristicKitViewModel(CharacteristicKit characteristicKit) {
         this.setId(characteristicKit.getId());
         this.setName(characteristicKit.getName());
+//        this.setCharacteristics();
     }
 
     public int getId() {
@@ -47,19 +49,19 @@ public class CharacteristicKitViewModel implements ViewModel {
         this.name.set(name);
     }
 
-    public ObservableList<CharacteristicViewModel> getCharacteristics() {
-        return characteristics.get();
-    }
+	public ObservableList<Characteristic> getCharacteristics() {
+		return characteristics.get();
+	}
 
-    public ListProperty<CharacteristicViewModel> characteristicsProperty() {
-        return characteristics;
-    }
+	public ListProperty<Characteristic> characteristicsProperty() {
+		return characteristics;
+	}
 
-    public void setCharacteristics(ObservableList<CharacteristicViewModel> characteristics) {
-        this.characteristics.set(characteristics);
-    }
+	public void setCharacteristics(ObservableList<Characteristic> characteristics) {
+		this.characteristics.set(characteristics);
+	}
 
-    public boolean getIsBelong() {
+	public boolean getIsBelong() {
         return isBelong.get();
     }
 
