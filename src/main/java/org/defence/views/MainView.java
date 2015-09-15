@@ -3,14 +3,15 @@ package org.defence.views;
 import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
 import javafx.application.Platform;
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.util.Callback;
-import org.defence.viewmodels.DescriptionFormatViewModel;
+import org.defence.viewmodels.AssertedNameViewModel;
+import org.defence.viewmodels.CatalogDescriptionViewModel;
 import org.defence.viewmodels.MainViewModel;
 
 /**
@@ -24,8 +25,7 @@ public class MainView implements FxmlView<MainViewModel> {
     TabPane tabs;
 
 	@FXML
-	TreeView<DescriptionFormatViewModel> formatsTreeView;
-
+	TreeView<Object> treeView;
 
     @InjectViewModel
     private MainViewModel viewModel;
@@ -44,32 +44,95 @@ public class MainView implements FxmlView<MainViewModel> {
 
 
     public void initialize() {
-//        exitBtnRegisterEvents();
+        TreeItem<Object> root = new TreeItem<>("Formats");
 
-        /*cancelMesTypeBtn.setOnAction(new EventHandler<ActionEvent>() {
+        for (Object object : viewModel.getFormats()) {
+            root.getChildren().add(createNode(object));
+        }
+
+        treeView.setRoot(root);
+        treeView.setCellFactory(p -> new TreeCellFactory());
+
+        root.setExpanded(true);
+	}
+
+	private TreeItem<Object> createNode(Object o) {
+		return new TreeItem<Object>(o) {
+			private boolean isLeaf;
+			private boolean isFirstTimeChildren = true;
+			private boolean isFirstTimeLeaf = true;
+
 			@Override
-            public void handle(ActionEvent event) {
-                tabs.getTabs().remove(measurementTypeTab);
-            }
-        });*/
-//        new DescriptionFormatEditView().initializeStage();
+			public ObservableList<TreeItem<Object>> getChildren() {
+				if (isFirstTimeChildren) {
+					isFirstTimeChildren = false;
 
-		DescriptionFormatViewModel root = new DescriptionFormatViewModel("code", "ROOT");
-		TreeItem<DescriptionFormatViewModel> rootItem = new TreeItem<>(root);
-
-		formatsTreeView.rootProperty().bindBidirectional(new SimpleObjectProperty<>(rootItem));
-		formatsTreeView.setCellFactory(new Callback<TreeView<DescriptionFormatViewModel>, TreeCell<DescriptionFormatViewModel>>() {
-			@Override
-			public TreeCell<DescriptionFormatViewModel> call(TreeView<DescriptionFormatViewModel> param) {
-				return null;
+					super.getChildren().setAll(buildChildren(this));
+				}
+				return super.getChildren();
 			}
-		});
 
-		//https://docs.oracle.com/javafx/2/ui_controls/tree-view.htm
-		System.out.println("Inside main view");
+			@Override
+			public boolean isLeaf() {
+				if (isFirstTimeLeaf) {
+					isFirstTimeLeaf = false;
 
-//		formatsTreeView.proper
-//        formatsTreeView.cellFactoryProperty().bindBidirectional(viewModel.formatsProperty());
+					if (o instanceof CatalogDescriptionViewModel) {
+						isLeaf = true;
+					}
+				}
+
+				return isLeaf;
+			}
+
+			private ObservableList<TreeItem<Object>> buildChildren(TreeItem<Object> treeItem) {
+				if (treeItem.getValue() instanceof AssertedNameViewModel) {
+					ObservableList<TreeItem<Object>> children = FXCollections.observableArrayList();
+
+					for (Object object : ((AssertedNameViewModel) treeItem.getValue()).getCatalogDescriptions()) {
+						children.add(createNode(object));
+					}
+
+					return children;
+				}
+
+				return FXCollections.emptyObservableList();
+			}
+		};
+	}
+
+	private final class TreeCellFactory extends TreeCell<Object> {
+		private ContextMenu topicMenu = new ContextMenu();
+		private ContextMenu groupMenu = new ContextMenu();
+
+		public TreeCellFactory() {
+			MenuItem topicMenuItem = new MenuItem("- Item 1 -");
+			topicMenu.getItems().add(topicMenuItem);
+
+			MenuItem groupMenuItem = new MenuItem("- Item 1 -");
+			groupMenu.getItems().add(groupMenuItem);
+		}
+
+		@Override
+		public void updateItem(Object item, boolean empty) {
+			super.updateItem(item, empty);
+
+			if (empty) {
+				setText(null);
+			} else {
+				setText(item.toString());
+			}
+
+			if (item instanceof CatalogDescriptionViewModel) {
+				setContextMenu(topicMenu);
+			}
+
+			if (item instanceof DescriptionFormatEditView) {
+				setContextMenu(groupMenu);
+			}
+		}
+
+
 	}
 }
 

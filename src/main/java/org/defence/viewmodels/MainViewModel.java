@@ -1,5 +1,6 @@
 package org.defence.viewmodels;
 
+import com.sun.javafx.collections.ObservableListWrapper;
 import de.saxsys.mvvmfx.ViewModel;
 import de.saxsys.mvvmfx.utils.commands.Action;
 import de.saxsys.mvvmfx.utils.commands.Command;
@@ -34,6 +35,8 @@ public class MainViewModel implements ViewModel {
 		for (DescriptionFormat elem : allFormatsFromDb) {
 			list.add(new DescriptionFormatViewModel(elem));
 		}
+
+		formats.setValue(new ObservableListWrapper<>(list));
 
 		exitCommand = new DelegateCommand(() -> new Action() {
 			@Override

@@ -102,4 +102,9 @@ public class DescriptionFormatViewModel implements ViewModel {
 	public void setAssertedNames(ObservableSet<AssertedName> assertedNames) {
 		this.assertedNames.set(assertedNames);
 	}
+
+	@Override
+	public String toString() {
+		return name.getValue();
+	}
 }

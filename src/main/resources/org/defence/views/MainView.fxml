@@ -106,7 +106,7 @@
                         <RowConstraints minHeight="150.0" prefHeight="150.0" vgrow="SOMETIMES"/>
                     </rowConstraints>
                     <children>
-                        <TreeView fx:id="formatsTreeView">
+                        <TreeView fx:id="treeView">
                             <!--<contextMenu>
                                 <ContextMenu>
                                     <items>
