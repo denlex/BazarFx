@@ -56,4 +56,9 @@ public class AssertedName implements IEntity {
 	public void setCatalogDescriptions(Set<CatalogDescription> catalogDescriptions) {
 		this.catalogDescriptions = catalogDescriptions;
 	}
+
+	@Override
+	public String toString() {
+		return String.format("%s. %s", code, name);
+	}
 }

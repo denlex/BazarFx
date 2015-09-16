@@ -1,6 +1,7 @@
 package org.defence.viewmodels;
 
 import javafx.beans.property.*;
+import org.defence.domain.entities.CharacteristicValue;
 
 /**
  * Created by root on 9/15/15.
@@ -9,6 +10,15 @@ public class CharacteristicValueViewModel {
 	private final IntegerProperty id = new SimpleIntegerProperty();
 	private final ObjectProperty<CharacteristicViewModel> characteristic = new SimpleObjectProperty<>();
 	private final StringProperty value = new SimpleStringProperty();
+
+	public CharacteristicValueViewModel() {
+	}
+
+	public CharacteristicValueViewModel(CharacteristicValue characteristicValue) {
+		id.setValue(characteristicValue.getId());
+		characteristic.setValue(new CharacteristicViewModel(characteristicValue.getCharacteristic()));
+		value.setValue(characteristicValue.getValue());
+	}
 
 	public int getId() {
 		return id.get();

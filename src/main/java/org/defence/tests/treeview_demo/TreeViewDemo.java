@@ -5,8 +5,7 @@ import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -18,7 +17,7 @@ import java.util.Set;
 /**
  * Created by root on 9/15/15.
  */
-public class TreeViewDemo<T> extends Application {
+public class TreeViewDemo extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
@@ -31,24 +30,15 @@ public class TreeViewDemo<T> extends Application {
 		Scene scene = new Scene(root);
 
 		TreeView<Object> treeView = new TreeView<>();
-		/*TreeItem<City> rootItem = new TreeItem<>();
 
-		TreeItem<Client> clientsItem = new TreeItem<>();
+		TreeItem<Object> rootItem = new TreeItem<>("Root");
 
 		for (City city : cities) {
-			for (Client client : city.getClients()) {
-				for (Car car : client.getCars()) {
-
-				}
-				clientsItem.getChildren().add(new TreeItem<>(client));
-			}
-//			rootItem.getChildren().add(new TreeItem<>(city));
-
-			rootItem.getChildren().add(new TreeItem<>(city));
-		}*/
-
-		TreeItem<Object> rootItem = createNode(cities);
+			rootItem.getChildren().add(createNode(city));
+		}
 		treeView.setRoot(rootItem);
+
+		treeView.setCellFactory(param -> new TreeCellFactory());
 
 		treeView.setMinWidth(400);
 
@@ -62,7 +52,7 @@ public class TreeViewDemo<T> extends Application {
 	}
 
 	private TreeItem<Object> createNode(Object obj) {
-		return new TreeItem<Object>() {
+		return new TreeItem<Object>(obj) {
 			private boolean isLeaf;
 			private boolean isFirstTimeChildren = true;
 			private boolean isFirstTimeLeaf = true;
@@ -71,8 +61,6 @@ public class TreeViewDemo<T> extends Application {
 				if (isFirstTimeChildren) {
 					isFirstTimeChildren = false;
 
-					// First getChildren() call, so we actually go off and
-					// determine the children of the File contained in this TreeItem.
 					super.getChildren().setAll(buildChildren(this));
 				}
 				return super.getChildren();
@@ -89,9 +77,10 @@ public class TreeViewDemo<T> extends Application {
 				return isLeaf;
 			}
 
-			private ObservableList<TreeItem<Object>> buildChildren(TreeItem<Object> TreeItem) {
-				if (obj instanceof City) {
-					City city = (City) TreeItem.getValue();
+			private ObservableList<TreeItem<Object>> buildChildren(TreeItem<Object> treeItem) {
+
+				if (treeItem.getValue() instanceof City) {
+					City city = (City) treeItem.getValue();
 					if (city != null) {
 						List<Client> clients = city.getClients();
 						if (clients != null) {
@@ -105,35 +94,20 @@ public class TreeViewDemo<T> extends Application {
 					}
 				}
 
-				if (obj instanceof Client) {
-					Client client = (Client) TreeItem.getValue();
+				if (treeItem.getValue() instanceof Client) {
+					Client client = (Client) treeItem.getValue();
 					if (client != null) {
 						Set<Car> cars = client.getCars();
 						if (cars != null) {
 							ObservableList<TreeItem<Object>> children = FXCollections.observableArrayList();
 
 							for (Car car : cars) {
-								children.add(createNode(client));
+								children.add(createNode(car));
 							}
 							return children;
 						}
 					}
 				}
-
-
-				/*T f = TreeItem.getValue();
-				if (f != null && f.isDirectory()) {
-					File[] files = f.listFiles();
-					if (files != null) {
-						ObservableList<TreeItem<File>> children = FXCollections.observableArrayList();
-
-						for (File childFile : files) {
-							children.add(createNode(childFile));
-						}
-
-						return children;
-					}
-				}*/
 
 				return FXCollections.emptyObservableList();
 			}
@@ -171,5 +145,40 @@ public class TreeViewDemo<T> extends Application {
 		cities.add(kursk);
 
 		return cities;
+	}
+
+	private final class TreeCellFactory extends TreeCell<Object> {
+		private ContextMenu clientMenu = new ContextMenu();
+		private ContextMenu carMenu = new ContextMenu();
+
+		public TreeCellFactory() {
+			MenuItem clientMenuItem = new MenuItem("Client menu");
+			clientMenu.getItems().add(clientMenuItem);
+
+			MenuItem carMenuItem = new MenuItem("Car menu");
+			carMenu.getItems().add(carMenuItem);
+		}
+
+		@Override
+		public void updateItem(Object item, boolean empty) {
+			super.updateItem(item, empty);
+
+			if (empty) {
+				setText(null);
+			} else {
+				setText(item.toString());
+			}
+
+			if (item instanceof Client) {
+				System.out.println(item);
+				setContextMenu(clientMenu);
+			}
+
+			if (item instanceof Car) {
+				setContextMenu(carMenu);
+			}
+		}
+
+
 	}
 }

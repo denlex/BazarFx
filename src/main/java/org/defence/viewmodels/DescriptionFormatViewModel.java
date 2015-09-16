@@ -1,13 +1,14 @@
 package org.defence.viewmodels;
 
-import com.sun.javafx.collections.ObservableSetWrapper;
 import de.saxsys.mvvmfx.ViewModel;
 import javafx.beans.property.*;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableSet;
 import org.defence.domain.entities.AssertedName;
 import org.defence.domain.entities.CharacteristicKit;
 import org.defence.domain.entities.DescriptionFormat;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -17,30 +18,40 @@ public class DescriptionFormatViewModel implements ViewModel {
 	private IntegerProperty id = new SimpleIntegerProperty();
 	private StringProperty code = new SimpleStringProperty();
 	private StringProperty name = new SimpleStringProperty();
-	private SetProperty<CharacteristicKit> characteristicKits = new SimpleSetProperty<>();
-	private SetProperty<AssertedName> assertedNames = new SimpleSetProperty<>();
+	private SetProperty<CharacteristicKitViewModel> characteristicKits = new SimpleSetProperty<>();
+	private SetProperty<AssertedNameViewModel> assertedNames = new SimpleSetProperty<>();
 
 	public DescriptionFormatViewModel() {
 	}
 
 	public DescriptionFormatViewModel(String code, String name) {
-		this(code, name, null, null);
+		this(null, code, name, null, null);
 	}
 
-	public DescriptionFormatViewModel(String code, String name, Set<CharacteristicKit> characteristicKits,
+	public DescriptionFormatViewModel(Integer id, String code, String name, Set<CharacteristicKit> characteristicKits,
 			Set<AssertedName> assertedNames) {
+		this.id.setValue(id);
 		this.code.setValue(code);
 		this.name.setValue(name);
-		this.characteristicKits.setValue(new ObservableSetWrapper<>(characteristicKits));
-		this.assertedNames.setValue(new ObservableSetWrapper<>(assertedNames));
+
+		if (characteristicKits != null) {
+			for (CharacteristicKit kit : characteristicKits) {
+				this.characteristicKits.add(new CharacteristicKitViewModel(kit));
+			}
+		}
+
+		if (assertedNames != null) {
+			Set<AssertedNameViewModel> set = new HashSet<>();
+			for (AssertedName assertedName : assertedNames) {
+				set.add(new AssertedNameViewModel(assertedName));
+			}
+			this.assertedNames.setValue(FXCollections.observableSet(set));
+		}
 	}
 
 	public DescriptionFormatViewModel(DescriptionFormat format) {
-		id.setValue(format.getId());
-		code.setValue(format.getCode());
-		name.setValue(format.getName());
-		characteristicKits.setValue(new ObservableSetWrapper<>(format.getCharacteristicKits()));
-		assertedNames.setValue(new ObservableSetWrapper<>(format.getAssertedNames()));
+		this(format.getId(), format.getCode(), format.getName(), format.getCharacteristicKits(), format
+				.getAssertedNames());
 	}
 
 	public int getId() {
@@ -79,32 +90,32 @@ public class DescriptionFormatViewModel implements ViewModel {
 		this.name.set(name);
 	}
 
-	public ObservableSet<CharacteristicKit> getCharacteristicKits() {
+	public ObservableSet<CharacteristicKitViewModel> getCharacteristicKits() {
 		return characteristicKits.get();
 	}
 
-	public SetProperty<CharacteristicKit> characteristicKitsProperty() {
+	public SetProperty<CharacteristicKitViewModel> characteristicKitsProperty() {
 		return characteristicKits;
 	}
 
-	public void setCharacteristicKits(ObservableSet<CharacteristicKit> characteristicKits) {
+	public void setCharacteristicKits(ObservableSet<CharacteristicKitViewModel> characteristicKits) {
 		this.characteristicKits.set(characteristicKits);
 	}
 
-	public ObservableSet<AssertedName> getAssertedNames() {
+	public ObservableSet<AssertedNameViewModel> getAssertedNames() {
 		return assertedNames.get();
 	}
 
-	public SetProperty<AssertedName> assertedNamesProperty() {
+	public SetProperty<AssertedNameViewModel> assertedNamesProperty() {
 		return assertedNames;
 	}
 
-	public void setAssertedNames(ObservableSet<AssertedName> assertedNames) {
+	public void setAssertedNames(ObservableSet<AssertedNameViewModel> assertedNames) {
 		this.assertedNames.set(assertedNames);
 	}
 
 	@Override
 	public String toString() {
-		return name.getValue();
+		return String.format("%s. %s", code.getValue(), name.getValue());
 	}
 }

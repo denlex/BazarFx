@@ -9,7 +9,7 @@
         </id>
 
         <property name="name" column="NAME" type="string"/>
-        <set name="values" table="CHARACTERISTICS_VALUE" fetch="select" lazy="true" cascade="all" inverse="false">
+        <set name="values" table="CHARACTERISTICS_VALUE" fetch="select" lazy="false" cascade="all" inverse="false">
             <key column="CATALOG_DESCRIPTION_ID"/>
             <one-to-many class="org.defence.domain.entities.CharacteristicValue"/>
         </set>

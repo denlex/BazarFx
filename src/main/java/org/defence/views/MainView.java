@@ -5,6 +5,7 @@ import de.saxsys.mvvmfx.InjectViewModel;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableSet;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -12,7 +13,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import org.defence.viewmodels.AssertedNameViewModel;
 import org.defence.viewmodels.CatalogDescriptionViewModel;
+import org.defence.viewmodels.DescriptionFormatViewModel;
 import org.defence.viewmodels.MainViewModel;
+
+import java.util.Set;
 
 /**
  * Created by root on 22.07.15.
@@ -44,7 +48,7 @@ public class MainView implements FxmlView<MainViewModel> {
 
 
     public void initialize() {
-        TreeItem<Object> root = new TreeItem<>("Formats");
+        TreeItem<Object> root = new TreeItem<>("Каталог СФО");
 
         for (Object object : viewModel.getFormats()) {
             root.getChildren().add(createNode(object));
@@ -85,32 +89,62 @@ public class MainView implements FxmlView<MainViewModel> {
 				return isLeaf;
 			}
 
-			private ObservableList<TreeItem<Object>> buildChildren(TreeItem<Object> treeItem) {
-				if (treeItem.getValue() instanceof AssertedNameViewModel) {
-					ObservableList<TreeItem<Object>> children = FXCollections.observableArrayList();
+			private ObservableSet<TreeItem<Object>> buildChildren(TreeItem<Object> treeItem) {
+				if (treeItem.getValue() instanceof DescriptionFormatViewModel) {
+					DescriptionFormatViewModel format = (DescriptionFormatViewModel) treeItem.getValue();
 
-					for (Object object : ((AssertedNameViewModel) treeItem.getValue()).getCatalogDescriptions()) {
-						children.add(createNode(object));
+					if (format != null) {
+						Set<AssertedNameViewModel> assertedNames = format.getAssertedNames();
+
+						if (assertedNames != null) {
+							ObservableSet<TreeItem<Object>> children = FXCollections.observableSet();
+
+							for (AssertedNameViewModel name : assertedNames) {
+								children.add(createNode(name));
+							}
+							return children;
+						}
 					}
-
-					return children;
 				}
 
-				return FXCollections.emptyObservableList();
+				if (treeItem.getValue() instanceof AssertedNameViewModel) {
+					AssertedNameViewModel name = (AssertedNameViewModel) treeItem.getValue();
+
+					if (name != null) {
+						Set<CatalogDescriptionViewModel> catalogDescriptions = name.getCatalogDescriptions();
+
+						if (catalogDescriptions != null) {
+							ObservableSet<TreeItem<Object>> children = FXCollections.observableSet();
+
+							for (CatalogDescriptionViewModel description : catalogDescriptions) {
+								children.add(createNode(description));
+							}
+							return children;
+						}
+					}
+				}
+
+				return FXCollections.emptyObservableSet();
 			}
 		};
 	}
 
 	private final class TreeCellFactory extends TreeCell<Object> {
-		private ContextMenu topicMenu = new ContextMenu();
-		private ContextMenu groupMenu = new ContextMenu();
+		private ContextMenu descriptionFormatMenu = new ContextMenu();
+		private ContextMenu assertedNameMenu = new ContextMenu();
 
 		public TreeCellFactory() {
-			MenuItem topicMenuItem = new MenuItem("- Item 1 -");
-			topicMenu.getItems().add(topicMenuItem);
+			MenuItem addAssertedNameMenuItem = new MenuItem("Добавить УН");
+			MenuItem editAssertedNameMenuItem = new MenuItem("Редактировать УН");
+			MenuItem removeAssertedNameMenuItem = new MenuItem("Удалить УН");
+			descriptionFormatMenu.getItems().addAll(addAssertedNameMenuItem, editAssertedNameMenuItem,
+					removeAssertedNameMenuItem);
 
-			MenuItem groupMenuItem = new MenuItem("- Item 1 -");
-			groupMenu.getItems().add(groupMenuItem);
+			MenuItem addCatalogDescriptionMenuItem = new MenuItem("Добавить КО");
+			MenuItem editCatalogDescriptionMenuItem = new MenuItem("Редактировать КО");
+			MenuItem removeCatalogDescriptionMenuItem = new MenuItem("Удалить КО");
+			assertedNameMenu.getItems().addAll(addCatalogDescriptionMenuItem, editCatalogDescriptionMenuItem,
+					removeCatalogDescriptionMenuItem);
 		}
 
 		@Override
@@ -123,12 +157,12 @@ public class MainView implements FxmlView<MainViewModel> {
 				setText(item.toString());
 			}
 
-			if (item instanceof CatalogDescriptionViewModel) {
-				setContextMenu(topicMenu);
+			if (item instanceof DescriptionFormatViewModel) {
+				setContextMenu(descriptionFormatMenu);
 			}
 
-			if (item instanceof DescriptionFormatEditView) {
-				setContextMenu(groupMenu);
+			if (item instanceof AssertedNameViewModel) {
+				setContextMenu(assertedNameMenu);
 			}
 		}
 

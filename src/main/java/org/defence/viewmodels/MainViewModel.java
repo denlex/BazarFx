@@ -21,22 +21,35 @@ import java.util.List;
  * Created by root on 30.08.15.
  */
 public class MainViewModel implements ViewModel {
-    private Command exitCommand;
+	private Command exitCommand;
 	private ListProperty<DescriptionFormatViewModel> formats = new SimpleListProperty<>();
 	private DbHelper dbHelper = DbHelper.getInstance();
 	private ObjectProperty<DescriptionFormatViewModel> root = new SimpleObjectProperty<>();
 
-    public MainViewModel() {
+	public MainViewModel() {
 		root.setValue(new DescriptionFormatViewModel("code", "ROOT"));
 
 		List<DescriptionFormat> allFormatsFromDb = dbHelper.getAllDescriptionFormats();
 		List<DescriptionFormatViewModel> list = new LinkedList<>();
 
-		for (DescriptionFormat elem : allFormatsFromDb) {
-			list.add(new DescriptionFormatViewModel(elem));
+
+		if (allFormatsFromDb != null) {
+			for (DescriptionFormat elem : allFormatsFromDb) {
+//				System.out.println(elem);
+
+				if (elem.getAssertedNames() == null) {
+					continue;
+				}
+
+				/*for (AssertedName name : elem.getAssertedNames()) {
+					System.out.println(name);
+				}*/
+				list.add(new DescriptionFormatViewModel(elem));
+			}
 		}
 
 		formats.setValue(new ObservableListWrapper<>(list));
+
 
 		exitCommand = new DelegateCommand(() -> new Action() {
 			@Override
@@ -49,9 +62,9 @@ public class MainViewModel implements ViewModel {
 		});
 	}
 
-    public Command getExitCommand() {
-        return exitCommand;
-    }
+	public Command getExitCommand() {
+		return exitCommand;
+	}
 
 	public ObservableList<DescriptionFormatViewModel> getFormats() {
 		return formats.get();
