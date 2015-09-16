@@ -3,11 +3,17 @@
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping package="org.defence.domain.entities">
-    <class name="AssertedName" table="AssertedName">
+    <class name="AssertedName" table="ASSERTED_NAME">
         <id name="id" column="ID">
             <generator class="native"/>
         </id>
-        <property name="code" column="Number" type="string"/>
+        <property name="code" column="Code" type="string"/>
         <property name="name" column="Name" type="string"/>
+
+        <set name="catalogDescriptions" table="CATALOG_DESCRIPTIONS"
+             inverse="false" lazy="false" fetch="select" cascade="all">
+            <key column="ASSERTED_NAME_ID" />
+            <one-to-many class="CatalogDescription" />
+        </set>
     </class>
 </hibernate-mapping>

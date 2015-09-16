@@ -58,11 +58,6 @@ public class CharacteristicEditView implements FxmlView<CharacteristicEditViewMo
         checkBoxTableColumn.setCellFactory(param -> new CheckBoxTableCell<>());
         checkBoxTableColumn.setCellValueFactory(new PropertyValueFactory<>("isBelong"));
 
-
-//        checkBoxTableColumn.setCellValueFactory(new PropertyValueFactory<>("isBelong"));
-
-//        measurementsTableView.addLastColumn();
-
         measurementsTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             viewModel.selectedMeasurementProperty().unbind();
             viewModel.selectedMeasurementProperty().bindBidirectional(new SimpleObjectProperty<>(newValue));
@@ -85,7 +80,6 @@ public class CharacteristicEditView implements FxmlView<CharacteristicEditViewMo
     }
 
     public void cancelButtonClicked() {
-        viewModel.getCancelCommand().execute();
         dialogResult = DialogResult.CANCEL;
         stage.close();
     }

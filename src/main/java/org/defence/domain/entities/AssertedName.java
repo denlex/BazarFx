@@ -1,14 +1,31 @@
 package org.defence.domain.entities;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Created by root on 22.07.15.
  */
 public class AssertedName implements IEntity {
     private int id;
     private String name;
-    private String number;
+    private String code;
+	private Set<CatalogDescription> catalogDescriptions = new HashSet<>();
 
-    public int getId() {
+	public AssertedName() {
+	}
+
+	public AssertedName(String code, String name) {
+		this(code, name, null);
+	}
+
+	public AssertedName(String code, String name, Set<CatalogDescription> catalogDescriptions) {
+		this.code = code;
+		this.name = name;
+		this.catalogDescriptions = catalogDescriptions;
+	}
+
+	public int getId() {
         return id;
     }
 
@@ -24,11 +41,19 @@ public class AssertedName implements IEntity {
         this.name = name;
     }
 
-    public String getNumber() {
-        return number;
+    public String getCode() {
+        return code;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
+    public void setCode(String code) {
+        this.code = code;
     }
+
+	public Set<CatalogDescription> getCatalogDescriptions() {
+		return catalogDescriptions;
+	}
+
+	public void setCatalogDescriptions(Set<CatalogDescription> catalogDescriptions) {
+		this.catalogDescriptions = catalogDescriptions;
+	}
 }

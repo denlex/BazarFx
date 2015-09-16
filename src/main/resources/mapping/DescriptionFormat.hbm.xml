@@ -12,15 +12,15 @@
         <property name="code" column="CODE" type="string"/>
 
         <set name="characteristicKits" table="CHARACTERISTIC_KIT"
-             inverse="false" lazy="true" fetch="select" cascade="all">
+             inverse="false" lazy="false" fetch="select" cascade="all">
             <key column="DESCRIPTION_FORMAT_ID" />
             <one-to-many class="CharacteristicKit" />
         </set>
 
-        <set name="catalogDescriptions" table="CATALOG_DESCRIPTIONS"
-             inverse="false" lazy="true" fetch="select" cascade="all">
+        <set name="assertedNames" table="ASSERTED_NAME"
+             inverse="false" lazy="false" fetch="select" cascade="all">
             <key column="DESCRIPTION_FORMAT_ID" />
-            <one-to-many class="CatalogDescription" />
+            <one-to-many class="AssertedName" />
         </set>
     </class>
 </hibernate-mapping>

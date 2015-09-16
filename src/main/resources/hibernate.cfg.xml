@@ -20,6 +20,7 @@
       <!--<mapping resource="mapping/CatalogClass.hbm.xml"/>-->
 
       <mapping resource="mapping/CatalogDescription.hbm.xml"/>
+      <mapping resource="mapping/AssertedName.hbm.xml"/>
       <mapping resource="mapping/Characteristic.hbm.xml"/>
       <mapping resource="mapping/CharacteristicKit.hbm.xml"/>
       <mapping resource="mapping/CharacteristicType.hbm.xml"/>

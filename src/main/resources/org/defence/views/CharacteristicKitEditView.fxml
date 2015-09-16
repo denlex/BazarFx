@@ -11,55 +11,64 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TableCell?>
 
-<GridPane stylesheets="/css/Button.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane stylesheets="/css/Button.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="org.defence.views.CharacteristicKitEditView">
     <children>
-        <StackPane style="-fx-background-color: #4A6C9B" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="0">
+        <StackPane style="-fx-background-color: #4A6C9B" GridPane.columnIndex="0" GridPane.columnSpan="2"
+                   GridPane.rowIndex="0">
             <children>
                 <Label stylesheets="/css/LabelProperty.css" text="Редактирование набора характеристик">
                 </Label>
             </children>
         </StackPane>
         <Label text="Наименование" GridPane.columnIndex="0" GridPane.rowIndex="1">
-         <GridPane.margin>
-            <Insets bottom="10.0" left="10.0" top="10.0" />
-         </GridPane.margin></Label>
-        <TextField maxHeight="-Infinity" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1">
-         <GridPane.margin>
-            <Insets left="10.0" right="10.0" />
-         </GridPane.margin></TextField>
-        <StackPane style="-fx-background-color: #4A6C9B" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="2">
+            <GridPane.margin>
+                <Insets bottom="10.0" left="10.0" top="10.0"/>
+            </GridPane.margin>
+        </Label>
+        <TextField fx:id="nameTextField" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1"
+                   GridPane.rowIndex="1">
+            <GridPane.margin>
+                <Insets left="10.0" right="10.0"/>
+            </GridPane.margin>
+        </TextField>
+        <StackPane style="-fx-background-color: #4A6C9B" GridPane.columnIndex="0" GridPane.columnSpan="2"
+                   GridPane.rowIndex="2">
             <children>
                 <Label stylesheets="/css/LabelProperty.css" text="Характеристики">
                 </Label>
             </children>
-         <GridPane.margin>
-            <Insets />
-         </GridPane.margin>
+            <GridPane.margin>
+                <Insets/>
+            </GridPane.margin>
         </StackPane>
-      <TableView GridPane.columnSpan="2" GridPane.rowIndex="3">
-        <columns>
-          <TableColumn text="C1" />
-          <TableColumn text="C2" />
-        </columns>
-      </TableView>
+        <TableView fx:id="characteristicsTableView" GridPane.columnSpan="2" GridPane.rowIndex="3">
+            <columns>
+                <TableColumn fx:id="idTableColumn" text="ID"/>
+                <TableColumn fx:id="nameTableColumn" text="Наименование"/>
+                <TableColumn fx:id="checkBoxTableColumn" text="isBelong"/>
+            </columns>
+        </TableView>
         <AnchorPane GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="4">
             <children>
-                <Button text="Применить" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="140.0" AnchorPane.topAnchor="10.0">
+                <Button text="Применить" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="140.0"
+                        AnchorPane.topAnchor="10.0" onAction="#saveCharacteristicKitClicked">
                 </Button>
-                <Button text="Отмена" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                <Button text="Отмена" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0"
+                        AnchorPane.topAnchor="10.0" onAction="#cancelButtonClicked">
                 </Button>
             </children>
         </AnchorPane>
     </children>
-   <columnConstraints>
-      <ColumnConstraints hgrow="ALWAYS" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
-      <ColumnConstraints hgrow="ALWAYS" />
-   </columnConstraints>
-   <rowConstraints>
-      <RowConstraints maxHeight="50.0" minHeight="50.0" vgrow="NEVER" />
-      <RowConstraints vgrow="NEVER" />
-      <RowConstraints vgrow="NEVER" />
-      <RowConstraints vgrow="ALWAYS" />
-      <RowConstraints vgrow="NEVER" />
-   </rowConstraints>
+    <columnConstraints>
+        <ColumnConstraints hgrow="ALWAYS" maxWidth="100.0" minWidth="100.0" prefWidth="100.0"/>
+        <ColumnConstraints hgrow="ALWAYS"/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints maxHeight="50.0" minHeight="50.0" vgrow="NEVER"/>
+        <RowConstraints vgrow="NEVER"/>
+        <RowConstraints vgrow="NEVER"/>
+        <RowConstraints vgrow="ALWAYS"/>
+        <RowConstraints vgrow="NEVER"/>
+    </rowConstraints>
 </GridPane>

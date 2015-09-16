@@ -23,7 +23,7 @@ public class CharacteristicEditViewModel implements ViewModel {
     private final IntegerProperty id = new SimpleIntegerProperty();
     private final StringProperty code = new SimpleStringProperty();
     private final StringProperty name = new SimpleStringProperty();
-    private final ListProperty<MeasurementViewModel> measurements = new SimpleListProperty<>();
+//    private final ListProperty<MeasurementViewModel> measurements = new SimpleListProperty<>();
 
     private final ListProperty<MeasurementViewModel> allMeasurements = new SimpleListProperty<>();
     private final ObjectProperty<MeasurementViewModel> selectedMeasurement = new SimpleObjectProperty<>();
@@ -38,7 +38,7 @@ public class CharacteristicEditViewModel implements ViewModel {
     private Command saveCommand;
     private Command cancelCommand;
 
-    CharacteristicCatalogViewModel parentViewModel;
+    private CharacteristicCatalogViewModel parentViewModel;
 
     public CharacteristicEditViewModel() {
 
@@ -180,7 +180,7 @@ public class CharacteristicEditViewModel implements ViewModel {
         this.parentViewModel = parentViewModel;
     }
 
-    public ObservableList<MeasurementViewModel> getMeasurements() {
+    /*public ObservableList<MeasurementViewModel> getMeasurements() {
         return measurements.get();
     }
 
@@ -190,7 +190,7 @@ public class CharacteristicEditViewModel implements ViewModel {
 
     public void setMeasurements(ObservableList<MeasurementViewModel> measurements) {
         this.measurements.set(measurements);
-    }
+    }*/
 
     public MeasurementViewModel getSelectedMeasurement() {
         return selectedMeasurement.get();

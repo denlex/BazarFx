@@ -70,7 +70,7 @@
                 <AnchorPane GridPane.rowIndex="3">
                     <children>
                         <Button fx:id="okBtn" alignment="CENTER" mnemonicParsing="false" text="Принять"
-                                AnchorPane.bottomAnchor="15" AnchorPane.rightAnchor="150"
+                                AnchorPane.bottomAnchor="15" AnchorPane.rightAnchor="150" defaultButton="true"
                                 onAction="#saveButtonClicked"/>
                         <Button alignment="CENTER" mnemonicParsing="false" text="Отмена" AnchorPane.bottomAnchor="15"
                                 AnchorPane.rightAnchor="15" onAction="#cancelButtonClicked"/>
