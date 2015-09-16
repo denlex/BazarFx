@@ -210,7 +210,7 @@
                                                                         valignment="TOP" vgrow="ALWAYS"/>
                                                     </rowConstraints>
                                                     <children>
-                                                        <fx:include source="/org/defence/views/CharacteristicCatalogView.fxml"
+                                                        <fx:include source="/org/defence/views/AssertedNameEditView.fxml"
                                                                     GridPane.hgrow="ALWAYS"
                                                                     GridPane.vgrow="ALWAYS"/>
                                                     </children>

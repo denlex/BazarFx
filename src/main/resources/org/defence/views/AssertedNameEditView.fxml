@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.Button?>
+
+<GridPane stylesheets="/css/Button.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <StackPane style="-fx-background-color: #4A6C9B" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="0">
+            <children>
+                <Label stylesheets="/css/LabelProperty.css" text="Добавление УН">
+                </Label>
+            </children>
+        </StackPane>
+        <Label text="Код" GridPane.columnIndex="0" GridPane.rowIndex="1">
+         <GridPane.margin>
+            <Insets left="10.0" />
+         </GridPane.margin></Label>
+        <TextField maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1">
+        </TextField>
+        <Label text="Наименование" GridPane.columnIndex="0" GridPane.rowIndex="2">
+         <GridPane.margin>
+            <Insets left="10.0" />
+         </GridPane.margin></Label>
+        <TextField maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="2">
+        </TextField>
+        <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <children>
+                <Button alignment="CENTER" mnemonicParsing="false" text="Принять" AnchorPane.bottomAnchor="15" AnchorPane.rightAnchor="150" />
+                <Button alignment="CENTER" mnemonicParsing="false" text="Отмена" AnchorPane.bottomAnchor="15" AnchorPane.rightAnchor="15" />
+            </children>
+        </AnchorPane>
+    </children>
+   <columnConstraints>
+      <ColumnConstraints hgrow="NEVER" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
+      <ColumnConstraints hgrow="ALWAYS" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" />
+      <RowConstraints minHeight="40.0" prefHeight="40.0" vgrow="NEVER" />
+      <RowConstraints minHeight="40.0" prefHeight="40.0" vgrow="NEVER" />
+      <RowConstraints vgrow="ALWAYS" />
+   </rowConstraints>
+</GridPane>
