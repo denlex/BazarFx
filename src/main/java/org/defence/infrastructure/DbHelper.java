@@ -266,6 +266,26 @@ public class DbHelper {
 		return true;
 	}
 
+	public boolean addAssertedName(Integer formatId, String code, String name) {
+		Session session = factory.openSession();
+		Transaction transaction = null;
+
+		try {
+			transaction = session.beginTransaction();
+
+			DescriptionFormat format = (DescriptionFormat) session.get(DescriptionFormat.class, formatId);
+			format.getAssertedNames().add(new AssertedName(code, name));
+
+			session.save(format);
+			transaction.commit();
+		} catch (Exception ex) {
+			transaction.rollback();
+			ex.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+
 	public boolean addDescriptionFormat(String code, String name, List<Integer> characteristicKitIdList,
 			List<Integer> assertedNameIdList) {
 
@@ -409,6 +429,36 @@ public class DbHelper {
 			}
 
 			session.update(kit);
+			transaction.commit();
+		} catch (Exception ex) {
+			transaction.rollback();
+			ex.printStackTrace();
+			return false;
+		} finally {
+			session.close();
+		}
+
+		return true;
+	}
+
+	public boolean updateAssertedName(Integer formatId, Integer id, String code, String name) {
+		Session session = factory.openSession();
+		Transaction transaction = null;
+
+		try {
+			transaction = session.beginTransaction();
+			DescriptionFormat descriptionFormat = (DescriptionFormat) session.get(DescriptionFormat.class, formatId);
+			AssertedName assertedName = descriptionFormat.getAssertedNames().stream().filter(p -> p.getId() == id).findFirst().get();
+
+			if (assertedName == null) {
+				transaction.rollback();
+				return false;
+			}
+
+			assertedName.setCode(code);
+			assertedName.setName(name);
+
+			session.update(assertedName);
 			transaction.commit();
 		} catch (Exception ex) {
 			transaction.rollback();

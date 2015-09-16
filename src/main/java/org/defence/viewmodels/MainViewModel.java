@@ -22,9 +22,14 @@ import java.util.List;
  */
 public class MainViewModel implements ViewModel {
 	private Command exitCommand;
-	private ListProperty<DescriptionFormatViewModel> formats = new SimpleListProperty<>();
+	private final ListProperty<DescriptionFormatViewModel> formats = new SimpleListProperty<>();
 	private DbHelper dbHelper = DbHelper.getInstance();
-	private ObjectProperty<DescriptionFormatViewModel> root = new SimpleObjectProperty<>();
+	private final ObjectProperty<DescriptionFormatViewModel> root = new SimpleObjectProperty<>();
+
+	private final ObjectProperty<DescriptionFormatViewModel> selectedFormat = new SimpleObjectProperty<>();
+	private final ObjectProperty<AssertedNameViewModel> selectedName = new SimpleObjectProperty<>();
+	private final ObjectProperty<CatalogDescriptionViewModel> selectedDescription = new SimpleObjectProperty<>();
+
 
 	public MainViewModel() {
 		root.setValue(new DescriptionFormatViewModel("code", "ROOT"));
@@ -88,5 +93,41 @@ public class MainViewModel implements ViewModel {
 
 	public void setRoot(DescriptionFormatViewModel root) {
 		this.root.set(root);
+	}
+
+	public DescriptionFormatViewModel getSelectedFormat() {
+		return selectedFormat.get();
+	}
+
+	public ObjectProperty<DescriptionFormatViewModel> selectedFormatProperty() {
+		return selectedFormat;
+	}
+
+	public void setSelectedFormat(DescriptionFormatViewModel selectedFormat) {
+		this.selectedFormat.set(selectedFormat);
+	}
+
+	public AssertedNameViewModel getSelectedName() {
+		return selectedName.get();
+	}
+
+	public ObjectProperty<AssertedNameViewModel> selectedNameProperty() {
+		return selectedName;
+	}
+
+	public void setSelectedName(AssertedNameViewModel selectedName) {
+		this.selectedName.set(selectedName);
+	}
+
+	public CatalogDescriptionViewModel getSelectedDescription() {
+		return selectedDescription.get();
+	}
+
+	public ObjectProperty<CatalogDescriptionViewModel> selectedDescriptionProperty() {
+		return selectedDescription;
+	}
+
+	public void setSelectedDescription(CatalogDescriptionViewModel selectedDescription) {
+		this.selectedDescription.set(selectedDescription);
 	}
 }
