@@ -89,7 +89,6 @@ public class DescriptionFormatEditViewModel implements ViewModel {
 					dbHelper.updateDescriptionFormat(id.getValue(), code.getValue(), name.getValue(), null,
 							characteristicIdList);
 				}
-
 				// TODO: реализовать возможность обновления списка наборов характеристик
 //                parentViewModel.loadCharacteristicKitKitsBySelectedFormat();
 			}
@@ -185,7 +184,7 @@ public class DescriptionFormatEditViewModel implements ViewModel {
 			kits.add(new CharacteristicKitViewModel(elem));
 		}
 
-		allCharacteristicKits.setValue(new ObservableListWrapper<CharacteristicKitViewModel>(kits));
+		allCharacteristicKits.setValue(new ObservableListWrapper<>(kits));
 
 	}
 

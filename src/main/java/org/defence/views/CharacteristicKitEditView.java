@@ -57,10 +57,6 @@ public class CharacteristicKitEditView implements FxmlView<CharacteristicKitEdit
         this.stage = stage;
     }
 
-    public DialogResult getDialogResult() {
-        return dialogResult;
-    }
-
     public void saveCharacteristicKitClicked() {
         viewModel.getSaveCommand().execute();
 		dialogResult = DialogResult.OK;
@@ -78,7 +74,7 @@ public class CharacteristicKitEditView implements FxmlView<CharacteristicKitEdit
 
     @Override
     public DialogResult getModalResult() {
-        return null;
+        return dialogResult;
     }
 
     public void initialize() {

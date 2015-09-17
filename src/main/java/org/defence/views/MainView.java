@@ -54,7 +54,6 @@ public class MainView implements FxmlView<MainViewModel> {
 		viewModel.getExitCommand().execute();
 	}
 
-
 	public void initialize() {
 		TreeItem<Object> root = new TreeItem<>("Каталог СФО");
 
