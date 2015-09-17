@@ -106,7 +106,7 @@
                         <RowConstraints minHeight="150.0" prefHeight="150.0" vgrow="SOMETIMES"/>
                     </rowConstraints>
                     <children>
-                        <TreeView>
+                        <TreeView fx:id="treeView">
                             <contextMenu>
                                 <ContextMenu>
                                     <items>
@@ -135,6 +135,7 @@
                                 </TreeItem>
                             </root>
                         </TreeView>
+                        <Button GridPane.rowIndex="1" text="Test" onAction="#testButtonClicked"/>
                     </children>
                 </GridPane>
                 <GridPane>

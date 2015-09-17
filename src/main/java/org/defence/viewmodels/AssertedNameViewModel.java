@@ -19,9 +19,6 @@ public class AssertedNameViewModel extends AbstractViewModel<AssertedName> {
 	private final StringProperty code = new SimpleStringProperty();
 	private final SetProperty<CatalogDescriptionViewModel> catalogDescriptions = new SimpleSetProperty<>();
 
-	public int getId() {
-		return id.get();
-	}
 
 	public AssertedNameViewModel() {
 	}
@@ -39,6 +36,11 @@ public class AssertedNameViewModel extends AbstractViewModel<AssertedName> {
 			catalogDescriptions.setValue(FXCollections.observableSet(set));
 		}
 	}
+
+	public int getId() {
+		return id.get();
+	}
+
 
 	public IntegerProperty idProperty() {
 		return id;

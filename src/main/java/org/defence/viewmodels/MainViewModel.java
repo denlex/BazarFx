@@ -14,6 +14,7 @@ import javafx.collections.ObservableList;
 import org.defence.domain.entities.DescriptionFormat;
 import org.defence.infrastructure.DbHelper;
 
+import javax.swing.*;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -30,6 +31,8 @@ public class MainViewModel implements ViewModel {
 	private final ObjectProperty<AssertedNameViewModel> selectedName = new SimpleObjectProperty<>();
 	private final ObjectProperty<CatalogDescriptionViewModel> selectedDescription = new SimpleObjectProperty<>();
 
+	private Command testCommand;
+
 
 	public MainViewModel() {
 		root.setValue(new DescriptionFormatViewModel("code", "ROOT"));
@@ -37,24 +40,38 @@ public class MainViewModel implements ViewModel {
 		List<DescriptionFormat> allFormatsFromDb = dbHelper.getAllDescriptionFormats();
 		List<DescriptionFormatViewModel> list = new LinkedList<>();
 
-
 		if (allFormatsFromDb != null) {
 			for (DescriptionFormat elem : allFormatsFromDb) {
-//				System.out.println(elem);
 
 				if (elem.getAssertedNames() == null) {
 					continue;
 				}
-
-				/*for (AssertedName name : elem.getAssertedNames()) {
-					System.out.println(name);
-				}*/
 				list.add(new DescriptionFormatViewModel(elem));
 			}
 		}
 
 		formats.setValue(new ObservableListWrapper<>(list));
 
+
+		testCommand = new DelegateCommand(() -> new Action() {
+			@Override
+			protected void action() throws Exception {
+				if (getSelectedDescription() != null) {
+					JOptionPane.showMessageDialog(null, getSelectedDescription().getName());
+					return;
+				}
+
+				if (getSelectedFormat() != null) {
+					JOptionPane.showMessageDialog(null, getSelectedFormat().getName());
+					return;
+				}
+
+				if (getSelectedName() != null) {
+					JOptionPane.showMessageDialog(null, getSelectedName().getName());
+					return;
+				}
+			}
+		});
 
 		exitCommand = new DelegateCommand(() -> new Action() {
 			@Override
@@ -129,5 +146,9 @@ public class MainViewModel implements ViewModel {
 
 	public void setSelectedDescription(CatalogDescriptionViewModel selectedDescription) {
 		this.selectedDescription.set(selectedDescription);
+	}
+
+	public Command getTestCommand() {
+		return testCommand;
 	}
 }

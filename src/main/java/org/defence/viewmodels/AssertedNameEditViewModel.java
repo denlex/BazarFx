@@ -46,12 +46,16 @@ public class AssertedNameEditViewModel implements ViewModel {
 		});
 	}
 
-	public Command getSaveCommand() {
-		return saveCommand;
+	public int getId() {
+		return id.get();
 	}
 
-	public void setSaveCommand(Command saveCommand) {
-		this.saveCommand = saveCommand;
+	public IntegerProperty idProperty() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id.set(id);
 	}
 
 	public String getCode() {
@@ -76,5 +80,17 @@ public class AssertedNameEditViewModel implements ViewModel {
 
 	public void setName(String name) {
 		this.name.set(name);
+	}
+
+	public void setParentViewModel(MainViewModel parentViewModel) {
+		this.parentViewModel = parentViewModel;
+	}
+
+	public Command getSaveCommand() {
+		return saveCommand;
+	}
+
+	public void setSaveCommand(Command saveCommand) {
+		this.saveCommand = saveCommand;
 	}
 }
