@@ -64,8 +64,7 @@ public class CharacteristicKitEditView implements FxmlView<CharacteristicKitEdit
     public void saveCharacteristicKitClicked() {
         viewModel.getSaveCommand().execute();
 		dialogResult = DialogResult.OK;
-		// TODO: Откомментировать, когда появится справочник наборов характеристик
-//		stage.close();
+		stage.close();
 	}
 
 	public void cancelButtonClicked() {

@@ -5,6 +5,7 @@ import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
 import de.saxsys.mvvmfx.ViewTuple;
 import javafx.application.Platform;
+import javafx.beans.property.Property;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,7 +24,6 @@ import javafx.stage.Stage;
 import org.defence.MainApp;
 import org.defence.viewmodels.*;
 
-import javax.swing.*;
 import java.util.Set;
 
 /**
@@ -168,18 +168,18 @@ public class MainView implements FxmlView<MainViewModel> {
 			MenuItem addAssertedNameMenuItem = new MenuItem("Добавить УН");
 			addAssertedNameMenuItem.setOnAction(event -> addAssertedName());
 
-			MenuItem editAssertedNameMenuItem = new MenuItem("Редактировать УН");
-			editAssertedNameMenuItem.setOnAction(event -> editAssertedName());
+			MenuItem editDescriptionFormatMenuItem = new MenuItem("Редактировать СФО");
+			editDescriptionFormatMenuItem.setOnAction(event -> editDescriptionFormat());
 
-			MenuItem removeAssertedNameMenuItem = new MenuItem("Удалить УН");
-			descriptionFormatMenu.getItems().addAll(addAssertedNameMenuItem, editAssertedNameMenuItem,
-					removeAssertedNameMenuItem);
+			MenuItem removeDescriptionFormatMenuItem = new MenuItem("Удалить СФО");
+			descriptionFormatMenu.getItems().addAll(addAssertedNameMenuItem, editDescriptionFormatMenuItem,
+					removeDescriptionFormatMenuItem);
 
 			MenuItem addCatalogDescriptionMenuItem = new MenuItem("Добавить КО");
-			MenuItem editCatalogDescriptionMenuItem = new MenuItem("Редактировать КО");
-			MenuItem removeCatalogDescriptionMenuItem = new MenuItem("Удалить КО");
-			assertedNameMenu.getItems().addAll(addCatalogDescriptionMenuItem, editCatalogDescriptionMenuItem,
-					removeCatalogDescriptionMenuItem);
+			MenuItem editAssertedNameMenuItem = new MenuItem("Редактировать УН");
+			MenuItem removeAssertedNameMenuItem = new MenuItem("Удалить УН");
+			assertedNameMenu.getItems().addAll(addCatalogDescriptionMenuItem, editAssertedNameMenuItem,
+					removeAssertedNameMenuItem);
 		}
 
 		@Override
@@ -225,37 +225,30 @@ public class MainView implements FxmlView<MainViewModel> {
 			dialog.showAndWait();
 		}
 
-		private void editAssertedName() {
-			if (viewModel.getSelectedName() != null) {
-				JOptionPane.showMessageDialog(null, viewModel.getSelectedName().getName());
-			}
-
-			/*if (viewModel.getSelectedDescription() != null) {
-				JOptionPane.showMessageDialog(null, viewModel.getSelectedDescription().getName());
+		private void editDescriptionFormat() {
+			// TODO: Придумать что-то для отмены проверки (выбрал ли пользователь СФО в TreeView)
+			if (viewModel.getSelectedFormat() == null) {
 				return;
 			}
 
-			if (viewModel.getSelectedFormat() != null) {
-				JOptionPane.showMessageDialog(null, viewModel.getSelectedFormat().getName());
-				return;
-			}
-
-			if (viewModel.getSelectedName() != null) {
-				JOptionPane.showMessageDialog(null, viewModel.getSelectedName().getName());
-				return;
-			}*/
-			/*ViewTuple<AssertedNameEditView, AssertedNameEditViewModel> viewTuple = FluentViewLoader.fxmlView
-					(AssertedNameEditView.class).load();
+			ViewTuple<DescriptionFormatEditView, DescriptionFormatEditViewModel> viewTuple = FluentViewLoader.fxmlView
+					(DescriptionFormatEditView.class).load();
 			viewTuple.getViewModel().setParentViewModel(viewModel);
-
-			Property<AssertedNameViewModel> t = viewModel.selectedNameProperty();
-			viewTuple.getViewModel().idProperty().bindBidirectional(t.getValue().idProperty());
-			viewTuple.getViewModel().codeProperty().bindBidirectional(t.getValue().codeProperty());
-			viewTuple.getViewModel().nameProperty().bindBidirectional(t.getValue().nameProperty());
 
 			Parent root = viewTuple.getView();
 			Stage dialog = new Stage();
 			viewTuple.getCodeBehind().setStage(dialog);
+			viewTuple.getCodeBehind().initializeStage();
+
+			Property<DescriptionFormatViewModel> f = viewModel.selectedFormatProperty();
+			System.out.println(f.getValue().getId());
+			System.out.println(f.getValue().getCode());
+			System.out.println(f.getValue().getName());
+
+			viewTuple.getViewModel().idProperty().bindBidirectional(f.getValue().idProperty());
+			viewTuple.getViewModel().codeProperty().bindBidirectional(f.getValue().codeProperty());
+			viewTuple.getViewModel().nameProperty().bindBidirectional(f.getValue().nameProperty());
+
 
 			dialog.initModality(Modality.WINDOW_MODAL);
 			dialog.initOwner(MainApp.mainStage);
@@ -269,13 +262,13 @@ public class MainView implements FxmlView<MainViewModel> {
 			});
 
 			dialog.setScene(scene);
-			dialog.showAndWait();*/
+			dialog.showAndWait();
 		}
 	}
 
 
 	public void testButtonClicked() {
-		viewModel.getTestCommand().execute();
+//		viewModel.getTestCommand().execute();
 	}
 }
 

@@ -9,7 +9,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 
-<GridPane stylesheets="/css/Button.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+<GridPane maxHeight="600.0" maxWidth="800.0" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0"
+          stylesheets="/css/Button.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="org.defence.views.DescriptionFormatEditView">
     <children>
         <StackPane style="-fx-background-color: #4A6C9B" GridPane.columnIndex="0" GridPane.columnSpan="3"

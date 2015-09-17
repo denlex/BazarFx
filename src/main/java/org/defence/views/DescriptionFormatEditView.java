@@ -104,8 +104,12 @@ public class DescriptionFormatEditView implements FxmlView<DescriptionFormatEdit
 		dialog.setScene(scene);
 		dialog.showAndWait();
 
+
+		// TODO: не за ходит в условие (не возвращает результат DialogResult)
 		// set current position in characteristicKitsTableView
 		if (viewTuple.getCodeBehind().getModalResult() == DialogResult.OK) {
+			System.out.println("INSIDE");
+
 			int lastRowIndex = viewModel.getAllCharacteristicKits().size() - 1;
 			characteristicKitsTableView.scrollTo(lastRowIndex);
 			characteristicKitsTableView.selectionModelProperty().get().select(lastRowIndex);
@@ -127,7 +131,10 @@ public class DescriptionFormatEditView implements FxmlView<DescriptionFormatEdit
 		stage.onShownProperty().bindBidirectional(viewModel.shownWindowProperty());
 	}
 
-	public void initialization() {
+	public void initialize() {
+		codeTextField.textProperty().bindBidirectional(viewModel.codeProperty());
+		nameTextField.textProperty().bindBidirectional(viewModel.nameProperty());
+
 		initializeTableView();
 	}
 }
