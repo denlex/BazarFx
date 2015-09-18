@@ -56,7 +56,7 @@ public class MainView implements FxmlView<MainViewModel> {
 
 
 	public void initialize() {
-		TreeItem<Object> root = new TreeItem<>("РљР°С‚Р°Р»РѕРі РЎР¤Рћ");
+		TreeItem<Object> root = new TreeItem<>("Каталог СФО");
 
 		for (Object object : viewModel.getFormats()) {
 			root.getChildren().add(createNode(object));
@@ -165,19 +165,19 @@ public class MainView implements FxmlView<MainViewModel> {
 		private ContextMenu assertedNameMenu = new ContextMenu();
 
 		public TreeCellFactory() {
-			MenuItem addAssertedNameMenuItem = new MenuItem("Р”РѕР±Р°РІРёС‚СЊ РЈРќ");
+			MenuItem addAssertedNameMenuItem = new MenuItem("Добавить УН");
 			addAssertedNameMenuItem.setOnAction(event -> addAssertedName());
 
-			MenuItem editAssertedNameMenuItem = new MenuItem("Р РµРґР°РєС‚РёСЂРѕРІР°С‚СЊ РЈРќ");
+			MenuItem editAssertedNameMenuItem = new MenuItem("Редактировать УН");
 			editAssertedNameMenuItem.setOnAction(event -> editAssertedName());
 
-			MenuItem removeAssertedNameMenuItem = new MenuItem("РЈРґР°Р»РёС‚СЊ РЈРќ");
+			MenuItem removeAssertedNameMenuItem = new MenuItem("Удалить УН");
 			descriptionFormatMenu.getItems().addAll(addAssertedNameMenuItem, editAssertedNameMenuItem,
 					removeAssertedNameMenuItem);
 
-			MenuItem addCatalogDescriptionMenuItem = new MenuItem("Р”РѕР±Р°РІРёС‚СЊ РљРћ");
-			MenuItem editCatalogDescriptionMenuItem = new MenuItem("Р РµРґР°РєС‚РёСЂРѕРІР°С‚СЊ РљРћ");
-			MenuItem removeCatalogDescriptionMenuItem = new MenuItem("РЈРґР°Р»РёС‚СЊ РљРћ");
+			MenuItem addCatalogDescriptionMenuItem = new MenuItem("Добавить КО");
+			MenuItem editCatalogDescriptionMenuItem = new MenuItem("Редактировать КО");
+			MenuItem removeCatalogDescriptionMenuItem = new MenuItem("Удалить КО");
 			assertedNameMenu.getItems().addAll(addCatalogDescriptionMenuItem, editCatalogDescriptionMenuItem,
 					removeCatalogDescriptionMenuItem);
 		}
