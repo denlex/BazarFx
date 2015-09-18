@@ -122,6 +122,7 @@ public class DescriptionFormatEditView implements FxmlView<DescriptionFormatEdit
 	public void saveButtonClicked() {
 		viewModel.getSaveCommand().execute();
 		dialogResult = DialogResult.OK;
+		stage.close();
 	}
 
 	public void cancelButtonClicked() {

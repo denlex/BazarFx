@@ -52,7 +52,6 @@ public class MainViewModel implements ViewModel {
 
 		formats.setValue(new ObservableListWrapper<>(list));
 
-
 		testCommand = new DelegateCommand(() -> new Action() {
 			@Override
 			protected void action() throws Exception {

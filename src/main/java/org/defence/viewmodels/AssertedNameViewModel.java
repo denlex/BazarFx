@@ -6,7 +6,7 @@ import javafx.collections.ObservableSet;
 import org.defence.domain.entities.AssertedName;
 import org.defence.domain.entities.CatalogDescription;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
@@ -23,18 +23,22 @@ public class AssertedNameViewModel extends AbstractViewModel<AssertedName> {
 	public AssertedNameViewModel() {
 	}
 
-	public AssertedNameViewModel(AssertedName assertedName) {
-		id.setValue(assertedName.getId());
-		name.setValue(assertedName.getName());
-		code.setValue(assertedName.getCode());
+	public AssertedNameViewModel(Integer id, String code, String name, Set<CatalogDescription> catalogDescriptions) {
+		this.id.setValue(id);
+		this.name.setValue(name);
+		this.code.setValue(code);
 
-		if (assertedName.getCatalogDescriptions() != null) {
-			Set<CatalogDescriptionViewModel> set = new HashSet<>();
-			for (CatalogDescription description : assertedName.getCatalogDescriptions()) {
+		if (catalogDescriptions != null) {
+			Set<CatalogDescriptionViewModel> set = new LinkedHashSet<>();
+			for (CatalogDescription description : catalogDescriptions) {
 				set.add(new CatalogDescriptionViewModel(description));
 			}
-			catalogDescriptions.setValue(FXCollections.observableSet(set));
+			this.catalogDescriptions.setValue(FXCollections.observableSet(set));
 		}
+	}
+
+	public AssertedNameViewModel(AssertedName assertedName) {
+		this(assertedName.getId(), assertedName.getCode(), assertedName.getName(), assertedName.getCatalogDescriptions());
 	}
 
 	public int getId() {

@@ -8,7 +8,7 @@ import org.defence.domain.entities.AssertedName;
 import org.defence.domain.entities.CharacteristicKit;
 import org.defence.domain.entities.DescriptionFormat;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
@@ -35,13 +35,22 @@ public class DescriptionFormatViewModel implements ViewModel {
 		this.name.setValue(name);
 
 		if (characteristicKits != null) {
+			Set<CharacteristicKitViewModel> set = new LinkedHashSet<>();
 			for (CharacteristicKit kit : characteristicKits) {
-				this.characteristicKits.add(new CharacteristicKitViewModel(kit));
+				set.add(new CharacteristicKitViewModel(kit));
 			}
+			this.characteristicKits.setValue(FXCollections.observableSet(set));
 		}
 
-		if (assertedNames != null) {
+		/*if (assertedNames != null) {
 			Set<AssertedNameViewModel> set = new HashSet<>();
+			for (AssertedName assertedName : assertedNames) {
+				set.add(new AssertedNameViewModel(assertedName));
+			}
+			this.assertedNames.setValue(FXCollections.observableSet(set));
+		}*/
+		if (assertedNames != null) {
+			Set<AssertedNameViewModel> set = new LinkedHashSet<>();
 			for (AssertedName assertedName : assertedNames) {
 				set.add(new AssertedNameViewModel(assertedName));
 			}

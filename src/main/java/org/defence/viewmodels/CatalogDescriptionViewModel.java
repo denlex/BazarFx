@@ -6,7 +6,7 @@ import javafx.collections.ObservableSet;
 import org.defence.domain.entities.CatalogDescription;
 import org.defence.domain.entities.CharacteristicValue;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
@@ -20,17 +20,21 @@ public class CatalogDescriptionViewModel {
 	public CatalogDescriptionViewModel() {
 	}
 
-	public CatalogDescriptionViewModel(CatalogDescription catalogDescription) {
-		id.setValue(catalogDescription.getId());
-		name.setValue(catalogDescription.getName());
+	public CatalogDescriptionViewModel(Integer id, String name, Set<CharacteristicValue> values) {
+		this.id.setValue(id);
+		this.name.setValue(name);
 
-		if (catalogDescription.getValues() != null) {
-			Set<CharacteristicValueViewModel> set = new HashSet<>();
-			for (CharacteristicValue value : catalogDescription.getValues()) {
+		if (values != null) {
+			Set<CharacteristicValueViewModel> set = new LinkedHashSet<>();
+			for (CharacteristicValue value : values) {
 				set.add(new CharacteristicValueViewModel(value));
 			}
-			values.setValue(FXCollections.observableSet(set));
+			this.values.setValue(FXCollections.observableSet(set));
 		}
+	}
+
+	public CatalogDescriptionViewModel(CatalogDescription catalogDescription) {
+		this(catalogDescription.getId(), catalogDescription.getName(), catalogDescription.getValues());
 	}
 
 	public int getId() {
