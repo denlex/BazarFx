@@ -24,6 +24,7 @@ import javafx.stage.Stage;
 import org.defence.MainApp;
 import org.defence.viewmodels.*;
 
+import javax.swing.*;
 import java.util.Set;
 
 /**
@@ -55,7 +56,7 @@ public class MainView implements FxmlView<MainViewModel> {
 	}
 
 	public void initialize() {
-		TreeItem<Object> root = new TreeItem<>("РљР°С‚Р°Р»РѕРі РЎР¤Рћ");
+		TreeItem<Object> root = new TreeItem<>("Каталог СФО");
 
 		for (Object object : viewModel.getFormats()) {
 			root.getChildren().add(createNode(object));
@@ -164,19 +165,19 @@ public class MainView implements FxmlView<MainViewModel> {
 		private ContextMenu assertedNameMenu = new ContextMenu();
 
 		public TreeCellFactory() {
-			MenuItem addAssertedNameMenuItem = new MenuItem("Р”РѕР±Р°РІРёС‚СЊ РЈРќ");
+			MenuItem addAssertedNameMenuItem = new MenuItem("Добавить УН");
 			addAssertedNameMenuItem.setOnAction(event -> addAssertedName());
 
-			MenuItem editDescriptionFormatMenuItem = new MenuItem("Р РµРґР°РєС‚РёСЂРѕРІР°С‚СЊ РЎР¤Рћ");
+			MenuItem editDescriptionFormatMenuItem = new MenuItem("Редактировать СФО");
 			editDescriptionFormatMenuItem.setOnAction(event -> editDescriptionFormat());
 
-			MenuItem removeDescriptionFormatMenuItem = new MenuItem("РЈРґР°Р»РёС‚СЊ РЎР¤Рћ");
+			MenuItem removeDescriptionFormatMenuItem = new MenuItem("Удалить СФО");
 			descriptionFormatMenu.getItems().addAll(addAssertedNameMenuItem, editDescriptionFormatMenuItem,
 					removeDescriptionFormatMenuItem);
 
-			MenuItem addCatalogDescriptionMenuItem = new MenuItem("Р”РѕР±Р°РІРёС‚СЊ РљРћ");
-			MenuItem editAssertedNameMenuItem = new MenuItem("Р РµРґР°РєС‚РёСЂРѕРІР°С‚СЊ РЈРќ");
-			MenuItem removeAssertedNameMenuItem = new MenuItem("РЈРґР°Р»РёС‚СЊ РЈРќ");
+			MenuItem addCatalogDescriptionMenuItem = new MenuItem("Добавить КО");
+			MenuItem editAssertedNameMenuItem = new MenuItem("Редактировать УН");
+			MenuItem removeAssertedNameMenuItem = new MenuItem("Удалить УН");
 			assertedNameMenu.getItems().addAll(addCatalogDescriptionMenuItem, editAssertedNameMenuItem,
 					removeAssertedNameMenuItem);
 		}
@@ -225,7 +226,7 @@ public class MainView implements FxmlView<MainViewModel> {
 		}
 
 		private void editDescriptionFormat() {
-			// TODO: РџСЂРёРґСѓРјР°С‚СЊ С‡С‚Рѕ-С‚Рѕ РґР»СЏ РѕС‚РјРµРЅС‹ РїСЂРѕРІРµСЂРєРё (РІС‹Р±СЂР°Р» Р»Рё РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЎР¤Рћ РІ TreeView)
+			// TODO: Придумать что-то для отмены проверки (выбрал ли пользователь СФО в TreeView)
 			if (viewModel.getSelectedFormat() == null) {
 				return;
 			}
