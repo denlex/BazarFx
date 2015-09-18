@@ -33,7 +33,12 @@ public class DescriptionFormatEditViewModel implements ViewModel {
     private Command saveCommand;
     private final DbHelper dbHelper = DbHelper.getInstance();
 
+	private MainViewModel parentViewModel;
+
     public DescriptionFormatEditViewModel() {
+		if (parentViewModel != null) {
+			System.out.println("Inside format edit viemodel\nname = " + parentViewModel.getSelectedFormat().getName());
+		}
         List<CharacteristicKit> allCharacteristicKitsFromDb = dbHelper.getAllCharacteristicKits();
         List<CharacteristicKitViewModel> list = new LinkedList<>();
 
@@ -61,36 +66,34 @@ public class DescriptionFormatEditViewModel implements ViewModel {
         saveCommand = new DelegateCommand(() -> new Action() {
             @Override
             protected void action() throws Exception {
-                // TODO: Заменить на id выбранного формата описания
-                Integer formatId = 1;//parentViewModel.getSelectedType().getId();
+				// TODO: Заменить на id выбранного формата описания
+				Integer formatId = parentViewModel.getSelectedFormat().getId();
 
-                if (formatId == null || formatId == 0) {
-                    return;
-                }
+				if (formatId == null || formatId == 0) {
+					return;
+				}
 
-                List<Integer> characteristicIdList = new LinkedList<>();
-                for (CharacteristicKitViewModel elem : allCharacteristicKits) {
-                    if (elem.getIsBelong()) {
-                        characteristicIdList.add(elem.getId());
-                    }
-                }
+				List<Integer> characteristicIdList = new LinkedList<>();
+				for (CharacteristicKitViewModel elem : allCharacteristicKits) {
+					if (elem.getIsBelong()) {
+						characteristicIdList.add(elem.getId());
+					}
+				}
 
-                if (id.getValue() == 0) {
-                    // add characteristic
-                    dbHelper.addDescriptionFormat(code.getValue(), name.getValue(), null, characteristicIdList);
-                } else {
-                    // change exist measurement
-                    // TODO: Сделать проверку на пустой ввод данных о типе измерения
-                    dbHelper.updateDescriptionFormat(id.getValue(), code.getValue(), name.getValue(), null, characteristicIdList);
-                }
-
-                // TODO: реализовать возможность обновления списка наборов характеристик
+				if (id.getValue() == 0) {
+					// add characteristic
+					dbHelper.addDescriptionFormat(code.getValue(), name.getValue(), null, characteristicIdList);
+				} else {
+					// change exist measurement
+					// TODO: Сделать проверку на пустой ввод данных о типе измерения
+					dbHelper.updateDescriptionFormat(id.getValue(), code.getValue(), name.getValue(), null,
+							characteristicIdList);
+				}
+				// TODO: реализовать возможность обновления списка наборов характеристик
 //                parentViewModel.loadCharacteristicKitKitsBySelectedFormat();
-            }
-        });
+			}
+		});
     }
-
-//    private CharacteristicKitKitCatalogViewModel parentViewModel;
 
 
     public int getId() {
@@ -181,7 +184,15 @@ public class DescriptionFormatEditViewModel implements ViewModel {
 			kits.add(new CharacteristicKitViewModel(elem));
 		}
 
-		allCharacteristicKits.setValue(new ObservableListWrapper<CharacteristicKitViewModel>(kits));
+		allCharacteristicKits.setValue(new ObservableListWrapper<>(kits));
 
 	}
+
+    public MainViewModel getParentViewModel() {
+        return parentViewModel;
+    }
+
+    public void setParentViewModel(MainViewModel parentViewModel) {
+        this.parentViewModel = parentViewModel;
+    }
 }

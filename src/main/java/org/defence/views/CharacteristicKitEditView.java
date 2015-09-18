@@ -57,15 +57,10 @@ public class CharacteristicKitEditView implements FxmlView<CharacteristicKitEdit
         this.stage = stage;
     }
 
-    public DialogResult getDialogResult() {
-        return dialogResult;
-    }
-
     public void saveCharacteristicKitClicked() {
         viewModel.getSaveCommand().execute();
 		dialogResult = DialogResult.OK;
-		// TODO: Откомментировать, когда появится справочник наборов характеристик
-//		stage.close();
+		stage.close();
 	}
 
 	public void cancelButtonClicked() {
@@ -79,7 +74,7 @@ public class CharacteristicKitEditView implements FxmlView<CharacteristicKitEdit
 
     @Override
     public DialogResult getModalResult() {
-        return null;
+        return dialogResult;
     }
 
     public void initialize() {

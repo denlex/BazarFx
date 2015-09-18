@@ -18,7 +18,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.defence.MainApp;
 import org.defence.viewmodels.CharacteristicKitEditViewModel;
 import org.defence.viewmodels.CharacteristicKitViewModel;
 import org.defence.viewmodels.DescriptionFormatEditViewModel;
@@ -77,10 +76,13 @@ public class DescriptionFormatEditView implements FxmlView<DescriptionFormatEdit
 
 	@Override
 	public DialogResult getModalResult() {
-		return null;
+		return dialogResult;
 	}
 
 	public void addCharacteristicKitClicked(Event event) {
+
+		System.out.println("Before adding size is = " + viewModel.getAllCharacteristicKits().size());
+
 		ViewTuple<CharacteristicKitEditView, CharacteristicKitEditViewModel> viewTuple = FluentViewLoader.fxmlView
 				(CharacteristicKitEditView.class).load();
 		viewTuple.getViewModel().setParentViewModel(viewModel);
@@ -91,7 +93,7 @@ public class DescriptionFormatEditView implements FxmlView<DescriptionFormatEdit
 		viewTuple.getCodeBehind().initializeStage();
 
 		dialog.initModality(Modality.WINDOW_MODAL);
-		dialog.initOwner(MainApp.mainStage);
+		dialog.initOwner(this.stage);
 		dialog.setResizable(false);
 
 		Scene scene = new Scene(root);
@@ -104,11 +106,15 @@ public class DescriptionFormatEditView implements FxmlView<DescriptionFormatEdit
 		dialog.setScene(scene);
 		dialog.showAndWait();
 
+		// TODO: не за ходит в условие (не возвращает результат DialogResult)
 		// set current position in characteristicKitsTableView
 		if (viewTuple.getCodeBehind().getModalResult() == DialogResult.OK) {
+			System.out.println("Size after adding = " + viewModel.getAllCharacteristicKits().size());
+
 			int lastRowIndex = viewModel.getAllCharacteristicKits().size() - 1;
 			characteristicKitsTableView.scrollTo(lastRowIndex);
 			characteristicKitsTableView.selectionModelProperty().get().select(lastRowIndex);
+			characteristicKitsTableView.refresh();
 			characteristicKitsTableView.requestFocus();
 		}
 	}
@@ -127,7 +133,10 @@ public class DescriptionFormatEditView implements FxmlView<DescriptionFormatEdit
 		stage.onShownProperty().bindBidirectional(viewModel.shownWindowProperty());
 	}
 
-	public void initialization() {
+	public void initialize() {
+		codeTextField.textProperty().bindBidirectional(viewModel.codeProperty());
+		nameTextField.textProperty().bindBidirectional(viewModel.nameProperty());
+
 		initializeTableView();
 	}
 }
