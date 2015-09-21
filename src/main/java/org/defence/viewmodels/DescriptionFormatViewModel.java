@@ -5,7 +5,7 @@ import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableSet;
 import org.defence.domain.entities.AssertedName;
-import org.defence.domain.entities.CharacteristicKit;
+import org.defence.domain.entities.Characteristic;
 import org.defence.domain.entities.DescriptionFormat;
 
 import java.util.LinkedHashSet;
@@ -18,7 +18,7 @@ public class DescriptionFormatViewModel implements ViewModel {
 	private IntegerProperty id = new SimpleIntegerProperty();
 	private StringProperty code = new SimpleStringProperty();
 	private StringProperty name = new SimpleStringProperty();
-	private SetProperty<CharacteristicKitViewModel> characteristicKits = new SimpleSetProperty<>();
+	private SetProperty<CharacteristicViewModel> characteristics = new SimpleSetProperty<>();
 	private SetProperty<AssertedNameViewModel> assertedNames = new SimpleSetProperty<>();
 
 	public DescriptionFormatViewModel() {
@@ -28,27 +28,20 @@ public class DescriptionFormatViewModel implements ViewModel {
 		this(null, code, name, null, null);
 	}
 
-	public DescriptionFormatViewModel(Integer id, String code, String name, Set<CharacteristicKit> characteristicKits,
+	public DescriptionFormatViewModel(Integer id, String code, String name, Set<Characteristic> characteristics,
 			Set<AssertedName> assertedNames) {
 		this.id.setValue(id);
 		this.code.setValue(code);
 		this.name.setValue(name);
 
-		if (characteristicKits != null) {
-			Set<CharacteristicKitViewModel> set = new LinkedHashSet<>();
-			for (CharacteristicKit kit : characteristicKits) {
-				set.add(new CharacteristicKitViewModel(kit));
+		if (characteristics != null) {
+			Set<CharacteristicViewModel> set = new LinkedHashSet<>();
+			for (Characteristic characteristic : characteristics) {
+				set.add(new CharacteristicViewModel(characteristic));
 			}
-			this.characteristicKits.setValue(FXCollections.observableSet(set));
+			this.characteristics.setValue(FXCollections.observableSet(set));
 		}
 
-		/*if (assertedNames != null) {
-			Set<AssertedNameViewModel> set = new HashSet<>();
-			for (AssertedName assertedName : assertedNames) {
-				set.add(new AssertedNameViewModel(assertedName));
-			}
-			this.assertedNames.setValue(FXCollections.observableSet(set));
-		}*/
 		if (assertedNames != null) {
 			Set<AssertedNameViewModel> set = new LinkedHashSet<>();
 			for (AssertedName assertedName : assertedNames) {
@@ -59,7 +52,7 @@ public class DescriptionFormatViewModel implements ViewModel {
 	}
 
 	public DescriptionFormatViewModel(DescriptionFormat format) {
-		this(format.getId(), format.getCode(), format.getName(), format.getCharacteristicKits(), format
+		this(format.getId(), format.getCode(), format.getName(), format.getCharacteristics(), format
 				.getAssertedNames());
 	}
 
@@ -99,16 +92,16 @@ public class DescriptionFormatViewModel implements ViewModel {
 		this.name.set(name);
 	}
 
-	public ObservableSet<CharacteristicKitViewModel> getCharacteristicKits() {
-		return characteristicKits.get();
+	public ObservableSet<CharacteristicViewModel> getCharacteristics() {
+		return characteristics.get();
 	}
 
-	public SetProperty<CharacteristicKitViewModel> characteristicKitsProperty() {
-		return characteristicKits;
+	public SetProperty<CharacteristicViewModel> characteristicsProperty() {
+		return characteristics;
 	}
 
-	public void setCharacteristicKits(ObservableSet<CharacteristicKitViewModel> characteristicKits) {
-		this.characteristicKits.set(characteristicKits);
+	public void setCharacteristics(ObservableSet<CharacteristicViewModel> characteristics) {
+		this.characteristics.set(characteristics);
 	}
 
 	public ObservableSet<AssertedNameViewModel> getAssertedNames() {

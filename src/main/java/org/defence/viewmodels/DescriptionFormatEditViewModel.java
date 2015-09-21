@@ -9,7 +9,7 @@ import javafx.beans.property.*;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.stage.WindowEvent;
-import org.defence.domain.entities.CharacteristicKit;
+import org.defence.domain.entities.Characteristic;
 import org.defence.domain.entities.DescriptionFormat;
 import org.defence.infrastructure.DbHelper;
 
@@ -25,8 +25,8 @@ public class DescriptionFormatEditViewModel implements ViewModel {
 	private final StringProperty code = new SimpleStringProperty();
 	private final StringProperty name = new SimpleStringProperty();
 
-	private final ListProperty<CharacteristicKitViewModel> allCharacteristicKits = new SimpleListProperty<>();
-	private final ObjectProperty<CharacteristicKitViewModel> selectedCharacteristicKit = new SimpleObjectProperty<>();
+	private final ListProperty<CharacteristicViewModel> allCharacteristics = new SimpleListProperty<>();
+	private final ObjectProperty<CharacteristicViewModel> selectedCharacteristic = new SimpleObjectProperty<>();
 
 	private ObjectProperty<EventHandler<WindowEvent>> shownWindow;
 
@@ -36,31 +36,28 @@ public class DescriptionFormatEditViewModel implements ViewModel {
 	private MainViewModel parentViewModel;
 
 	public DescriptionFormatEditViewModel() {
-		if (parentViewModel != null) {
-			System.out.println("Inside format edit viemodel\nname = " + parentViewModel.getSelectedFormat().getName());
-		}
-		List<CharacteristicKit> allCharacteristicKitsFromDb = dbHelper.getAllCharacteristicKits();
-		List<CharacteristicKitViewModel> list = new LinkedList<>();
+		List<Characteristic> allCharacteristicsFromDb = dbHelper.getAllCharacteristics();
+		List<CharacteristicViewModel> list = new LinkedList<>();
 
-		for (CharacteristicKit characteristicKit : allCharacteristicKitsFromDb) {
-			list.add(new CharacteristicKitViewModel(characteristicKit));
+		for (Characteristic characteristic : allCharacteristicsFromDb) {
+			list.add(new CharacteristicViewModel(characteristic));
 		}
 
-		allCharacteristicKits.setValue(new ObservableListWrapper<>(list));
+		allCharacteristics.setValue(new ObservableListWrapper<>(list));
 
 		// filling checkBoxes in table with corresponded values
 		shownWindow = new SimpleObjectProperty<>(event -> {
 			// if modification open window mode (not creation new description format)
 			if (id != null && id.getValue() != 0) {
 				DescriptionFormat current = dbHelper.getDescriptionFormatById(id.getValue());
-				for (CharacteristicKit elem : current.getCharacteristicKits()) {
-					CharacteristicKitViewModel m = allCharacteristicKits.getValue().stream().filter(p -> p.getId() ==
+				for (Characteristic elem : current.getCharacteristics()) {
+					CharacteristicViewModel m = allCharacteristics.getValue().stream().filter(p -> p.getId() ==
 							elem.getId()).findFirst().get();
 
 					m.setIsBelong(true);
 				}
 			} else {
-				loadAllCharacteristicKits();
+				loadAllCharacteristics();
 			}
 		});
 
@@ -68,30 +65,26 @@ public class DescriptionFormatEditViewModel implements ViewModel {
 			@Override
 			protected void action() throws Exception {
 				// TODO: Заменить на id выбранного формата описания
-				Integer formatId = parentViewModel.getSelectedFormat().getId();
-
-				if (formatId == null || formatId == 0) {
-					return;
-				}
-
-				List<Integer> characteristicKitIdList = new LinkedList<>();
-				for (CharacteristicKitViewModel elem : allCharacteristicKits) {
-					if (elem.getIsBelong()) {
-						characteristicKitIdList.add(elem.getId());
+				List<Integer> characteristicIdList = new LinkedList<>();
+				if (characteristicIdList != null && characteristicIdList.size() > 0) {
+					for (CharacteristicViewModel elem : allCharacteristics) {
+						if (elem.getIsBelong()) {
+							characteristicIdList.add(elem.getId());
+						}
 					}
 				}
 
-				if (id.getValue() == 0) {
-					// add characteristic
-					dbHelper.addDescriptionFormat(code.getValue(), name.getValue(), characteristicKitIdList);
+				// if window was opened in adding mode
+				if (parentViewModel.getSelectedFormat() == null) {
+					dbHelper.addDescriptionFormat(code.getValue(), name.getValue(), characteristicIdList);
 				} else {
-					// change exist measurement
+					// change exist descriptionFormat
 					// TODO: Сделать проверку на пустой ввод данных о типе измерения
 					dbHelper.updateDescriptionFormat(id.getValue(), code.getValue(), name.getValue(),
-                            characteristicKitIdList);
+							characteristicIdList);
 				}
 				// TODO: реализовать возможность обновления списка наборов характеристик
-//                parentViewModel.loadCharacteristicKitKitsBySelectedFormat();
+//                parentViewModel.loadCharacteristics;
 			}
 		});
 	}
@@ -133,28 +126,28 @@ public class DescriptionFormatEditViewModel implements ViewModel {
 		this.name.set(name);
 	}
 
-	public ObservableList<CharacteristicKitViewModel> getAllCharacteristicKits() {
-		return allCharacteristicKits.get();
+	public ObservableList<CharacteristicViewModel> getAllCharacteristics() {
+		return allCharacteristics.get();
 	}
 
-	public ListProperty<CharacteristicKitViewModel> allCharacteristicKitsProperty() {
-		return allCharacteristicKits;
+	public ListProperty<CharacteristicViewModel> allCharacteristicsProperty() {
+		return allCharacteristics;
 	}
 
-	public void setAllCharacteristicKits(ObservableList<CharacteristicKitViewModel> allCharacteristicKits) {
-		this.allCharacteristicKits.set(allCharacteristicKits);
+	public void setAllCharacteristics(ObservableList<CharacteristicViewModel> allCharacteristics) {
+		this.allCharacteristics.set(allCharacteristics);
 	}
 
-	public CharacteristicKitViewModel getSelectedCharacteristicKit() {
-		return selectedCharacteristicKit.get();
+	public CharacteristicViewModel getSelectedCharacteristic() {
+		return selectedCharacteristic.get();
 	}
 
-	public ObjectProperty<CharacteristicKitViewModel> selectedCharacteristicKitProperty() {
-		return selectedCharacteristicKit;
+	public ObjectProperty<CharacteristicViewModel> selectedCharacteristicProperty() {
+		return selectedCharacteristic;
 	}
 
-	public void setSelectedCharacteristicKit(CharacteristicKitViewModel selectedCharacteristicKit) {
-		this.selectedCharacteristicKit.set(selectedCharacteristicKit);
+	public void setSelectedCharacteristic(CharacteristicViewModel selectedCharacteristic) {
+		this.selectedCharacteristic.set(selectedCharacteristic);
 	}
 
 	public EventHandler<WindowEvent> getShownWindow() {
@@ -177,15 +170,15 @@ public class DescriptionFormatEditViewModel implements ViewModel {
 		this.saveCommand = saveCommand;
 	}
 
-	public void loadAllCharacteristicKits() {
-		List<CharacteristicKit> kitsFromDb = dbHelper.getAllCharacteristicKits();
-		List<CharacteristicKitViewModel> kits = new LinkedList<>();
+	public void loadAllCharacteristics() {
+		List<Characteristic> characteristicsFromDb = dbHelper.getAllCharacteristics();
+		List<CharacteristicViewModel> characteristics = new LinkedList<>();
 
-		for (CharacteristicKit elem : kitsFromDb) {
-			kits.add(new CharacteristicKitViewModel(elem));
+		for (Characteristic elem : characteristicsFromDb) {
+			characteristics.add(new CharacteristicViewModel(elem));
 		}
 
-		allCharacteristicKits.setValue(new ObservableListWrapper<>(kits));
+		allCharacteristics.setValue(new ObservableListWrapper<>(characteristics));
 
 	}
 

@@ -8,13 +8,13 @@
             <generator class="native"/>
         </id>
 
-        <property name="name" column="NAME" type="string"/>
         <property name="code" column="CODE" type="string"/>
+        <property name="name" column="NAME" type="string"/>
 
-        <set name="characteristicKits" table="CHARACTERISTIC_KIT"
+        <set name="characteristics" table="FORMAT_N_CHARACTERISTIC"
              inverse="false" lazy="false" fetch="select" cascade="all">
             <key column="DESCRIPTION_FORMAT_ID" />
-            <one-to-many class="CharacteristicKit" />
+            <many-to-many column="CHARACTERISTIC_ID" class="Characteristic" />
         </set>
 
         <set name="assertedNames" table="ASSERTED_NAME"

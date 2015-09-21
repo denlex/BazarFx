@@ -12,7 +12,7 @@
         <property name="name" column="NAME" type="string"/>
 
         <set name="characteristics" table="CHARACTERISTIC"
-             inverse="false" lazy="true" fetch="select" cascade="all">
+             inverse="false" lazy="false" fetch="select" cascade="all">
             <key column="CHARACTERISTIC_TYPE_ID"/>
             <one-to-many class="Characteristic"/>
         </set>

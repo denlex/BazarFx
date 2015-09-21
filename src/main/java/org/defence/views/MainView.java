@@ -24,7 +24,6 @@ import javafx.stage.Stage;
 import org.defence.MainApp;
 import org.defence.viewmodels.*;
 
-import javax.swing.*;
 import java.util.Set;
 
 /**
@@ -39,6 +38,8 @@ public class MainView implements FxmlView<MainViewModel> {
 
 	@FXML
 	TreeView<Object> treeView;
+
+	private TreeItem<Object> root = new TreeItem<>("ROOT");
 
 	@InjectViewModel
 	private MainViewModel viewModel;
@@ -56,11 +57,14 @@ public class MainView implements FxmlView<MainViewModel> {
 	}
 
 	public void initialize() {
-		TreeItem<Object> root = new TreeItem<>("Каталог СФО");
+		TreeItem<Object> rootItem = new TreeItem("РљР°С‚Р°Р»РѕРі");
 
 		for (Object object : viewModel.getFormats()) {
-			root.getChildren().add(createNode(object));
+			rootItem.getChildren().add(createNode(object));
+//			root.getChildren().add(createNode(object));
 		}
+
+		root.getChildren().add(rootItem);
 
 		treeView.setRoot(root);
 		treeView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -90,6 +94,43 @@ public class MainView implements FxmlView<MainViewModel> {
 
 		root.setExpanded(true);
 	}
+
+	private void addDescriptionFormat() {
+
+		ViewTuple<DescriptionFormatEditView, DescriptionFormatEditViewModel> viewTuple = FluentViewLoader.fxmlView
+				(DescriptionFormatEditView.class).load();
+		viewTuple.getViewModel().setParentViewModel(viewModel);
+
+		Parent root = viewTuple.getView();
+		Stage dialog = new Stage();
+		viewTuple.getCodeBehind().setStage(dialog);
+		viewTuple.getCodeBehind().initializeStage();
+
+			/*Property<DescriptionFormatViewModel> f = viewModel.selectedFormatProperty();
+			System.out.println(f.getValue().getId());
+			System.out.println(f.getValue().getCode());
+			System.out.println(f.getValue().getName());
+
+			viewTuple.getViewModel().idProperty().bindBidirectional(f.getValue().idProperty());
+			viewTuple.getViewModel().codeProperty().bindBidirectional(f.getValue().codeProperty());
+			viewTuple.getViewModel().nameProperty().bindBidirectional(f.getValue().nameProperty());*/
+
+
+		dialog.initModality(Modality.WINDOW_MODAL);
+		dialog.initOwner(MainApp.mainStage);
+		dialog.setResizable(false);
+
+		Scene scene = new Scene(root);
+		scene.addEventHandler(KeyEvent.ANY, event -> {
+			if (event.getCode() == KeyCode.ESCAPE) {
+				dialog.close();
+			}
+		});
+
+		dialog.setScene(scene);
+		dialog.showAndWait();
+	}
+
 
 	private TreeItem<Object> createNode(Object o) {
 		return new TreeItem<Object>(o) {
@@ -161,25 +202,31 @@ public class MainView implements FxmlView<MainViewModel> {
 	}
 
 	private final class TreeCellFactory extends TreeCell<Object> {
+
 		private ContextMenu descriptionFormatMenu = new ContextMenu();
 		private ContextMenu assertedNameMenu = new ContextMenu();
+		private ContextMenu rootMenu = new ContextMenu();
 
 		public TreeCellFactory() {
-			MenuItem addAssertedNameMenuItem = new MenuItem("Добавить УН");
+			MenuItem addAssertedNameMenuItem = new MenuItem("Р”РѕР±Р°РІРёС‚СЊ РЈРќ");
 			addAssertedNameMenuItem.setOnAction(event -> addAssertedName());
 
-			MenuItem editDescriptionFormatMenuItem = new MenuItem("Редактировать СФО");
+			MenuItem editDescriptionFormatMenuItem = new MenuItem("Р РµРґР°РєС‚РёСЂРѕРІР°С‚СЊ РЎР¤Рћ");
 			editDescriptionFormatMenuItem.setOnAction(event -> editDescriptionFormat());
 
-			MenuItem removeDescriptionFormatMenuItem = new MenuItem("Удалить СФО");
+			MenuItem removeDescriptionFormatMenuItem = new MenuItem("РЈРґР°Р»РёС‚СЊ РЎР¤Рћ");
 			descriptionFormatMenu.getItems().addAll(addAssertedNameMenuItem, editDescriptionFormatMenuItem,
 					removeDescriptionFormatMenuItem);
 
-			MenuItem addCatalogDescriptionMenuItem = new MenuItem("Добавить КО");
-			MenuItem editAssertedNameMenuItem = new MenuItem("Редактировать УН");
-			MenuItem removeAssertedNameMenuItem = new MenuItem("Удалить УН");
+			MenuItem addCatalogDescriptionMenuItem = new MenuItem("Р”РѕР±Р°РІРёС‚СЊ РљРћ");
+			MenuItem editAssertedNameMenuItem = new MenuItem("Р РµРґР°РєС‚РёСЂРѕРІР°С‚СЊ РЈРќ");
+			MenuItem removeAssertedNameMenuItem = new MenuItem("РЈРґР°Р»РёС‚СЊ РЈРќ");
 			assertedNameMenu.getItems().addAll(addCatalogDescriptionMenuItem, editAssertedNameMenuItem,
 					removeAssertedNameMenuItem);
+
+			MenuItem addDescriptionFormatItem = new MenuItem("Р”РѕР±Р°РІРёС‚СЊ РЎР¤Рћ");
+			addDescriptionFormatItem.setOnAction(event -> addDescriptionFormat());
+			rootMenu.getItems().add(addDescriptionFormatItem);
 		}
 
 		@Override
@@ -198,6 +245,10 @@ public class MainView implements FxmlView<MainViewModel> {
 
 			if (item instanceof AssertedNameViewModel) {
 				setContextMenu(assertedNameMenu);
+			}
+
+			if (item instanceof String) {
+				setContextMenu(rootMenu);
 			}
 		}
 
@@ -226,7 +277,7 @@ public class MainView implements FxmlView<MainViewModel> {
 		}
 
 		private void editDescriptionFormat() {
-			// TODO: Придумать что-то для отмены проверки (выбрал ли пользователь СФО в TreeView)
+			// TODO: пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅ TreeView)
 			if (viewModel.getSelectedFormat() == null) {
 				return;
 			}

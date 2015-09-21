@@ -80,7 +80,7 @@ public class CharacteristicKitEditViewModel implements ViewModel {
 				}
 
 				// TODO: реализовать возможность обновления списка наборов характеристик
-                parentViewModel.loadAllCharacteristicKits();
+                parentViewModel.loadAllCharacteristics();
 //                parentViewModel.loadCharacteristicKitsBySelectedFormat();
 			}
 		});

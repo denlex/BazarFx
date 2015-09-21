@@ -289,7 +289,7 @@ public class DbHelper {
 		return true;
 	}
 
-	public boolean addDescriptionFormat(String code, String name, List<Integer> characteristicKitIdList) {
+	public boolean addDescriptionFormat(String code, String name, List<Integer> characteristicIdList) {
 
 		Session session = factory.openSession();
 		Transaction transaction = null;
@@ -299,13 +299,13 @@ public class DbHelper {
 			DescriptionFormat format = new DescriptionFormat(code, name);
 
 			// getting assertedName list of descriptionFormat
-			List<CharacteristicKit> characteristicKits;
+			List<Characteristic> characteristics;
 
-			// if there is any kit belongs to descriptionFormat
-			if (characteristicKitIdList != null && characteristicKitIdList.size() != 0) {
-				characteristicKits = session.createQuery("from CharacteristicKit m where m.id in " +
-						"(:kitIdList)").setParameterList("kitIdList", characteristicKitIdList).list();
-				format.setCharacteristicKits(new HashSet<>(characteristicKits));
+			// if there is any characteristic belongs to descriptionFormat
+			if (characteristicIdList != null && characteristicIdList.size() != 0) {
+				characteristics = session.createQuery("from Characteristic m where m.id in " +
+						"(:characteristicIdList)").setParameterList("characteristicIdList", characteristicIdList).list();
+				format.setCharacteristics(new HashSet<>(characteristics));
 			}
 
 			/*// getting assertedName list of descriptionFormat
@@ -479,7 +479,7 @@ public class DbHelper {
 		return true;
 	}
 
-	public boolean updateDescriptionFormat(Integer id, String code, String name, List<Integer> characteristicKitIdList) {
+	public boolean updateDescriptionFormat(Integer id, String code, String name, List<Integer> characteristicIdList) {
 		Session session = factory.openSession();
 		Transaction transaction = null;
 
@@ -507,19 +507,21 @@ public class DbHelper {
 				return false;
 			}*/
 
-			List<CharacteristicKit> allKits = session.createQuery("from CharacteristicKit").list();
-			Set<CharacteristicKit> characteristicKits = new LinkedHashSet<>();
+			List<Characteristic> allCharacteristic = session.createQuery("from Characteristic").list();
+			Set<Characteristic> characteristics = new LinkedHashSet<>();
 
-			for (CharacteristicKit kit : allKits) {
-				for (Integer kitId : characteristicKitIdList) {
-					if (kit.getId() == kitId) {
-						characteristicKits.add(kit);
+			for (Characteristic characteristic : allCharacteristic) {
+				for (Integer characteristicId : characteristicIdList) {
+					if (characteristic.getId() == characteristicId) {
+						characteristics.add(characteristic);
 						break;
 					}
 				}
 			}
 
-			format.setCharacteristicKits(characteristicKits);
+			format.setCode(code);
+			format.setName(name);
+			format.setCharacteristics(characteristics);
 
 			session.update(format);
 			transaction.commit();

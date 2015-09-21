@@ -57,7 +57,7 @@ public class HibernateTest {
 		assertedNames.add(assertedName);
 
         DescriptionFormat destroyer = new DescriptionFormat("001", "Истребители");
-        destroyer.setCharacteristicKits(characteristicKits);
+//        destroyer.setCharacteristics(characteristicKits);
         destroyer.setAssertedNames(assertedNames);
 
         Session session = factory.openSession();

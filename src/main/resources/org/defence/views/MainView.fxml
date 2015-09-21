@@ -107,7 +107,7 @@
                     </rowConstraints>
                     <children>
                         <TreeView fx:id="treeView" stylesheets="/css/TreeView.css">
-                            <contextMenu>
+                            <!--<contextMenu>
                                 <ContextMenu>
                                     <items>
                                         <MenuItem text="ddsf"/>
@@ -133,7 +133,7 @@
                                         </TreeItem>
                                     </children>
                                 </TreeItem>
-                            </root>
+                            </root>-->
                         </TreeView>
                         <Button GridPane.rowIndex="1" text="Test" onAction="#testButtonClicked"/>
                     </children>
@@ -195,7 +195,7 @@
                                                     </children>
                                                 </GridPane>
                                             </content>
-                                        </Tab>
+                                        </Tab>-->
 
                                         <Tab fx:id="measurementsTab" text="Справочник единиц измерения">
                                             <content>
@@ -234,13 +234,13 @@
                                                                         valignment="TOP" vgrow="ALWAYS"/>
                                                     </rowConstraints>
                                                     <children>
-                                                        <fx:include source="/org/defence/views/AssertedNameEditView.fxml"
+                                                        <fx:include source="/org/defence/views/CharacteristicCatalogView.fxml"
                                                                     GridPane.hgrow="ALWAYS"
                                                                     GridPane.vgrow="ALWAYS"/>
                                                     </children>
                                                 </GridPane>
                                             </content>
-                                        </Tab>-->
+                                        </Tab>
                                       <!--<Tab text="Добавление характеристики">
                                             <content>
                                                 <GridPane maxHeight="1.7976931348623157E308"

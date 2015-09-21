@@ -10,7 +10,7 @@ public class DescriptionFormat {
     private int id;
     private String code;
     private String name;
-    private Set<CharacteristicKit> characteristicKits = new HashSet<>();
+    private Set<Characteristic> characteristics = new HashSet<>();
     private Set<AssertedName> assertedNames = new HashSet<>();
 
     public DescriptionFormat() {
@@ -20,10 +20,10 @@ public class DescriptionFormat {
 		this(code, name, null, null);
 	}
 
-    public DescriptionFormat(String code, String name, Set<CharacteristicKit> characteristicKits, Set<AssertedName> assertedNames) {
+    public DescriptionFormat(String code, String name, Set<Characteristic> characteristics, Set<AssertedName> assertedNames) {
         this.code = code;
         this.name = name;
-		this.characteristicKits = characteristicKits;
+		this.characteristics = characteristics;
 		this.assertedNames = assertedNames;
 	}
 
@@ -51,12 +51,12 @@ public class DescriptionFormat {
         this.code = code;
     }
 
-    public Set<CharacteristicKit> getCharacteristicKits() {
-        return characteristicKits;
+    public Set<Characteristic> getCharacteristics() {
+        return characteristics;
     }
 
-    public void setCharacteristicKits(Set<CharacteristicKit> characteristicKits) {
-        this.characteristicKits = characteristicKits;
+    public void setCharacteristics(Set<Characteristic> characteristics) {
+        this.characteristics = characteristics;
     }
 
     public Set<AssertedName> getAssertedNames() {
