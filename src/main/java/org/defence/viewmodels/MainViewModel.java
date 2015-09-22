@@ -17,7 +17,6 @@ import javafx.stage.WindowEvent;
 import org.defence.domain.entities.DescriptionFormat;
 import org.defence.infrastructure.DbHelper;
 
-import javax.swing.*;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -38,6 +37,19 @@ public class MainViewModel implements ViewModel {
 
 	private Command testCommand;
 
+	private void expandChildren(ObservableList<TreeItem<Object>> children) {
+		if (children == null || children.size() == 0) {
+			return;
+		}
+
+		for (TreeItem<Object> obj : children) {
+			obj.setExpanded(true);
+
+			if (obj.getChildren() != null) {
+				expandChildren(obj.getChildren());
+			}
+		}
+	}
 
 	public MainViewModel() {
 
@@ -58,7 +70,7 @@ public class MainViewModel implements ViewModel {
 		testCommand = new DelegateCommand(() -> new Action() {
 			@Override
 			protected void action() throws Exception {
-				if (getSelectedDescription() != null) {
+				/*if (getSelectedDescription() != null) {
 					JOptionPane.showMessageDialog(null, getSelectedDescription().getName());
 					return;
 				}
@@ -71,7 +83,18 @@ public class MainViewModel implements ViewModel {
 				if (getSelectedName() != null) {
 					JOptionPane.showMessageDialog(null, getSelectedName().getName());
 					return;
+				}*/
+
+				TreeItem<Object> rootItem = new TreeItem<>("Каталог СФО");
+
+				for (Object object : formats) {
+					rootItem.getChildren().add(new TreeItem<>(object));
 				}
+				root.setValue(null);
+				root.setValue(rootItem);
+
+//				expandChildren(root.getValue().getChildren());
+				root.getValue().setExpanded(true);
 			}
 		});
 

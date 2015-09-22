@@ -78,22 +78,25 @@ public class MainView implements FxmlView<MainViewModel> {
 			viewModel.setSelectedName(null);
 			viewModel.setSelectedDescription(null);
 
-			if (newValue.getValue() instanceof DescriptionFormatViewModel) {
-				viewModel.selectedFormatProperty().unbind();
-				viewModel.selectedFormatProperty().bindBidirectional(new SimpleObjectProperty<>(
-						(DescriptionFormatViewModel) newValue.getValue()));
-			}
+			if (newValue != null) {
+				if (newValue.getValue() instanceof DescriptionFormatViewModel) {
+					viewModel.selectedFormatProperty().unbind();
+					viewModel.selectedFormatProperty().bindBidirectional(new SimpleObjectProperty<>(
+							(DescriptionFormatViewModel) newValue.getValue()));
+				}
 
-			if (newValue.getValue() instanceof AssertedNameViewModel) {
-				viewModel.selectedNameProperty().unbind();
-				viewModel.selectedNameProperty().bindBidirectional(new SimpleObjectProperty<>((AssertedNameViewModel)
-						newValue.getValue()));
-			}
 
-			if (newValue.getValue() instanceof CatalogDescriptionViewModel) {
-				viewModel.selectedDescriptionProperty().unbind();
-				viewModel.selectedDescriptionProperty().bindBidirectional(new SimpleObjectProperty<>(
-						(CatalogDescriptionViewModel) newValue.getValue()));
+				if (newValue.getValue() instanceof AssertedNameViewModel) {
+					viewModel.selectedNameProperty().unbind();
+					viewModel.selectedNameProperty().bindBidirectional(new SimpleObjectProperty<>((AssertedNameViewModel)
+							newValue.getValue()));
+				}
+
+				if (newValue.getValue() instanceof CatalogDescriptionViewModel) {
+					viewModel.selectedDescriptionProperty().unbind();
+					viewModel.selectedDescriptionProperty().bindBidirectional(new SimpleObjectProperty<>(
+							(CatalogDescriptionViewModel) newValue.getValue()));
+				}
 			}
 		});
 		treeView.setCellFactory(p -> new TreeCellFactory());
@@ -136,7 +139,7 @@ public class MainView implements FxmlView<MainViewModel> {
 		dialog.setScene(scene);
 		dialog.showAndWait();
 
-		if (viewTuple.getCodeBehind().getModalResult() == DialogResult.OK ) {
+		if (viewTuple.getCodeBehind().getModalResult() == DialogResult.OK) {
 			treeView.refresh();
 		}
 	}
@@ -337,6 +340,7 @@ public class MainView implements FxmlView<MainViewModel> {
 	}
 
 	public void testButtonClicked() {
-//		viewModel.getTestCommand().execute();
+//		treeView.refresh();
+		viewModel.getTestCommand().execute();
 	}
 }
