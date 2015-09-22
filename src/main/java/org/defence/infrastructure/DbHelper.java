@@ -289,10 +289,11 @@ public class DbHelper {
 		return true;
 	}
 
-	public boolean addDescriptionFormat(String code, String name, List<Integer> characteristicIdList) {
+	public DescriptionFormat addDescriptionFormat(String code, String name, List<Integer> characteristicIdList) {
 
 		Session session = factory.openSession();
 		Transaction transaction = null;
+		DescriptionFormat result = null;
 
 		try {
 			transaction = session.beginTransaction();
@@ -319,16 +320,17 @@ public class DbHelper {
 				format.setAssertedNames(new HashSet<>(assertedNames));
 			}*/
 
-			session.save(format);
+			Integer newId = (Integer) session.save(format);
+			result = (DescriptionFormat) session.get(DescriptionFormat.class, newId);
 			transaction.commit();
 		} catch (Exception ex) {
 			transaction.rollback();
 			ex.printStackTrace();
-			return false;
+			return result;
 		} finally {
 			session.close();
 		}
-		return true;
+		return result;
 	}
 
 	public boolean updateMeasurement(Integer typeId, Integer id, String code, String name, String shortName) {

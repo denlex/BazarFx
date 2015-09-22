@@ -39,10 +39,12 @@ public class MainView implements FxmlView<MainViewModel> {
 	@FXML
 	TreeView<Object> treeView;
 
-	private TreeItem<Object> root = new TreeItem<>("ROOT");
+	private TreeItem<Object> root = new TreeItem<>("Каталог");
 
 	@InjectViewModel
 	private MainViewModel viewModel;
+
+	private Stage stage;
 
 	private void exitBtnRegisterEvents() {
 		exitBtn.setOnAction(new EventHandler<ActionEvent>() {
@@ -57,16 +59,20 @@ public class MainView implements FxmlView<MainViewModel> {
 	}
 
 	public void initialize() {
-		TreeItem<Object> rootItem = new TreeItem("Каталог");
 
-		for (Object object : viewModel.getFormats()) {
-			rootItem.getChildren().add(createNode(object));
-//			root.getChildren().add(createNode(object));
-		}
 
-		root.getChildren().add(rootItem);
+		/*for (Object object : viewModel.getFormats()) {
 
-		treeView.setRoot(root);
+			root.getChildren().add(createNode(object));
+		}*/
+
+//		rootProperty.setValue(root);
+
+		treeView.rootProperty().bindBidirectional(viewModel.rootProperty());
+
+//		root.setExpanded(true);
+//		treeView.setRoot(root);
+
 		treeView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
 			viewModel.setSelectedFormat(null);
 			viewModel.setSelectedName(null);
@@ -129,6 +135,10 @@ public class MainView implements FxmlView<MainViewModel> {
 
 		dialog.setScene(scene);
 		dialog.showAndWait();
+
+		if (viewTuple.getCodeBehind().getModalResult() == DialogResult.OK ) {
+			treeView.refresh();
+		}
 	}
 
 
@@ -318,9 +328,15 @@ public class MainView implements FxmlView<MainViewModel> {
 	}
 
 
+	public void setStage(Stage stage) {
+		this.stage = stage;
+	}
+
+	public void initializeStage() {
+		stage.onShownProperty().bindBidirectional(viewModel.shownWindowProperty());
+	}
+
 	public void testButtonClicked() {
 //		viewModel.getTestCommand().execute();
 	}
 }
-
-

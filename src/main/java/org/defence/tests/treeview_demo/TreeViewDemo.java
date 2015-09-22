@@ -2,6 +2,8 @@ package org.defence.tests.treeview_demo;
 
 import com.sun.javafx.collections.ObservableListWrapper;
 import javafx.application.Application;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
@@ -18,8 +20,58 @@ import java.util.Set;
  * Created by root on 9/15/15.
  */
 public class TreeViewDemo extends Application {
+	ObjectProperty<TreeItem<Object>> rootProperty = new SimpleObjectProperty<>();
+
 	public static void main(String[] args) {
 		launch(args);
+	}
+
+	void searchInChildren(ObservableList<TreeItem<Object>> children) {
+		if (children.size() == 0) {
+			return;
+		}
+
+		for (TreeItem<Object> obj : children) {
+			if (obj.getValue() instanceof Car) {
+				System.out.println(obj);
+			}
+
+			if (obj.getChildren() != null) {
+				searchInChildren(obj.getChildren());
+			}
+		}
+	}
+
+	void addNewCar(ObservableList<TreeItem<Object>> children, Car newCar) {
+		if (children.size() == 0) {
+			return;
+		}
+
+		for (TreeItem<Object> obj : children) {
+			if (obj.getValue() instanceof Car) {
+				children.add(new TreeItem<>(newCar));
+				return;
+//				System.out.println(obj);
+			}
+
+			if (obj.getChildren() != null) {
+				addNewCar(obj.getChildren(), newCar);
+			}
+		}
+	}
+
+	void expandChildren(ObservableList<TreeItem<Object>> children) {
+		if (children.size() == 0) {
+			return;
+		}
+
+		for (TreeItem<Object> obj : children) {
+			obj.setExpanded(true);
+
+			if (obj.getChildren() != null) {
+				expandChildren(obj.getChildren());
+			}
+		}
 	}
 
 	@Override
@@ -35,14 +87,35 @@ public class TreeViewDemo extends Application {
 
 		for (City city : cities) {
 			rootItem.getChildren().add(createNode(city));
+//			rootProperty.getValue().getChildren().add(createNode(city));
 		}
-		treeView.setRoot(rootItem);
+
+		rootProperty.setValue(rootItem);
+
+//		treeView.setRoot(rootItem);
+
+		treeView.rootProperty().bindBidirectional(rootProperty);
 
 		treeView.setCellFactory(param -> new TreeCellFactory());
 
 		treeView.setMinWidth(400);
 
+		Button testBtn = new Button("Добавить");
+		testBtn.setOnAction(event -> {
+
+			Car newCar = new Car("ЗИЛ", 1956);
+//			searchInChildren(rootProperty.getValue().getChildren());
+			addNewCar(rootProperty.getValue().getChildren(), newCar);
+			System.out.println("The End");
+
+			treeView.getRoot().setExpanded(true);
+			expandChildren(rootProperty.getValue().getChildren());
+//			treeView.refresh();
+//			rootProperty.getValue().getChildren().add(new TreeItem<>(newCar));
+		});
+
 		root.getChildren().add(treeView);
+		root.getChildren().add(testBtn);
 
 		stage.setScene(scene);
 		stage.setTitle("TreeView Demo");
@@ -117,7 +190,7 @@ public class TreeViewDemo extends Application {
 	private List<City> generateCitiesWithClients() {
 		Car skoda = new Car("Skoda", 2007);
 		Car chevrolet = new Car("Chevrolet", 2014);
-		Car vaz = new Car("Vaz 3110", 2000);
+		Car vaz = new Car("Gaz 3110", 2000);
 
 		Set<Car> lehasCars = new HashSet<>();
 		lehasCars.add(skoda);
@@ -139,7 +212,7 @@ public class TreeViewDemo extends Application {
 		clients.add(denchik);
 
 		City kursk = new City("Курск");
-		kursk.setClients(new ObservableListWrapper<Client>(clients));
+		kursk.setClients(new ObservableListWrapper<>(clients));
 
 		List<City> cities = new LinkedList<>();
 		cities.add(kursk);
@@ -170,7 +243,7 @@ public class TreeViewDemo extends Application {
 			}
 
 			if (item instanceof Client) {
-				System.out.println(item);
+//				System.out.println(item);
 				setContextMenu(clientMenu);
 			}
 

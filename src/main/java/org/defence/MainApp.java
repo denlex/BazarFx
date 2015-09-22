@@ -50,6 +50,9 @@ public class MainApp extends Application {
         Scene scene = new Scene(root);
         scene.setFill(Color.TRANSPARENT);
 
+        viewTuple.getCodeBehind().setStage(primaryStage);
+		viewTuple.getCodeBehind().initializeStage();
+
         scene.getStylesheets().add((getClass().getResource("/css/TreeView.css")).toExternalForm());
         scene.getStylesheets().add((getClass().getResource("/css/SplitPanel.css")).toExternalForm());
 

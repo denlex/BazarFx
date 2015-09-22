@@ -11,6 +11,9 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
+import javafx.scene.control.TreeItem;
+import javafx.stage.WindowEvent;
 import org.defence.domain.entities.DescriptionFormat;
 import org.defence.infrastructure.DbHelper;
 
@@ -25,32 +28,32 @@ public class MainViewModel implements ViewModel {
 	private Command exitCommand;
 	private final ListProperty<DescriptionFormatViewModel> formats = new SimpleListProperty<>();
 	private DbHelper dbHelper = DbHelper.getInstance();
-	private final ObjectProperty<DescriptionFormatViewModel> root = new SimpleObjectProperty<>();
 
 	private final ObjectProperty<DescriptionFormatViewModel> selectedFormat = new SimpleObjectProperty<>();
 	private final ObjectProperty<AssertedNameViewModel> selectedName = new SimpleObjectProperty<>();
 	private final ObjectProperty<CatalogDescriptionViewModel> selectedDescription = new SimpleObjectProperty<>();
+	private ObjectProperty<EventHandler<WindowEvent>> shownWindow;
+
+	ObjectProperty<TreeItem<Object>> root = new SimpleObjectProperty<>();
 
 	private Command testCommand;
 
 
 	public MainViewModel() {
-		root.setValue(new DescriptionFormatViewModel("code", "ROOT"));
 
-		List<DescriptionFormat> allFormatsFromDb = dbHelper.getAllDescriptionFormats();
-		List<DescriptionFormatViewModel> list = new LinkedList<>();
+		loadAllFormats();
 
-		if (allFormatsFromDb != null) {
-			for (DescriptionFormat elem : allFormatsFromDb) {
+		TreeItem<Object> rootItem = new TreeItem<>("Каталог СФО");
 
-				if (elem.getAssertedNames() == null) {
-					continue;
-				}
-				list.add(new DescriptionFormatViewModel(elem));
-			}
+		for (Object object : formats) {
+			rootItem.getChildren().add(new TreeItem<>(object));
 		}
+		root.setValue(null);
+		root.setValue(rootItem);
 
-		formats.setValue(new ObservableListWrapper<>(list));
+		shownWindow = new SimpleObjectProperty<>(event -> {
+
+		});
 
 		testCommand = new DelegateCommand(() -> new Action() {
 			@Override
@@ -99,15 +102,15 @@ public class MainViewModel implements ViewModel {
 		this.formats.set(formats);
 	}
 
-	public DescriptionFormatViewModel getRoot() {
+	public TreeItem<Object> getRoot() {
 		return root.get();
 	}
 
-	public ObjectProperty<DescriptionFormatViewModel> rootProperty() {
+	public ObjectProperty<TreeItem<Object>> rootProperty() {
 		return root;
 	}
 
-	public void setRoot(DescriptionFormatViewModel root) {
+	public void setRoot(TreeItem<Object> root) {
 		this.root.set(root);
 	}
 
@@ -149,5 +152,36 @@ public class MainViewModel implements ViewModel {
 
 	public Command getTestCommand() {
 		return testCommand;
+	}
+
+	public EventHandler<WindowEvent> getShownWindow() {
+		return shownWindow.get();
+	}
+
+	public ObjectProperty<EventHandler<WindowEvent>> shownWindowProperty() {
+		return shownWindow;
+	}
+
+	public void setShownWindow(EventHandler<WindowEvent> shownWindow) {
+		this.shownWindow.set(shownWindow);
+	}
+
+	public void loadAllFormats() {
+		List<DescriptionFormat> allFormatsFromDb = dbHelper.getAllDescriptionFormats();
+		List<DescriptionFormatViewModel> list = new LinkedList<>();
+
+		if (allFormatsFromDb != null) {
+			for (DescriptionFormat elem : allFormatsFromDb) {
+
+				if (elem.getAssertedNames() == null) {
+					continue;
+				}
+				list.add(new DescriptionFormatViewModel(elem));
+			}
+		}
+
+		formats.setValue(new ObservableListWrapper<>(list));
+
+
 	}
 }
