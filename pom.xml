@@ -47,6 +47,36 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.10</version>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>build-classpath</goal>
+                        </goals>
+                        <configuration>
+                            <outputProperty>class-path</outputProperty>
+                            <pathSeparator> </pathSeparator>
+                            <prefix>lib</prefix>
+                            <outputAbsoluteArtifactFilename>false</outputAbsoluteArtifactFilename>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <outputProperty>class-path</outputProperty>
+                    <outputDirectory>target/lib</outputDirectory>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
