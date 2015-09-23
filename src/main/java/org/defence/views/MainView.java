@@ -59,41 +59,33 @@ public class MainView implements FxmlView<MainViewModel> {
 	}
 
 	public void initialize() {
-
-
-		/*for (Object object : viewModel.getFormats()) {
-
-			root.getChildren().add(createNode(object));
-		}*/
-
-//		rootProperty.setValue(root);
-
 		treeView.rootProperty().bindBidirectional(viewModel.rootProperty());
-
-//		root.setExpanded(true);
-//		treeView.setRoot(root);
+		viewModel.getRoot().setValue("Каталог СФО");
 
 		treeView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
 			viewModel.setSelectedFormat(null);
 			viewModel.setSelectedName(null);
 			viewModel.setSelectedDescription(null);
 
-			if (newValue.getValue() instanceof DescriptionFormatViewModel) {
-				viewModel.selectedFormatProperty().unbind();
-				viewModel.selectedFormatProperty().bindBidirectional(new SimpleObjectProperty<>(
-						(DescriptionFormatViewModel) newValue.getValue()));
-			}
+			if (newValue != null) {
+				if (newValue.getValue() instanceof DescriptionFormatViewModel) {
+					viewModel.selectedFormatProperty().unbind();
+					viewModel.selectedFormatProperty().bindBidirectional(new SimpleObjectProperty<>(
+							(DescriptionFormatViewModel) newValue.getValue()));
+				}
 
-			if (newValue.getValue() instanceof AssertedNameViewModel) {
-				viewModel.selectedNameProperty().unbind();
-				viewModel.selectedNameProperty().bindBidirectional(new SimpleObjectProperty<>((AssertedNameViewModel)
-						newValue.getValue()));
-			}
+				if (newValue.getValue() instanceof AssertedNameViewModel) {
+					viewModel.selectedNameProperty().unbind();
+					viewModel.selectedNameProperty().bindBidirectional(new SimpleObjectProperty<>(
+							(AssertedNameViewModel)
+							newValue.getValue()));
+				}
 
-			if (newValue.getValue() instanceof CatalogDescriptionViewModel) {
-				viewModel.selectedDescriptionProperty().unbind();
-				viewModel.selectedDescriptionProperty().bindBidirectional(new SimpleObjectProperty<>(
-						(CatalogDescriptionViewModel) newValue.getValue()));
+				if (newValue.getValue() instanceof CatalogDescriptionViewModel) {
+					viewModel.selectedDescriptionProperty().unbind();
+					viewModel.selectedDescriptionProperty().bindBidirectional(new SimpleObjectProperty<>(
+							(CatalogDescriptionViewModel) newValue.getValue()));
+				}
 			}
 		});
 		treeView.setCellFactory(p -> new TreeCellFactory());
@@ -101,8 +93,17 @@ public class MainView implements FxmlView<MainViewModel> {
 		root.setExpanded(true);
 	}
 
-	private void addDescriptionFormat() {
+	private void selectEditedFormat(DescriptionFormatViewModel format) {
+		ObservableList<TreeItem<Object>> formats = treeView.getRoot().getChildren();
+		for (TreeItem<Object> object : formats) {
+			if (format.getId() == ((DescriptionFormatViewModel) object.getValue()).getId()) {
+				treeView.getSelectionModel().select(object);
+				break;
+			}
+		}
+	}
 
+	private void addDescriptionFormat() {
 		ViewTuple<DescriptionFormatEditView, DescriptionFormatEditViewModel> viewTuple = FluentViewLoader.fxmlView
 				(DescriptionFormatEditView.class).load();
 		viewTuple.getViewModel().setParentViewModel(viewModel);
@@ -111,16 +112,6 @@ public class MainView implements FxmlView<MainViewModel> {
 		Stage dialog = new Stage();
 		viewTuple.getCodeBehind().setStage(dialog);
 		viewTuple.getCodeBehind().initializeStage();
-
-			/*Property<DescriptionFormatViewModel> f = viewModel.selectedFormatProperty();
-			System.out.println(f.getValue().getId());
-			System.out.println(f.getValue().getCode());
-			System.out.println(f.getValue().getName());
-
-			viewTuple.getViewModel().idProperty().bindBidirectional(f.getValue().idProperty());
-			viewTuple.getViewModel().codeProperty().bindBidirectional(f.getValue().codeProperty());
-			viewTuple.getViewModel().nameProperty().bindBidirectional(f.getValue().nameProperty());*/
-
 
 		dialog.initModality(Modality.WINDOW_MODAL);
 		dialog.initOwner(MainApp.mainStage);
@@ -136,11 +127,11 @@ public class MainView implements FxmlView<MainViewModel> {
 		dialog.setScene(scene);
 		dialog.showAndWait();
 
-		if (viewTuple.getCodeBehind().getModalResult() == DialogResult.OK ) {
-			treeView.refresh();
+		if (viewTuple.getCodeBehind().getModalResult() == DialogResult.OK) {
+			// select new added format in treeView
+			selectEditedFormat(viewTuple.getViewModel().getEditedFormat());
 		}
 	}
-
 
 	private TreeItem<Object> createNode(Object o) {
 		return new TreeItem<Object>(o) {
@@ -225,6 +216,11 @@ public class MainView implements FxmlView<MainViewModel> {
 			editDescriptionFormatMenuItem.setOnAction(event -> editDescriptionFormat());
 
 			MenuItem removeDescriptionFormatMenuItem = new MenuItem("Удалить СФО");
+			removeDescriptionFormatMenuItem.setOnAction(event -> {
+				viewModel.getDeleteFormatCommand().execute();
+				treeView.getSelectionModel().select(0);
+			});
+
 			descriptionFormatMenu.getItems().addAll(addAssertedNameMenuItem, editDescriptionFormatMenuItem,
 					removeDescriptionFormatMenuItem);
 
@@ -302,10 +298,6 @@ public class MainView implements FxmlView<MainViewModel> {
 			viewTuple.getCodeBehind().initializeStage();
 
 			Property<DescriptionFormatViewModel> f = viewModel.selectedFormatProperty();
-			System.out.println(f.getValue().getId());
-			System.out.println(f.getValue().getCode());
-			System.out.println(f.getValue().getName());
-
 			viewTuple.getViewModel().idProperty().bindBidirectional(f.getValue().idProperty());
 			viewTuple.getViewModel().codeProperty().bindBidirectional(f.getValue().codeProperty());
 			viewTuple.getViewModel().nameProperty().bindBidirectional(f.getValue().nameProperty());
@@ -324,6 +316,11 @@ public class MainView implements FxmlView<MainViewModel> {
 
 			dialog.setScene(scene);
 			dialog.showAndWait();
+
+			// select edited format in treeView
+			if (viewTuple.getCodeBehind().getModalResult() == DialogResult.OK) {
+				selectEditedFormat(viewTuple.getViewModel().getEditedFormat());
+			}
 		}
 	}
 
@@ -337,6 +334,6 @@ public class MainView implements FxmlView<MainViewModel> {
 	}
 
 	public void testButtonClicked() {
-//		viewModel.getTestCommand().execute();
+		viewModel.getTestCommand().execute();
 	}
 }

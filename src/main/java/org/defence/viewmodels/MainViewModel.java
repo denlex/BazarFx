@@ -12,14 +12,17 @@ import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TreeItem;
 import javafx.stage.WindowEvent;
 import org.defence.domain.entities.DescriptionFormat;
 import org.defence.infrastructure.DbHelper;
 
-import javax.swing.*;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by root on 30.08.15.
@@ -34,44 +37,63 @@ public class MainViewModel implements ViewModel {
 	private final ObjectProperty<CatalogDescriptionViewModel> selectedDescription = new SimpleObjectProperty<>();
 	private ObjectProperty<EventHandler<WindowEvent>> shownWindow;
 
-	ObjectProperty<TreeItem<Object>> root = new SimpleObjectProperty<>();
+	private ObjectProperty<TreeItem<Object>> root = new SimpleObjectProperty<>();
 
+	private Command deleteFormatCommand;
 	private Command testCommand;
 
+	private void expandChildren(ObservableList<TreeItem<Object>> children) {
+		if (children == null || children.size() == 0) {
+			return;
+		}
+
+		for (TreeItem<Object> obj : children) {
+			obj.setExpanded(true);
+
+			if (obj.getChildren() != null) {
+				expandChildren(obj.getChildren());
+			}
+		}
+	}
 
 	public MainViewModel() {
 
-		loadAllFormats();
+		loadAllFormatsFromDb();
+		root.setValue(new TreeItem<>());
+		displayFormats();
 
-		TreeItem<Object> rootItem = new TreeItem<>("Каталог СФО");
-
-		for (Object object : formats) {
-			rootItem.getChildren().add(new TreeItem<>(object));
-		}
-		root.setValue(null);
-		root.setValue(rootItem);
 
 		shownWindow = new SimpleObjectProperty<>(event -> {
 
 		});
 
+		deleteFormatCommand = new DelegateCommand(() -> new Action() {
+			@Override
+			protected void action() throws Exception {
+				Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+				alert.setTitle("Удаление СФО");
+				alert.setHeaderText(null);
+				alert.setContentText("Вы действительно хотите удалить СФО:\nНаименование:   " + getSelectedFormat().getName());
+
+				ButtonType yes = new ButtonType("Удалить");
+				ButtonType no = new ButtonType("Отмена");
+
+				alert.getButtonTypes().setAll(yes, no);
+				((Button) alert.getDialogPane().lookupButton(yes)).setDefaultButton(true);
+
+				Optional<ButtonType> result = alert.showAndWait();
+
+				if (result.get() == yes) {
+					dbHelper.deleteDescriptionFormat(getSelectedFormat().getId());
+					formats.removeIf(f -> f.getId() == getSelectedFormat().getId());
+					displayFormats();
+				}
+			}
+		});
+
 		testCommand = new DelegateCommand(() -> new Action() {
 			@Override
 			protected void action() throws Exception {
-				if (getSelectedDescription() != null) {
-					JOptionPane.showMessageDialog(null, getSelectedDescription().getName());
-					return;
-				}
-
-				if (getSelectedFormat() != null) {
-					JOptionPane.showMessageDialog(null, getSelectedFormat().getName());
-					return;
-				}
-
-				if (getSelectedName() != null) {
-					JOptionPane.showMessageDialog(null, getSelectedName().getName());
-					return;
-				}
 			}
 		});
 
@@ -166,13 +188,22 @@ public class MainViewModel implements ViewModel {
 		this.shownWindow.set(shownWindow);
 	}
 
-	public void loadAllFormats() {
+	public Command getDeleteFormatCommand() {
+		return deleteFormatCommand;
+	}
+
+	public void setDeleteFormatCommand(Command deleteFormatCommand) {
+		this.deleteFormatCommand = deleteFormatCommand;
+	}
+
+	public void loadAllFormatsFromDb() {
 		List<DescriptionFormat> allFormatsFromDb = dbHelper.getAllDescriptionFormats();
-		List<DescriptionFormatViewModel> list = new LinkedList<>();
+		List<DescriptionFormatViewModel> list = null;
 
 		if (allFormatsFromDb != null) {
-			for (DescriptionFormat elem : allFormatsFromDb) {
+			list = new LinkedList<>();
 
+			for (DescriptionFormat elem : allFormatsFromDb) {
 				if (elem.getAssertedNames() == null) {
 					continue;
 				}
@@ -181,7 +212,20 @@ public class MainViewModel implements ViewModel {
 		}
 
 		formats.setValue(new ObservableListWrapper<>(list));
+	}
 
+	public void displayFormats() {
+		if (root == null || root.getValue() == null) {
+			return;
+		}
 
+		TreeItem<Object> rootItem = new TreeItem<>(root.getValue().getValue());
+
+		for (Object object : formats) {
+			rootItem.getChildren().add(new TreeItem<>(object));
+		}
+		root.setValue(rootItem);
+//		expandChildren(root.getValue().getChildren());
+		root.getValue().setExpanded(true);
 	}
 }

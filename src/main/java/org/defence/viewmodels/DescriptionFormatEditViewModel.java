@@ -27,6 +27,7 @@ public class DescriptionFormatEditViewModel implements ViewModel {
 
 	private final ListProperty<CharacteristicViewModel> allCharacteristics = new SimpleListProperty<>();
 	private final ObjectProperty<CharacteristicViewModel> selectedCharacteristic = new SimpleObjectProperty<>();
+	private DescriptionFormatViewModel editedFormat;
 
 	private ObjectProperty<EventHandler<WindowEvent>> shownWindow;
 
@@ -72,29 +73,24 @@ public class DescriptionFormatEditViewModel implements ViewModel {
 					}
 				}
 
-				DescriptionFormatViewModel newFormat = null;
-
 				// if window was opened in adding mode
 				if (parentViewModel.getSelectedFormat() == null) {
-					newFormat = new DescriptionFormatViewModel(dbHelper.addDescriptionFormat(code.getValue(), name
+					editedFormat = new DescriptionFormatViewModel(dbHelper.addDescriptionFormat(code.getValue(), name
 							.getValue(), characteristicIdList));
-
+                    parentViewModel.getFormats().add(editedFormat);
 				} else {
 					// change exist descriptionFormat
 					// TODO: Сделать проверку на пустой ввод данных о типе измерения
-					dbHelper.updateDescriptionFormat(id.getValue(), code.getValue(), name.getValue(),
-							characteristicIdList);
-//					newFormat = new DescriptionFormatViewModel(id.getValue(), code.getValue(), name.getValue())
+					editedFormat = new DescriptionFormatViewModel(dbHelper.updateDescriptionFormat(id.getValue(), code
+									.getValue(), name.getValue(),
+							characteristicIdList));
 				}
 				// TODO: реализовать возможность обновления списка наборов характеристик
 
-				parentViewModel.getFormats().add(newFormat);
-//				parentViewModel.loadAllFormats();
-//                parentViewModel.loadCharacteristics;
+				parentViewModel.displayFormats();
 			}
 		});
 	}
-
 
 	public int getId() {
 		return id.get();
@@ -194,5 +190,9 @@ public class DescriptionFormatEditViewModel implements ViewModel {
 
 	public void setParentViewModel(MainViewModel parentViewModel) {
 		this.parentViewModel = parentViewModel;
+	}
+
+	public DescriptionFormatViewModel getEditedFormat() {
+		return editedFormat;
 	}
 }

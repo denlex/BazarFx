@@ -481,13 +481,14 @@ public class DbHelper {
 		return true;
 	}
 
-	public boolean updateDescriptionFormat(Integer id, String code, String name, List<Integer> characteristicIdList) {
+	public DescriptionFormat updateDescriptionFormat(Integer id, String code, String name, List<Integer> characteristicIdList) {
 		Session session = factory.openSession();
 		Transaction transaction = null;
+		DescriptionFormat format = null;
 
 		try {
 			transaction = session.beginTransaction();
-			DescriptionFormat format = (DescriptionFormat) session.get(DescriptionFormat.class, id);
+			format = (DescriptionFormat) session.get(DescriptionFormat.class, id);
 			/*CharacteristicKit characteristicKit = descriptionFormat.getCharacteristicKits().stream().filter(p -> p
 					.getId() == id).findFirst().get();
 
@@ -530,12 +531,12 @@ public class DbHelper {
 		} catch (Exception ex) {
 			transaction.rollback();
 			ex.printStackTrace();
-			return false;
+			return format;
 		} finally {
 			session.close();
 		}
 
-		return true;
+		return format;
 	}
 
 	public MeasurementType getMeasurementTypeById(int id) {
@@ -944,6 +945,28 @@ public class DbHelper {
 		return true;
 	}
 
+	public boolean deleteDescriptionFormat(Integer id) {
+		Session session = factory.openSession();
+		Transaction transaction = null;
+
+		try {
+			transaction = session.beginTransaction();
+			DescriptionFormat format = (DescriptionFormat) session.get(DescriptionFormat.class, id);
+			format.getAssertedNames().clear();
+			format.getCharacteristics().clear();
+			session.delete(format);
+			transaction.commit();
+		} catch (Exception ex) {
+			transaction.rollback();
+			ex.printStackTrace();
+			return false;
+		} finally {
+			session.close();
+		}
+
+		return true;
+	}
+
 	//----------------------------------------------------------------------------------------------------------------------
 	public static int importCharacteristicsIntoTable() throws Exception {
 		int counter = 0;
@@ -1050,6 +1073,7 @@ public class DbHelper {
 
 //----------------------------------------------------------------------------------------------------------------------
 
+
 	public static void main(String[] args) throws Exception {
 		if (factory == null) {
 			factory = new Configuration().configure().buildSessionFactory();
@@ -1061,6 +1085,4 @@ public class DbHelper {
 
 		factory.close();
 	}
-
-
 }
