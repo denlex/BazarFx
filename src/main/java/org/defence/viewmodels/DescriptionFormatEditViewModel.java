@@ -87,7 +87,7 @@ public class DescriptionFormatEditViewModel implements ViewModel {
 				}
 				// TODO: реализовать возможность обновления списка наборов характеристик
 
-				parentViewModel.displayFormats();
+//				parentViewModel.displayFormats();
 			}
 		});
 	}

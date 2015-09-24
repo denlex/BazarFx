@@ -16,6 +16,7 @@ public class AssertedNameEditViewModel implements ViewModel {
 	private final StringProperty name = new SimpleStringProperty();
 
 	private final ObjectProperty<DescriptionFormatViewModel> selectedFormat = new SimpleObjectProperty<>();
+	private AssertedNameViewModel editedName;
 
 	DbHelper dbHelper = DbHelper.getInstance();
 
@@ -26,20 +27,53 @@ public class AssertedNameEditViewModel implements ViewModel {
 		saveCommand = new DelegateCommand(() -> new Action() {
 			@Override
 			protected void action() throws Exception {
-				Integer formateId = parentViewModel.getSelectedFormat().getId();
+				DescriptionFormatViewModel format = parentViewModel.getSelectedFormat();
 
-				if (formateId == null || formateId == 0) {
+				// if user choose descriptionFormat for adding assertedName, else - edit existed assertedName
+				if (format == null) {
+					editedName = new AssertedNameViewModel(dbHelper.updateAssertedName(id.getValue(), code.getValue(),
+							name.getValue()));
+
+					// TODO: неплохо было бы перенести инициализаци в класс AssertedName
+					parentViewModel.getSelectedName().setId(id.getValue());
+					parentViewModel.getSelectedName().setCode(code.getValue());
+					parentViewModel.getSelectedName().setName(name.getValue());
+				} else {
+					/*if (format == null || format.getId() == 0) {
+						return;
+					}*/
+
+					editedName = new AssertedNameViewModel(dbHelper.addAssertedName(format.getId(), code.getValue(),
+							name.getValue()));
+
+					// add new assertedName
+					parentViewModel.getSelectedFormat().getAssertedNames().add(editedName);
+				}
+
+
+				/*Integer formatId = parentViewModel.getSelectedFormat().getId();
+
+				if (formatId == null || formatId == 0) {
 					return;
 				}
 
+				System.out.println("id = " + id);
+				System.out.println("code = " + code);
+				System.out.println("name = " + name);
+
 				if (id.getValue() == 0) {
 					// add assertedName
-					dbHelper.addAssertedName(formateId, code.getValue(), name.getValue());
+					editedName = new AssertedNameViewModel(dbHelper.addAssertedName(formatId, code.getValue(), name
+							.getValue()));
+					parentViewModel.getSelectedFormat().getAssertedNames().add(editedName);
 				} else {
 					// change exist assertedName
 					// TODO: Сделать проверку на пустой ввод данных об УН
-					dbHelper.updateAssertedName(formateId, id.getValue(), code.getValue(), name.getValue());
-				}
+					editedName = new AssertedNameViewModel(dbHelper.updateAssertedName(formatId, id.getValue(), code
+							.getValue(), name.getValue()));
+
+//					parentViewModel.getSelectedFormat().getAssertedNames()
+				}*/
 
 //				parentViewModel.loadMeasurementsBySelectedType();
 			}
@@ -92,5 +126,9 @@ public class AssertedNameEditViewModel implements ViewModel {
 
 	public void setSaveCommand(Command saveCommand) {
 		this.saveCommand = saveCommand;
+	}
+
+	public AssertedNameViewModel getEditedName() {
+		return editedName;
 	}
 }

@@ -4,12 +4,10 @@ import de.saxsys.mvvmfx.FluentViewLoader;
 import de.saxsys.mvvmfx.ViewTuple;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import org.defence.infrastructure.DbHelper;
 import org.defence.viewmodels.MainViewModel;
 import org.defence.views.MainView;
@@ -56,15 +54,12 @@ public class MainApp extends Application {
         scene.getStylesheets().add((getClass().getResource("/css/TreeView.css")).toExternalForm());
         scene.getStylesheets().add((getClass().getResource("/css/SplitPanel.css")).toExternalForm());
 
-        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent event) {
+        primaryStage.setOnCloseRequest(event -> {
 //                JOptionPane.showMessageDialog(null, "Exit!");
-                DbHelper.terminateDbConnection();
-                Platform.exit();
-                System.exit(0);
-            }
-        });
+			DbHelper.terminateDbConnection();
+			Platform.exit();
+			System.exit(0);
+		});
 
         scene.setFill(null);
         primaryStage.setScene(scene);

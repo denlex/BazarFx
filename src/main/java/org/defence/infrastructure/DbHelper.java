@@ -269,35 +269,36 @@ public class DbHelper {
 		return true;
 	}
 
-	public boolean addAssertedName(Integer formatId, String code, String name) {
+	public AssertedName addAssertedName(Integer formatId, String code, String name) {
 		Session session = factory.openSession();
 		Transaction transaction = null;
+		AssertedName newName = new AssertedName(code, name);
 
 		try {
 			transaction = session.beginTransaction();
 
 			DescriptionFormat format = (DescriptionFormat) session.get(DescriptionFormat.class, formatId);
-			format.getAssertedNames().add(new AssertedName(code, name));
-
+			format.getAssertedNames().add(newName);
 			session.save(format);
+
 			transaction.commit();
 		} catch (Exception ex) {
 			transaction.rollback();
 			ex.printStackTrace();
-			return false;
+		} finally {
+			session.close();
+			return newName;
 		}
-		return true;
 	}
 
 	public DescriptionFormat addDescriptionFormat(String code, String name, List<Integer> characteristicIdList) {
 
 		Session session = factory.openSession();
 		Transaction transaction = null;
-		DescriptionFormat result = null;
+		DescriptionFormat newFormat = new DescriptionFormat(code, name);
 
 		try {
 			transaction = session.beginTransaction();
-			DescriptionFormat format = new DescriptionFormat(code, name);
 
 			// getting assertedName list of descriptionFormat
 			List<Characteristic> characteristics;
@@ -305,8 +306,9 @@ public class DbHelper {
 			// if there is any characteristic belongs to descriptionFormat
 			if (characteristicIdList != null && characteristicIdList.size() != 0) {
 				characteristics = session.createQuery("from Characteristic m where m.id in " +
-						"(:characteristicIdList)").setParameterList("characteristicIdList", characteristicIdList).list();
-				format.setCharacteristics(new HashSet<>(characteristics));
+						"(:characteristicIdList)").setParameterList("characteristicIdList", characteristicIdList)
+						.list();
+				newFormat.setCharacteristics(new HashSet<>(characteristics));
 			}
 
 			/*// getting assertedName list of descriptionFormat
@@ -320,17 +322,17 @@ public class DbHelper {
 				format.setAssertedNames(new HashSet<>(assertedNames));
 			}*/
 
-			Integer newId = (Integer) session.save(format);
-			result = (DescriptionFormat) session.get(DescriptionFormat.class, newId);
+			/*Integer newId = (Integer) session.save(format);
+			result = (DescriptionFormat) session.get(DescriptionFormat.class, newId);*/
+			session.save(newFormat);
 			transaction.commit();
 		} catch (Exception ex) {
 			transaction.rollback();
 			ex.printStackTrace();
-			return result;
 		} finally {
 			session.close();
+			return newFormat;
 		}
-		return result;
 	}
 
 	public boolean updateMeasurement(Integer typeId, Integer id, String code, String name, String shortName) {
@@ -450,19 +452,41 @@ public class DbHelper {
 		return true;
 	}
 
-	public boolean updateAssertedName(Integer formatId, Integer id, String code, String name) {
+	public AssertedName updateAssertedName(Integer id, String code, String name) {
 		Session session = factory.openSession();
 		Transaction transaction = null;
+		AssertedName assertedName = null;
+
+		try {
+			transaction = session.beginTransaction();
+			assertedName = (AssertedName) session.get(AssertedName.class, id);
+			assertedName.setCode(code);
+			assertedName.setName(name);
+			session.save(assertedName);
+			transaction.commit();
+		} catch (Exception ex) {
+			transaction.rollback();
+			ex.printStackTrace();
+		} finally {
+			session.close();
+			return assertedName;
+		}
+	}
+
+	public AssertedName updateAssertedName(Integer formatId, Integer id, String code, String name) {
+		Session session = factory.openSession();
+		Transaction transaction = null;
+		AssertedName assertedName = null;
 
 		try {
 			transaction = session.beginTransaction();
 			DescriptionFormat descriptionFormat = (DescriptionFormat) session.get(DescriptionFormat.class, formatId);
-			AssertedName assertedName = descriptionFormat.getAssertedNames().stream().filter(p -> p.getId() == id)
+			assertedName = descriptionFormat.getAssertedNames().stream().filter(p -> p.getId() == id)
 					.findFirst().get();
 
 			if (assertedName == null) {
 				transaction.rollback();
-				return false;
+				return assertedName;
 			}
 
 			assertedName.setCode(code);
@@ -473,15 +497,14 @@ public class DbHelper {
 		} catch (Exception ex) {
 			transaction.rollback();
 			ex.printStackTrace();
-			return false;
 		} finally {
 			session.close();
+			return assertedName;
 		}
-
-		return true;
 	}
 
-	public DescriptionFormat updateDescriptionFormat(Integer id, String code, String name, List<Integer> characteristicIdList) {
+	public DescriptionFormat updateDescriptionFormat(Integer id, String code, String name, List<Integer>
+			characteristicIdList) {
 		Session session = factory.openSession();
 		Transaction transaction = null;
 		DescriptionFormat format = null;
@@ -1078,7 +1101,7 @@ public class DbHelper {
 		if (factory == null) {
 			factory = new Configuration().configure().buildSessionFactory();
 		}
-        /*int result = importMeasurementsIntoTable();
+		/*int result = importMeasurementsIntoTable();
         System.out.format("%s measurements were loaded\n", result);*/
 
 		int result = importCharacteristicsIntoTable();

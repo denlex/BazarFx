@@ -7,9 +7,7 @@ import de.saxsys.mvvmfx.ViewTuple;
 import javafx.application.Platform;
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableSet;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -23,8 +21,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.defence.MainApp;
 import org.defence.viewmodels.*;
-
-import java.util.Set;
 
 /**
  * Created by root on 22.07.15.
@@ -93,11 +89,29 @@ public class MainView implements FxmlView<MainViewModel> {
 		root.setExpanded(true);
 	}
 
-	private void selectEditedFormat(DescriptionFormatViewModel format) {
+	private void selectEditedDescriptionFormat(DescriptionFormatViewModel format) {
 		ObservableList<TreeItem<Object>> formats = treeView.getRoot().getChildren();
 		for (TreeItem<Object> object : formats) {
 			if (format.getId() == ((DescriptionFormatViewModel) object.getValue()).getId()) {
 				treeView.getSelectionModel().select(object);
+				break;
+			}
+		}
+	}
+
+	private void selectEditedAssertedName(DescriptionFormatViewModel format, AssertedNameViewModel name) {
+		ObservableList<TreeItem<Object>> formatItems = treeView.getRoot().getChildren();
+
+		for (TreeItem<Object> formatItem : formatItems) {
+			if (((DescriptionFormatViewModel) formatItem.getValue()).getId() == format.getId()) {
+				ObservableList<TreeItem<Object>> nameItems = formatItem.getChildren();
+
+				for (TreeItem<Object> nameItem : nameItems) {
+					if (name.getId() == ((AssertedNameViewModel) nameItem.getValue()).getId()) {
+						treeView.getSelectionModel().select(nameItem);
+						break;
+					}
+				}
 				break;
 			}
 		}
@@ -128,82 +142,13 @@ public class MainView implements FxmlView<MainViewModel> {
 		dialog.showAndWait();
 
 		if (viewTuple.getCodeBehind().getModalResult() == DialogResult.OK) {
+			viewModel.displayFormats();
 			// select new added format in treeView
-			selectEditedFormat(viewTuple.getViewModel().getEditedFormat());
+			selectEditedDescriptionFormat(viewTuple.getViewModel().getEditedFormat());
 		}
 	}
 
-	private TreeItem<Object> createNode(Object o) {
-		return new TreeItem<Object>(o) {
-			private boolean isLeaf;
-			private boolean isFirstTimeChildren = true;
-			private boolean isFirstTimeLeaf = true;
-
-			@Override
-			public ObservableList<TreeItem<Object>> getChildren() {
-				if (isFirstTimeChildren) {
-					isFirstTimeChildren = false;
-
-					super.getChildren().setAll(buildChildren(this));
-				}
-				return super.getChildren();
-			}
-
-			@Override
-			public boolean isLeaf() {
-				if (isFirstTimeLeaf) {
-					isFirstTimeLeaf = false;
-
-					if (o instanceof CatalogDescriptionViewModel) {
-						isLeaf = true;
-					}
-				}
-
-				return isLeaf;
-			}
-
-			private ObservableSet<TreeItem<Object>> buildChildren(TreeItem<Object> treeItem) {
-				if (treeItem.getValue() instanceof DescriptionFormatViewModel) {
-					DescriptionFormatViewModel format = (DescriptionFormatViewModel) treeItem.getValue();
-
-					if (format != null) {
-						Set<AssertedNameViewModel> assertedNames = format.getAssertedNames();
-
-						if (assertedNames != null) {
-							ObservableSet<TreeItem<Object>> children = FXCollections.observableSet();
-
-							for (AssertedNameViewModel name : assertedNames) {
-								children.add(createNode(name));
-							}
-							return children;
-						}
-					}
-				}
-
-				if (treeItem.getValue() instanceof AssertedNameViewModel) {
-					AssertedNameViewModel name = (AssertedNameViewModel) treeItem.getValue();
-
-					if (name != null) {
-						Set<CatalogDescriptionViewModel> catalogDescriptions = name.getCatalogDescriptions();
-
-						if (catalogDescriptions != null) {
-							ObservableSet<TreeItem<Object>> children = FXCollections.observableSet();
-
-							for (CatalogDescriptionViewModel description : catalogDescriptions) {
-								children.add(createNode(description));
-							}
-							return children;
-						}
-					}
-				}
-
-				return FXCollections.emptyObservableSet();
-			}
-		};
-	}
-
 	private final class TreeCellFactory extends TreeCell<Object> {
-
 		private ContextMenu descriptionFormatMenu = new ContextMenu();
 		private ContextMenu assertedNameMenu = new ContextMenu();
 		private ContextMenu rootMenu = new ContextMenu();
@@ -226,12 +171,17 @@ public class MainView implements FxmlView<MainViewModel> {
 
 			MenuItem addCatalogDescriptionMenuItem = new MenuItem("Добавить КО");
 			MenuItem editAssertedNameMenuItem = new MenuItem("Редактировать УН");
+			editAssertedNameMenuItem.setOnAction(event -> {
+				editAssertedName();
+			});
+
 			MenuItem removeAssertedNameMenuItem = new MenuItem("Удалить УН");
 			assertedNameMenu.getItems().addAll(addCatalogDescriptionMenuItem, editAssertedNameMenuItem,
 					removeAssertedNameMenuItem);
 
 			MenuItem addDescriptionFormatItem = new MenuItem("Добавить СФО");
 			addDescriptionFormatItem.setOnAction(event -> addDescriptionFormat());
+
 			rootMenu.getItems().add(addDescriptionFormatItem);
 		}
 
@@ -256,30 +206,6 @@ public class MainView implements FxmlView<MainViewModel> {
 			if (item instanceof String) {
 				setContextMenu(rootMenu);
 			}
-		}
-
-		private void addAssertedName() {
-			ViewTuple<AssertedNameEditView, AssertedNameEditViewModel> viewTuple = FluentViewLoader.fxmlView
-					(AssertedNameEditView.class).load();
-			viewTuple.getViewModel().setParentViewModel(viewModel);
-			Parent root = viewTuple.getView();
-
-			Stage dialog = new Stage();
-			viewTuple.getCodeBehind().setStage(dialog);
-
-			dialog.initModality(Modality.WINDOW_MODAL);
-			dialog.initOwner(MainApp.mainStage);
-			dialog.setResizable(false);
-
-			Scene scene = new Scene(root);
-			scene.addEventHandler(KeyEvent.ANY, event -> {
-				if (event.getCode() == KeyCode.ESCAPE) {
-					dialog.close();
-				}
-			});
-
-			dialog.setScene(scene);
-			dialog.showAndWait();
 		}
 
 		private void editDescriptionFormat() {
@@ -319,7 +245,81 @@ public class MainView implements FxmlView<MainViewModel> {
 
 			// select edited format in treeView
 			if (viewTuple.getCodeBehind().getModalResult() == DialogResult.OK) {
-				selectEditedFormat(viewTuple.getViewModel().getEditedFormat());
+				selectEditedDescriptionFormat(viewTuple.getViewModel().getEditedFormat());
+			}
+		}
+
+		private void addAssertedName() {
+			ViewTuple<AssertedNameEditView, AssertedNameEditViewModel> viewTuple = FluentViewLoader.fxmlView
+					(AssertedNameEditView.class).load();
+			viewTuple.getViewModel().setParentViewModel(viewModel);
+			Parent root = viewTuple.getView();
+
+			Stage dialog = new Stage();
+			viewTuple.getCodeBehind().setStage(dialog);
+
+			dialog.initModality(Modality.WINDOW_MODAL);
+			dialog.initOwner(MainApp.mainStage);
+			dialog.setResizable(false);
+
+			Scene scene = new Scene(root);
+			scene.addEventHandler(KeyEvent.ANY, event -> {
+				if (event.getCode() == KeyCode.ESCAPE) {
+					dialog.close();
+				}
+			});
+
+			dialog.setScene(scene);
+			dialog.showAndWait();
+
+			if (viewTuple.getCodeBehind().getModalResult() == DialogResult.OK) {
+				DescriptionFormatViewModel selectedFormat = viewModel.getSelectedFormat();
+				viewModel.displayFormats();
+				// select new added assertedName in treeView
+				selectEditedAssertedName(selectedFormat, viewTuple.getViewModel().getEditedName());
+			}
+		}
+
+		private void editAssertedName() {
+			if (viewModel.getSelectedName() == null) {
+				return;
+			}
+
+			ViewTuple<AssertedNameEditView, AssertedNameEditViewModel> viewTuple = FluentViewLoader.fxmlView
+					(AssertedNameEditView.class).load();
+			viewTuple.getViewModel().setParentViewModel(viewModel);
+
+			Parent root = viewTuple.getView();
+			Stage dialog = new Stage();
+			viewTuple.getCodeBehind().setStage(dialog);
+			viewTuple.getCodeBehind().initializeStage();
+
+			Property<AssertedNameViewModel> f = viewModel.selectedNameProperty();
+			viewTuple.getViewModel().idProperty().bindBidirectional(f.getValue().idProperty());
+			viewTuple.getViewModel().codeProperty().bindBidirectional(f.getValue().codeProperty());
+			viewTuple.getViewModel().nameProperty().bindBidirectional(f.getValue().nameProperty());
+
+
+			dialog.initModality(Modality.WINDOW_MODAL);
+			dialog.initOwner(MainApp.mainStage);
+			dialog.setResizable(false);
+
+			Scene scene = new Scene(root);
+			scene.addEventHandler(KeyEvent.ANY, event -> {
+				if (event.getCode() == KeyCode.ESCAPE) {
+					dialog.close();
+				}
+			});
+
+			dialog.setScene(scene);
+			dialog.showAndWait();
+
+			// select edited format in treeView
+			if (viewTuple.getCodeBehind().getModalResult() == DialogResult.OK) {
+				TreeItem<Object> selectedItem = treeView.getSelectionModel().getSelectedItem();
+				AssertedNameViewModel n = (AssertedNameViewModel) treeView.getSelectionModel().getSelectedItem().getValue();
+				viewModel.displayFormats();
+				treeView.getSelectionModel().select(selectedItem);
 			}
 		}
 	}

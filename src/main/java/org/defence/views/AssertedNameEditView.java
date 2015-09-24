@@ -43,7 +43,11 @@ public class AssertedNameEditView implements FxmlView<AssertedNameEditViewModel>
 		stage.close();
 	}
 
-	public void initialization() {
+	public void initializeStage() {
+//		stage.onShownProperty().bindBidirectional(viewModel.shownWindowProperty());
+	}
+
+	public void initialize() {
 		codeTextField.textProperty().bindBidirectional(viewModel.codeProperty());
 		nameTextField.textProperty().bindBidirectional(viewModel.nameProperty());
 	}

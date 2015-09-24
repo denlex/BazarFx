@@ -10,7 +10,9 @@ import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableSet;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -23,6 +25,7 @@ import org.defence.infrastructure.DbHelper;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * Created by root on 30.08.15.
@@ -214,7 +217,42 @@ public class MainViewModel implements ViewModel {
 		formats.setValue(new ObservableListWrapper<>(list));
 	}
 
+	private TreeItem<Object> displayChildren(ObservableList<TreeItem<Object>> children) {
+		if (children == null || children.size() == 0) {
+			return null;
+		}
+
+		TreeItem<Object> root = new TreeItem<>();
+
+		for (TreeItem<Object> child : children) {
+			if (child.getChildren() != null && child.getChildren().size() > 0) {
+
+			}
+		}
+
+		return root;
+	}
+
+	public void displayAssertedNames(DescriptionFormatViewModel format) {
+		if (format == null) {
+			return;
+		}
+
+		Set<AssertedNameViewModel> names = format.getAssertedNames();
+
+		if (names == null || names.size() == 0) {
+			return;
+		}
+
+		TreeItem<Object> root = new TreeItem<>();
+
+		for (AssertedNameViewModel name : names) {
+			root.getChildren().add(createNode(name));
+		}
+	}
+
 	public void displayFormats() {
+
 		if (root == null || root.getValue() == null) {
 			return;
 		}
@@ -222,10 +260,80 @@ public class MainViewModel implements ViewModel {
 		TreeItem<Object> rootItem = new TreeItem<>(root.getValue().getValue());
 
 		for (Object object : formats) {
-			rootItem.getChildren().add(new TreeItem<>(object));
+			rootItem.getChildren().add(createNode(object));
 		}
+
 		root.setValue(rootItem);
-//		expandChildren(root.getValue().getChildren());
+		expandChildren(root.getValue().getChildren());
 		root.getValue().setExpanded(true);
+	}
+
+	private TreeItem<Object> createNode(Object o) {
+		return new TreeItem<Object>(o) {
+			private boolean isLeaf;
+			private boolean isFirstTimeChildren = true;
+			private boolean isFirstTimeLeaf = true;
+
+			@Override
+			public ObservableList<TreeItem<Object>> getChildren() {
+				if (isFirstTimeChildren) {
+					isFirstTimeChildren = false;
+
+					super.getChildren().setAll(buildChildren(this));
+				}
+				return super.getChildren();
+			}
+
+			@Override
+			public boolean isLeaf() {
+				if (isFirstTimeLeaf) {
+					isFirstTimeLeaf = false;
+
+					if (o instanceof CatalogDescriptionViewModel) {
+						isLeaf = true;
+					}
+				}
+
+				return isLeaf;
+			}
+
+			private ObservableSet<TreeItem<Object>> buildChildren(TreeItem<Object> treeItem) {
+				if (treeItem.getValue() instanceof DescriptionFormatViewModel) {
+					DescriptionFormatViewModel format = (DescriptionFormatViewModel) treeItem.getValue();
+
+					if (format != null) {
+						Set<AssertedNameViewModel> assertedNames = format.getAssertedNames();
+
+						if (assertedNames != null) {
+							ObservableSet<TreeItem<Object>> children = FXCollections.observableSet();
+
+							for (AssertedNameViewModel name : assertedNames) {
+								children.add(createNode(name));
+							}
+							return children;
+						}
+					}
+				}
+
+				if (treeItem.getValue() instanceof AssertedNameViewModel) {
+					AssertedNameViewModel name = (AssertedNameViewModel) treeItem.getValue();
+
+					if (name != null) {
+						Set<CatalogDescriptionViewModel> catalogDescriptions = name.getCatalogDescriptions();
+
+						if (catalogDescriptions != null) {
+							ObservableSet<TreeItem<Object>> children = FXCollections.observableSet();
+
+							for (CatalogDescriptionViewModel description : catalogDescriptions) {
+								children.add(createNode(description));
+							}
+							return children;
+						}
+					}
+				}
+
+				return FXCollections.emptyObservableSet();
+			}
+		};
 	}
 }
