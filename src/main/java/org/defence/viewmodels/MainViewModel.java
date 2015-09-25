@@ -41,7 +41,8 @@ public class MainViewModel implements ViewModel {
 
 	private ObjectProperty<TreeItem<Object>> root = new SimpleObjectProperty<>();
 
-	private Command deleteFormatCommand;
+	private Command deleteDescriptionFormatCommand;
+	private Command deleteAssertedNameCommand;
 	private Command testCommand;
 
 	private void expandChildren(ObservableList<TreeItem<Object>> children) {
@@ -69,7 +70,7 @@ public class MainViewModel implements ViewModel {
 
 		});
 
-		deleteFormatCommand = new DelegateCommand(() -> new Action() {
+		deleteDescriptionFormatCommand = new DelegateCommand(() -> new Action() {
 			@Override
 			protected void action() throws Exception {
 				Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -88,6 +89,31 @@ public class MainViewModel implements ViewModel {
 				if (result.get() == yes) {
 					dbHelper.deleteDescriptionFormat(getSelectedFormat().getId());
 					formats.removeIf(f -> f.getId() == getSelectedFormat().getId());
+					displayFormats();
+				}
+			}
+		});
+
+		deleteAssertedNameCommand = new DelegateCommand(() -> new Action() {
+			@Override
+			protected void action() throws Exception {
+				Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+				alert.setTitle("Удаление УН");
+				alert.setHeaderText(null);
+				alert.setContentText("Вы действительно хотите удалить УН:\nНаименование:   " + getSelectedName().getName());
+
+				ButtonType yes = new ButtonType("Удалить");
+				ButtonType no = new ButtonType("Отмена");
+
+				alert.getButtonTypes().setAll(yes, no);
+				((Button) alert.getDialogPane().lookupButton(yes)).setDefaultButton(true);
+
+				Optional<ButtonType> result = alert.showAndWait();
+
+				if (result.get() == yes) {
+					dbHelper.deleteAssertedName(getSelectedName().getId());
+					// remove selectedName from formats collection
+					formats.stream().forEach(f -> f.getAssertedNames().removeIf(n -> n.getId() == getSelectedName().getId()));
 					displayFormats();
 				}
 			}
@@ -191,12 +217,20 @@ public class MainViewModel implements ViewModel {
 		this.shownWindow.set(shownWindow);
 	}
 
-	public Command getDeleteFormatCommand() {
-		return deleteFormatCommand;
+	public Command getDeleteDescriptionFormatCommand() {
+		return deleteDescriptionFormatCommand;
 	}
 
-	public void setDeleteFormatCommand(Command deleteFormatCommand) {
-		this.deleteFormatCommand = deleteFormatCommand;
+	public void setDeleteDescriptionFormatCommand(Command deleteDescriptionFormatCommand) {
+		this.deleteDescriptionFormatCommand = deleteDescriptionFormatCommand;
+	}
+
+	public Command getDeleteAssertedNameCommand() {
+		return deleteAssertedNameCommand;
+	}
+
+	public void setDeleteAssertedNameCommand(Command deleteAssertedNameCommand) {
+		this.deleteAssertedNameCommand = deleteAssertedNameCommand;
 	}
 
 	public void loadAllFormatsFromDb() {

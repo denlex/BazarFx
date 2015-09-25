@@ -162,7 +162,7 @@ public class MainView implements FxmlView<MainViewModel> {
 
 			MenuItem removeDescriptionFormatMenuItem = new MenuItem("Удалить СФО");
 			removeDescriptionFormatMenuItem.setOnAction(event -> {
-				viewModel.getDeleteFormatCommand().execute();
+				viewModel.getDeleteDescriptionFormatCommand().execute();
 				treeView.getSelectionModel().select(0);
 			});
 
@@ -171,11 +171,13 @@ public class MainView implements FxmlView<MainViewModel> {
 
 			MenuItem addCatalogDescriptionMenuItem = new MenuItem("Добавить КО");
 			MenuItem editAssertedNameMenuItem = new MenuItem("Редактировать УН");
-			editAssertedNameMenuItem.setOnAction(event -> {
-				editAssertedName();
-			});
+			editAssertedNameMenuItem.setOnAction(event -> editAssertedName());
 
 			MenuItem removeAssertedNameMenuItem = new MenuItem("Удалить УН");
+			removeAssertedNameMenuItem.setOnAction(event -> {
+				viewModel.getDeleteAssertedNameCommand().execute();
+			});
+
 			assertedNameMenu.getItems().addAll(addCatalogDescriptionMenuItem, editAssertedNameMenuItem,
 					removeAssertedNameMenuItem);
 

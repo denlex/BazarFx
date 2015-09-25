@@ -990,6 +990,26 @@ public class DbHelper {
 		return true;
 	}
 
+	public boolean deleteAssertedName(Integer id) {
+		Session session = factory.openSession();
+		Transaction transaction = null;
+
+		try {
+			transaction = session.beginTransaction();
+			AssertedName name = (AssertedName) session.get(AssertedName.class, id);
+			session.delete(name);
+			transaction.commit();
+		} catch (Exception ex) {
+			transaction.rollback();
+			ex.printStackTrace();
+			return false;
+		} finally {
+			session.close();
+		}
+
+		return true;
+	}
+
 	//----------------------------------------------------------------------------------------------------------------------
 	public static int importCharacteristicsIntoTable() throws Exception {
 		int counter = 0;
