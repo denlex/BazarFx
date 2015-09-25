@@ -316,14 +316,15 @@ public class MainView implements FxmlView<MainViewModel> {
 
 			// select edited format in treeView
 			if (viewTuple.getCodeBehind().getModalResult() == DialogResult.OK) {
-				TreeItem<Object> selectedItem = treeView.getSelectionModel().getSelectedItem();
-				AssertedNameViewModel n = (AssertedNameViewModel) treeView.getSelectionModel().getSelectedItem().getValue();
+//				TreeItem<Object> selectedItem = treeView.getSelectionModel().getSelectedItem();
+				int index = treeView.getSelectionModel().getSelectedIndex();
 				viewModel.displayFormats();
-				treeView.getSelectionModel().select(selectedItem);
+//				treeView.getSelectionModel().select(selectedItem);
+				treeView.getSelectionModel().select(index);
+				treeView.getFocusModel().focus(index);
 			}
 		}
 	}
-
 
 	public void setStage(Stage stage) {
 		this.stage = stage;

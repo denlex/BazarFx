@@ -12,7 +12,6 @@ import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableSet;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -97,6 +96,7 @@ public class MainViewModel implements ViewModel {
 		testCommand = new DelegateCommand(() -> new Action() {
 			@Override
 			protected void action() throws Exception {
+				displayFormats();
 			}
 		});
 
@@ -261,8 +261,9 @@ public class MainViewModel implements ViewModel {
 
 		for (Object object : formats) {
 			rootItem.getChildren().add(createNode(object));
-		}
 
+		}
+		root.setValue(null);
 		root.setValue(rootItem);
 		expandChildren(root.getValue().getChildren());
 		root.getValue().setExpanded(true);
@@ -297,18 +298,19 @@ public class MainViewModel implements ViewModel {
 				return isLeaf;
 			}
 
-			private ObservableSet<TreeItem<Object>> buildChildren(TreeItem<Object> treeItem) {
+			private ObservableList<TreeItem<Object>> buildChildren(TreeItem<Object> treeItem) {
 				if (treeItem.getValue() instanceof DescriptionFormatViewModel) {
 					DescriptionFormatViewModel format = (DescriptionFormatViewModel) treeItem.getValue();
 
 					if (format != null) {
 						Set<AssertedNameViewModel> assertedNames = format.getAssertedNames();
 
-						if (assertedNames != null) {
-							ObservableSet<TreeItem<Object>> children = FXCollections.observableSet();
+						if (assertedNames != null && assertedNames.size() > 0) {
+							ObservableList<TreeItem<Object>> children = FXCollections.observableArrayList();
 
 							for (AssertedNameViewModel name : assertedNames) {
-								children.add(createNode(name));
+//								children.add(createNode(name));
+								children.add(new TreeItem<>(name));
 							}
 							return children;
 						}
@@ -322,17 +324,18 @@ public class MainViewModel implements ViewModel {
 						Set<CatalogDescriptionViewModel> catalogDescriptions = name.getCatalogDescriptions();
 
 						if (catalogDescriptions != null) {
-							ObservableSet<TreeItem<Object>> children = FXCollections.observableSet();
+							ObservableList<TreeItem<Object>> children = FXCollections.observableArrayList();
 
 							for (CatalogDescriptionViewModel description : catalogDescriptions) {
-								children.add(createNode(description));
+//								children.add(createNode(description));
+								children.add(new TreeItem<>(description));
 							}
 							return children;
 						}
 					}
 				}
 
-				return FXCollections.emptyObservableSet();
+				return FXCollections.emptyObservableList();
 			}
 		};
 	}
