@@ -44,9 +44,6 @@ public class AssertedNameEditViewModel implements ViewModel {
 					parentViewModel.getSelectedName().setCode(code.getValue());
 					parentViewModel.getSelectedName().setName(name.getValue());
 				} else {
-					/*if (format == null || format.getId() == 0) {
-						return;
-					}*/
 
 					editedName = new AssertedNameViewModel(dbHelper.addAssertedName(format.getId(), code.getValue(),
 							name.getValue()));
@@ -60,7 +57,6 @@ public class AssertedNameEditViewModel implements ViewModel {
 					} else {
 						format.getAssertedNames().add(editedName);
 					}
-//					parentViewModel.getSelectedFormat().getAssertedNames().add(editedName);
 				}
 
 

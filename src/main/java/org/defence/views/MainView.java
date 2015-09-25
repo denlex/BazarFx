@@ -148,6 +148,7 @@ public class MainView implements FxmlView<MainViewModel> {
 			viewModel.displayFormats();
 			// select new added format in treeView
 			selectEditedDescriptionFormat(viewTuple.getViewModel().getEditedFormat());
+			treeView.scrollTo(treeView.getSelectionModel() != null ? treeView.getSelectionModel().getSelectedIndex() : 0);
 		}
 	}
 
@@ -173,6 +174,7 @@ public class MainView implements FxmlView<MainViewModel> {
 					removeDescriptionFormatMenuItem);
 
 			MenuItem addCatalogDescriptionMenuItem = new MenuItem("Добавить КО");
+			addCatalogDescriptionMenuItem.setOnAction(event -> addCatalogDescription());
 			MenuItem editAssertedNameMenuItem = new MenuItem("Редактировать УН");
 			editAssertedNameMenuItem.setOnAction(event -> editAssertedName());
 
@@ -327,6 +329,40 @@ public class MainView implements FxmlView<MainViewModel> {
 //				treeView.getSelectionModel().select(selectedItem);
 				treeView.getSelectionModel().select(index);
 				treeView.getFocusModel().focus(index);
+				// TODO: не работает прокрутка
+				treeView.scrollTo(treeView.getSelectionModel() != null ? treeView.getSelectionModel().getSelectedIndex
+						() : 0);
+			}
+		}
+
+		private void addCatalogDescription() {
+			ViewTuple<CatalogDescriptionEditView, CatalogDescriptionEditViewModel> viewTuple = FluentViewLoader.fxmlView
+					(CatalogDescriptionEditView.class).load();
+			viewTuple.getViewModel().setParentViewModel(viewModel);
+			Parent root = viewTuple.getView();
+
+			Stage dialog = new Stage();
+			viewTuple.getCodeBehind().setStage(dialog);
+
+			dialog.initModality(Modality.WINDOW_MODAL);
+			dialog.initOwner(MainApp.mainStage);
+			dialog.setResizable(false);
+
+			Scene scene = new Scene(root);
+			scene.addEventHandler(KeyEvent.ANY, event -> {
+				if (event.getCode() == KeyCode.ESCAPE) {
+					dialog.close();
+				}
+			});
+
+			dialog.setScene(scene);
+			dialog.showAndWait();
+
+			if (viewTuple.getCodeBehind().getModalResult() == DialogResult.OK) {
+				/*DescriptionFormatViewModel selectedFormat = viewModel.getSelectedFormat();
+				viewModel.displayFormats();
+				// select new added assertedName in treeView
+				selectEditedCatalogDescription(selectedFormat, viewTuple.getViewModel().getEditedName());*/
 			}
 		}
 	}
