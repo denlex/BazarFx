@@ -5,7 +5,11 @@ import de.saxsys.mvvmfx.utils.commands.Action;
 import de.saxsys.mvvmfx.utils.commands.Command;
 import de.saxsys.mvvmfx.utils.commands.DelegateCommand;
 import javafx.beans.property.*;
+import javafx.collections.FXCollections;
 import org.defence.infrastructure.DbHelper;
+
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 /**
  * Created by root on 9/16/15.
@@ -28,13 +32,14 @@ public class AssertedNameEditViewModel implements ViewModel {
 			@Override
 			protected void action() throws Exception {
 				DescriptionFormatViewModel format = parentViewModel.getSelectedFormat();
+				System.out.println(format.getName());
 
 				// if user choose descriptionFormat for adding assertedName, else - edit existed assertedName
 				if (format == null) {
 					editedName = new AssertedNameViewModel(dbHelper.updateAssertedName(id.getValue(), code.getValue(),
 							name.getValue()));
 
-					// TODO: неплохо было бы перенести инициализаци в класс AssertedName
+					// TODO: неплохо было бы перенести инициализацию в класс AssertedName
 					parentViewModel.getSelectedName().setId(id.getValue());
 					parentViewModel.getSelectedName().setCode(code.getValue());
 					parentViewModel.getSelectedName().setName(name.getValue());
@@ -47,7 +52,15 @@ public class AssertedNameEditViewModel implements ViewModel {
 							name.getValue()));
 
 					// add new assertedName
-					parentViewModel.getSelectedFormat().getAssertedNames().add(editedName);
+					if (format.getAssertedNames() == null) {
+						Set<AssertedNameViewModel> set = new LinkedHashSet<>();
+						set.add(editedName);
+
+						format.assertedNamesProperty().setValue(FXCollections.observableSet(set));
+					} else {
+						format.getAssertedNames().add(editedName);
+					}
+//					parentViewModel.getSelectedFormat().getAssertedNames().add(editedName);
 				}
 
 
