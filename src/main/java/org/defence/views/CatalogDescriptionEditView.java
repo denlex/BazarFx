@@ -34,7 +34,7 @@ public class CatalogDescriptionEditView implements FxmlView<CatalogDescriptionEd
 	}
 
 	public void initialize() {
-		codeTextField.textProperty().bindBidirectional(viewModel.codeTextField.textProperty());
-		nameTextField.textProperty().bindBidirectional(viewModel.nameTextField.textProperty());
+		/*codeTextField.textProperty().bindBidirectional(viewModel.codeTextField.textProperty());
+		nameTextField.textProperty().bindBidirectional(viewModel.nameTextField.textProperty());*/
 	}
 }
