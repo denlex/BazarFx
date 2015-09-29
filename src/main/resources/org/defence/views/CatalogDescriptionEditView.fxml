@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.image.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
-
-<GridPane stylesheets="/css/Button.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+<GridPane minHeight="650.0" minWidth="800.0" prefHeight="650.0" prefWidth="800.0" stylesheets="/css/Button.css"
+          xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="org.defence.views.CatalogDescriptionEditView">
     <children>
         <StackPane style="-fx-background-color: #4A6C9B" GridPane.columnIndex="0" GridPane.columnSpan="2"
@@ -15,34 +15,37 @@
                 </Label>
             </children>
         </StackPane>
-        <Label text="Код" GridPane.columnIndex="0" GridPane.rowIndex="1">
+        <!--<Label text="Код" GridPane.columnIndex="0" GridPane.rowIndex="1">
             <GridPane.margin>
                 <Insets left="10.0"/>
             </GridPane.margin>
-        </Label>
-        <TextField fx:id="codeTextField" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1">
-        </TextField>
+        </Label>-->
+        <!--<TextField fx:id="codeTextField" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1"/>-->
         <Label text="Наименование" GridPane.columnIndex="0" GridPane.rowIndex="2">
             <GridPane.margin>
                 <Insets left="10.0"/>
             </GridPane.margin>
         </Label>
-        <TextField fx:id="nameTextField" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="2">
+        <TextField fx:id="nameTextField" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1"
+                   GridPane.rowIndex="2">
         </TextField>
-        <!--<TabPane GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="3">
+        <TabPane GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="3">
             <tabs>
                 <Tab text="Untitled Tab">
                     <content>
                         <GridPane>
                             <children>
-                                <TableView>
+                                <TableView fx:id="valuesTableView">
                                     <columns>
-                                        <TableColumn maxWidth="1.7976931348623157E308" minWidth="300.0"
+                                        <TableColumn fx:id="characteristicTableColumn" maxWidth="1.7976931348623157E308"
+                                                     minWidth="300.0"
                                                      prefWidth="120.0" text="Характеристика"/>
-                                        <TableColumn maxWidth="1.7976931348623157E308" minWidth="150.0"
-                                                     prefWidth="200.0" text="Единица измерения"/>
-                                        <TableColumn maxWidth="1.7976931348623157E308" minWidth="120.0"
+                                        <TableColumn fx:id="valueTableColumn" maxWidth="1.7976931348623157E308"
+                                                     minWidth="120.0"
                                                      prefWidth="150.0" text="Значение"/>
+                                        <TableColumn fx:id="measurementTableColumn" maxWidth="1.7976931348623157E308"
+                                                     minWidth="150.0"
+                                                     prefWidth="200.0" text="Единица измерения"/>
                                     </columns>
                                 </TableView>
                             </children>
@@ -71,9 +74,9 @@
                                     <GridPane.margin>
                                         <Insets left="10.0" right="10.0" top="10.0"/>
                                     </GridPane.margin>
-                                    &lt;!&ndash;<image>
+                                    <!--<image>
                                         <Image url=""/>
-                                    </image>&ndash;&gt;
+                                    </image>-->
                                 </ImageView>
                                 <Button alignment="CENTER" mnemonicParsing="false" style="-fx-pref-width: 370px"
                                         text="Загрузить изображение" GridPane.rowIndex="1">
@@ -86,7 +89,7 @@
                     </content>
                 </Tab>
             </tabs>
-        </TabPane>-->
+        </TabPane>
         <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="4">
             <children>
                 <Button alignment="CENTER" mnemonicParsing="false" text="Принять" AnchorPane.bottomAnchor="15"

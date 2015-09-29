@@ -1,7 +1,7 @@
 package org.defence.domain.entities;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by root on 22.07.15.
@@ -10,8 +10,8 @@ public class DescriptionFormat {
     private int id;
     private String code;
     private String name;
-    private Set<Characteristic> characteristics = new HashSet<>();
-    private Set<AssertedName> assertedNames = new HashSet<>();
+    private List<Characteristic> characteristics = new ArrayList<>();
+    private List<AssertedName> assertedNames = new ArrayList<>();
 
     public DescriptionFormat() {
     }
@@ -20,7 +20,7 @@ public class DescriptionFormat {
 		this(code, name, null, null);
 	}
 
-    public DescriptionFormat(String code, String name, Set<Characteristic> characteristics, Set<AssertedName> assertedNames) {
+    public DescriptionFormat(String code, String name, List<Characteristic> characteristics, List<AssertedName> assertedNames) {
         this.code = code;
         this.name = name;
 		this.characteristics = characteristics;
@@ -51,21 +51,21 @@ public class DescriptionFormat {
         this.code = code;
     }
 
-    public Set<Characteristic> getCharacteristics() {
-        return characteristics;
-    }
+	public List<Characteristic> getCharacteristics() {
+		return characteristics;
+	}
 
-    public void setCharacteristics(Set<Characteristic> characteristics) {
-        this.characteristics = characteristics;
-    }
+	public void setCharacteristics(List<Characteristic> characteristics) {
+		this.characteristics = characteristics;
+	}
 
-    public Set<AssertedName> getAssertedNames() {
-        return assertedNames;
-    }
+	public List<AssertedName> getAssertedNames() {
+		return assertedNames;
+	}
 
-    public void setAssertedNames(Set<AssertedName> catalogDescriptions) {
-        this.assertedNames = catalogDescriptions;
-    }
+	public void setAssertedNames(List<AssertedName> assertedNames) {
+		this.assertedNames = assertedNames;
+	}
 
 	@Override
 	public String toString() {

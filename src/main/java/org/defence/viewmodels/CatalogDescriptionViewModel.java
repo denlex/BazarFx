@@ -2,12 +2,12 @@ package org.defence.viewmodels;
 
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableSet;
+import javafx.collections.ObservableList;
 import org.defence.domain.entities.CatalogDescription;
 import org.defence.domain.entities.CharacteristicValue;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by root on 9/15/15.
@@ -15,21 +15,21 @@ import java.util.Set;
 public class CatalogDescriptionViewModel {
 	private final IntegerProperty id = new SimpleIntegerProperty();
 	private final StringProperty name = new SimpleStringProperty();
-	private final SetProperty<CharacteristicValueViewModel> values = new SimpleSetProperty<>();
+	private final ListProperty<CharacteristicValueViewModel> values = new SimpleListProperty<>();
 
 	public CatalogDescriptionViewModel() {
 	}
 
-	public CatalogDescriptionViewModel(Integer id, String name, Set<CharacteristicValue> values) {
+	public CatalogDescriptionViewModel(Integer id, String name, List<CharacteristicValue> values) {
 		this.id.setValue(id);
 		this.name.setValue(name);
 
 		if (values != null) {
-			Set<CharacteristicValueViewModel> set = new LinkedHashSet<>();
+			List<CharacteristicValueViewModel> list = new ArrayList<>();
 			for (CharacteristicValue value : values) {
-				set.add(new CharacteristicValueViewModel(value));
+				list.add(new CharacteristicValueViewModel(value));
 			}
-			this.values.setValue(FXCollections.observableSet(set));
+			this.values.setValue(FXCollections.observableArrayList(list));
 		}
 	}
 
@@ -61,15 +61,15 @@ public class CatalogDescriptionViewModel {
 		this.name.set(name);
 	}
 
-	public ObservableSet<CharacteristicValueViewModel> getValues() {
+	public ObservableList<CharacteristicValueViewModel> getValues() {
 		return values.get();
 	}
 
-	public SetProperty<CharacteristicValueViewModel> valuesProperty() {
+	public ListProperty<CharacteristicValueViewModel> valuesProperty() {
 		return values;
 	}
 
-	public void setValues(ObservableSet<CharacteristicValueViewModel> values) {
+	public void setValues(ObservableList<CharacteristicValueViewModel> values) {
 		this.values.set(values);
 	}
 

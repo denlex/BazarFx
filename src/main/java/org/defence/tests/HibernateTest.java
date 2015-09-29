@@ -6,8 +6,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by root on 06.08.15.
@@ -29,17 +29,17 @@ public class HibernateTest {
         Characteristic moatWidth = new Characteristic("04", "Ширана преодолеваемого рва");
         Characteristic speedOnRoad = new Characteristic("05", "Скорость по трассе");
 
-        Set<Characteristic> migCharacteristics = new HashSet<Characteristic>();
+        List<Characteristic> migCharacteristics = new ArrayList<Characteristic>();
         migCharacteristics.add(maxDistance);
         migCharacteristics.add(maxHeight);
         migCharacteristics.add(maxSpeed);
 
         CharacteristicKit destroyersOfVVS = new CharacteristicKit("Истребители ВВС", migCharacteristics);
 
-        Set<CharacteristicKit> characteristicKits = new HashSet<CharacteristicKit>();
+        List<CharacteristicKit> characteristicKits = new ArrayList<CharacteristicKit>();
         characteristicKits.add(destroyersOfVVS);
 
-        Set<CharacteristicValue> migCharacteristicValues = new HashSet<CharacteristicValue>();
+        List<CharacteristicValue> migCharacteristicValues = new ArrayList<CharacteristicValue>();
         migCharacteristicValues.add(new CharacteristicValue(maxDistance, "1 430"));
         migCharacteristicValues.add(new CharacteristicValue(maxHeight, "18 000"));
         migCharacteristicValues.add(new CharacteristicValue(maxSpeed, "2 450"));
@@ -47,13 +47,13 @@ public class HibernateTest {
         CatalogDescription mig29 = new CatalogDescription("Миг-29", migCharacteristicValues);
 
 
-        Set<CatalogDescription> catalogDescriptions = new HashSet<CatalogDescription>();
+        List<CatalogDescription> catalogDescriptions = new ArrayList<CatalogDescription>();
         catalogDescriptions.add(mig29);
 
 		AssertedName assertedName = new AssertedName("code", "Миги");
 		assertedName.setCatalogDescriptions(catalogDescriptions);
 
-		Set<AssertedName> assertedNames = new HashSet<>();
+		List<AssertedName> assertedNames = new ArrayList<>();
 		assertedNames.add(assertedName);
 
         DescriptionFormat destroyer = new DescriptionFormat("001", "Истребители");

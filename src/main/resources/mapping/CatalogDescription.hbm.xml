@@ -9,9 +9,10 @@
         </id>
 
         <property name="name" column="NAME" type="string"/>
-        <set name="values" table="CHARACTERISTICS_VALUE" fetch="select" lazy="false" cascade="all" inverse="false">
+        <list name="values" table="CHARACTERISTICS_VALUE" fetch="select" lazy="false" cascade="all" inverse="false">
             <key column="CATALOG_DESCRIPTION_ID"/>
+            <list-index column="idx"/>
             <one-to-many class="org.defence.domain.entities.CharacteristicValue"/>
-        </set>
+        </list>
     </class>
 </hibernate-mapping>

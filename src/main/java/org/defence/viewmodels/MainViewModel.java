@@ -24,7 +24,6 @@ import org.defence.infrastructure.DbHelper;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 /**
  * Created by root on 30.08.15.
@@ -272,7 +271,7 @@ public class MainViewModel implements ViewModel {
 			return;
 		}
 
-		Set<AssertedNameViewModel> names = format.getAssertedNames();
+		List<AssertedNameViewModel> names = format.getAssertedNames();
 
 		if (names == null || names.size() == 0) {
 			return;
@@ -337,7 +336,7 @@ public class MainViewModel implements ViewModel {
 					DescriptionFormatViewModel format = (DescriptionFormatViewModel) treeItem.getValue();
 
 					if (format != null) {
-						Set<AssertedNameViewModel> assertedNames = format.getAssertedNames();
+						List<AssertedNameViewModel> assertedNames = format.getAssertedNames();
 
 						if (assertedNames != null && assertedNames.size() > 0) {
 							ObservableList<TreeItem<Object>> children = FXCollections.observableArrayList();
@@ -355,7 +354,7 @@ public class MainViewModel implements ViewModel {
 					AssertedNameViewModel name = (AssertedNameViewModel) treeItem.getValue();
 
 					if (name != null) {
-						Set<CatalogDescriptionViewModel> catalogDescriptions = name.getCatalogDescriptions();
+						List<CatalogDescriptionViewModel> catalogDescriptions = name.getCatalogDescriptions();
 
 						if (catalogDescriptions != null) {
 							ObservableList<TreeItem<Object>> children = FXCollections.observableArrayList();

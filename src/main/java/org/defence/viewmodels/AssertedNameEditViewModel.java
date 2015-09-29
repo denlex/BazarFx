@@ -8,8 +8,8 @@ import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import org.defence.infrastructure.DbHelper;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by root on 9/16/15.
@@ -50,10 +50,10 @@ public class AssertedNameEditViewModel implements ViewModel {
 
 					// add new assertedName
 					if (format.getAssertedNames() == null) {
-						Set<AssertedNameViewModel> set = new LinkedHashSet<>();
-						set.add(editedName);
+						List<AssertedNameViewModel> list = new ArrayList<>();
+						list.add(editedName);
 
-						format.assertedNamesProperty().setValue(FXCollections.observableSet(set));
+						format.assertedNamesProperty().setValue(FXCollections.observableList(list));
 					} else {
 						format.getAssertedNames().add(editedName);
 					}

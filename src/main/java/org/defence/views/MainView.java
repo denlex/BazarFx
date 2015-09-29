@@ -343,6 +343,7 @@ public class MainView implements FxmlView<MainViewModel> {
 
 			Stage dialog = new Stage();
 			viewTuple.getCodeBehind().setStage(dialog);
+			viewTuple.getCodeBehind().initializeStage();
 
 			dialog.initModality(Modality.WINDOW_MODAL);
 			dialog.initOwner(MainApp.mainStage);

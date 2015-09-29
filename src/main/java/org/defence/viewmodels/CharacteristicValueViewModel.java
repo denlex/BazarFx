@@ -55,4 +55,15 @@ public class CharacteristicValueViewModel {
 	public void setValue(String value) {
 		this.value.set(value);
 	}
+
+	@Override
+	public String toString() {
+		System.out.println("CharacteristicValueViewModel");
+
+		if (id != null && value != null && characteristic != null) {
+			return "id = " + id + "\nvalue = " + value + "\ncharacteristic = " + characteristic.getValue().getName();
+		} else {
+			return super.toString();
+		}
+	}
 }

@@ -3,12 +3,12 @@ package org.defence.viewmodels;
 import de.saxsys.mvvmfx.ViewModel;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableSet;
+import javafx.collections.ObservableList;
 import org.defence.domain.entities.Characteristic;
 import org.defence.domain.entities.Measurement;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by root on 06.09.15.
@@ -17,14 +17,14 @@ public class CharacteristicViewModel implements ViewModel {
     private final IntegerProperty id = new SimpleIntegerProperty();
     private final StringProperty code = new SimpleStringProperty();
     private final StringProperty name = new SimpleStringProperty();
-    private final SetProperty<MeasurementViewModel> measurements = new SimpleSetProperty<>();
+    private final ListProperty<MeasurementViewModel> measurements = new SimpleListProperty<>();
     private final StringProperty measurementText = new SimpleStringProperty();
     private final BooleanProperty isBelong = new SimpleBooleanProperty();
 
     public CharacteristicViewModel() {
     }
 
-	public CharacteristicViewModel(Integer id, String code, String name, Set<Measurement> measurements) {
+	public CharacteristicViewModel(Integer id, String code, String name, List<Measurement> measurements) {
 		this.id.setValue(id);
 		this.code.setValue(code);
 		this.name.setValue(name);
@@ -32,14 +32,14 @@ public class CharacteristicViewModel implements ViewModel {
 		StringBuilder text = new StringBuilder();
 
 		if (measurements != null) {
-			Set<MeasurementViewModel> set = new LinkedHashSet<>();
+			List<MeasurementViewModel> list = new ArrayList<>();
 			for (Measurement measurement : measurements) {
-				set.add(new MeasurementViewModel(measurement));
+				list.add(new MeasurementViewModel(measurement));
 				text.append(measurement.getShortName());
 				text.append(";");
 			}
 
-			this.measurements.setValue(FXCollections.observableSet(set));
+			this.measurements.setValue(FXCollections.observableArrayList(list));
 		}
 
 		/*for (Measurement elem : measurements.getValue()) {
@@ -57,7 +57,7 @@ public class CharacteristicViewModel implements ViewModel {
 
     public CharacteristicViewModel(Characteristic characteristic) {
 		this(characteristic.getId(), characteristic.getCode(), characteristic.getName(), characteristic
-				.getMeasurements());
+                .getMeasurements());
 	}
 
     public int getId() {
@@ -96,19 +96,19 @@ public class CharacteristicViewModel implements ViewModel {
         this.name.set(name);
     }
 
-	public ObservableSet<MeasurementViewModel> getMeasurements() {
-		return measurements.get();
-	}
+    public ObservableList<MeasurementViewModel> getMeasurements() {
+        return measurements.get();
+    }
 
-	public SetProperty<MeasurementViewModel> measurementsProperty() {
-		return measurements;
-	}
+    public ListProperty<MeasurementViewModel> measurementsProperty() {
+        return measurements;
+    }
 
-	public void setMeasurements(ObservableSet<MeasurementViewModel> measurements) {
-		this.measurements.set(measurements);
-	}
+    public void setMeasurements(ObservableList<MeasurementViewModel> measurements) {
+        this.measurements.set(measurements);
+    }
 
-	public String getMeasurementText() {
+    public String getMeasurementText() {
         return measurementText.get();
     }
 

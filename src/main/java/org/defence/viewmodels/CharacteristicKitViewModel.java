@@ -3,12 +3,12 @@ package org.defence.viewmodels;
 import de.saxsys.mvvmfx.ViewModel;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableSet;
+import javafx.collections.ObservableList;
 import org.defence.domain.entities.Characteristic;
 import org.defence.domain.entities.CharacteristicKit;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by root on 9/10/15.
@@ -17,22 +17,22 @@ public class CharacteristicKitViewModel implements ViewModel {
     private final IntegerProperty id = new SimpleIntegerProperty();
     private final StringProperty name = new SimpleStringProperty();
     private final BooleanProperty isBelong = new SimpleBooleanProperty();
-    private final SetProperty<CharacteristicViewModel> characteristics = new SimpleSetProperty<>();
+    private final ListProperty<CharacteristicViewModel> characteristics = new SimpleListProperty<>();
 
     public CharacteristicKitViewModel() {
 
     }
 
-	public CharacteristicKitViewModel(Integer id, String name, Set<Characteristic> characteristics) {
+	public CharacteristicKitViewModel(Integer id, String name, List<Characteristic> characteristics) {
 		this.setId(id);
 		this.setName(name);
 
 		if (characteristics != null) {
-			Set<CharacteristicViewModel> set = new LinkedHashSet<>();
+			List<CharacteristicViewModel> list = new ArrayList<>();
 			for (Characteristic characteristic : characteristics) {
-				set.add(new CharacteristicViewModel(characteristic));
+				list.add(new CharacteristicViewModel(characteristic));
 			}
-			this.characteristics.setValue(FXCollections.observableSet(set));
+			this.characteristics.setValue(FXCollections.observableList(list));
 		}
 	}
 
@@ -64,19 +64,19 @@ public class CharacteristicKitViewModel implements ViewModel {
         this.name.set(name);
     }
 
-	public ObservableSet<CharacteristicViewModel> getCharacteristics() {
-		return characteristics.get();
-	}
+    public ObservableList<CharacteristicViewModel> getCharacteristics() {
+        return characteristics.get();
+    }
 
-	public SetProperty<CharacteristicViewModel> characteristicsProperty() {
-		return characteristics;
-	}
+    public ListProperty<CharacteristicViewModel> characteristicsProperty() {
+        return characteristics;
+    }
 
-	public void setCharacteristics(ObservableSet<CharacteristicViewModel> characteristics) {
-		this.characteristics.set(characteristics);
-	}
+    public void setCharacteristics(ObservableList<CharacteristicViewModel> characteristics) {
+        this.characteristics.set(characteristics);
+    }
 
-	public boolean getIsBelong() {
+    public boolean getIsBelong() {
         return isBelong.get();
     }
 

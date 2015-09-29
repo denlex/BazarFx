@@ -41,4 +41,10 @@ public class CharacteristicValue implements Serializable {
     public void setValue(String value) {
         this.value = value;
     }
+
+	@Override
+	public String toString() {
+		System.out.println("CharacteristicValue");
+		return super.toString();
+	}
 }

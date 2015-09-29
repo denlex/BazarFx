@@ -1,7 +1,8 @@
 package org.defence.domain.entities;
 
 import java.io.Serializable;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by root on 22.07.15.
@@ -10,7 +11,7 @@ public class MeasurementType implements Serializable {
     private int id;
     private String code;
     private String name;
-    private Set<Measurement> measurements;
+    private List<Measurement> measurements = new ArrayList<>();
 
     public MeasurementType() {
     }
@@ -19,7 +20,7 @@ public class MeasurementType implements Serializable {
         this(code, name, null);
     }
 
-    public MeasurementType(String code, String name, Set<Measurement> measurements) {
+    public MeasurementType(String code, String name, List<Measurement> measurements) {
         this.code = code;
         this.name = name;
         this.measurements = measurements;
@@ -49,11 +50,11 @@ public class MeasurementType implements Serializable {
         this.name = name;
     }
 
-    public Set<Measurement> getMeasurements() {
+    public List<Measurement> getMeasurements() {
         return measurements;
     }
 
-    public void setMeasurements(Set<Measurement> measurements) {
+    public void setMeasurements(List<Measurement> measurements) {
         this.measurements = measurements;
     }
 }

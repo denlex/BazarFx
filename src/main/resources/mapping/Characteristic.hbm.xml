@@ -11,10 +11,11 @@
         <property name="code" column="CODE" type="string"/>
         <property name="name" column="NAME" type="string"/>
 
-        <set name="measurements" table="CHARACTERISTIC_N_MEASUREMENT"
+        <list name="measurements" table="CHARACTERISTIC_N_MEASUREMENT"
              inverse="false" lazy="false" fetch="select" cascade="all">
             <key column="CHARACTERISTIC_ID"/>
+            <list-index column="idx"/>
             <many-to-many column="MEASUREMENT_ID" class="Measurement"/>
-        </set>
+        </list>
     </class>
 </hibernate-mapping>

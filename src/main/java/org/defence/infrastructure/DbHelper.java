@@ -216,7 +216,7 @@ public class DbHelper {
 				measurements = session.createQuery("from Measurement m where m.id in (:measurementIdList)")
 						.setParameterList("measurementIdList",
 								measurementIdList).list();
-				characteristic.setMeasurements(new HashSet<>(measurements));
+				characteristic.setMeasurements(new ArrayList<>(measurements));
 			}
 
 			if (characteristic == null) {
@@ -254,7 +254,7 @@ public class DbHelper {
 				characteristics = session.createQuery("from Characteristic m where m.id in (:characteristicIdList)")
 						.setParameterList("characteristicIdList",
 								characteristicIdList).list();
-				kit.setCharacteristics(new HashSet<>(characteristics));
+				kit.setCharacteristics(new ArrayList<>(characteristics));
 			}
 
 			session.save(kit);
@@ -291,6 +291,23 @@ public class DbHelper {
 		}
 	}
 
+	public CatalogDescription addCatalogDescription(String name, List<CharacteristicValue> values) {
+		Session session = factory.openSession();
+		Transaction transaction = null;
+		CatalogDescription description = null;
+
+		try {
+			description = new CatalogDescription(name, values);
+			session.save(description);
+			transaction.commit();
+		} catch (Exception ex) {
+			transaction.rollback();
+		} finally {
+			session.close();
+			return description;
+		}
+	}
+
 	public DescriptionFormat addDescriptionFormat(String code, String name, List<Integer> characteristicIdList) {
 
 		Session session = factory.openSession();
@@ -308,7 +325,7 @@ public class DbHelper {
 				characteristics = session.createQuery("from Characteristic m where m.id in " +
 						"(:characteristicIdList)").setParameterList("characteristicIdList", characteristicIdList)
 						.list();
-				newFormat.setCharacteristics(new HashSet<>(characteristics));
+				newFormat.setCharacteristics(new ArrayList<>(characteristics));
 			}
 
 			/*// getting assertedName list of descriptionFormat
@@ -319,7 +336,7 @@ public class DbHelper {
 				assertedNames = session.createQuery("from AssertedName m where m.id in (:assertedNameIdList)")
 						.setParameterList("assertedNameIdList",
 								assertedNameIdList).list();
-				format.setAssertedNames(new HashSet<>(assertedNames));
+				format.setAssertedNames(new ArrayList<>(assertedNames));
 			}*/
 
 			/*Integer newId = (Integer) session.save(format);
@@ -385,7 +402,7 @@ public class DbHelper {
 				measurements = session.createQuery("from Measurement m where m.id in (:measurementIdList)")
 						.setParameterList("measurementIdList",
 								measurementIdList).list();
-				characteristic.setMeasurements(new HashSet<>(measurements));
+				characteristic.setMeasurements(new ArrayList<>(measurements));
 			} else {
 				characteristic.setMeasurements(null);
 			}
@@ -428,7 +445,7 @@ public class DbHelper {
 				characteristics = session.createQuery("from Characteristic m where m.id in (:characteristicIdList)")
 						.setParameterList("characteristicIdList",
 								characteristicIdList).list();
-				kit.setCharacteristics(new HashSet<>(characteristics));
+				kit.setCharacteristics(new ArrayList<>(characteristics));
 			} else {
 				kit.setCharacteristics(null);
 			}
@@ -523,7 +540,7 @@ public class DbHelper {
 				characteristics = session.createQuery("from Characteristic m where m.id in (:characteristicIdList)")
 						.setParameterList("characteristicIdList",
 								characteristicIdList).list();
-				characteristicKit.setCharacteristics(new HashSet<>(characteristics));
+				characteristicKit.setCharacteristics(new ArrayList<>(characteristics));
 			} else {
 				characteristicKit.setCharacteristics(null);
 			}
@@ -534,7 +551,7 @@ public class DbHelper {
 			}*/
 
 			List<Characteristic> allCharacteristic = session.createQuery("from Characteristic").list();
-			Set<Characteristic> characteristics = new LinkedHashSet<>();
+			List<Characteristic> characteristics = new ArrayList<>();
 
 			for (Characteristic characteristic : allCharacteristic) {
 				for (Integer characteristicId : characteristicIdList) {
@@ -892,7 +909,7 @@ public class DbHelper {
 
 	private static void importMeasurementTypes() throws ExceptionInInitializerError {
 		if (measurementEntries.size() > 0) {
-			Set<Measurement> measurements = new HashSet<>();
+			List<Measurement> measurements = new ArrayList<>();
 
 			// loading measurementTypes into MeasurementType table
 			for (final Map.Entry<Integer, MeasurementType> entry : measurementTypes.entrySet()) {
@@ -1010,6 +1027,29 @@ public class DbHelper {
 		return true;
 	}
 
+	public List<Characteristic> getCharacteristicsByAssertedNameId(Integer assertedNameId) {
+		Session session = factory.openSession();
+		List<Characteristic> result = null;
+
+		try {
+			AssertedName name = (AssertedName) session.get(AssertedName.class, assertedNameId);
+			List<DescriptionFormat> formats = session.createQuery("from DescriptionFormat").list();
+
+			for (DescriptionFormat format : formats) {
+				if (format.getAssertedNames().contains(name)) {
+					result = format.getCharacteristics();
+					break;
+				}
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			session.close();
+			return result;
+		}
+	}
+
+
 	//----------------------------------------------------------------------------------------------------------------------
 	public static int importCharacteristicsIntoTable() throws Exception {
 		int counter = 0;
@@ -1079,7 +1119,7 @@ public class DbHelper {
 
 	private static void importCharacteristicTypes() {
 		if (measurementEntries.size() > 0) {
-			Set<Characteristic> characteristics = new HashSet<>();
+			List<Characteristic> characteristics = new ArrayList<>();
 
 			// loading measurementTypes into CharacteristicType table
 			for (final Map.Entry<Integer, CharacteristicType> entry : characteristicTypes.entrySet()) {

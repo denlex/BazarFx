@@ -11,16 +11,18 @@
         <property name="code" column="CODE" type="string"/>
         <property name="name" column="NAME" type="string"/>
 
-        <set name="characteristics" table="FORMAT_N_CHARACTERISTIC"
+        <list name="characteristics" table="FORMAT_N_CHARACTERISTIC"
              inverse="false" lazy="false" fetch="select" cascade="all">
             <key column="DESCRIPTION_FORMAT_ID" />
+            <list-index column="idx"/>
             <many-to-many column="CHARACTERISTIC_ID" class="Characteristic" />
-        </set>
+        </list>
 
-        <set name="assertedNames" table="ASSERTED_NAME"
+        <list name="assertedNames" table="ASSERTED_NAME"
              inverse="false" lazy="false" fetch="select" cascade="all">
             <key column="DESCRIPTION_FORMAT_ID" />
+            <list-index column="idx"/>
             <one-to-many class="AssertedName" />
-        </set>
+        </list>
     </class>
 </hibernate-mapping>

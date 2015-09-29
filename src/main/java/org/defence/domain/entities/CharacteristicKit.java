@@ -1,8 +1,8 @@
 package org.defence.domain.entities;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by root on 8/6/15.
@@ -10,7 +10,7 @@ import java.util.Set;
 public class CharacteristicKit implements Serializable {
     private int id;
     private String name;
-    private Set<Characteristic> characteristics = new HashSet<Characteristic>();
+    private List<Characteristic> characteristics = new ArrayList<>();
 
     public CharacteristicKit() {
     }
@@ -19,7 +19,7 @@ public class CharacteristicKit implements Serializable {
         this(name, null);
     }
 
-    public CharacteristicKit(String name, Set<Characteristic> characteristics) {
+    public CharacteristicKit(String name, List<Characteristic> characteristics) {
         this.name = name;
         this.characteristics = characteristics;
     }
@@ -40,11 +40,11 @@ public class CharacteristicKit implements Serializable {
         this.name = name;
     }
 
-    public Set<Characteristic> getCharacteristics() {
+    public List<Characteristic> getCharacteristics() {
         return characteristics;
     }
 
-    public void setCharacteristics(Set<Characteristic> characteristics) {
+    public void setCharacteristics(List<Characteristic> characteristics) {
         this.characteristics = characteristics;
     }
 }

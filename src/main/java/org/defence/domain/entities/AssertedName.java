@@ -1,7 +1,7 @@
 package org.defence.domain.entities;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by root on 22.07.15.
@@ -10,7 +10,7 @@ public class AssertedName implements IEntity {
     private int id;
     private String name;
     private String code;
-	private Set<CatalogDescription> catalogDescriptions = new HashSet<>();
+	private List<CatalogDescription> catalogDescriptions = new ArrayList<>();
 
 	public AssertedName() {
 	}
@@ -19,7 +19,7 @@ public class AssertedName implements IEntity {
 		this(code, name, null);
 	}
 
-	public AssertedName(String code, String name, Set<CatalogDescription> catalogDescriptions) {
+	public AssertedName(String code, String name, List<CatalogDescription> catalogDescriptions) {
 		this.code = code;
 		this.name = name;
 		this.catalogDescriptions = catalogDescriptions;
@@ -49,11 +49,11 @@ public class AssertedName implements IEntity {
         this.code = code;
     }
 
-	public Set<CatalogDescription> getCatalogDescriptions() {
+	public List<CatalogDescription> getCatalogDescriptions() {
 		return catalogDescriptions;
 	}
 
-	public void setCatalogDescriptions(Set<CatalogDescription> catalogDescriptions) {
+	public void setCatalogDescriptions(List<CatalogDescription> catalogDescriptions) {
 		this.catalogDescriptions = catalogDescriptions;
 	}
 

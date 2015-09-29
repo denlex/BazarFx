@@ -5,8 +5,15 @@ import de.saxsys.mvvmfx.utils.commands.Action;
 import de.saxsys.mvvmfx.utils.commands.Command;
 import de.saxsys.mvvmfx.utils.commands.DelegateCommand;
 import javafx.beans.property.*;
-import javafx.collections.ObservableSet;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
+import javafx.stage.WindowEvent;
+import org.defence.domain.entities.Characteristic;
+import org.defence.domain.entities.CharacteristicValue;
 import org.defence.infrastructure.DbHelper;
+
+import java.util.List;
 
 /**
  * Created by root on 9/25/15.
@@ -14,7 +21,10 @@ import org.defence.infrastructure.DbHelper;
 public class CatalogDescriptionEditViewModel implements ViewModel {
 	private final IntegerProperty id = new SimpleIntegerProperty();
 	private final StringProperty name = new SimpleStringProperty();
-	private final SetProperty<CharacteristicValueViewModel> values = new SimpleSetProperty<>();
+	private final ListProperty<CharacteristicValueViewModel> values = new SimpleListProperty<>();
+
+	//	private final SetProperty<CharacteristicValueViewModel> characteristics = new SimpleSetProperty<>();
+	private ObjectProperty<EventHandler<WindowEvent>> shownWindow;
 
 	private final ObjectProperty<AssertedNameViewModel> selectedName = new SimpleObjectProperty<>();
 	private CatalogDescriptionViewModel editedDescription;
@@ -25,10 +35,35 @@ public class CatalogDescriptionEditViewModel implements ViewModel {
 	Command saveCommand;
 
 	public CatalogDescriptionEditViewModel() {
+
+		shownWindow = new SimpleObjectProperty<>(event -> {
+			List<Characteristic> characteristics = dbHelper.getCharacteristicsByAssertedNameId(parentViewModel
+					.getSelectedName().getId());
+
+			ObservableList<CharacteristicValueViewModel> list = FXCollections.observableArrayList();
+			for (Characteristic characteristic : characteristics) {
+				CharacteristicValue value = new CharacteristicValue(characteristic, null);
+				CharacteristicValueViewModel valueViewModel = new CharacteristicValueViewModel(value);
+
+				list.add(valueViewModel);
+			}
+			values.setValue(list);
+		});
+
 		saveCommand = new DelegateCommand(() -> new Action() {
 			@Override
 			protected void action() throws Exception {
 
+				/*List<CharacteristicValue> list = new ArrayList<>(values.getValue());
+				for (CharacteristicValueViewModel value : values) {
+					value.getCharacteristic().get
+
+
+					list.add(new CharacteristicValue(value));
+				}
+
+				dbHelper.addCatalogDescription(name.getValue(), values.getValue().subList(0, values.getValue().size
+						()));*/
 			}
 		});
 	}
@@ -45,6 +80,18 @@ public class CatalogDescriptionEditViewModel implements ViewModel {
 		this.id.set(id);
 	}
 
+	/*public String getCode() {
+		return code.get();
+	}
+
+	public StringProperty codeProperty() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code.set(code);
+	}*/
+
 	public String getName() {
 		return name.get();
 	}
@@ -57,15 +104,15 @@ public class CatalogDescriptionEditViewModel implements ViewModel {
 		this.name.set(name);
 	}
 
-	public ObservableSet<CharacteristicValueViewModel> getValues() {
+	public ObservableList<CharacteristicValueViewModel> getValues() {
 		return values.get();
 	}
 
-	public SetProperty<CharacteristicValueViewModel> valuesProperty() {
+	public ListProperty<CharacteristicValueViewModel> valuesProperty() {
 		return values;
 	}
 
-	public void setValues(ObservableSet<CharacteristicValueViewModel> values) {
+	public void setValues(ObservableList<CharacteristicValueViewModel> values) {
 		this.values.set(values);
 	}
 
@@ -95,5 +142,17 @@ public class CatalogDescriptionEditViewModel implements ViewModel {
 
 	public void setSaveCommand(Command saveCommand) {
 		this.saveCommand = saveCommand;
+	}
+
+	public EventHandler<WindowEvent> getShownWindow() {
+		return shownWindow.get();
+	}
+
+	public ObjectProperty<EventHandler<WindowEvent>> shownWindowProperty() {
+		return shownWindow;
+	}
+
+	public void setShownWindow(EventHandler<WindowEvent> shownWindow) {
+		this.shownWindow.set(shownWindow);
 	}
 }

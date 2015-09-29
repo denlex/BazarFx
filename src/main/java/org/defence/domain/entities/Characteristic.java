@@ -1,8 +1,8 @@
 package org.defence.domain.entities;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by root on 22.07.15.
@@ -11,7 +11,7 @@ public class Characteristic implements Serializable, Comparable<Characteristic> 
     private int id;
     private String code;
     private String name;
-    private Set<Measurement> measurements = new HashSet<>();
+    private List<Measurement> measurements = new ArrayList<>();
 
     public Characteristic() {
     }
@@ -21,7 +21,7 @@ public class Characteristic implements Serializable, Comparable<Characteristic> 
         this.name = name;
     }
 
-    public Characteristic(String code, String name, Set<Measurement> measurements) {
+    public Characteristic(String code, String name, List<Measurement> measurements) {
         this(code, name);
         this.measurements = measurements;
     }
@@ -51,15 +51,15 @@ public class Characteristic implements Serializable, Comparable<Characteristic> 
         this.name = name;
     }
 
-    public Set<Measurement> getMeasurements() {
-        return measurements;
-    }
+	public List<Measurement> getMeasurements() {
+		return measurements;
+	}
 
-    public void setMeasurements(Set<Measurement> measurements) {
-        this.measurements = measurements;
-    }
+	public void setMeasurements(List<Measurement> measurements) {
+		this.measurements = measurements;
+	}
 
-    @Override
+	@Override
     public int compareTo(Characteristic o) {
         return this.name.compareToIgnoreCase(o.getName());
     }

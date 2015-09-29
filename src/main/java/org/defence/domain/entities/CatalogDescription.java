@@ -1,8 +1,8 @@
 package org.defence.domain.entities;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by root on 22.07.15.
@@ -10,7 +10,7 @@ import java.util.Set;
 public class CatalogDescription implements Serializable {
     private int id;
     private String name;
-    private Set<CharacteristicValue> values = new HashSet<CharacteristicValue>();
+    private List<CharacteristicValue> values = new ArrayList<CharacteristicValue>();
 
     public CatalogDescription() {
     }
@@ -19,7 +19,7 @@ public class CatalogDescription implements Serializable {
         this.name = name;
     }
 
-    public CatalogDescription(String name, Set<CharacteristicValue> values) {
+    public CatalogDescription(String name, List<CharacteristicValue> values) {
         this.name = name;
         this.values = values;
     }
@@ -40,11 +40,11 @@ public class CatalogDescription implements Serializable {
         this.name = name;
     }
 
-    public Set<CharacteristicValue> getValues() {
+    public List<CharacteristicValue> getValues() {
         return values;
     }
 
-    public void setValues(Set<CharacteristicValue> values) {
+    public void setValues(List<CharacteristicValue> values) {
         this.values = values;
     }
 }
