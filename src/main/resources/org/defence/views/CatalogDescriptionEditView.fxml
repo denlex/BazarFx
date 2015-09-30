@@ -31,7 +31,7 @@
         </TextField>
         <TabPane GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="3">
             <tabs>
-                <Tab text="Untitled Tab">
+                <Tab text="Значения характеристик">
                     <content>
                         <GridPane>
                             <children>
@@ -93,7 +93,7 @@
         <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="4">
             <children>
                 <Button alignment="CENTER" mnemonicParsing="false" text="Принять" AnchorPane.bottomAnchor="15"
-                        AnchorPane.rightAnchor="150"/>
+                        AnchorPane.rightAnchor="150" onAction="#saveButtonClicked"/>
                 <Button alignment="CENTER" mnemonicParsing="false" text="Отмена" AnchorPane.bottomAnchor="15"
                         AnchorPane.rightAnchor="15"/>
             </children>

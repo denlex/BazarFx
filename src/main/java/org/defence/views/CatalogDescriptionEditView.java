@@ -2,16 +2,16 @@ package org.defence.views;
 
 import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import org.defence.viewmodels.CatalogDescriptionEditViewModel;
 import org.defence.viewmodels.CharacteristicValueViewModel;
-import org.defence.viewmodels.CharacteristicViewModel;
-import org.defence.viewmodels.MeasurementViewModel;
 
 /**
  * Created by root on 9/25/15.
@@ -28,13 +28,13 @@ public class CatalogDescriptionEditView implements FxmlView<CatalogDescriptionEd
 	TableView<CharacteristicValueViewModel> valuesTableView;
 
 	@FXML
-	TableColumn<CharacteristicViewModel, String> characteristicTableColumn;
+	TableColumn<CharacteristicValueViewModel, String> characteristicTableColumn;
 
 	@FXML
 	TableColumn<CharacteristicValueViewModel, String> valueTableColumn;
 
 	@FXML
-	TableColumn<MeasurementViewModel, String> measurementTableColumn;
+	TableColumn<CharacteristicValueViewModel, String> measurementTableColumn;
 
 	@InjectViewModel
 	CatalogDescriptionEditViewModel viewModel;
@@ -43,10 +43,34 @@ public class CatalogDescriptionEditView implements FxmlView<CatalogDescriptionEd
 	DialogResult dialogResult = DialogResult.CANCEL;
 
 	private void initializeValuesTableView() {
+		valuesTableView.setEditable(true);
+
 		valuesTableView.itemsProperty().bindBidirectional(viewModel.valuesProperty());
-		characteristicTableColumn.setCellValueFactory(new PropertyValueFactory("name"));
-		valueTableColumn.setCellValueFactory(new PropertyValueFactory("value"));
-		measurementTableColumn.setCellValueFactory(new PropertyValueFactory("shortName"));
+		characteristicTableColumn.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue()
+				.getCharacteristic().getName()));
+
+/*		//Set cell factory for cells that allow editing
+		Callback<CharacteristicValueViewModel, String> cellFactory = new Callback<CharacteristicValueViewModel,
+		String>() {
+			@Override
+			public String call(CharacteristicValueViewModel param) {
+				return new EditingCell();
+			}
+		};*/
+		/*valueTableColumn.setCellFactory(param -> new TextFieldTableCell<>());
+		valueTableColumn.setOnEditCommit(event -> event.getTableView().getItems().get(event.getTablePosition
+				().getRow()).setValue(event.getNewValue()));*/
+
+		valueTableColumn.setCellFactory(param -> new TableCell<CharacteristicValueViewModel, String>());
+
+		measurementTableColumn.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue()
+				.getCharacteristic().getMeasurementText()));
+
+		valuesTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue,
+				newValue) -> {
+			viewModel.selectedCharacteristicValueProperty().unbind();
+			viewModel.selectedCharacteristicValueProperty().bindBidirectional(new SimpleObjectProperty<>(newValue));
+		});
 	}
 
 	public void setStage(Stage stage) {
@@ -62,8 +86,16 @@ public class CatalogDescriptionEditView implements FxmlView<CatalogDescriptionEd
 		stage.onShownProperty().bindBidirectional(viewModel.shownWindowProperty());
 	}
 
+	public void saveButtonClicked(Event event) {
+		viewModel.getSaveCommand().execute();
+	}
+
 	public void initialize() {
 //		codeTextField.textProperty().bindBidirectional(viewModel.codeProperty());
 		nameTextField.textProperty().bindBidirectional(viewModel.nameProperty());
+
+		initializeValuesTableView();
 	}
+
+
 }
