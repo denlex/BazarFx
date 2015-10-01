@@ -32,9 +32,8 @@ public class AssertedNameEditViewModel implements ViewModel {
 			@Override
 			protected void action() throws Exception {
 				DescriptionFormatViewModel format = parentViewModel.getSelectedFormat();
-				System.out.println(format.getName());
 
-				// if user choose descriptionFormat for adding assertedName, else - edit existed assertedName
+				// if user choose descriptionFormat for editing assertedName, else - add existed assertedName
 				if (format == null) {
 					editedName = new AssertedNameViewModel(dbHelper.updateAssertedName(id.getValue(), code.getValue(),
 							name.getValue()));
@@ -48,12 +47,12 @@ public class AssertedNameEditViewModel implements ViewModel {
 					editedName = new AssertedNameViewModel(dbHelper.addAssertedName(format.getId(), code.getValue(),
 							name.getValue()));
 
-					// add new assertedName
+					// add new assertedName (display it on treeView)
 					if (format.getAssertedNames() == null) {
 						List<AssertedNameViewModel> list = new ArrayList<>();
 						list.add(editedName);
 
-						format.assertedNamesProperty().setValue(FXCollections.observableList(list));
+						format.assertedNamesProperty().setValue(FXCollections.observableArrayList(list));
 					} else {
 						format.getAssertedNames().add(editedName);
 					}

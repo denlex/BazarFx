@@ -14,6 +14,10 @@ public class Measurement implements Serializable, Comparable<Measurement> {
     public Measurement() {
     }
 
+    public Measurement(Integer id, String code, String name, String shortName) {
+		this(code, name, shortName);
+	}
+
     public Measurement(String code, String name, String shortName) {
         this.code = code;
         this.name = name;

@@ -85,4 +85,8 @@ public class MeasurementViewModel implements ViewModel {
     public void setIsBelong(boolean isBelong) {
         this.isBelong.set(isBelong);
     }
+
+    public Measurement toModel() {
+		return new Measurement(id.getValue(), code.getValue(), name.getValue(), shortName.getValue());
+	}
 }

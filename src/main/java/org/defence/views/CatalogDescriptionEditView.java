@@ -5,10 +5,8 @@ import de.saxsys.mvvmfx.InjectViewModel;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import org.defence.viewmodels.CatalogDescriptionEditViewModel;
 import org.defence.viewmodels.CharacteristicValueViewModel;
@@ -44,24 +42,15 @@ public class CatalogDescriptionEditView implements FxmlView<CatalogDescriptionEd
 
 	private void initializeValuesTableView() {
 		valuesTableView.setEditable(true);
-
 		valuesTableView.itemsProperty().bindBidirectional(viewModel.valuesProperty());
+
 		characteristicTableColumn.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue()
 				.getCharacteristic().getName()));
 
-/*		//Set cell factory for cells that allow editing
-		Callback<CharacteristicValueViewModel, String> cellFactory = new Callback<CharacteristicValueViewModel,
-		String>() {
-			@Override
-			public String call(CharacteristicValueViewModel param) {
-				return new EditingCell();
-			}
-		};*/
-		/*valueTableColumn.setCellFactory(param -> new TextFieldTableCell<>());
-		valueTableColumn.setOnEditCommit(event -> event.getTableView().getItems().get(event.getTablePosition
-				().getRow()).setValue(event.getNewValue()));*/
-
-		valueTableColumn.setCellFactory(param -> new TableCell<CharacteristicValueViewModel, String>());
+		valueTableColumn.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().getValue()));
+		valueTableColumn.setCellFactory(param -> new EditableTableCell());
+		valueTableColumn.setOnEditCommit(event -> event.getTableView().getItems().get(event.getTablePosition().getRow
+				()).setValue(event.getNewValue()));
 
 		measurementTableColumn.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue()
 				.getCharacteristic().getMeasurementText()));
@@ -88,6 +77,13 @@ public class CatalogDescriptionEditView implements FxmlView<CatalogDescriptionEd
 
 	public void saveButtonClicked(Event event) {
 		viewModel.getSaveCommand().execute();
+		dialogResult = DialogResult.OK;
+		stage.close();
+	}
+
+	public void cancelButtonClicked(Event event) {
+		dialogResult = DialogResult.CANCEL;
+		stage.close();
 	}
 
 	public void initialize() {
@@ -97,5 +93,67 @@ public class CatalogDescriptionEditView implements FxmlView<CatalogDescriptionEd
 		initializeValuesTableView();
 	}
 
+	// EditableTableCell - for editing capability in a TableCell
+	public static class EditableTableCell extends TableCell<CharacteristicValueViewModel, String> {
+		private TextField textField;
 
+		public EditableTableCell() {
+		}
+
+		@Override
+		public void startEdit() {
+			super.startEdit();
+
+			if (textField == null) {
+				createTextField();
+			}
+			setText(null);
+			setGraphic(textField);
+			textField.selectAll();
+		}
+
+		@Override
+		public void cancelEdit() {
+			super.cancelEdit();
+			setText(getItem());
+			setGraphic(null);
+		}
+
+		@Override
+		public void updateItem(String item, boolean empty) {
+			super.updateItem(item, empty);
+			if (empty) {
+				setText(null);
+				setGraphic(null);
+			} else {
+				if (isEditing()) {
+					if (textField != null) {
+						textField.setText(getString());
+					}
+					setText(null);
+					setGraphic(textField);
+				} else {
+					setText(getString());
+					setGraphic(null);
+				}
+			}
+		}
+
+		private void createTextField() {
+			textField = new TextField(getString());
+			textField.setMinWidth(this.getWidth() - this.getGraphicTextGap() * 2);
+			textField.setOnKeyReleased(t -> {
+				if (t.getCode() == KeyCode.ENTER) {
+					commitEdit(textField.getText());
+					System.out.println(getText());
+				} else if (t.getCode() == KeyCode.ESCAPE) {
+					cancelEdit();
+				}
+			});
+		}
+
+		private String getString() {
+			return getItem() == null ? "" : getItem().toString();
+		}
+	}
 }

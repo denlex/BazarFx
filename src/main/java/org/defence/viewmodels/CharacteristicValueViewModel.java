@@ -66,4 +66,14 @@ public class CharacteristicValueViewModel {
 			return super.toString();
 		}
 	}
+
+	CharacteristicValue toModel() {
+		CharacteristicValue result = new CharacteristicValue();
+
+		result.setId(id.getValue());
+		result.setValue(value.getValue());
+		result.setCharacteristic(characteristic.getValue().toModel());
+
+		return result;
+	}
 }

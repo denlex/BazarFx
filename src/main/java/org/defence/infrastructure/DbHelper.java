@@ -291,13 +291,41 @@ public class DbHelper {
 		}
 	}
 
-	public CatalogDescription addCatalogDescription(String name, List<CharacteristicValue> values) {
+	public CharacteristicValue addCharacteristicValue(Characteristic characteristic, String value) {
+		Session session = factory.openSession();
+		Transaction transaction = null;
+		CharacteristicValue characteristicValue = null;
+
+		try {
+			characteristicValue.setCharacteristic(characteristic);
+			characteristicValue.setValue(value);
+
+			transaction = session.beginTransaction();
+			session.save(characteristicValue);
+			transaction.commit();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			transaction.rollback();
+		} finally {
+			session.close();
+			return characteristicValue;
+		}
+	}
+
+	public CatalogDescription addCatalogDescription(Integer assertedNameId, String name, List<CharacteristicValue> values) {
 		Session session = factory.openSession();
 		Transaction transaction = null;
 		CatalogDescription description = null;
 
+		System.out.println("ADDITION");
+
 		try {
 			description = new CatalogDescription(name, values);
+			/*AssertedName assertedName = (AssertedName) session.get(AssertedName.class, assertedNameId);
+			assertedName.getCatalogDescriptions().add(description);
+			transaction = session.beginTransaction();
+			session.save(assertedName);*/
+			transaction = session.beginTransaction();
 			session.save(description);
 			transaction.commit();
 		} catch (Exception ex) {
@@ -517,6 +545,27 @@ public class DbHelper {
 		} finally {
 			session.close();
 			return assertedName;
+		}
+	}
+
+	public CatalogDescription updateCatalogDescription(Integer id, String name, List<CharacteristicValue> values) {
+		Session session = factory.openSession();
+		Transaction transaction = null;
+		CatalogDescription description = null;
+
+		try {
+			transaction = session.beginTransaction();
+			description = (CatalogDescription) session.get(CatalogDescription.class, id);
+			description.setName(name);
+			description.setValues(values);
+			session.save(description);
+			transaction.commit();
+		} catch (Exception ex) {
+			transaction.rollback();
+			ex.printStackTrace();
+		} finally {
+			session.close();
+			return description;
 		}
 	}
 
@@ -1162,7 +1211,7 @@ public class DbHelper {
 			factory = new Configuration().configure().buildSessionFactory();
 		}
 		/*int result = importMeasurementsIntoTable();
-        System.out.format("%s measurements were loaded\n", result);*/
+		System.out.format("%s measurements were loaded\n", result);*/
 
 		int result = importCharacteristicsIntoTable();
 

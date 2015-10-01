@@ -95,7 +95,7 @@
                 <Button alignment="CENTER" mnemonicParsing="false" text="Принять" AnchorPane.bottomAnchor="15"
                         AnchorPane.rightAnchor="150" onAction="#saveButtonClicked"/>
                 <Button alignment="CENTER" mnemonicParsing="false" text="Отмена" AnchorPane.bottomAnchor="15"
-                        AnchorPane.rightAnchor="15"/>
+                        AnchorPane.rightAnchor="15" onAction="#cancelButtonClicked"/>
             </children>
         </AnchorPane>
     </children>

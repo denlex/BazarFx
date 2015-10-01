@@ -6,9 +6,9 @@ import de.saxsys.mvvmfx.utils.commands.Action;
 import de.saxsys.mvvmfx.utils.commands.Command;
 import de.saxsys.mvvmfx.utils.commands.DelegateCommand;
 import javafx.beans.property.*;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
-import javafx.scene.control.Alert;
 import javafx.stage.WindowEvent;
 import org.defence.domain.entities.Characteristic;
 import org.defence.domain.entities.CharacteristicValue;
@@ -16,6 +16,7 @@ import org.defence.infrastructure.DbHelper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by root on 9/25/15.
@@ -25,8 +26,10 @@ public class CatalogDescriptionEditViewModel implements ViewModel {
 	private final StringProperty name = new SimpleStringProperty();
 	private final ListProperty<CharacteristicValueViewModel> values = new SimpleListProperty<>();
 
-	//	private final SetProperty<CharacteristicValueViewModel> characteristics = new SimpleSetProperty<>();
-	private final ObjectProperty<CharacteristicValueViewModel> selectedCharacteristicValue = new SimpleObjectProperty<>();
+//	private final ListProperty<CharacteristicValueViewModel> characteristics = new SimpleListProperty<>();
+
+	private final ObjectProperty<CharacteristicValueViewModel> selectedCharacteristicValue = new
+			SimpleObjectProperty<>();
 	private ObjectProperty<EventHandler<WindowEvent>> shownWindow;
 
 	private final ObjectProperty<AssertedNameViewModel> selectedName = new SimpleObjectProperty<>();
@@ -52,7 +55,7 @@ public class CatalogDescriptionEditViewModel implements ViewModel {
 			}*/
 			List<CharacteristicValueViewModel> list = new ArrayList<>();
 			for (Characteristic characteristic : characteristics) {
-				CharacteristicValue value = new CharacteristicValue(characteristic, "1236");
+				CharacteristicValue value = new CharacteristicValue(characteristic, null);
 				CharacteristicValueViewModel valueViewModel = new CharacteristicValueViewModel(value);
 				list.add(valueViewModel);
 			}
@@ -69,10 +72,58 @@ public class CatalogDescriptionEditViewModel implements ViewModel {
 		saveCommand = new DelegateCommand(() -> new Action() {
 			@Override
 			protected void action() throws Exception {
+				CharacteristicValueViewModel valueViewModel = selectedCharacteristicValue.getValue();
+				AssertedNameViewModel assertedName = parentViewModel.getSelectedName();
 
-				Alert alert = new Alert(Alert.AlertType.INFORMATION);
-				alert.setContentText(selectedCharacteristicValue.getValue().getCharacteristic().getName());
-				alert.showAndWait();
+				dbHelper.addCatalogDescription(assertedName.getId(), name.getValue(), values.stream().map
+						(CharacteristicValueViewModel::toModel)
+						.collect(Collectors.toList()));
+
+				if (assertedName == null) {
+					editedDescription = new CatalogDescriptionViewModel(dbHelper.updateCatalogDescription(id.getValue
+							(), name.getValue(), values.stream().map(CharacteristicValueViewModel::toModel)
+							.collect(Collectors.toList())));
+					CatalogDescriptionViewModel selectedDescription = parentViewModel.getSelectedDescription();
+
+					if (selectedDescription != null) {
+						selectedDescription.setId(editedDescription.getId());
+						selectedDescription.setName(editedDescription.getName());
+						selectedDescription.setValues(editedDescription.getValues());
+					}
+				} else {
+					editedDescription = new CatalogDescriptionViewModel(dbHelper.addCatalogDescription(assertedName
+							.getId(), name.getValue(), values.stream().map(CharacteristicValueViewModel::toModel)
+							.collect(Collectors.toList())));
+
+					if (assertedName.getCatalogDescriptions() == null) {
+						List<CatalogDescriptionViewModel> list = new ArrayList<>();
+						list.add(editedDescription);
+						assertedName.setCatalogDescriptions(FXCollections.observableArrayList(list));
+					} else {
+						assertedName.getCatalogDescriptions().add(editedDescription);
+					}
+				}
+
+
+				/*if (assertedName == null) {
+					editedDescription = new CharacteristicValueViewModel(dbHelper.updateCharacteristicValue
+							(valueViewModel.getId(), valueViewModel.getCharacteristic(), valueViewModel.getValue()));
+
+					parentViewModel.getSelectedDescription().setId(editedDescription.getId());
+					parentViewModel.getSelectedDescription().setName(editedDescription.getName());
+					parentViewModel.getSelectedDescription().setValues(editedDescription.getValues());
+				} else {
+					editedDescription = new CharacteristicValueViewModel(dbHelper.addCharacteristicValue
+							(valueViewModel.getCharacteristic(), valueViewModel.getValue()));
+
+					if (assertedName.getCatalogDescriptions() == null) {
+						List<CatalogDescriptionViewModel> list = new ArrayList<>();
+						list.add(editedDescription);
+						assertedName.setCatalogDescriptions(FXCollections.observableArrayList(list));
+					} else {
+						assertedName.getCatalogDescriptions().add(editedDescription);
+					}
+				}*/
 			}
 		});
 	}

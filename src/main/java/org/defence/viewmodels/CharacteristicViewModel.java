@@ -9,20 +9,21 @@ import org.defence.domain.entities.Measurement;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by root on 06.09.15.
  */
 public class CharacteristicViewModel implements ViewModel {
-    private final IntegerProperty id = new SimpleIntegerProperty();
-    private final StringProperty code = new SimpleStringProperty();
-    private final StringProperty name = new SimpleStringProperty();
-    private final ListProperty<MeasurementViewModel> measurements = new SimpleListProperty<>();
-    private final StringProperty measurementText = new SimpleStringProperty();
-    private final BooleanProperty isBelong = new SimpleBooleanProperty();
+	private final IntegerProperty id = new SimpleIntegerProperty();
+	private final StringProperty code = new SimpleStringProperty();
+	private final StringProperty name = new SimpleStringProperty();
+	private final ListProperty<MeasurementViewModel> measurements = new SimpleListProperty<>();
+	private final StringProperty measurementText = new SimpleStringProperty();
+	private final BooleanProperty isBelong = new SimpleBooleanProperty();
 
-    public CharacteristicViewModel() {
-    }
+	public CharacteristicViewModel() {
+	}
 
 	public CharacteristicViewModel(Integer id, String code, String name, List<Measurement> measurements) {
 		this.id.setValue(id);
@@ -55,80 +56,91 @@ public class CharacteristicViewModel implements ViewModel {
 		measurementText.setValue(text.toString());
 	}
 
-    public CharacteristicViewModel(Characteristic characteristic) {
+	public CharacteristicViewModel(Characteristic characteristic) {
 		this(characteristic.getId(), characteristic.getCode(), characteristic.getName(), characteristic
-                .getMeasurements());
+				.getMeasurements());
 	}
 
-    public int getId() {
-        return id.get();
-    }
+	public int getId() {
+		return id.get();
+	}
 
-    public IntegerProperty idProperty() {
-        return id;
-    }
+	public IntegerProperty idProperty() {
+		return id;
+	}
 
-    public void setId(int id) {
-        this.id.set(id);
-    }
+	public void setId(int id) {
+		this.id.set(id);
+	}
 
-    public String getCode() {
-        return code.get();
-    }
+	public String getCode() {
+		return code.get();
+	}
 
-    public StringProperty codeProperty() {
-        return code;
-    }
+	public StringProperty codeProperty() {
+		return code;
+	}
 
-    public void setCode(String code) {
-        this.code.set(code);
-    }
+	public void setCode(String code) {
+		this.code.set(code);
+	}
 
-    public String getName() {
-        return name.get();
-    }
+	public String getName() {
+		return name.get();
+	}
 
-    public StringProperty nameProperty() {
-        return name;
-    }
+	public StringProperty nameProperty() {
+		return name;
+	}
 
-    public void setName(String name) {
-        this.name.set(name);
-    }
+	public void setName(String name) {
+		this.name.set(name);
+	}
 
-    public ObservableList<MeasurementViewModel> getMeasurements() {
-        return measurements.get();
-    }
+	public ObservableList<MeasurementViewModel> getMeasurements() {
+		return measurements.get();
+	}
 
-    public ListProperty<MeasurementViewModel> measurementsProperty() {
-        return measurements;
-    }
+	public ListProperty<MeasurementViewModel> measurementsProperty() {
+		return measurements;
+	}
 
-    public void setMeasurements(ObservableList<MeasurementViewModel> measurements) {
-        this.measurements.set(measurements);
-    }
+	public void setMeasurements(ObservableList<MeasurementViewModel> measurements) {
+		this.measurements.set(measurements);
+	}
 
-    public String getMeasurementText() {
-        return measurementText.get();
-    }
+	public String getMeasurementText() {
+		return measurementText.get();
+	}
 
-    public StringProperty measurementTextProperty() {
-        return measurementText;
-    }
+	public StringProperty measurementTextProperty() {
+		return measurementText;
+	}
 
-    public void setMeasurementText(String measurementText) {
-        this.measurementText.set(measurementText);
-    }
+	public void setMeasurementText(String measurementText) {
+		this.measurementText.set(measurementText);
+	}
 
-    public boolean getIsBelong() {
-        return isBelong.get();
-    }
+	public boolean getIsBelong() {
+		return isBelong.get();
+	}
 
-    public BooleanProperty isBelongProperty() {
-        return isBelong;
-    }
+	public BooleanProperty isBelongProperty() {
+		return isBelong;
+	}
 
-    public void setIsBelong(boolean isBelong) {
-        this.isBelong.set(isBelong);
-    }
+	public void setIsBelong(boolean isBelong) {
+		this.isBelong.set(isBelong);
+	}
+
+	public Characteristic toModel() {
+		Characteristic result = new Characteristic();
+
+		result.setId(id.getValue());
+		result.setName(name.getValue());
+		result.setCode(code.getValue());
+		result.setMeasurements(measurements.stream().map(MeasurementViewModel::toModel).collect(Collectors.toList()));
+
+		return result;
+	}
 }
