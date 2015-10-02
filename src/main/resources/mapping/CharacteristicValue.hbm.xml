@@ -11,7 +11,7 @@
         <property name="value" column="VALUE" type="string"/>
 
 
-        <many-to-one name="characteristic" column="CHARACTERISTIC_ID" class="Characteristic" unique="true"
-                     not-null="true" lazy="false"/>
+        <many-to-one name="characteristic" column="CHARACTERISTIC_ID" class="Characteristic" not-null="true"
+                     lazy="false"/>
     </class>
 </hibernate-mapping>

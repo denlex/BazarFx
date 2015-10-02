@@ -342,8 +342,8 @@ public class MainViewModel implements ViewModel {
 							ObservableList<TreeItem<Object>> children = FXCollections.observableArrayList();
 
 							for (AssertedNameViewModel name : assertedNames) {
-//								children.add(createNode(name));
-								children.add(new TreeItem<>(name));
+								children.add(createNode(name));
+//								children.add(new TreeItem<>(name));
 							}
 							return children;
 						}
@@ -360,8 +360,8 @@ public class MainViewModel implements ViewModel {
 							ObservableList<TreeItem<Object>> children = FXCollections.observableArrayList();
 
 							for (CatalogDescriptionViewModel description : catalogDescriptions) {
-//								children.add(createNode(description));
-								children.add(new TreeItem<>(description));
+								children.add(createNode(description));
+//								children.add(new TreeItem<>(description));
 							}
 							return children;
 						}

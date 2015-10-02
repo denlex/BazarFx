@@ -68,16 +68,15 @@ public class MainView implements FxmlView<MainViewModel> {
 					viewModel.selectedFormatProperty().unbind();
 					viewModel.selectedFormatProperty().bindBidirectional(new SimpleObjectProperty<>(
 							(DescriptionFormatViewModel) newValue.getValue()));
-					System.out.println(viewModel.getSelectedFormat().getName());
+//					System.out.println(viewModel.getSelectedFormat().getName());
 				} else {
 					if (newValue.getValue() instanceof AssertedNameViewModel) {
 						viewModel.selectedNameProperty().unbind();
 						viewModel.selectedNameProperty().bindBidirectional(new SimpleObjectProperty<>(
 								(AssertedNameViewModel)
 										newValue.getValue()));
-						System.out.println(viewModel.getSelectedName());
+//						System.out.println(viewModel.getSelectedName());
 					} else {
-
 						if (newValue.getValue() instanceof CatalogDescriptionViewModel) {
 							viewModel.selectedDescriptionProperty().unbind();
 							viewModel.selectedDescriptionProperty().bindBidirectional(new SimpleObjectProperty<>(

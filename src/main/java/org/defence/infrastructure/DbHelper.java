@@ -317,16 +317,12 @@ public class DbHelper {
 		Transaction transaction = null;
 		CatalogDescription description = null;
 
-		System.out.println("ADDITION");
-
 		try {
 			description = new CatalogDescription(name, values);
-			/*AssertedName assertedName = (AssertedName) session.get(AssertedName.class, assertedNameId);
+			AssertedName assertedName = (AssertedName) session.get(AssertedName.class, assertedNameId);
 			assertedName.getCatalogDescriptions().add(description);
 			transaction = session.beginTransaction();
-			session.save(assertedName);*/
-			transaction = session.beginTransaction();
-			session.save(description);
+			session.save(assertedName);
 			transaction.commit();
 		} catch (Exception ex) {
 			transaction.rollback();

@@ -75,10 +75,11 @@ public class CatalogDescriptionEditViewModel implements ViewModel {
 				CharacteristicValueViewModel valueViewModel = selectedCharacteristicValue.getValue();
 				AssertedNameViewModel assertedName = parentViewModel.getSelectedName();
 
-				dbHelper.addCatalogDescription(assertedName.getId(), name.getValue(), values.stream().map
+				/*dbHelper.addCatalogDescription(assertedName.getId(), name.getValue(), values.stream().map
 						(CharacteristicValueViewModel::toModel)
-						.collect(Collectors.toList()));
+						.collect(Collectors.toList()));*/
 
+				// editting catalogDescription
 				if (assertedName == null) {
 					editedDescription = new CatalogDescriptionViewModel(dbHelper.updateCatalogDescription(id.getValue
 							(), name.getValue(), values.stream().map(CharacteristicValueViewModel::toModel)
