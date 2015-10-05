@@ -43,30 +43,29 @@ public class CatalogDescriptionEditViewModel implements ViewModel {
 	public CatalogDescriptionEditViewModel() {
 
 		shownWindow = new SimpleObjectProperty<>(event -> {
-			List<Characteristic> characteristics = dbHelper.getCharacteristicsByAssertedNameId(parentViewModel
-					.getSelectedName().getId());
-
-			/*ObservableList<CharacteristicValueViewModel> list = FXCollections.observableArrayList();
-			for (Characteristic characteristic : characteristics) {
-				CharacteristicValue value = new CharacteristicValue(characteristic, "1236");
-				CharacteristicValueViewModel valueViewModel = new CharacteristicValueViewModel(value);
-
-				list.add(valueViewModel);
-			}*/
+			List<Characteristic> characteristics = null;
 			List<CharacteristicValueViewModel> list = new ArrayList<>();
-			for (Characteristic characteristic : characteristics) {
-				CharacteristicValue value = new CharacteristicValue(characteristic, null);
-				CharacteristicValueViewModel valueViewModel = new CharacteristicValueViewModel(value);
-				list.add(valueViewModel);
-			}
-//			values.setValue(list);
-			values.set(new ObservableListWrapper<>(list));
 
-			for (CharacteristicValueViewModel value : values) {
-//				value.setValue("456");
-				System.out.println(value.getCharacteristic().getName());
-				System.out.println(value.getValue());
+
+			if (parentViewModel.getSelectedName() != null) {
+				characteristics = dbHelper.getCharacteristicsByAssertedNameId(parentViewModel.getSelectedName().getId());
+
+				for (Characteristic characteristic : characteristics) {
+					list.add(new CharacteristicValueViewModel(new CharacteristicValue(characteristic, null)));
+				}
+			} else {
+				if (parentViewModel.getSelectedDescription() != null) {
+					List<CharacteristicValue> characteristicValues = dbHelper.getCharacteristicValuesByCatalogDescriptionId(parentViewModel
+							.getSelectedDescription().getId());
+
+					for (CharacteristicValue value : characteristicValues) {
+						list.add(new CharacteristicValueViewModel(new CharacteristicValue(value.getCharacteristic(),
+								value.getValue())));
+					}
+				}
 			}
+
+			values.set(new ObservableListWrapper<>(list));
 		});
 
 		saveCommand = new DelegateCommand(() -> new Action() {
@@ -104,6 +103,9 @@ public class CatalogDescriptionEditViewModel implements ViewModel {
 						assertedName.getCatalogDescriptions().add(editedDescription);
 					}
 				}
+
+				// TODO: доделать позиционирование на отредактированную запись в treeView
+				parentViewModel.displayFormats();
 
 
 				/*if (assertedName == null) {

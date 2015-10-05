@@ -42,6 +42,7 @@ public class MainViewModel implements ViewModel {
 
 	private Command deleteDescriptionFormatCommand;
 	private Command deleteAssertedNameCommand;
+	private Command deleteCatalogDescriptionCommand;
 	private Command testCommand;
 
 	private void expandChildren(ObservableList<TreeItem<Object>> children) {
@@ -112,8 +113,46 @@ public class MainViewModel implements ViewModel {
 				if (result.get() == yes) {
 					dbHelper.deleteAssertedName(getSelectedName().getId());
 					// remove selectedName from formats collection
-					formats.stream().forEach(f -> f.getAssertedNames().removeIf(n -> n.getId() == getSelectedName().getId()));
+					formats.stream().forEach(f -> f.getAssertedNames().removeIf(n -> n.getId() == getSelectedName()
+							.getId()));
 					displayFormats();
+				}
+			}
+		});
+
+		deleteCatalogDescriptionCommand = new DelegateCommand(() -> new Action() {
+			@Override
+			protected void action() throws Exception {
+				Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+				alert.setTitle("Удаление КО");
+				alert.setHeaderText(null);
+				alert.setContentText("Вы действительно хотите удалить КО:\nНаименование:   " + getSelectedDescription().getName());
+
+				ButtonType yes = new ButtonType("Удалить");
+				ButtonType no = new ButtonType("Отмена");
+
+				alert.getButtonTypes().setAll(yes, no);
+				((Button) alert.getDialogPane().lookupButton(yes)).setDefaultButton(true);
+
+				Optional<ButtonType> result = alert.showAndWait();
+
+				if (result.get() == yes) {
+					dbHelper.deleteCatalogDescription(getSelectedDescription().getId());
+					// remove selectedDescription from formats collection
+					for (DescriptionFormatViewModel format :formats) {
+						for (AssertedNameViewModel name : format.getAssertedNames()) {
+							for (CatalogDescriptionViewModel description : name.getCatalogDescriptions()) {
+								if (description.getId() == getSelectedDescription().getId()) {
+									name.getCatalogDescriptions().remove(description);
+									displayFormats();
+									return;
+								}
+							}
+						}
+					}
+
+//					formats.stream().forEach(f -> f.getAssertedNames().removeIf(n -> n.getId() == getSelectedName().getId()));
+//					displayFormats();
 				}
 			}
 		});
@@ -230,6 +269,14 @@ public class MainViewModel implements ViewModel {
 
 	public void setDeleteAssertedNameCommand(Command deleteAssertedNameCommand) {
 		this.deleteAssertedNameCommand = deleteAssertedNameCommand;
+	}
+
+	public Command getDeleteCatalogDescriptionCommand() {
+		return deleteCatalogDescriptionCommand;
+	}
+
+	public void setDeleteCatalogDescriptionCommand(Command deleteCatalogDescriptionCommand) {
+		this.deleteCatalogDescriptionCommand = deleteCatalogDescriptionCommand;
 	}
 
 	public void loadAllFormatsFromDb() {
