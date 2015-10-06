@@ -312,7 +312,8 @@ public class DbHelper {
 		}
 	}
 
-	public CatalogDescription addCatalogDescription(Integer assertedNameId, String name, List<CharacteristicValue> values) {
+	public CatalogDescription addCatalogDescription(Integer assertedNameId, String name, List<CharacteristicValue>
+			values) {
 		Session session = factory.openSession();
 		Transaction transaction = null;
 		CatalogDescription description = null;
@@ -1072,6 +1073,26 @@ public class DbHelper {
 		return true;
 	}
 
+	public boolean deleteCatalogDescription(Integer id) {
+		Session session = factory.openSession();
+		Transaction transaction = null;
+
+		try {
+			transaction = session.beginTransaction();
+			CatalogDescription description = (CatalogDescription) session.get(CatalogDescription.class, id);
+			session.delete(description);
+			transaction.commit();
+		} catch (Exception ex) {
+			transaction.rollback();
+			ex.printStackTrace();
+			return false;
+		} finally {
+			session.close();
+		}
+
+		return true;
+	}
+
 	public List<Characteristic> getCharacteristicsByAssertedNameId(Integer assertedNameId) {
 		Session session = factory.openSession();
 		List<Characteristic> result = null;
@@ -1086,6 +1107,25 @@ public class DbHelper {
 					break;
 				}
 			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			session.close();
+			return result;
+		}
+	}
+
+	public List<CharacteristicValue> getCharacteristicValuesByCatalogDescriptionId(Integer descriptionId) {
+		Session session = factory.openSession();
+		List<CharacteristicValue> result = new ArrayList<>();
+
+		try {
+			CatalogDescription description = (CatalogDescription) session.get(CatalogDescription.class, descriptionId);
+			result = description.getValues();
+
+			/*for (CharacteristicValue value : description.getValues()) {
+				result.add(value.getCharacteristic());
+			}*/
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		} finally {

@@ -154,6 +154,7 @@ public class MainView implements FxmlView<MainViewModel> {
 	private final class TreeCellFactory extends TreeCell<Object> {
 		private ContextMenu descriptionFormatMenu = new ContextMenu();
 		private ContextMenu assertedNameMenu = new ContextMenu();
+		private ContextMenu catalogDescriptionMenu = new ContextMenu();
 		private ContextMenu rootMenu = new ContextMenu();
 
 		public TreeCellFactory() {
@@ -178,12 +179,17 @@ public class MainView implements FxmlView<MainViewModel> {
 			editAssertedNameMenuItem.setOnAction(event -> editAssertedName());
 
 			MenuItem removeAssertedNameMenuItem = new MenuItem("Удалить УН");
-			removeAssertedNameMenuItem.setOnAction(event -> {
-				viewModel.getDeleteAssertedNameCommand().execute();
-			});
+			removeAssertedNameMenuItem.setOnAction(event -> viewModel.getDeleteAssertedNameCommand().execute());
 
 			assertedNameMenu.getItems().addAll(addCatalogDescriptionMenuItem, editAssertedNameMenuItem,
 					removeAssertedNameMenuItem);
+
+			MenuItem editCatalogDescriptionMenuItem = new MenuItem("Редактировать КО");
+			editCatalogDescriptionMenuItem.setOnAction(event -> editCatalogDescription());
+			MenuItem removeCatalogDescriptionMenuItem = new MenuItem("Удалить КО");
+			removeCatalogDescriptionMenuItem.setOnAction(event -> viewModel.getDeleteCatalogDescriptionCommand().execute());
+
+			catalogDescriptionMenu.getItems().addAll(editCatalogDescriptionMenuItem, removeCatalogDescriptionMenuItem);
 
 			MenuItem addDescriptionFormatItem = new MenuItem("Добавить СФО");
 			addDescriptionFormatItem.setOnAction(event -> addDescriptionFormat());
@@ -207,6 +213,10 @@ public class MainView implements FxmlView<MainViewModel> {
 
 			if (item instanceof AssertedNameViewModel) {
 				setContextMenu(assertedNameMenu);
+			}
+
+			if (item instanceof CatalogDescriptionViewModel) {
+				setContextMenu(catalogDescriptionMenu);
 			}
 
 			if (item instanceof String) {
@@ -364,6 +374,53 @@ public class MainView implements FxmlView<MainViewModel> {
 				// select new added assertedName in treeView
 				selectEditedCatalogDescription(selectedFormat, viewTuple.getViewModel().getEditedName());*/
 			}
+		}
+
+		private void editCatalogDescription() {
+			if (viewModel.getSelectedDescription() == null) {
+				return;
+			}
+
+			ViewTuple<CatalogDescriptionEditView, CatalogDescriptionEditViewModel> viewTuple = FluentViewLoader.fxmlView
+					(CatalogDescriptionEditView.class).load();
+			viewTuple.getViewModel().setParentViewModel(viewModel);
+
+			Parent root = viewTuple.getView();
+			Stage dialog = new Stage();
+			viewTuple.getCodeBehind().setStage(dialog);
+			viewTuple.getCodeBehind().initializeStage();
+
+			Property<CatalogDescriptionViewModel> f = viewModel.selectedDescriptionProperty();
+			viewTuple.getViewModel().idProperty().bindBidirectional(f.getValue().idProperty());
+			viewTuple.getViewModel().nameProperty().bindBidirectional(f.getValue().nameProperty());
+
+
+			dialog.initModality(Modality.WINDOW_MODAL);
+			dialog.initOwner(MainApp.mainStage);
+			dialog.setResizable(false);
+
+			Scene scene = new Scene(root);
+			scene.addEventHandler(KeyEvent.ANY, event -> {
+				if (event.getCode() == KeyCode.ESCAPE) {
+					dialog.close();
+				}
+			});
+
+			dialog.setScene(scene);
+			dialog.showAndWait();
+
+			// select edited format in treeView
+			/*if (viewTuple.getCodeBehind().getModalResult() == DialogResult.OK) {
+//				TreeItem<Object> selectedItem = treeView.getSelectionModel().getSelectedItem();
+				int index = treeView.getSelectionModel().getSelectedIndex();
+				viewModel.displayFormats();
+//				treeView.getSelectionModel().select(selectedItem);
+				treeView.getSelectionModel().select(index);
+				treeView.getFocusModel().focus(index);
+				// TODO: не работает прокрутка
+				treeView.scrollTo(treeView.getSelectionModel() != null ? treeView.getSelectionModel().getSelectedIndex
+						() : 0);
+			}*/
 		}
 	}
 
