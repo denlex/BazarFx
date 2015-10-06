@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.SplitPane?>
+
+<GridPane prefHeight="640.0" prefWidth="800.0" stylesheets="/css/Button.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <StackPane style="-fx-background-color: #4A6C9B" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="0">
+            <children>
+                <Label stylesheets="/css/LabelProperty.css" text="Поиск по значениям характеристик">
+                </Label>
+            </children>
+        </StackPane>
+        <SplitPane dividerPositions="0.5" GridPane.columnIndex="0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
+            <items>
+                <GridPane>
+                    <children>
+                        <StackPane style="-fx-background-color: #4A6C9B" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
+                            <children>
+                                <Label stylesheets="/css/LabelProperty.css" text="Характеристики">
+                                </Label>
+                            </children>
+                        </StackPane>
+                        <TreeView prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                    </children>
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="ALWAYS" />
+                        <RowConstraints vgrow="ALWAYS" />
+                    </rowConstraints>
+                </GridPane>
+                <GridPane>
+                    <children>
+                        <StackPane style="-fx-background-color: #4A6C9B" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
+                            <children>
+                                <Label stylesheets="/css/LabelProperty.css" text="Параметры поиска">
+                                </Label>
+                            </children>
+                        </StackPane>
+                        <GridPane GridPane.rowIndex="1">
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="NEVER" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
+                                <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="30.0" />
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            </rowConstraints>
+                            <children>
+                                <RadioButton mnemonicParsing="false" text="Число">
+                                    <toggleGroup>
+                                        <ToggleGroup fx:id="DataType" />
+                                    </toggleGroup>
+                                </RadioButton>
+                                <RadioButton mnemonicParsing="false" text="Строка" toggleGroup="$DataType" GridPane.rowIndex="1" />
+                                <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                <TextField GridPane.columnIndex="1" />
+                                <RadioButton mnemonicParsing="false" text="Интервал" toggleGroup="$DataType" GridPane.rowIndex="2" />
+                                <RadioButton mnemonicParsing="false" text="Больше чем:" toggleGroup="$DataType" GridPane.rowIndex="3" />
+                                <RadioButton mnemonicParsing="false" text="Меньше чем:" toggleGroup="$DataType" GridPane.rowIndex="4" />
+                                <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <GridPane GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                                  <children>
+                                      <TextField GridPane.columnIndex="1" />
+                                      <Label text="от:" />
+                                      <TextField GridPane.columnIndex="3" />
+                                      <Label text="до:" GridPane.columnIndex="2">
+                                          <opaqueInsets>
+                                              <Insets />
+                                          </opaqueInsets>
+                                      </Label>
+                                  </children>
+                                  <columnConstraints>
+                                      <ColumnConstraints hgrow="NEVER" minWidth="-Infinity" />
+                                      <ColumnConstraints hgrow="ALWAYS" />
+                                      <ColumnConstraints hgrow="NEVER" minWidth="-Infinity" />
+                                      <ColumnConstraints hgrow="ALWAYS" />
+                                  </columnConstraints>
+                                  <rowConstraints>
+                                      <RowConstraints minHeight="10.0" vgrow="NEVER" />
+                                  </rowConstraints>
+                           <GridPane.margin>
+                              <Insets top="3.0" />
+                           </GridPane.margin>
+                              </GridPane>
+                            </children>
+                            <GridPane.margin>
+                                <Insets left="10.0" right="10.0" />
+                            </GridPane.margin>
+                        </GridPane>
+                  <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Поиск" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
+                     <GridPane.margin>
+                        <Insets left="10.0" right="10.0" top="10.0" />
+                     </GridPane.margin>
+                  </Button>
+                  <TableView GridPane.rowIndex="3">
+                    <columns>
+                      <TableColumn maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="-1.0" text="Каталожные описания" />
+                    </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                     <GridPane.margin>
+                        <Insets left="10.0" right="10.0" top="10.0" />
+                     </GridPane.margin>
+                  </TableView>
+                  <AnchorPane GridPane.rowIndex="4">
+                     <children>
+                        <Button maxWidth="120.0" minWidth="120.0" mnemonicParsing="false" prefWidth="120.0" text="Отмена" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+                        <Button maxWidth="120.0" minWidth="120.0" mnemonicParsing="false" prefWidth="120.0" text="Перейти" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="140.0" AnchorPane.topAnchor="10.0" />
+                     </children>
+                  </AnchorPane>
+                    </children>
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="ALWAYS" minWidth="300.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="ALWAYS" />
+                        <RowConstraints minHeight="-Infinity" vgrow="NEVER" />
+                        <RowConstraints maxHeight="-Infinity" vgrow="NEVER" />
+                  <RowConstraints maxHeight="1.7976931348623157E308" vgrow="ALWAYS" />
+                  <RowConstraints vgrow="NEVER" />
+                    </rowConstraints>
+                </GridPane>
+            </items>
+        </SplitPane>
+    </children>
+    <columnConstraints>
+        <ColumnConstraints hgrow="ALWAYS" />
+        <ColumnConstraints />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" />
+        <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="10.0" />
+        <RowConstraints />
+    </rowConstraints>
+</GridPane>
