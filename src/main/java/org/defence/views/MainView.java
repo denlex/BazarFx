@@ -147,7 +147,8 @@ public class MainView implements FxmlView<MainViewModel> {
 			viewModel.displayFormats();
 			// select new added format in treeView
 			selectEditedDescriptionFormat(viewTuple.getViewModel().getEditedFormat());
-			treeView.scrollTo(treeView.getSelectionModel() != null ? treeView.getSelectionModel().getSelectedIndex() : 0);
+			treeView.scrollTo(treeView.getSelectionModel() != null ? treeView.getSelectionModel().getSelectedIndex() :
+					0);
 		}
 	}
 
@@ -187,9 +188,14 @@ public class MainView implements FxmlView<MainViewModel> {
 			MenuItem editCatalogDescriptionMenuItem = new MenuItem("Редактировать КО");
 			editCatalogDescriptionMenuItem.setOnAction(event -> editCatalogDescription());
 			MenuItem removeCatalogDescriptionMenuItem = new MenuItem("Удалить КО");
-			removeCatalogDescriptionMenuItem.setOnAction(event -> viewModel.getDeleteCatalogDescriptionCommand().execute());
+			removeCatalogDescriptionMenuItem.setOnAction(event -> viewModel.getDeleteCatalogDescriptionCommand()
+					.execute());
+			MenuItem exportCatalogDescriptionMenuItem = new MenuItem("Экспорт КО");
+			exportCatalogDescriptionMenuItem.setOnAction(event -> viewModel.getExportCatalogDescriptionCommand()
+					.execute());
 
-			catalogDescriptionMenu.getItems().addAll(editCatalogDescriptionMenuItem, removeCatalogDescriptionMenuItem);
+			catalogDescriptionMenu.getItems().addAll(editCatalogDescriptionMenuItem, removeCatalogDescriptionMenuItem,
+					exportCatalogDescriptionMenuItem);
 
 			MenuItem addDescriptionFormatItem = new MenuItem("Добавить СФО");
 			addDescriptionFormatItem.setOnAction(event -> addDescriptionFormat());
@@ -345,7 +351,8 @@ public class MainView implements FxmlView<MainViewModel> {
 		}
 
 		private void addCatalogDescription() {
-			ViewTuple<CatalogDescriptionEditView, CatalogDescriptionEditViewModel> viewTuple = FluentViewLoader.fxmlView
+			ViewTuple<CatalogDescriptionEditView, CatalogDescriptionEditViewModel> viewTuple = FluentViewLoader
+					.fxmlView
 					(CatalogDescriptionEditView.class).load();
 			viewTuple.getViewModel().setParentViewModel(viewModel);
 			Parent root = viewTuple.getView();
@@ -381,7 +388,8 @@ public class MainView implements FxmlView<MainViewModel> {
 				return;
 			}
 
-			ViewTuple<CatalogDescriptionEditView, CatalogDescriptionEditViewModel> viewTuple = FluentViewLoader.fxmlView
+			ViewTuple<CatalogDescriptionEditView, CatalogDescriptionEditViewModel> viewTuple = FluentViewLoader
+					.fxmlView
 					(CatalogDescriptionEditView.class).load();
 			viewTuple.getViewModel().setParentViewModel(viewModel);
 

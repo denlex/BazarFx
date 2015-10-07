@@ -20,7 +20,17 @@ import javafx.scene.control.TreeItem;
 import javafx.stage.WindowEvent;
 import org.defence.domain.entities.DescriptionFormat;
 import org.defence.infrastructure.DbHelper;
+import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -43,6 +53,7 @@ public class MainViewModel implements ViewModel {
 	private Command deleteDescriptionFormatCommand;
 	private Command deleteAssertedNameCommand;
 	private Command deleteCatalogDescriptionCommand;
+	private Command exportCatalogDescriptionCommand;
 	private Command testCommand;
 
 	private void expandChildren(ObservableList<TreeItem<Object>> children) {
@@ -173,6 +184,121 @@ public class MainViewModel implements ViewModel {
 				System.exit(0);
 			}
 		});
+
+		exportCatalogDescriptionCommand = new DelegateCommand(() -> new Action() {
+			@Override
+			protected void action() throws Exception {
+				/*DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+				DocumentBuilder builder = dbf.newDocumentBuilder();
+				Document document = builder.newDocument();
+				Element rootElement = document.createElement("catalogDescription");
+
+				document.appendChild(rootElement);
+
+				TransformerFactory transformerFactory = TransformerFactory
+						.newInstance();
+				Transformer transformer = transformerFactory.newTransformer();
+				DOMSource source = new DOMSource(document);
+				StreamResult result = new StreamResult(new File("catalogDescription.xml"));
+				transformer.transform(source, result);*/
+
+				try {
+					DocumentBuilderFactory dbFactory =
+							DocumentBuilderFactory.newInstance();
+					DocumentBuilder dBuilder =
+							dbFactory.newDocumentBuilder();
+					Document doc = dBuilder.newDocument();
+					// root element
+					Element catalogDescription = doc.createElement("catalogDescription");
+					doc.appendChild(catalogDescription);
+
+					// name element
+					Element descriptionName = doc.createElement("name");
+					catalogDescription.appendChild(descriptionName);
+
+					// setting attribute to element
+					Attr descriptionNameAttr = doc.createAttribute("value");
+					descriptionNameAttr.setValue(selectedDescription.getValue().getName());
+					descriptionName.setAttributeNode(descriptionNameAttr);
+
+					List<CharacteristicValueViewModel> values = selectedDescription.getValue().getValues();
+
+					if (values != null && values.size() > 0) {
+						for (CharacteristicValueViewModel value : values) {
+							Element characteristicValue = doc.createElement("characteristicValue");
+							catalogDescription.appendChild(characteristicValue);
+
+							Attr valueAttr = doc.createAttribute("value");
+							valueAttr.setValue(value.getValue());
+							characteristicValue.setAttributeNode(valueAttr);
+
+							CharacteristicViewModel characteristicViewModel = value.getCharacteristic();
+							if (characteristicViewModel != null) {
+								Element characteristic = doc.createElement("characteristic");
+								characteristicValue.appendChild(characteristic);
+
+								Element characteristicCode = doc.createElement("code");
+								characteristic.appendChild(characteristicCode);
+
+								Attr characteristicCodeAttr = doc.createAttribute("value");
+								characteristicCodeAttr.setValue(characteristicViewModel.getCode());
+								characteristicCode.setAttributeNode(characteristicCodeAttr);
+
+								Element characteristicName = doc.createElement("name");
+								characteristic.appendChild(characteristicName);
+
+								Attr characteristicNameAttr = doc.createAttribute("value");
+								characteristicNameAttr.setValue(characteristicViewModel.getName());
+								characteristicName.setAttributeNode(characteristicNameAttr);
+
+								List<MeasurementViewModel> measurements = characteristicViewModel.getMeasurements();
+
+								if (measurements != null && measurements.size() > 0) {
+									Element measurementsNode = doc.createElement("measurements");
+
+									for (MeasurementViewModel measurement : measurements) {
+										Element measurementNode = doc.createElement("measurement");
+										measurementsNode.appendChild(measurementNode);
+
+										Element measurementCodeNode = doc.createElement("code");
+										measurementNode.appendChild(measurementCodeNode);
+
+										Attr measurementCodeAttr = doc.createAttribute("value");
+										measurementCodeAttr.setValue(measurement.getCode());
+										measurementNode.setAttributeNode(measurementCodeAttr);
+
+										Element measurementNameNode = doc.createElement("name");
+										measurementNode.appendChild(measurementNameNode);
+
+										Attr measurementNameAttr = doc.createAttribute("value");
+										measurementNameAttr.setValue(measurement.getName());
+										measurementNode.setAttributeNode(measurementNameAttr);
+									}
+								}
+							}
+						}
+					}
+
+
+
+					// write the content into xml file
+					TransformerFactory transformerFactory =
+							TransformerFactory.newInstance();
+					Transformer transformer =
+							transformerFactory.newTransformer();
+					DOMSource source = new DOMSource(doc);
+					StreamResult result =
+							new StreamResult(new File("catalogDescription.xml"));
+					transformer.transform(source, result);
+					// Output to console for testing
+					StreamResult consoleResult =
+							new StreamResult(System.out);
+					transformer.transform(source, consoleResult);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 
 	public Command getExitCommand() {
@@ -277,6 +403,14 @@ public class MainViewModel implements ViewModel {
 
 	public void setDeleteCatalogDescriptionCommand(Command deleteCatalogDescriptionCommand) {
 		this.deleteCatalogDescriptionCommand = deleteCatalogDescriptionCommand;
+	}
+
+	public Command getExportCatalogDescriptionCommand() {
+		return exportCatalogDescriptionCommand;
+	}
+
+	public void setExportCatalogDescriptionCommand(Command exportCatalogDescriptionCommand) {
+		this.exportCatalogDescriptionCommand = exportCatalogDescriptionCommand;
 	}
 
 	public void loadAllFormatsFromDb() {
