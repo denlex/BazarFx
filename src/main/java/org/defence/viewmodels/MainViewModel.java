@@ -234,18 +234,18 @@ public class MainViewModel implements ViewModel {
 
 							CharacteristicViewModel characteristicViewModel = value.getCharacteristic();
 							if (characteristicViewModel != null) {
-								Element characteristic = doc.createElement("characteristic");
-								characteristicValue.appendChild(characteristic);
+								Element characteristicNode = doc.createElement("characteristic");
+								characteristicValue.appendChild(characteristicNode);
 
 								Element characteristicCode = doc.createElement("code");
-								characteristic.appendChild(characteristicCode);
+								characteristicNode.appendChild(characteristicCode);
 
 								Attr characteristicCodeAttr = doc.createAttribute("value");
 								characteristicCodeAttr.setValue(characteristicViewModel.getCode());
 								characteristicCode.setAttributeNode(characteristicCodeAttr);
 
 								Element characteristicName = doc.createElement("name");
-								characteristic.appendChild(characteristicName);
+								characteristicNode.appendChild(characteristicName);
 
 								Attr characteristicNameAttr = doc.createAttribute("value");
 								characteristicNameAttr.setValue(characteristicViewModel.getName());
@@ -254,9 +254,11 @@ public class MainViewModel implements ViewModel {
 								List<MeasurementViewModel> measurements = characteristicViewModel.getMeasurements();
 
 								if (measurements != null && measurements.size() > 0) {
+
 									Element measurementsNode = doc.createElement("measurements");
 
 									for (MeasurementViewModel measurement : measurements) {
+
 										Element measurementNode = doc.createElement("measurement");
 										measurementsNode.appendChild(measurementNode);
 
@@ -265,15 +267,24 @@ public class MainViewModel implements ViewModel {
 
 										Attr measurementCodeAttr = doc.createAttribute("value");
 										measurementCodeAttr.setValue(measurement.getCode());
-										measurementNode.setAttributeNode(measurementCodeAttr);
+										measurementCodeNode.setAttributeNode(measurementCodeAttr);
 
 										Element measurementNameNode = doc.createElement("name");
 										measurementNode.appendChild(measurementNameNode);
 
 										Attr measurementNameAttr = doc.createAttribute("value");
 										measurementNameAttr.setValue(measurement.getName());
-										measurementNode.setAttributeNode(measurementNameAttr);
+										measurementNameNode.setAttributeNode(measurementNameAttr);
+
+										Element measurementShortNameNode = doc.createElement("shortName");
+										measurementNode.appendChild(measurementShortNameNode);
+
+										Attr measurementShortNameAttr = doc.createAttribute("value");
+										measurementShortNameAttr.setValue(measurement.getShortName());
+										measurementShortNameNode.setAttributeNode(measurementShortNameAttr);
 									}
+
+									characteristicNode.appendChild(measurementsNode);
 								}
 							}
 						}
