@@ -19,6 +19,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TreeItem;
 import javafx.stage.WindowEvent;
 import org.defence.domain.entities.DescriptionFormat;
+import org.defence.domain.entities.MeasurementType;
 import org.defence.infrastructure.DbHelper;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
@@ -221,6 +222,8 @@ public class MainViewModel implements ViewModel {
 					descriptionNameAttr.setValue(selectedDescription.getValue().getName());
 					descriptionName.setAttributeNode(descriptionNameAttr);
 
+					List<MeasurementType> measurementTypes = dbHelper.getAllMeasurementTypes();
+
 					List<CharacteristicValueViewModel> values = selectedDescription.getValue().getValues();
 
 					if (values != null && values.size() > 0) {
@@ -282,9 +285,43 @@ public class MainViewModel implements ViewModel {
 										Attr measurementShortNameAttr = doc.createAttribute("value");
 										measurementShortNameAttr.setValue(measurement.getShortName());
 										measurementShortNameNode.setAttributeNode(measurementShortNameAttr);
+
+										Element measurementTypeNode = doc.createElement("measurementType");
+										measurementNode.appendChild(measurementTypeNode);
+
+										Element measurementTypeCodeNode = doc.createElement("code");
+										measurementTypeNode.appendChild(measurementTypeCodeNode);
+
+										Attr measurementTypeCodeAttr = doc.createAttribute("value");
+										measurementTypeCodeAttr.setValue(measurement.getType().getCode());
+										measurementTypeCodeNode.setAttributeNode(measurementTypeCodeAttr);
+
+										Element measurementTypeNameNode = doc.createElement("name");
+										measurementTypeNode.appendChild(measurementTypeNameNode);
+
+										Attr measurementTypeNameAttr = doc.createAttribute("value");
+										measurementTypeNameAttr.setValue(measurement.getType().getName());
+										measurementTypeNameNode.setAttributeNode(measurementTypeNameAttr);
 									}
 
 									characteristicNode.appendChild(measurementsNode);
+
+									/*Element characteristicTypeNode = doc.createElement("characteristicType");
+									characteristicNode.appendChild(characteristicTypeNode);
+
+									Element characteristicTypeCode = doc.createElement("code");
+									characteristicTypeNode.appendChild(characteristicTypeCode);
+
+									Attr characteristicTypeCodeAttr = doc.createAttribute("value");
+									characteristicTypeCodeAttr.setValue(characteristicViewModel.getType().getCode());
+									characteristicTypeNode.setAttributeNode(characteristicTypeCodeAttr);
+
+									Element characteristicTypeName = doc.createElement("name");
+									characteristicTypeName.appendChild(characteristicTypeName);
+
+									Attr characteristicTypeNameAttr = doc.createAttribute("value");
+									characteristicTypeNameAttr.setValue(characteristicViewModel.getType().getName());
+									characteristicTypeNode.setAttributeNode(characteristicTypeNameAttr);*/
 								}
 							}
 						}

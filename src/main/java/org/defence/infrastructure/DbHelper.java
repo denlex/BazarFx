@@ -181,7 +181,7 @@ public class DbHelper {
 		try {
 			transaction = session.beginTransaction();
 			MeasurementType type = (MeasurementType) session.get(MeasurementType.class, typeId);
-			type.getMeasurements().add(new Measurement(code, name, shortName));
+			type.getMeasurements().add(new Measurement(code, name, shortName, type));
 			session.save(type);
 			transaction.commit();
 		} catch (Exception ex) {
