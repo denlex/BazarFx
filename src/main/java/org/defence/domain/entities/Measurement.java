@@ -10,7 +10,6 @@ public class Measurement implements Serializable, Comparable<Measurement> {
     private String code;
     private String name;
     private String shortName;
-	private MeasurementType type;
 
     public Measurement() {
     }
@@ -20,15 +19,10 @@ public class Measurement implements Serializable, Comparable<Measurement> {
 		this.id = id;
 	}
 
-    public Measurement(String code, String name, String shortName) {
-		this(code, name, shortName, null);
-	}
-
-	public Measurement(String code, String name, String shortName, MeasurementType type) {
+	public Measurement(String code, String name, String shortName) {
 		this.code = code;
 		this.name = name;
 		this.shortName = shortName;
-		this.type = type;
 	}
 
     public int getId() {
@@ -62,14 +56,6 @@ public class Measurement implements Serializable, Comparable<Measurement> {
     public void setCode(String code) {
         this.code = code;
     }
-
-	public MeasurementType getType() {
-		return type;
-	}
-
-	public void setType(MeasurementType type) {
-		this.type = type;
-	}
 
 	@Override
     public int compareTo(Measurement o) {

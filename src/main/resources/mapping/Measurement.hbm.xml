@@ -11,6 +11,5 @@
         <property name="code" column="CODE" type="string"/>
         <property name="name" column="NAME" type="string"/>
         <property name="shortName" column="SHORT_NAME" type="string"/>
-        <many-to-one name="type" column="TYPE_ID" class="MeasurementType" not-null="true" lazy="false"/>
     </class>
 </hibernate-mapping>

@@ -13,7 +13,6 @@ public class MeasurementViewModel implements ViewModel {
     private final StringProperty code = new SimpleStringProperty();
     private final StringProperty name = new SimpleStringProperty();
     private final StringProperty shortName = new SimpleStringProperty();
-	private final ObjectProperty<MeasurementTypeViewModel> type = new SimpleObjectProperty<>();
 	private final BooleanProperty isBelong = new SimpleBooleanProperty();
 
 
@@ -25,7 +24,6 @@ public class MeasurementViewModel implements ViewModel {
         code.setValue(measurement.getCode());
         name.setValue(measurement.getName());
         shortName.setValue(measurement.getShortName());
-		type.setValue(new MeasurementTypeViewModel(measurement.getType()));
     }
 
     public int getId() {
@@ -75,18 +73,6 @@ public class MeasurementViewModel implements ViewModel {
     public void setShortName(String shortName) {
         this.shortName.set(shortName);
     }
-
-	public MeasurementTypeViewModel getType() {
-		return type.get();
-	}
-
-	public ObjectProperty<MeasurementTypeViewModel> typeProperty() {
-		return type;
-	}
-
-	public void setType(MeasurementTypeViewModel type) {
-		this.type.set(type);
-	}
 
 	public boolean getIsBelong() {
         return isBelong.get();

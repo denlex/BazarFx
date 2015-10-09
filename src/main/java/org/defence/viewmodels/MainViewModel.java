@@ -19,6 +19,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TreeItem;
 import javafx.stage.WindowEvent;
 import org.defence.domain.entities.DescriptionFormat;
+import org.defence.domain.entities.Measurement;
 import org.defence.domain.entities.MeasurementType;
 import org.defence.infrastructure.DbHelper;
 import org.w3c.dom.Attr;
@@ -260,6 +261,8 @@ public class MainViewModel implements ViewModel {
 
 									Element measurementsNode = doc.createElement("measurements");
 
+									List<MeasurementType> typeListFromDb = dbHelper.getAllMeasurementTypes();
+
 									for (MeasurementViewModel measurement : measurements) {
 
 										Element measurementNode = doc.createElement("measurement");
@@ -286,22 +289,27 @@ public class MainViewModel implements ViewModel {
 										measurementShortNameAttr.setValue(measurement.getShortName());
 										measurementShortNameNode.setAttributeNode(measurementShortNameAttr);
 
-										Element measurementTypeNode = doc.createElement("measurementType");
-										measurementNode.appendChild(measurementTypeNode);
+										MeasurementType measurementType = getTypeByMeasurement(typeListFromDb,
+												measurement.toModel());
 
-										Element measurementTypeCodeNode = doc.createElement("code");
-										measurementTypeNode.appendChild(measurementTypeCodeNode);
+										if (measurementType != null) {
+											Element measurementTypeNode = doc.createElement("measurementType");
+											measurementNode.appendChild(measurementTypeNode);
 
-										Attr measurementTypeCodeAttr = doc.createAttribute("value");
-										measurementTypeCodeAttr.setValue(measurement.getType().getCode());
-										measurementTypeCodeNode.setAttributeNode(measurementTypeCodeAttr);
+											Element measurementTypeCodeNode = doc.createElement("code");
+											measurementTypeNode.appendChild(measurementTypeCodeNode);
 
-										Element measurementTypeNameNode = doc.createElement("name");
-										measurementTypeNode.appendChild(measurementTypeNameNode);
+											Attr measurementTypeCodeAttr = doc.createAttribute("value");
+											measurementTypeCodeAttr.setValue(measurementType.getCode());
+											measurementTypeCodeNode.setAttributeNode(measurementTypeCodeAttr);
 
-										Attr measurementTypeNameAttr = doc.createAttribute("value");
-										measurementTypeNameAttr.setValue(measurement.getType().getName());
-										measurementTypeNameNode.setAttributeNode(measurementTypeNameAttr);
+											Element measurementTypeNameNode = doc.createElement("name");
+											measurementTypeNode.appendChild(measurementTypeNameNode);
+
+											Attr measurementTypeNameAttr = doc.createAttribute("value");
+											measurementTypeNameAttr.setValue(measurementType.getName());
+											measurementTypeNameNode.setAttributeNode(measurementTypeNameAttr);
+										}
 									}
 
 									characteristicNode.appendChild(measurementsNode);
@@ -347,6 +355,21 @@ public class MainViewModel implements ViewModel {
 				}
 			}
 		});
+	}
+
+	private MeasurementType getTypeByMeasurement(List<MeasurementType> types,  Measurement measurement) {
+		for (MeasurementType type : types) {
+
+			List<Measurement> measurements = type.getMeasurements();
+
+			for (Measurement meas : measurements) {
+				if (meas.getId() == measurement.getId()) {
+					return type;
+				}
+			}
+		}
+
+		return null;
 	}
 
 	public Command getExitCommand() {
