@@ -6,15 +6,13 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane stylesheets="/css/Button.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="org.defence.views.CharacteristicCatalogView">
+<GridPane stylesheets="/css/Button.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.defence.views.CharacteristicCatalogView">
     <children>
         <GridPane GridPane.columnIndex="0" GridPane.rowIndex="0">
             <children>
                 <StackPane style="-fx-background-color: #4A6C9B" GridPane.columnIndex="0" GridPane.rowIndex="0">
                     <children>
-                        <Label stylesheets="/css/LabelProperty.css" text="Справочник характеристик"
-                               StackPane.alignment="CENTER">
+                        <Label stylesheets="/css/LabelProperty.css" text="Справочник характеристик" StackPane.alignment="CENTER">
                         </Label>
                     </children>
                 </StackPane>
@@ -26,158 +24,112 @@
                                     <items>
                                         <GridPane>
                                             <children>
-                                                <StackPane style="-fx-background-color: #4A6C9B;"
-                                                           GridPane.columnIndex="0" GridPane.rowIndex="0">
+                                                <StackPane style="-fx-background-color: #4A6C9B;" GridPane.columnIndex="0" GridPane.rowIndex="0">
                                                     <children>
-                                                        <Label stylesheets="/css/LabelProperty.css"
-                                                               text="Типы характеристик">
+                                                        <Label stylesheets="/css/LabelProperty.css" text="Типы характеристик">
                                                         </Label>
                                                     </children>
                                                 </StackPane>
-                                                <TableView fx:id="typesTableView" GridPane.columnIndex="0"
-                                                           GridPane.rowIndex="1" onMouseClicked="#typesTableViewClicked"
-                                                           onKeyPressed="#typesTableViewKeyPressed"
-                                                           onKeyReleased="#typesTableViewKeyReleased"
-                                                           onMouseReleased="#typesTableViewMouseReleased">
+                                                <TableView fx:id="typesTableView" onKeyPressed="#typesTableViewKeyPressed" onKeyReleased="#typesTableViewKeyReleased" onMouseClicked="#typesTableViewClicked" onMouseReleased="#typesTableViewMouseReleased" GridPane.columnIndex="0" GridPane.rowIndex="1">
                                                     <columns>
-                                                        <TableColumn fx:id="idTypeTableColumn" text="ID"/>
-                                                        <TableColumn fx:id="codeTypeTableColumn"
-                                                                     maxWidth="1.7976931348623157E308" minWidth="50.0"
-                                                                     prefWidth="50.0" text="Код"/>
-                                                        <TableColumn fx:id="nameTypeTableColumn"
-                                                                     maxWidth="1.7976931348623157E308" minWidth="150.0"
-                                                                     prefWidth="150.0" text="Наименование"/>
+                                                        <TableColumn fx:id="idTypeTableColumn" maxWidth="50.0" minWidth="50.0" prefWidth="-1.0" text="ID" />
+                                                        <TableColumn fx:id="codeTypeTableColumn" maxWidth="50.0" minWidth="50.0" prefWidth="-1.0" text="Код" />
+                                                        <TableColumn fx:id="nameTypeTableColumn" maxWidth="1.7976931348623157E308" minWidth="300.0" prefWidth="400.0" text="Наименование" />
                                                     </columns>
                                                 </TableView>
-                                                <AnchorPane GridPane.columnIndex="0" GridPane.halignment="RIGHT"
-                                                            GridPane.rowIndex="2">
+                                                <AnchorPane GridPane.columnIndex="0" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
                                                     <children>
-                                                        <Button fx:id="editTypeButton" text="Изменить"
-                                                                AnchorPane.bottomAnchor="10.0"
-                                                                AnchorPane.rightAnchor="140.0"
-                                                                AnchorPane.topAnchor="10.0"
-                                                                onAction="#editTypeButtonClicked">
+                                                        <Button fx:id="editTypeButton" onAction="#editTypeButtonClicked" text="Изменить" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="140.0" AnchorPane.topAnchor="10.0">
                                                         </Button>
-                                                        <Button fx:id="deleteTypeButton" text="Удалить"
-                                                                AnchorPane.bottomAnchor="10.0"
-                                                                AnchorPane.rightAnchor="10.0"
-                                                                AnchorPane.topAnchor="10.0">
+                                                        <Button fx:id="deleteTypeButton" text="Удалить" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                                                         </Button>
-                                                        <Button fx:id="addTypeButton" text="Добавить"
-                                                                AnchorPane.bottomAnchor="10.0"
-                                                                AnchorPane.rightAnchor="270.0"
-                                                                AnchorPane.topAnchor="10.0"
-                                                                onAction="#addTypeButtonClicked">
+                                                        <Button fx:id="addTypeButton" onAction="#addTypeButtonClicked" text="Добавить" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="270.0" AnchorPane.topAnchor="10.0">
                                                         </Button>
                                                     </children>
                                                 </AnchorPane>
                                             </children>
                                             <columnConstraints>
-                                                <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="400.0"/>
+                                                <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="400.0" />
                                             </columnConstraints>
                                             <rowConstraints>
-                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0"/>
-                                                <RowConstraints vgrow="ALWAYS"/>
-                                                <RowConstraints minHeight="35.0" vgrow="NEVER"/>
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" />
+                                                <RowConstraints vgrow="ALWAYS" />
+                                                <RowConstraints minHeight="35.0" vgrow="NEVER" />
                                             </rowConstraints>
                                         </GridPane>
                                         <GridPane>
                                             <children>
-                                                <StackPane style="-fx-background-color: #4A6C9B;"
-                                                           GridPane.columnIndex="0" GridPane.rowIndex="0">
+                                                <StackPane style="-fx-background-color: #4A6C9B;" GridPane.columnIndex="0" GridPane.rowIndex="0">
                                                     <children>
-                                                        <Label stylesheets="/css/LabelProperty.css"
-                                                               text="Характеристики">
+                                                        <Label stylesheets="/css/LabelProperty.css" text="Характеристики">
                                                         </Label>
                                                     </children>
                                                 </StackPane>
-                                                <TableView fx:id="characteristicsTableView" GridPane.columnIndex="0"
-                                                           GridPane.rowIndex="1"
-                                                           onKeyPressed="#characteristicsTableViewKeyPressed"
-                                                           onMouseReleased="#characteristicsTableViewMouseRelease">
+                                                <TableView fx:id="characteristicsTableView" onKeyPressed="#characteristicsTableViewKeyPressed" onMouseReleased="#characteristicsTableViewMouseRelease" GridPane.columnIndex="0" GridPane.rowIndex="1">
                                                     <columns>
-                                                        <TableColumn fx:id="idTableColumn" text="ID"/>
-                                                        <TableColumn fx:id="codeTableColumn"
-                                                                     maxWidth="1.7976931348623157E308" minWidth="50.0"
-                                                                     prefWidth="50.0" text="Код"/>
-                                                        <TableColumn fx:id="nameTableColumn"
-                                                                     maxWidth="1.7976931348623157E308" minWidth="150.0"
-                                                                     prefWidth="150.0" text="Наименование"/>
-                                                        <TableColumn fx:id="measurementsTableColumn"
-                                                                     maxWidth="1.7976931348623157E308" minWidth="150.0"
-                                                                     prefWidth="150.0" text="Ед.измер."/>
+                                                        <TableColumn fx:id="idTableColumn" maxWidth="50.0" minWidth="50.0" prefWidth="-1.0" text="ID" />
+                                                        <TableColumn fx:id="codeTableColumn" maxWidth="50.0" minWidth="50.0" prefWidth="-1.0" text="Код" />
+                                                        <TableColumn fx:id="nameTableColumn" maxWidth="1.7976931348623157E308" minWidth="200.0" prefWidth="200.0" text="Наименование" />
+                                                        <TableColumn fx:id="measurementsTableColumn" maxWidth="1.7976931348623157E308" minWidth="150.0" prefWidth="200.0" text="Ед.измер." />
                                                     </columns>
                                                 </TableView>
-                                                <AnchorPane GridPane.columnIndex="0" GridPane.halignment="RIGHT"
-                                                            GridPane.rowIndex="2">
+                                                <AnchorPane GridPane.columnIndex="0" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
                                                     <children>
-                                                        <Button fx:id="editCharacteristicButton" text="Изменить"
-                                                                AnchorPane.bottomAnchor="10.0"
-                                                                AnchorPane.rightAnchor="140.0"
-                                                                AnchorPane.topAnchor="10.0"
-                                                                onAction="#editCharacteristicButtonClicked">
+                                                        <Button fx:id="editCharacteristicButton" onAction="#editCharacteristicButtonClicked" text="Изменить" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="140.0" AnchorPane.topAnchor="10.0">
                                                         </Button>
-                                                        <Button fx:id="deleteCharacteristicButton" text="Удалить"
-                                                                AnchorPane.bottomAnchor="10.0"
-                                                                AnchorPane.rightAnchor="10.0"
-                                                                AnchorPane.topAnchor="10.0"
-                                                                onAction="#deleteCharacteristicButtonClicked">
+                                                        <Button fx:id="deleteCharacteristicButton" onAction="#deleteCharacteristicButtonClicked" text="Удалить" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                                                         </Button>
-                                                        <Button fx:id="addCharacteristicButton" text="Добавить"
-                                                                AnchorPane.bottomAnchor="10.0"
-                                                                AnchorPane.rightAnchor="270.0"
-                                                                AnchorPane.topAnchor="10.0"
-                                                                onAction="#addCharacteristicButtonClicked">
+                                                        <Button fx:id="addCharacteristicButton" onAction="#addCharacteristicButtonClicked" text="Добавить" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="270.0" AnchorPane.topAnchor="10.0">
                                                         </Button>
                                                     </children>
                                                 </AnchorPane>
                                             </children>
                                             <columnConstraints>
-                                                <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="400.0"/>
+                                                <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="400.0" />
                                             </columnConstraints>
                                             <rowConstraints>
-                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0"/>
-                                                <RowConstraints vgrow="ALWAYS"/>
-                                                <RowConstraints minHeight="35.0" vgrow="NEVER"/>
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" />
+                                                <RowConstraints vgrow="ALWAYS" />
+                                                <RowConstraints minHeight="35.0" vgrow="NEVER" />
                                             </rowConstraints>
                                         </GridPane>
                                     </items>
                                 </SplitPane>
                             </children>
                             <columnConstraints>
-                                <ColumnConstraints hgrow="ALWAYS"/>
+                                <ColumnConstraints hgrow="ALWAYS" />
                             </columnConstraints>
                             <rowConstraints>
-                                <RowConstraints vgrow="ALWAYS"/>
+                                <RowConstraints vgrow="ALWAYS" />
                             </rowConstraints>
                             <GridPane.margin>
-                                <Insets left="10.0" right="10.0" top="15.0"/>
+                                <Insets left="10.0" right="10.0" top="15.0" />
                             </GridPane.margin>
                         </GridPane>
                     </children>
                     <columnConstraints>
-                        <ColumnConstraints maxWidth="130.0" minWidth="120.0" prefWidth="130.0"/>
-                        <ColumnConstraints hgrow="ALWAYS"/>
+                        <ColumnConstraints maxWidth="130.0" minWidth="120.0" prefWidth="130.0" />
+                        <ColumnConstraints hgrow="ALWAYS" />
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints/>
-                        <RowConstraints vgrow="ALWAYS"/>
+                        <RowConstraints />
+                        <RowConstraints vgrow="ALWAYS" />
                     </rowConstraints>
                 </GridPane>
             </children>
             <columnConstraints>
-                <ColumnConstraints hgrow="ALWAYS"/>
+                <ColumnConstraints hgrow="ALWAYS" />
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" valignment="CENTER" vgrow="ALWAYS"/>
-                <RowConstraints vgrow="ALWAYS"/>
+                <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" valignment="CENTER" vgrow="ALWAYS" />
+                <RowConstraints vgrow="ALWAYS" />
             </rowConstraints>
         </GridPane>
     </children>
     <columnConstraints>
-        <ColumnConstraints hgrow="ALWAYS"/>
+        <ColumnConstraints hgrow="ALWAYS" />
     </columnConstraints>
     <rowConstraints>
-        <RowConstraints vgrow="ALWAYS"/>
+        <RowConstraints vgrow="ALWAYS" />
     </rowConstraints>
 </GridPane>

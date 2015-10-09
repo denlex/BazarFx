@@ -22,13 +22,15 @@
             </GridPane.margin>
         </Label>-->
         <!--<TextField fx:id="codeTextField" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1"/>-->
-        <Label text="Наименование" GridPane.columnIndex="0" GridPane.rowIndex="2">
+        <Label text="Наименование:" GridPane.columnIndex="0" GridPane.rowIndex="2">
             <GridPane.margin>
-                <Insets left="10.0" />
+                <Insets left="10.0" right="10.0" />
             </GridPane.margin>
         </Label>
         <TextField fx:id="nameTextField" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="2">
-        </TextField>
+         <GridPane.margin>
+            <Insets right="10.0" />
+         </GridPane.margin></TextField>
         <TabPane GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="3">
             <tabs>
                 <Tab text="Значения характеристик">
@@ -37,13 +39,10 @@
                             <children>
                                 <TableView fx:id="valuesTableView">
                                     <columns>
-                                        <TableColumn fx:id="characteristicTableColumn" maxWidth="1.7976931348623157E308" minWidth="300.0" prefWidth="120.0" text="Характеристика" />
-                                        <TableColumn fx:id="valueTableColumn" maxWidth="1.7976931348623157E308" minWidth="120.0" prefWidth="150.0" text="Значение" />
-                                        <TableColumn fx:id="measurementTableColumn" maxWidth="1.7976931348623157E308" minWidth="150.0" prefWidth="200.0" text="Единица измерения" />
+                                        <TableColumn fx:id="characteristicTableColumn" maxWidth="1.7976931348623157E308" minWidth="150.0" prefWidth="430.0" text="Характеристика" />
+                                        <TableColumn fx:id="valueTableColumn" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="150.0" text="Значение" />
+                                        <TableColumn fx:id="measurementTableColumn" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="200.0" text="Единица измерения" />
                                     </columns>
-                           <columnResizePolicy>
-                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                           </columnResizePolicy>
                                 </TableView>
                             </children>
                             <columnConstraints>
@@ -84,16 +83,22 @@
                     </content>
                 </Tab>
             </tabs>
+         <GridPane.margin>
+            <Insets left="10.0" right="10.0" />
+         </GridPane.margin>
         </TabPane>
         <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="4">
             <children>
                 <Button alignment="CENTER" mnemonicParsing="false" onAction="#saveButtonClicked" text="Принять" AnchorPane.bottomAnchor="15" AnchorPane.rightAnchor="150" />
                 <Button alignment="CENTER" mnemonicParsing="false" onAction="#cancelButtonClicked" text="Отмена" AnchorPane.bottomAnchor="15" AnchorPane.rightAnchor="15" />
             </children>
+         <GridPane.margin>
+            <Insets top="10.0" />
+         </GridPane.margin>
         </AnchorPane>
     </children>
     <columnConstraints>
-        <ColumnConstraints hgrow="NEVER" minWidth="110.0" prefWidth="110.0" />
+        <ColumnConstraints hgrow="NEVER" minWidth="-Infinity" />
         <ColumnConstraints hgrow="ALWAYS" />
     </columnConstraints>
     <rowConstraints>
