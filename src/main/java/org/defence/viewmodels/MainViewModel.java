@@ -18,9 +18,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TreeItem;
 import javafx.stage.WindowEvent;
-import org.defence.domain.entities.DescriptionFormat;
-import org.defence.domain.entities.Measurement;
-import org.defence.domain.entities.MeasurementType;
+import org.defence.domain.entities.*;
 import org.defence.infrastructure.DbHelper;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
@@ -44,6 +42,7 @@ public class MainViewModel implements ViewModel {
 	private Command exitCommand;
 	private final ListProperty<DescriptionFormatViewModel> formats = new SimpleListProperty<>();
 	private DbHelper dbHelper = DbHelper.getInstance();
+	private File exportCatalogDescriptionFile;
 
 	private final ObjectProperty<DescriptionFormatViewModel> selectedFormat = new SimpleObjectProperty<>();
 	private final ObjectProperty<AssertedNameViewModel> selectedName = new SimpleObjectProperty<>();
@@ -89,7 +88,8 @@ public class MainViewModel implements ViewModel {
 				Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 				alert.setTitle("Удаление СФО");
 				alert.setHeaderText(null);
-				alert.setContentText("Вы действительно хотите удалить СФО:\nНаименование:   " + getSelectedFormat().getName());
+				alert.setContentText("Вы действительно хотите удалить СФО:\nНаименование:   " + getSelectedFormat()
+						.getName());
 
 				ButtonType yes = new ButtonType("Удалить");
 				ButtonType no = new ButtonType("Отмена");
@@ -113,7 +113,8 @@ public class MainViewModel implements ViewModel {
 				Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 				alert.setTitle("Удаление УН");
 				alert.setHeaderText(null);
-				alert.setContentText("Вы действительно хотите удалить УН:\nНаименование:   " + getSelectedName().getName());
+				alert.setContentText("Вы действительно хотите удалить УН:\nНаименование:   " + getSelectedName()
+						.getName());
 
 				ButtonType yes = new ButtonType("Удалить");
 				ButtonType no = new ButtonType("Отмена");
@@ -139,7 +140,8 @@ public class MainViewModel implements ViewModel {
 				Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 				alert.setTitle("Удаление КО");
 				alert.setHeaderText(null);
-				alert.setContentText("Вы действительно хотите удалить КО:\nНаименование:   " + getSelectedDescription().getName());
+				alert.setContentText("Вы действительно хотите удалить КО:\nНаименование:   " + getSelectedDescription
+						().getName());
 
 				ButtonType yes = new ButtonType("Удалить");
 				ButtonType no = new ButtonType("Отмена");
@@ -152,7 +154,7 @@ public class MainViewModel implements ViewModel {
 				if (result.get() == yes) {
 					dbHelper.deleteCatalogDescription(getSelectedDescription().getId());
 					// remove selectedDescription from formats collection
-					for (DescriptionFormatViewModel format :formats) {
+					for (DescriptionFormatViewModel format : formats) {
 						for (AssertedNameViewModel name : format.getAssertedNames()) {
 							for (CatalogDescriptionViewModel description : name.getCatalogDescriptions()) {
 								if (description.getId() == getSelectedDescription().getId()) {
@@ -164,7 +166,8 @@ public class MainViewModel implements ViewModel {
 						}
 					}
 
-//					formats.stream().forEach(f -> f.getAssertedNames().removeIf(n -> n.getId() == getSelectedName().getId()));
+//					formats.stream().forEach(f -> f.getAssertedNames().removeIf(n -> n.getId() == getSelectedName()
+// .getId()));
 //					displayFormats();
 				}
 			}
@@ -190,19 +193,6 @@ public class MainViewModel implements ViewModel {
 		exportCatalogDescriptionCommand = new DelegateCommand(() -> new Action() {
 			@Override
 			protected void action() throws Exception {
-				/*DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-				DocumentBuilder builder = dbf.newDocumentBuilder();
-				Document document = builder.newDocument();
-				Element rootElement = document.createElement("catalogDescription");
-
-				document.appendChild(rootElement);
-
-				TransformerFactory transformerFactory = TransformerFactory
-						.newInstance();
-				Transformer transformer = transformerFactory.newTransformer();
-				DOMSource source = new DOMSource(document);
-				StreamResult result = new StreamResult(new File("catalogDescription.xml"));
-				transformer.transform(source, result);*/
 
 				try {
 					DocumentBuilderFactory dbFactory =
@@ -223,23 +213,24 @@ public class MainViewModel implements ViewModel {
 					descriptionNameAttr.setValue(selectedDescription.getValue().getName());
 					descriptionName.setAttributeNode(descriptionNameAttr);
 
-					List<MeasurementType> measurementTypes = dbHelper.getAllMeasurementTypes();
-
 					List<CharacteristicValueViewModel> values = selectedDescription.getValue().getValues();
 
 					if (values != null && values.size() > 0) {
+						List<CharacteristicType> characteristicTypeListFromDb = dbHelper.getAllCharacteristicTypes();
+						List<MeasurementType> measurementTypeListFromDb = dbHelper.getAllMeasurementTypes();
+
 						for (CharacteristicValueViewModel value : values) {
-							Element characteristicValue = doc.createElement("characteristicValue");
-							catalogDescription.appendChild(characteristicValue);
+							Element characteristicValueNode = doc.createElement("characteristicValue");
+							catalogDescription.appendChild(characteristicValueNode);
 
 							Attr valueAttr = doc.createAttribute("value");
 							valueAttr.setValue(value.getValue());
-							characteristicValue.setAttributeNode(valueAttr);
+							characteristicValueNode.setAttributeNode(valueAttr);
 
 							CharacteristicViewModel characteristicViewModel = value.getCharacteristic();
 							if (characteristicViewModel != null) {
 								Element characteristicNode = doc.createElement("characteristic");
-								characteristicValue.appendChild(characteristicNode);
+								characteristicValueNode.appendChild(characteristicNode);
 
 								Element characteristicCode = doc.createElement("code");
 								characteristicNode.appendChild(characteristicCode);
@@ -255,13 +246,31 @@ public class MainViewModel implements ViewModel {
 								characteristicNameAttr.setValue(characteristicViewModel.getName());
 								characteristicName.setAttributeNode(characteristicNameAttr);
 
+								CharacteristicType characteristicType = getTypeByCharacteristic
+										(characteristicTypeListFromDb, value.getCharacteristic().toModel());
+
+								Element characteristicTypeNode = doc.createElement("characteristicType");
+								characteristicValueNode.appendChild(characteristicTypeNode);
+
+								Element characteristicTypeCodeNode = doc.createElement("code");
+								characteristicTypeNode.appendChild(characteristicTypeCodeNode);
+
+								Attr characteristicTypeCodeAttr = doc.createAttribute("value");
+								characteristicTypeCodeAttr.setValue(characteristicType.getCode());
+								characteristicTypeCodeNode.setAttributeNode(characteristicTypeCodeAttr);
+
+								Element characteristicTypeNameNode = doc.createElement("name");
+								characteristicTypeNode.appendChild(characteristicTypeNameNode);
+
+								Attr characteristicTypeNameAttr = doc.createAttribute("value");
+								characteristicTypeNameAttr.setValue(characteristicType.getName());
+								characteristicTypeNameNode.setAttributeNode(characteristicTypeNameAttr);
+
 								List<MeasurementViewModel> measurements = characteristicViewModel.getMeasurements();
 
 								if (measurements != null && measurements.size() > 0) {
 
 									Element measurementsNode = doc.createElement("measurements");
-
-									List<MeasurementType> typeListFromDb = dbHelper.getAllMeasurementTypes();
 
 									for (MeasurementViewModel measurement : measurements) {
 
@@ -289,8 +298,8 @@ public class MainViewModel implements ViewModel {
 										measurementShortNameAttr.setValue(measurement.getShortName());
 										measurementShortNameNode.setAttributeNode(measurementShortNameAttr);
 
-										MeasurementType measurementType = getTypeByMeasurement(typeListFromDb,
-												measurement.toModel());
+										MeasurementType measurementType = getTypeByMeasurement
+												(measurementTypeListFromDb, measurement.toModel());
 
 										if (measurementType != null) {
 											Element measurementTypeNode = doc.createElement("measurementType");
@@ -313,28 +322,10 @@ public class MainViewModel implements ViewModel {
 									}
 
 									characteristicNode.appendChild(measurementsNode);
-
-									/*Element characteristicTypeNode = doc.createElement("characteristicType");
-									characteristicNode.appendChild(characteristicTypeNode);
-
-									Element characteristicTypeCode = doc.createElement("code");
-									characteristicTypeNode.appendChild(characteristicTypeCode);
-
-									Attr characteristicTypeCodeAttr = doc.createAttribute("value");
-									characteristicTypeCodeAttr.setValue(characteristicViewModel.getType().getCode());
-									characteristicTypeNode.setAttributeNode(characteristicTypeCodeAttr);
-
-									Element characteristicTypeName = doc.createElement("name");
-									characteristicTypeName.appendChild(characteristicTypeName);
-
-									Attr characteristicTypeNameAttr = doc.createAttribute("value");
-									characteristicTypeNameAttr.setValue(characteristicViewModel.getType().getName());
-									characteristicTypeNode.setAttributeNode(characteristicTypeNameAttr);*/
 								}
 							}
 						}
 					}
-
 
 
 					// write the content into xml file
@@ -344,7 +335,7 @@ public class MainViewModel implements ViewModel {
 							transformerFactory.newTransformer();
 					DOMSource source = new DOMSource(doc);
 					StreamResult result =
-							new StreamResult(new File("catalogDescription.xml"));
+							new StreamResult(exportCatalogDescriptionFile);
 					transformer.transform(source, result);
 					// Output to console for testing
 					StreamResult consoleResult =
@@ -357,7 +348,7 @@ public class MainViewModel implements ViewModel {
 		});
 	}
 
-	private MeasurementType getTypeByMeasurement(List<MeasurementType> types,  Measurement measurement) {
+	private MeasurementType getTypeByMeasurement(List<MeasurementType> types, Measurement measurement) {
 		for (MeasurementType type : types) {
 
 			List<Measurement> measurements = type.getMeasurements();
@@ -371,6 +362,22 @@ public class MainViewModel implements ViewModel {
 
 		return null;
 	}
+
+	private CharacteristicType getTypeByCharacteristic(List<CharacteristicType> types, Characteristic characteristic) {
+		for (CharacteristicType type : types) {
+
+			List<Characteristic> characteristics = type.getCharacteristics();
+
+			for (Characteristic ch : characteristics) {
+				if (ch.getId() == characteristic.getId()) {
+					return type;
+				}
+			}
+		}
+
+		return null;
+	}
+
 
 	public Command getExitCommand() {
 		return exitCommand;
@@ -482,6 +489,14 @@ public class MainViewModel implements ViewModel {
 
 	public void setExportCatalogDescriptionCommand(Command exportCatalogDescriptionCommand) {
 		this.exportCatalogDescriptionCommand = exportCatalogDescriptionCommand;
+	}
+
+	public File getExportCatalogDescriptionFile() {
+		return exportCatalogDescriptionFile;
+	}
+
+	public void setExportCatalogDescriptionFile(File exportCatalogDescriptionFile) {
+		this.exportCatalogDescriptionFile = exportCatalogDescriptionFile;
 	}
 
 	public void loadAllFormatsFromDb() {

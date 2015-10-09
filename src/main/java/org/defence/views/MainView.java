@@ -17,10 +17,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.defence.MainApp;
 import org.defence.viewmodels.*;
+
+import java.io.File;
 
 /**
  * Created by root on 22.07.15.
@@ -191,8 +194,21 @@ public class MainView implements FxmlView<MainViewModel> {
 			removeCatalogDescriptionMenuItem.setOnAction(event -> viewModel.getDeleteCatalogDescriptionCommand()
 					.execute());
 			MenuItem exportCatalogDescriptionMenuItem = new MenuItem("Экспорт КО");
-			exportCatalogDescriptionMenuItem.setOnAction(event -> viewModel.getExportCatalogDescriptionCommand()
-					.execute());
+			exportCatalogDescriptionMenuItem.setOnAction(event -> {
+
+				FileChooser fileChooser = new FileChooser();
+				fileChooser.setTitle("Экспорт КО");
+
+				FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Формат КО файла (*.xml)", "*.xml");
+				fileChooser.getExtensionFilters().add(filter);
+
+				File file = fileChooser.showSaveDialog(stage);
+
+				if (file != null) {
+					viewModel.setExportCatalogDescriptionFile(file);
+					viewModel.getExportCatalogDescriptionCommand().execute();
+				}
+			});
 
 			catalogDescriptionMenu.getItems().addAll(editCatalogDescriptionMenuItem, removeCatalogDescriptionMenuItem,
 					exportCatalogDescriptionMenuItem);
