@@ -16,13 +16,14 @@ public class Measurement implements Serializable, Comparable<Measurement> {
 
     public Measurement(Integer id, String code, String name, String shortName) {
 		this(code, name, shortName);
+		this.id = id;
 	}
 
-    public Measurement(String code, String name, String shortName) {
-        this.code = code;
-        this.name = name;
-        this.shortName = shortName;
-    }
+	public Measurement(String code, String name, String shortName) {
+		this.code = code;
+		this.name = name;
+		this.shortName = shortName;
+	}
 
     public int getId() {
         return id;
@@ -56,7 +57,7 @@ public class Measurement implements Serializable, Comparable<Measurement> {
         this.code = code;
     }
 
-    @Override
+	@Override
     public int compareTo(Measurement o) {
         return id == o.getId() ? 0 : id > o.getId() ? 1 : -1;
     }

@@ -13,7 +13,7 @@ public class MeasurementViewModel implements ViewModel {
     private final StringProperty code = new SimpleStringProperty();
     private final StringProperty name = new SimpleStringProperty();
     private final StringProperty shortName = new SimpleStringProperty();
-    private final BooleanProperty isBelong = new SimpleBooleanProperty();
+	private final BooleanProperty isBelong = new SimpleBooleanProperty();
 
 
     public MeasurementViewModel() {
@@ -74,7 +74,7 @@ public class MeasurementViewModel implements ViewModel {
         this.shortName.set(shortName);
     }
 
-    public boolean getIsBelong() {
+	public boolean getIsBelong() {
         return isBelong.get();
     }
 

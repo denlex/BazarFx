@@ -1,0 +1,40 @@
+<catalogDescription>
+    <name value="Миг-29"/>
+    <characteristicValueList>
+
+        <characteristicValue value="1000">
+            <characteristic>
+                <code value="1"/>
+                <name value="Взлетная масса"/>
+                <characteristicType>
+                    <code value="1"/>
+                    <name value="Масса"/>
+                </characteristicType>
+                <measurementList>
+
+                    <measurement>
+                        <code value="1"/>
+                        <name value="килограмм"/>
+                        <shortName value="кг"/>
+                        <measurementType>
+                            <code value="1"/>
+                            <name value="Единицы массы"/>
+                        </measurementType>
+                    </measurement>
+
+                    <measurement>
+                        <code value="2"/>
+                        <name value="грамм"/>
+                        <shortName value="гр"/>
+                        <measurementType>
+                            <code value="1"/>
+                            <name value="Единицы массы"/>
+                        </measurementType>
+                    </measurement>
+
+                </measurementList>
+            </characteristic>
+        </characteristicValue>
+
+    </characteristicValueList>
+</catalogDescription>

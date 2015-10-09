@@ -17,10 +17,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.defence.MainApp;
 import org.defence.viewmodels.*;
+
+import java.io.File;
 
 /**
  * Created by root on 22.07.15.
@@ -147,7 +150,8 @@ public class MainView implements FxmlView<MainViewModel> {
 			viewModel.displayFormats();
 			// select new added format in treeView
 			selectEditedDescriptionFormat(viewTuple.getViewModel().getEditedFormat());
-			treeView.scrollTo(treeView.getSelectionModel() != null ? treeView.getSelectionModel().getSelectedIndex() : 0);
+			treeView.scrollTo(treeView.getSelectionModel() != null ? treeView.getSelectionModel().getSelectedIndex() :
+					0);
 		}
 	}
 
@@ -187,9 +191,27 @@ public class MainView implements FxmlView<MainViewModel> {
 			MenuItem editCatalogDescriptionMenuItem = new MenuItem("Редактировать КО");
 			editCatalogDescriptionMenuItem.setOnAction(event -> editCatalogDescription());
 			MenuItem removeCatalogDescriptionMenuItem = new MenuItem("Удалить КО");
-			removeCatalogDescriptionMenuItem.setOnAction(event -> viewModel.getDeleteCatalogDescriptionCommand().execute());
+			removeCatalogDescriptionMenuItem.setOnAction(event -> viewModel.getDeleteCatalogDescriptionCommand()
+					.execute());
+			MenuItem exportCatalogDescriptionMenuItem = new MenuItem("Экспорт КО");
+			exportCatalogDescriptionMenuItem.setOnAction(event -> {
 
-			catalogDescriptionMenu.getItems().addAll(editCatalogDescriptionMenuItem, removeCatalogDescriptionMenuItem);
+				FileChooser fileChooser = new FileChooser();
+				fileChooser.setTitle("Экспорт КО");
+
+				FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Формат КО файла (*.xml)", "*.xml");
+				fileChooser.getExtensionFilters().add(filter);
+
+				File file = fileChooser.showSaveDialog(stage);
+
+				if (file != null) {
+					viewModel.setExportCatalogDescriptionFile(file);
+					viewModel.getExportCatalogDescriptionCommand().execute();
+				}
+			});
+
+			catalogDescriptionMenu.getItems().addAll(editCatalogDescriptionMenuItem, removeCatalogDescriptionMenuItem,
+					exportCatalogDescriptionMenuItem);
 
 			MenuItem addDescriptionFormatItem = new MenuItem("Добавить СФО");
 			addDescriptionFormatItem.setOnAction(event -> addDescriptionFormat());
@@ -345,7 +367,8 @@ public class MainView implements FxmlView<MainViewModel> {
 		}
 
 		private void addCatalogDescription() {
-			ViewTuple<CatalogDescriptionEditView, CatalogDescriptionEditViewModel> viewTuple = FluentViewLoader.fxmlView
+			ViewTuple<CatalogDescriptionEditView, CatalogDescriptionEditViewModel> viewTuple = FluentViewLoader
+					.fxmlView
 					(CatalogDescriptionEditView.class).load();
 			viewTuple.getViewModel().setParentViewModel(viewModel);
 			Parent root = viewTuple.getView();
@@ -381,7 +404,8 @@ public class MainView implements FxmlView<MainViewModel> {
 				return;
 			}
 
-			ViewTuple<CatalogDescriptionEditView, CatalogDescriptionEditViewModel> viewTuple = FluentViewLoader.fxmlView
+			ViewTuple<CatalogDescriptionEditView, CatalogDescriptionEditViewModel> viewTuple = FluentViewLoader
+					.fxmlView
 					(CatalogDescriptionEditView.class).load();
 			viewTuple.getViewModel().setParentViewModel(viewModel);
 
