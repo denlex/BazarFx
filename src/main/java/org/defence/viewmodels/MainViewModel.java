@@ -20,9 +20,7 @@ import javafx.scene.control.TreeItem;
 import javafx.stage.WindowEvent;
 import org.defence.domain.entities.*;
 import org.defence.infrastructure.DbHelper;
-import org.w3c.dom.Attr;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
+import org.w3c.dom.*;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -30,10 +28,9 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import javax.xml.validation.Schema;
 import java.io.File;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Created by root on 30.08.15.
@@ -42,7 +39,7 @@ public class MainViewModel implements ViewModel {
 	private Command exitCommand;
 	private final ListProperty<DescriptionFormatViewModel> formats = new SimpleListProperty<>();
 	private DbHelper dbHelper = DbHelper.getInstance();
-	private File exportCatalogDescriptionFile;
+	private File catalogDescriptionFile;
 
 	private final ObjectProperty<DescriptionFormatViewModel> selectedFormat = new SimpleObjectProperty<>();
 	private final ObjectProperty<AssertedNameViewModel> selectedName = new SimpleObjectProperty<>();
@@ -54,6 +51,7 @@ public class MainViewModel implements ViewModel {
 	private Command deleteDescriptionFormatCommand;
 	private Command deleteAssertedNameCommand;
 	private Command deleteCatalogDescriptionCommand;
+	private Command importCatalogDescriptionCommand;
 	private Command exportCatalogDescriptionCommand;
 	private Command testCommand;
 
@@ -88,7 +86,7 @@ public class MainViewModel implements ViewModel {
 				Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 				alert.setTitle("Удаление СФО");
 				alert.setHeaderText(null);
-				alert.setContentText("Вы действительно хотите удалить СФО:\nНаименование:   " + getSelectedFormat()
+				alert.setContentText("Вы действительно хотите удалить СФО?:\nНаименование:   " + getSelectedFormat()
 						.getName());
 
 				ButtonType yes = new ButtonType("Удалить");
@@ -113,7 +111,7 @@ public class MainViewModel implements ViewModel {
 				Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 				alert.setTitle("Удаление УН");
 				alert.setHeaderText(null);
-				alert.setContentText("Вы действительно хотите удалить УН:\nНаименование:   " + getSelectedName()
+				alert.setContentText("Вы действительно хотите удалить УН?:\nНаименование:   " + getSelectedName()
 						.getName());
 
 				ButtonType yes = new ButtonType("Удалить");
@@ -140,7 +138,7 @@ public class MainViewModel implements ViewModel {
 				Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 				alert.setTitle("Удаление КО");
 				alert.setHeaderText(null);
-				alert.setContentText("Вы действительно хотите удалить КО:\nНаименование:   " + getSelectedDescription
+				alert.setContentText("Вы действительно хотите удалить КО?:\nНаименование:   " + getSelectedDescription
 						().getName());
 
 				ButtonType yes = new ButtonType("Удалить");
@@ -187,6 +185,40 @@ public class MainViewModel implements ViewModel {
 				DbHelper.terminateDbConnection();
 				Platform.exit();
 				System.exit(0);
+			}
+		});
+
+		importCatalogDescriptionCommand = new DelegateCommand(() -> new Action() {
+			@Override
+			protected void action() throws Exception {
+				try {
+					DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+					dbFactory.setValidating(false);
+					DocumentBuilder builder = dbFactory.newDocumentBuilder();
+					Document doc = builder.parse(catalogDescriptionFile);
+//					NodeList root = doc.getChildNodes();
+
+					this.getClass().getClassLoader().getResource("catalog_description.xsd");
+					/*Schema
+					dbFactory.setSchema();*/
+
+					Element root = doc.getDocumentElement();
+					Element name = (Element) root.getElementsByTagName("name").item(0);
+
+					Alert alert = new Alert(Alert.AlertType.INFORMATION);
+
+					System.out.println(name.getAttribute("value"));
+					System.out.println("textContent = " + name.getTextContent());
+					System.out.println("nodeValue = " + name.getNodeValue());
+					System.out.println("tagName = " + name.getTagName());
+					System.out.println("parentNodeName = " + name.getParentNode().getNodeName());
+
+					alert.setContentText(name.getAttribute("value"));
+					alert.showAndWait();
+
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
 			}
 		});
 
@@ -335,7 +367,7 @@ public class MainViewModel implements ViewModel {
 							transformerFactory.newTransformer();
 					DOMSource source = new DOMSource(doc);
 					StreamResult result =
-							new StreamResult(exportCatalogDescriptionFile);
+							new StreamResult(catalogDescriptionFile);
 					transformer.transform(source, result);
 					// Output to console for testing
 					StreamResult consoleResult =
@@ -346,6 +378,35 @@ public class MainViewModel implements ViewModel {
 				}
 			}
 		});
+	}
+
+	private String getChildrenAsString(Document doc) {
+		final String SPACE = "   ";
+		StringBuffer content = new StringBuffer();
+		Node node = doc.getChildNodes().item(0);
+		ApplicationNode appNode = new ApplicationNode(node);
+
+		content.append("Application \n");
+
+		List<ClassNode> classes = appNode.getClasses();
+
+		for (int i = 0; i < classes.size(); i++) {
+			ClassNode classNode = classes.get(i);
+			if (classNode == null) {
+				System.out.println("classNode is null");
+			}
+			content.append(SPACE + "Class: " + classNode.getName() + " \n");
+
+			List<MethodNode> methods = classNode.getMethods();
+
+			for (int j = 0; j < methods.size(); j++) {
+				MethodNode methodNode = methods.get(j);
+				content.append(SPACE + SPACE + "Method: "
+						+ methodNode.getName() + " \n");
+			}
+		}
+
+		return content.toString();
 	}
 
 	private MeasurementType getTypeByMeasurement(List<MeasurementType> types, Measurement measurement) {
@@ -483,6 +544,14 @@ public class MainViewModel implements ViewModel {
 		this.deleteCatalogDescriptionCommand = deleteCatalogDescriptionCommand;
 	}
 
+	public Command getImportCatalogDescriptionCommand() {
+		return importCatalogDescriptionCommand;
+	}
+
+	public void setImportCatalogDescriptionCommand(Command importCatalogDescriptionCommand) {
+		this.importCatalogDescriptionCommand = importCatalogDescriptionCommand;
+	}
+
 	public Command getExportCatalogDescriptionCommand() {
 		return exportCatalogDescriptionCommand;
 	}
@@ -491,12 +560,12 @@ public class MainViewModel implements ViewModel {
 		this.exportCatalogDescriptionCommand = exportCatalogDescriptionCommand;
 	}
 
-	public File getExportCatalogDescriptionFile() {
-		return exportCatalogDescriptionFile;
+	public File getCatalogDescriptionFile() {
+		return catalogDescriptionFile;
 	}
 
-	public void setExportCatalogDescriptionFile(File exportCatalogDescriptionFile) {
-		this.exportCatalogDescriptionFile = exportCatalogDescriptionFile;
+	public void setCatalogDescriptionFile(File catalogDescriptionFile) {
+		this.catalogDescriptionFile = catalogDescriptionFile;
 	}
 
 	public void loadAllFormatsFromDb() {
@@ -638,5 +707,150 @@ public class MainViewModel implements ViewModel {
 				return FXCollections.emptyObservableList();
 			}
 		};
+	}
+
+	/**
+	 * Объектное представление приложения.
+	 */
+	public static class ApplicationNode {
+
+		Node node;
+
+		public ApplicationNode(Node node) {
+			this.node = node;
+		}
+
+		public List<ClassNode> getClasses() {
+			ArrayList<ClassNode> classes = new ArrayList<ClassNode>();
+
+			/**
+			 * Получаем список дочерних узлов для данного узла XML, который
+			 * соответствует приложению application. Здесь будут располагаться
+			 * все узлы Node, каждый из которых является объектным
+			 * представлением тега class для текущего тега application.
+			 */
+			NodeList classNodes = node.getChildNodes();
+
+			for (int i = 0; i < classNodes.getLength(); i++) {
+				Node node = classNodes.item(i);
+
+				if (node.getNodeType() == Node.ELEMENT_NODE) {
+
+					/**
+					 * Создаем на основе Node узла своё объектное
+					 * представление класса.
+					 */
+					ClassNode classNode = new ClassNode(node);
+					classes.add(classNode);
+				}
+			}
+
+			return classes;
+		}
+
+	}
+
+	/**
+	 * Объектное представление класса.
+	 */
+	public static class ClassNode {
+
+		Node node;
+
+		/**
+		 * Создаем новый экземпляр объекта на основе Node узла.
+		 */
+		public ClassNode(Node node) {
+			this.node = node;
+		}
+
+		/**
+		 * Возвращает список методов класса.
+		 */
+		public List<MethodNode> getMethods() {
+			ArrayList<MethodNode> methods = new ArrayList<MethodNode>();
+
+			/**
+			 * Получаем список дочерних узлов для данного узла XML,
+			 * который соответствует классу class. Здесь будут располагаться
+			 * все узлы Node, каждый из которых является объектным
+			 * представлением тега method для текущего тега class.
+			 */
+			NodeList methodNodes = node.getChildNodes();
+
+			for (int i = 0; i < methodNodes.getLength(); i++) {
+				node = methodNodes.item(i);
+
+				if (node.getNodeType() == Node.ELEMENT_NODE) {
+
+					/**
+					 * Создаем на основе Node узла своё объектное представление
+					 * метода.
+					 */
+					MethodNode methodNode = new MethodNode(node);
+					methods.add(methodNode);
+				}
+			}
+
+			return methods;
+		}
+
+		/**
+		 * Возвращае имя класса.
+		 */
+		public String getName() {
+
+			/**
+			 * Получаем атрибуты узла метода.
+			 */
+			NamedNodeMap attributes = node.getAttributes();
+
+			/**
+			 * Получаем узел аттрибута.
+			 */
+			Node nameAttrib = attributes.getNamedItem("name");
+
+			/**
+			 * Возвращаем значение атрибута.
+			 */
+			return nameAttrib.getNodeValue();
+		}
+	}
+
+	/**
+	 * Объектное представление сущности метод класса.
+	 */
+	public static class MethodNode {
+
+		Node node;
+
+		/**
+		 * Создаем новый экземпляр объекта на основе Node узла.
+		 */
+		public MethodNode(Node node) {
+			this.node = node;
+		}
+
+		/**
+		 * Возвращает имя метода.
+		 */
+		public String getName() {
+
+			/**
+			 * Получаем атрибуты узла метода.
+			 */
+			NamedNodeMap attributes = node.getAttributes();
+
+			/**
+			 * Получаем узел аттрибута.
+			 */
+			Node nameAttrib = attributes.getNamedItem("name");
+
+			/**
+			 * Возвращаем значение атрибута.
+			 */
+			return nameAttrib.getNodeValue();
+		}
+
 	}
 }
