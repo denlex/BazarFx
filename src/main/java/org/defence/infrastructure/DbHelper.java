@@ -120,7 +120,7 @@ public class DbHelper {
 		}
 	}
 
-	public boolean addMeasurementType(MeasurementType measurementType) {
+	public MeasurementType addMeasurementType(MeasurementType measurementType) {
 		Session session = factory.openSession();
 		Transaction transaction = null;
 
@@ -130,12 +130,11 @@ public class DbHelper {
 			transaction.commit();
 		} catch (Exception ex) {
 			transaction.rollback();
-			return false;
+			return null;
 		} finally {
 			session.close();
+			return measurementType;
 		}
-
-		return true;
 	}
 
 	public boolean addMeasurementType(String code, String name) {
@@ -174,7 +173,7 @@ public class DbHelper {
 		return true;
 	}
 
-	public void addMeasurement(Integer typeId, String code, String name, String shortName) {
+	public Measurement addMeasurement(Integer typeId, String code, String name, String shortName) {
 		Session session = factory.openSession();
 		Transaction transaction = null;
 
@@ -189,6 +188,7 @@ public class DbHelper {
 			ex.printStackTrace();
 		} finally {
 			session.close();
+			return null;
 		}
 	}
 

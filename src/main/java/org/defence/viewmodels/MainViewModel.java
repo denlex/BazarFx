@@ -20,6 +20,7 @@ import javafx.scene.control.TreeItem;
 import javafx.stage.WindowEvent;
 import org.defence.domain.entities.*;
 import org.defence.infrastructure.DbHelper;
+import org.defence.tools.XSDValidator;
 import org.w3c.dom.*;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -28,9 +29,11 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import javax.xml.validation.Schema;
 import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by root on 30.08.15.
@@ -189,32 +192,118 @@ public class MainViewModel implements ViewModel {
 		});
 
 		importCatalogDescriptionCommand = new DelegateCommand(() -> new Action() {
+			private Integer addMeasurementTypeIfNotFoundInDb(MeasurementType measurementType) {
+				List<MeasurementType> measurementTypes = dbHelper.getAllMeasurementTypes();
+
+				for (MeasurementType type : measurementTypes) {
+					if (type.getCode().equalsIgnoreCase(measurementType.getCode())) {
+						return type.getId();
+					}
+				}
+
+				System.out.println("New measurement type was added");
+
+				return dbHelper.addMeasurementType(measurementType).getId();
+			}
+
+			private void addMeasurementIfNotFoundInDb(Integer measurementTypeId, Measurement measurement) {
+				List<Measurement> measurements = dbHelper.getAllMeasurements();
+				boolean isFound = false;
+
+				for (Measurement type : measurements) {
+					if (type.getCode().equalsIgnoreCase(measurement.getCode())) {
+						isFound = true;
+						break;
+					}
+				}
+
+				if (!isFound) {
+					dbHelper.addMeasurement(measurementTypeId, measurement.getCode(), measurement.getName(),
+							measurement.getShortName());
+					System.out.println("New measurement was added");
+				}
+			}
+
 			@Override
 			protected void action() throws Exception {
 				try {
+					ClassLoader classLoader = getClass().getClassLoader();
+					String xsdPath = classLoader.getResource("exchange_format/catalogDescription.xsd").getFile();
+					String xmlPath = classLoader.getResource("exchange_format/catalogDescription.xml").getFile();
+					if (!XSDValidator.validateXMLSchema(xsdPath, xmlPath)) {
+						Alert alert = new Alert(Alert.AlertType.ERROR);
+						alert.setContentText("Ошибка при чтении импортируемого КО. Убедитесь, что файл имеет " +
+								"правильный формат");
+						alert.showAndWait();
+						return;
+					}
+
 					DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-					dbFactory.setValidating(false);
+//					dbFactory.setValidating(true);
 					DocumentBuilder builder = dbFactory.newDocumentBuilder();
-					Document doc = builder.parse(catalogDescriptionFile);
-//					NodeList root = doc.getChildNodes();
+//					Document doc = builder.parse(catalogDescriptionFile);
+					Document doc = builder.parse(xmlPath);
 
-					this.getClass().getClassLoader().getResource("catalog_description.xsd");
-					/*Schema
-					dbFactory.setSchema();*/
+					CharacteristicValue characteristicValue = new CharacteristicValue();
+					Characteristic characteristic = new Characteristic();
 
-					Element root = doc.getDocumentElement();
-					Element name = (Element) root.getElementsByTagName("name").item(0);
+					Element catalogDescriptionNode = doc.getDocumentElement();
+					Element catalogDescriptionNameNode = (Element) catalogDescriptionNode.getElementsByTagName("name")
+							.item(0);
+					NodeList characteristicValueNodeList = catalogDescriptionNode.getElementsByTagName
+							("characteristicValue");
+
+					for (int i = 0; i < characteristicValueNodeList.getLength(); i++) {
+						Element characteristicValueNode = (Element) characteristicValueNodeList.item(i);
+						characteristicValue.setValue(characteristicValueNode.getAttribute("value"));
+						Element characteristicNode = (Element) characteristicValueNode.getElementsByTagName
+								("characteristic").item(0);
+
+						Element characteristicCodeNode = (Element) characteristicNode.getElementsByTagName("code")
+								.item(0);
+						Element characteristicNameNode = (Element) characteristicNode.getElementsByTagName("name")
+								.item(0);
+
+						characteristic.setCode(characteristicCodeNode.getAttribute("value"));
+						characteristic.setName(characteristicNameNode.getAttribute("value"));
+
+						Element measurementsNode = (Element) characteristicNode.getElementsByTagName("measurements")
+								.item(0);
+						NodeList measurementListNode = measurementsNode.getElementsByTagName("measurement");
+
+						Element measurementNode;
+						Measurement measurement = new Measurement();
+
+						for (int j = 0; j < measurementListNode.getLength(); j++) {
+							measurementNode = (Element) measurementListNode.item(j);
+							measurement.setCode(((Element) measurementNode.getElementsByTagName("code").item(0))
+									.getAttribute
+											("value"));
+							measurement.setName(((Element) measurementNode.getElementsByTagName("name").item(0))
+									.getAttribute
+											("value"));
+							measurement.setShortName(((Element) measurementNode.getElementsByTagName("shortName").item
+									(0)).getAttribute("value"));
+
+							MeasurementType measurementType = new MeasurementType();
+							Element measurementTypeNode = (Element) measurementNode.getElementsByTagName
+									("measurementType").item(0);
+							measurementType.setCode(((Element) measurementTypeNode.getElementsByTagName("code").item
+									(0)).getAttribute("value"));
+							measurementType.setName(((Element) measurementTypeNode.getElementsByTagName("name").item
+									(0)).getAttribute("value"));
+
+							Integer measurementTypeId = addMeasurementTypeIfNotFoundInDb(measurementType);
+							addMeasurementIfNotFoundInDb(measurementTypeId, measurement);
+						}
+					}
 
 					Alert alert = new Alert(Alert.AlertType.INFORMATION);
-
-					System.out.println(name.getAttribute("value"));
-					System.out.println("textContent = " + name.getTextContent());
-					System.out.println("nodeValue = " + name.getNodeValue());
-					System.out.println("tagName = " + name.getTagName());
-					System.out.println("parentNodeName = " + name.getParentNode().getNodeName());
-
-					alert.setContentText(name.getAttribute("value"));
+					alert.setContentText("Даные успешно экспортированны");
 					alert.showAndWait();
+
+					CharacteristicValue value = new CharacteristicValue();
+
 
 				} catch (Exception ex) {
 					ex.printStackTrace();
