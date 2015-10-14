@@ -48,7 +48,7 @@ public class MeasurementTypeListViewModel implements ViewModel {
             protected void action() throws Exception {
                 MeasurementType typeEntity = new MeasurementType(type.get().getCode(), type.get().getName());
 
-                if (dbHelper.addMeasurementType(typeEntity) != false) {
+                if (dbHelper.addMeasurementType(typeEntity) != null) {
                     types.get().add(new MeasurementTypeViewModel(typeEntity));
                     type.get().setCode(null);
                     type.get().setName(null);

@@ -192,6 +192,11 @@ public class MainViewModel implements ViewModel {
 		});
 
 		importCatalogDescriptionCommand = new DelegateCommand(() -> new Action() {
+
+			private void addCatalogDescription() {
+
+			}
+
 			private Integer addMeasurementTypeIfNotFoundInDb(MeasurementType measurementType) {
 				List<MeasurementType> measurementTypes = dbHelper.getAllMeasurementTypes();
 
@@ -207,11 +212,11 @@ public class MainViewModel implements ViewModel {
 			}
 
 			private void addMeasurementIfNotFoundInDb(Integer measurementTypeId, Measurement measurement) {
-				List<Measurement> measurements = dbHelper.getAllMeasurements();
+				List<Measurement> measurements = dbHelper.getMeasurementsByTypeId(measurementTypeId);
 				boolean isFound = false;
 
-				for (Measurement type : measurements) {
-					if (type.getCode().equalsIgnoreCase(measurement.getCode())) {
+				for (Measurement m : measurements) {
+					if (m.getCode().equalsIgnoreCase(measurement.getCode())) {
 						isFound = true;
 						break;
 					}
@@ -222,6 +227,46 @@ public class MainViewModel implements ViewModel {
 							measurement.getShortName());
 					System.out.println("New measurement was added");
 				}
+			}
+
+			public Integer addCharacteristicTypeIfNotFoundInDb(CharacteristicType type) {
+				List<CharacteristicType> types = dbHelper.getAllCharacteristicTypes();
+
+				for (CharacteristicType t : types) {
+					if (t.getCode().equalsIgnoreCase(type.getCode())) {
+						return t.getId();
+					}
+				}
+
+				System.out.println("New characteristic type was added");
+
+				return dbHelper.addCharacteristicType(type.getCode(), type.getName()).getId();
+			}
+
+			public void addCharacteristicIfNotFoundInDb(Integer characteristicTypeId, Characteristic characteristic) {
+				List<Characteristic> characteristics = dbHelper.getCharacteristicsByTypeId(characteristicTypeId);
+				boolean isFound = false;
+
+				for (Characteristic ch : characteristics) {
+					if (ch.getCode().equalsIgnoreCase(characteristic.getCode())) {
+						isFound = true;
+						break;
+					}
+				}
+
+				if (!isFound) {
+//					dbHelper.addCharacteristic(characteristicTypeId, characteristic.getCode(), characteristic.getName());
+					System.out.println("New measurement was added");
+				}
+			}
+
+			public void addCharacteristicIfNotExists(Characteristic characteristic, CharacteristicType characteristicType) {
+				List<Characteristic> characteristicList = dbHelper.getCharacteristicsByTypeId(characteristicType.getId
+						());
+
+				/*for (Characteristic ch : characteristicList) {
+					if (ch.getCode().equalsIgnoreCase(characteristic.getCode())
+				}*/
 			}
 
 			@Override
@@ -252,6 +297,8 @@ public class MainViewModel implements ViewModel {
 							.item(0);
 					NodeList characteristicValueNodeList = catalogDescriptionNode.getElementsByTagName
 							("characteristicValue");
+
+					List<CharacteristicValue> valueList = new ArrayList<>();
 
 					for (int i = 0; i < characteristicValueNodeList.getLength(); i++) {
 						Element characteristicValueNode = (Element) characteristicValueNodeList.item(i);
@@ -293,13 +340,46 @@ public class MainViewModel implements ViewModel {
 							measurementType.setName(((Element) measurementTypeNode.getElementsByTagName("name").item
 									(0)).getAttribute("value"));
 
-							Integer measurementTypeId = addMeasurementTypeIfNotFoundInDb(measurementType);
-							addMeasurementIfNotFoundInDb(measurementTypeId, measurement);
+							measurementType.getMeasurements().add(measurement);
+							characteristic.getMeasurements().add(measurement);
+
+							/*Integer measurementTypeId = addMeasurementTypeIfNotFoundInDb(measurementType);
+							addMeasurementIfNotFoundInDb(measurementTypeId, measurement);*/
 						}
+
+						Element characteristicTypeNode = (Element) characteristicValueNode.getElementsByTagName
+								("characteristicType").item(0);
+						Element characteristicTypeCodeNode = (Element) characteristicTypeNode.getElementsByTagName("code").item(0);
+						Element characteristicTypeNameNode = (Element) characteristicTypeNode.getElementsByTagName("name").item(0);
+
+						CharacteristicType characteristicType = new CharacteristicType();
+						characteristicType.setCode(characteristicTypeCodeNode.getAttribute("value"));
+						characteristicType.setName(characteristicTypeNameNode.getAttribute("value"));
+
+//						addCharacteristicIfNotExists(characteristic, characteristicType);
+						characteristicType.getCharacteristics().add(characteristic);
+
+						CharacteristicValue value = new CharacteristicValue();
+						value.setValue(characteristicValue.getValue());
+						value.setCharacteristic(characteristic);
+						valueList.add(value);
+
+//						Integer characteristicTypeId = addCharacteristicTypeIfNotFoundInDb(characteristicType);
+//						addCharacteristicIfNotFoundInDb(characteristicTypeId, characteristic);
 					}
 
-					Alert alert = new Alert(Alert.AlertType.INFORMATION);
+					/*Alert alert = new Alert(Alert.AlertType.INFORMATION);
 					alert.setContentText("Даные успешно экспортированны");
+					alert.showAndWait();*/
+
+					CatalogDescription catalogDescription = new CatalogDescription(catalogDescriptionNameNode
+							.getAttribute("value"));
+
+					catalogDescription.setValues(valueList);
+
+					Alert alert = new Alert(Alert.AlertType.INFORMATION);
+					alert.setContentText("code: " + selectedName.getValue().getCode()
+						+ "\nname: " + selectedName.getValue().getName());
 					alert.showAndWait();
 
 					CharacteristicValue value = new CharacteristicValue();

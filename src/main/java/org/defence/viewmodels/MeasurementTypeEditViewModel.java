@@ -36,7 +36,7 @@ public class MeasurementTypeEditViewModel implements ViewModel {
 
                 if (id.getValue() == 0) {
                     // add measurement type
-                    if (dbHelper.addMeasurementType(code.getValue(), name.getValue())) {
+                    if (dbHelper.addMeasurementType(code.getValue(), name.getValue()) != null) {
                         System.out.println("type was added");
 
                         if (parentViewModel != null) {

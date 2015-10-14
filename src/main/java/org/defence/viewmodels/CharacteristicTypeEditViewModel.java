@@ -35,7 +35,7 @@ public class CharacteristicTypeEditViewModel implements ViewModel {
 
                 if (id.getValue() == 0) {
                     // add characteristic type
-                    if (dbHelper.addCharacteristicType(code.getValue(), name.getValue())) {
+                    if (dbHelper.addCharacteristicType(code.getValue(), name.getValue()) != null) {
                         System.out.println("type was added");
 
                         if (parentViewModel != null) {

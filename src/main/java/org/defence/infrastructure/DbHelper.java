@@ -123,90 +123,94 @@ public class DbHelper {
 	public MeasurementType addMeasurementType(MeasurementType measurementType) {
 		Session session = factory.openSession();
 		Transaction transaction = null;
+		MeasurementType newType = null;
 
 		try {
+			newType = new MeasurementType(measurementType.getCode(), measurementType.getName());
 			transaction = session.beginTransaction();
-			session.save(measurementType);
+			Integer typeId = (Integer) session.save(measurementType);
 			transaction.commit();
+			newType.setId(typeId);
 		} catch (Exception ex) {
 			transaction.rollback();
-			return null;
 		} finally {
 			session.close();
-			return measurementType;
+			return newType;
 		}
 	}
 
-	public boolean addMeasurementType(String code, String name) {
+	public MeasurementType addMeasurementType(String code, String name) {
 		Session session = factory.openSession();
 		Transaction transaction = null;
+		MeasurementType newType = null;
 
 		try {
+			newType = new MeasurementType(code, name);
 			transaction = session.beginTransaction();
-			session.save(new MeasurementType(code, name));
+			Integer typeId = (Integer) session.save(newType);
 			transaction.commit();
+			newType.setId(typeId);
 		} catch (Exception ex) {
 			transaction.rollback();
-			return false;
 		} finally {
 			session.close();
+			return newType;
 		}
-
-		return true;
 	}
 
-	public boolean addCharacteristicType(String code, String name) {
+	public CharacteristicType addCharacteristicType(String code, String name) {
 		Session session = factory.openSession();
 		Transaction transaction = null;
+		CharacteristicType newType = null;
 
 		try {
+			newType = new CharacteristicType(code, name);
 			transaction = session.beginTransaction();
-			session.save(new CharacteristicType(code, name));
+			Integer typeId = (Integer) session.save(newType);
 			transaction.commit();
+			newType.setId(typeId);
 		} catch (Exception ex) {
 			transaction.rollback();
-			return false;
 		} finally {
 			session.close();
+			return newType;
 		}
-
-		return true;
 	}
 
 	public Measurement addMeasurement(Integer typeId, String code, String name, String shortName) {
 		Session session = factory.openSession();
 		Transaction transaction = null;
+		Measurement newMeasurement = null;
 
 		try {
+			newMeasurement = new Measurement(code, name, shortName);
 			transaction = session.beginTransaction();
 			MeasurementType type = (MeasurementType) session.get(MeasurementType.class, typeId);
-			type.getMeasurements().add(new Measurement(code, name, shortName));
-			session.save(type);
+
+			type.getMeasurements().add(newMeasurement);
+			Integer measurementId = (Integer) session.save(type);
 			transaction.commit();
+
+//			newMeasurement.setId(measurementId);
 		} catch (Exception ex) {
 			transaction.rollback();
 			ex.printStackTrace();
 		} finally {
 			session.close();
-			return null;
+			return newMeasurement;
 		}
 	}
 
-	public boolean addCharacteristic(Integer typeId, String code, String name, List<Integer> measurementIdList) {
+	public Characteristic addCharacteristic(Integer typeId, String code, String name, List<Integer>
+			measurementIdList) {
 		Session session = factory.openSession();
 		Transaction transaction = null;
+		Characteristic newCharacteristic = null;
 
 		try {
+			newCharacteristic = new Characteristic(code, name, null);
 			transaction = session.beginTransaction();
 			CharacteristicType type = (CharacteristicType) session.get(CharacteristicType.class, typeId);
-
-            /*// getting characteristic measurements
-			List<Measurement> measurements
-                    = session.createQuery("from Measurement m where m.id in (:measurementIdList)").setParameterList
-                    ("measurementIdList",
-                    measurementIdList).list();*/
-
-			Characteristic characteristic = new Characteristic(code, name, null);
 
 			// getting measurement list of characteristic
 			List<Measurement> measurements;
@@ -216,25 +220,25 @@ public class DbHelper {
 				measurements = session.createQuery("from Measurement m where m.id in (:measurementIdList)")
 						.setParameterList("measurementIdList",
 								measurementIdList).list();
-				characteristic.setMeasurements(new ArrayList<>(measurements));
+				newCharacteristic.setMeasurements(new ArrayList<>(measurements));
 			}
 
-			if (characteristic == null) {
+			if (newCharacteristic == null) {
 				transaction.rollback();
-				return false;
+				return null;
 			}
 
-			type.getCharacteristics().add(characteristic);
-			session.save(type);
+			type.getCharacteristics().add(newCharacteristic);
+			Integer characteristicId = (Integer) session.save(type);
 			transaction.commit();
+			newCharacteristic.setId(characteristicId);
 		} catch (Exception ex) {
 			transaction.rollback();
 			ex.printStackTrace();
-			return false;
 		} finally {
 			session.close();
+			return newCharacteristic;
 		}
-		return true;
 	}
 
 	public boolean addCharacteristicKit(String name, List<Integer> characteristicIdList) {
@@ -279,9 +283,9 @@ public class DbHelper {
 
 			DescriptionFormat format = (DescriptionFormat) session.get(DescriptionFormat.class, formatId);
 			format.getAssertedNames().add(newName);
-			session.save(format);
-
+			Integer nameId = (Integer) session.save(format);
 			transaction.commit();
+			newName.setId(nameId);
 		} catch (Exception ex) {
 			transaction.rollback();
 			ex.printStackTrace();
@@ -774,7 +778,7 @@ public class DbHelper {
 		}
 	}
 
-	public List<Measurement> getMeasurementsByTypeId(Integer id) {
+	/*public List<Measurement> getMeasurementsByTypeId(Integer id) {
 		Session session = factory.openSession();
 		List<Measurement> result = null;
 
@@ -790,7 +794,7 @@ public class DbHelper {
 			session.close();
 			return result;
 		}
-	}
+	}*/
 
 	public List<Characteristic> getCharacteristicsByTypeId(Integer id) {
 		Session session = factory.openSession();
@@ -862,6 +866,27 @@ public class DbHelper {
 
 		try {
 			result = session.createQuery("from Measurement order by name").list();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			session.close();
+			return result;
+		}
+	}
+
+	public List<Measurement> getMeasurementsByTypeId(Integer typeId) {
+		Session session = factory.openSession();
+		List<Measurement> result = null;
+
+		try {
+			MeasurementType type = (MeasurementType) session.get(MeasurementType.class, typeId);
+
+			if (type == null) {
+				throw new NullPointerException(String.format("MeasurementType {id = %d} is not found in data base",
+						typeId));
+			}
+
+			result = type.getMeasurements();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		} finally {
