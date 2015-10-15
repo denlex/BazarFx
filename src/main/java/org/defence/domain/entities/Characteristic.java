@@ -1,13 +1,12 @@
 package org.defence.domain.entities;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by root on 22.07.15.
  */
-public class Characteristic implements Serializable, Comparable<Characteristic> {
+public class Characteristic implements Comparable<Characteristic> {
     private int id;
     private String code;
     private String name;
@@ -25,7 +24,6 @@ public class Characteristic implements Serializable, Comparable<Characteristic> 
         this(code, name);
         this.measurements = measurements;
     }
-
 
     public int getId() {
         return id;

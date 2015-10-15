@@ -197,6 +197,17 @@ public class MainViewModel implements ViewModel {
 
 			}
 
+			private void addMeasurementIfNotExists(Measurement measurement, MeasurementType type) {
+
+				for (Measurement m : type.getMeasurements()) {
+					if (m.getCode().equalsIgnoreCase(measurement.getCode())) {
+						return;
+					}
+				}
+
+				type.getMeasurements().add(measurement);
+			}
+
 			private Integer addMeasurementTypeIfNotFoundInDb(MeasurementType measurementType) {
 				List<MeasurementType> measurementTypes = dbHelper.getAllMeasurementTypes();
 
@@ -214,6 +225,10 @@ public class MainViewModel implements ViewModel {
 			private void addMeasurementIfNotFoundInDb(Integer measurementTypeId, Measurement measurement) {
 				List<Measurement> measurements = dbHelper.getMeasurementsByTypeId(measurementTypeId);
 				boolean isFound = false;
+
+				if (measurements == null) {
+					return;
+				}
 
 				for (Measurement m : measurements) {
 					if (m.getCode().equalsIgnoreCase(measurement.getCode())) {
@@ -255,12 +270,19 @@ public class MainViewModel implements ViewModel {
 				}
 
 				if (!isFound) {
-//					dbHelper.addCharacteristic(characteristicTypeId, characteristic.getCode(), characteristic.getName());
+					List<Integer> measurementIdList = new ArrayList<>();
+					for (Measurement m : characteristic.getMeasurements()) {
+						measurementIdList.add(m.getId());
+					}
+
+					dbHelper.addCharacteristic(characteristicTypeId, characteristic.getCode(), characteristic.getName
+							(), measurementIdList);
 					System.out.println("New measurement was added");
 				}
 			}
 
-			public void addCharacteristicIfNotExists(Characteristic characteristic, CharacteristicType characteristicType) {
+			public void addCharacteristicIfNotExists(Characteristic characteristic, CharacteristicType
+					characteristicType) {
 				List<Characteristic> characteristicList = dbHelper.getCharacteristicsByTypeId(characteristicType.getId
 						());
 
@@ -268,6 +290,7 @@ public class MainViewModel implements ViewModel {
 					if (ch.getCode().equalsIgnoreCase(characteristic.getCode())
 				}*/
 			}
+
 
 			@Override
 			protected void action() throws Exception {
@@ -289,8 +312,12 @@ public class MainViewModel implements ViewModel {
 //					Document doc = builder.parse(catalogDescriptionFile);
 					Document doc = builder.parse(xmlPath);
 
-					CharacteristicValue characteristicValue = new CharacteristicValue();
-					Characteristic characteristic = new Characteristic();
+					Element measurementNode;
+					MeasurementType measurementType;
+					Measurement measurement;
+					CharacteristicValue characteristicValue;
+					Characteristic characteristic;
+
 
 					Element catalogDescriptionNode = doc.getDocumentElement();
 					Element catalogDescriptionNameNode = (Element) catalogDescriptionNode.getElementsByTagName("name")
@@ -301,6 +328,7 @@ public class MainViewModel implements ViewModel {
 					List<CharacteristicValue> valueList = new ArrayList<>();
 
 					for (int i = 0; i < characteristicValueNodeList.getLength(); i++) {
+						characteristicValue = new CharacteristicValue();
 						Element characteristicValueNode = (Element) characteristicValueNodeList.item(i);
 						characteristicValue.setValue(characteristicValueNode.getAttribute("value"));
 						Element characteristicNode = (Element) characteristicValueNode.getElementsByTagName
@@ -311,6 +339,7 @@ public class MainViewModel implements ViewModel {
 						Element characteristicNameNode = (Element) characteristicNode.getElementsByTagName("name")
 								.item(0);
 
+						characteristic = new Characteristic();
 						characteristic.setCode(characteristicCodeNode.getAttribute("value"));
 						characteristic.setName(characteristicNameNode.getAttribute("value"));
 
@@ -318,11 +347,10 @@ public class MainViewModel implements ViewModel {
 								.item(0);
 						NodeList measurementListNode = measurementsNode.getElementsByTagName("measurement");
 
-						Element measurementNode;
-						Measurement measurement = new Measurement();
-
 						for (int j = 0; j < measurementListNode.getLength(); j++) {
 							measurementNode = (Element) measurementListNode.item(j);
+
+							measurement = new Measurement();
 							measurement.setCode(((Element) measurementNode.getElementsByTagName("code").item(0))
 									.getAttribute
 											("value"));
@@ -332,25 +360,30 @@ public class MainViewModel implements ViewModel {
 							measurement.setShortName(((Element) measurementNode.getElementsByTagName("shortName").item
 									(0)).getAttribute("value"));
 
-							MeasurementType measurementType = new MeasurementType();
 							Element measurementTypeNode = (Element) measurementNode.getElementsByTagName
 									("measurementType").item(0);
+
+							measurementType = new MeasurementType();
 							measurementType.setCode(((Element) measurementTypeNode.getElementsByTagName("code").item
 									(0)).getAttribute("value"));
 							measurementType.setName(((Element) measurementTypeNode.getElementsByTagName("name").item
 									(0)).getAttribute("value"));
 
+//							addMeasurementIfNotExists(measurement, measurementType);
 							measurementType.getMeasurements().add(measurement);
+//							addCharacteristicIfNotExists();
 							characteristic.getMeasurements().add(measurement);
 
-							/*Integer measurementTypeId = addMeasurementTypeIfNotFoundInDb(measurementType);
-							addMeasurementIfNotFoundInDb(measurementTypeId, measurement);*/
+							Integer measurementTypeId = addMeasurementTypeIfNotFoundInDb(measurementType);
+							addMeasurementIfNotFoundInDb(measurementTypeId, measurement);
 						}
 
 						Element characteristicTypeNode = (Element) characteristicValueNode.getElementsByTagName
 								("characteristicType").item(0);
-						Element characteristicTypeCodeNode = (Element) characteristicTypeNode.getElementsByTagName("code").item(0);
-						Element characteristicTypeNameNode = (Element) characteristicTypeNode.getElementsByTagName("name").item(0);
+						Element characteristicTypeCodeNode = (Element) characteristicTypeNode.getElementsByTagName
+								("code").item(0);
+						Element characteristicTypeNameNode = (Element) characteristicTypeNode.getElementsByTagName
+								("name").item(0);
 
 						CharacteristicType characteristicType = new CharacteristicType();
 						characteristicType.setCode(characteristicTypeCodeNode.getAttribute("value"));
@@ -364,22 +397,26 @@ public class MainViewModel implements ViewModel {
 						value.setCharacteristic(characteristic);
 						valueList.add(value);
 
-//						Integer characteristicTypeId = addCharacteristicTypeIfNotFoundInDb(characteristicType);
-//						addCharacteristicIfNotFoundInDb(characteristicTypeId, characteristic);
+						Integer characteristicTypeId = addCharacteristicTypeIfNotFoundInDb(characteristicType);
+						addCharacteristicIfNotFoundInDb(characteristicTypeId, characteristic);
 					}
-
-					/*Alert alert = new Alert(Alert.AlertType.INFORMATION);
-					alert.setContentText("Даные успешно экспортированны");
-					alert.showAndWait();*/
 
 					CatalogDescription catalogDescription = new CatalogDescription(catalogDescriptionNameNode
 							.getAttribute("value"));
 
 					catalogDescription.setValues(valueList);
+					catalogDescription.setName(catalogDescriptionNameNode.getAttribute("value"));
+					/*dbHelper.addCatalogDescription(selectedName.getValue().getId(), catalogDescription.getName(),
+							catalogDescription.getValues());*/
+
+
+//					Measurement measurement1 = new Measurement("10", "локоть", "лок");
+
+//					dbHelper.addMeasurement(measurement1);
 
 					Alert alert = new Alert(Alert.AlertType.INFORMATION);
 					alert.setContentText("code: " + selectedName.getValue().getCode()
-						+ "\nname: " + selectedName.getValue().getName());
+							+ "\nname: " + selectedName.getValue().getName());
 					alert.showAndWait();
 
 					CharacteristicValue value = new CharacteristicValue();

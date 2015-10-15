@@ -128,9 +128,8 @@ public class DbHelper {
 		try {
 			newType = new MeasurementType(measurementType.getCode(), measurementType.getName());
 			transaction = session.beginTransaction();
-			Integer typeId = (Integer) session.save(measurementType);
+			session.save(measurementType);
 			transaction.commit();
-			newType.setId(typeId);
 		} catch (Exception ex) {
 			transaction.rollback();
 		} finally {
@@ -147,9 +146,8 @@ public class DbHelper {
 		try {
 			newType = new MeasurementType(code, name);
 			transaction = session.beginTransaction();
-			Integer typeId = (Integer) session.save(newType);
+			session.save(newType);
 			transaction.commit();
-			newType.setId(typeId);
 		} catch (Exception ex) {
 			transaction.rollback();
 		} finally {
@@ -166,9 +164,8 @@ public class DbHelper {
 		try {
 			newType = new CharacteristicType(code, name);
 			transaction = session.beginTransaction();
-			Integer typeId = (Integer) session.save(newType);
+			session.save(newType);
 			transaction.commit();
-			newType.setId(typeId);
 		} catch (Exception ex) {
 			transaction.rollback();
 		} finally {
@@ -188,10 +185,8 @@ public class DbHelper {
 			MeasurementType type = (MeasurementType) session.get(MeasurementType.class, typeId);
 
 			type.getMeasurements().add(newMeasurement);
-			Integer measurementId = (Integer) session.save(type);
+			session.save(type);
 			transaction.commit();
-
-//			newMeasurement.setId(measurementId);
 		} catch (Exception ex) {
 			transaction.rollback();
 			ex.printStackTrace();
@@ -229,9 +224,8 @@ public class DbHelper {
 			}
 
 			type.getCharacteristics().add(newCharacteristic);
-			Integer characteristicId = (Integer) session.save(type);
+			session.save(type);
 			transaction.commit();
-			newCharacteristic.setId(characteristicId);
 		} catch (Exception ex) {
 			transaction.rollback();
 			ex.printStackTrace();
@@ -283,9 +277,8 @@ public class DbHelper {
 
 			DescriptionFormat format = (DescriptionFormat) session.get(DescriptionFormat.class, formatId);
 			format.getAssertedNames().add(newName);
-			Integer nameId = (Integer) session.save(format);
+			session.save(format);
 			transaction.commit();
-			newName.setId(nameId);
 		} catch (Exception ex) {
 			transaction.rollback();
 			ex.printStackTrace();
@@ -881,12 +874,11 @@ public class DbHelper {
 		try {
 			MeasurementType type = (MeasurementType) session.get(MeasurementType.class, typeId);
 
-			if (type == null) {
-				throw new NullPointerException(String.format("MeasurementType {id = %d} is not found in data base",
-						typeId));
+			if (type != null) {
+				/*throw new NullPointerException(String.format("MeasurementType {id = %d} is not found in data base",
+						typeId));*/
+				result = type.getMeasurements();
 			}
-
-			result = type.getMeasurements();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		} finally {
