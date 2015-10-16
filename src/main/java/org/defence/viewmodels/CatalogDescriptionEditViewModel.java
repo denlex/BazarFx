@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
  */
 public class CatalogDescriptionEditViewModel implements ViewModel {
 	private final IntegerProperty id = new SimpleIntegerProperty();
+	private final StringProperty code = new SimpleStringProperty();
 	private final StringProperty name = new SimpleStringProperty();
 	private final ListProperty<CharacteristicValueViewModel> values = new SimpleListProperty<>();
 
@@ -143,7 +144,7 @@ public class CatalogDescriptionEditViewModel implements ViewModel {
 		this.id.set(id);
 	}
 
-	/*public String getCode() {
+	public String getCode() {
 		return code.get();
 	}
 
@@ -153,7 +154,7 @@ public class CatalogDescriptionEditViewModel implements ViewModel {
 
 	public void setCode(String code) {
 		this.code.set(code);
-	}*/
+	}
 
 	public String getName() {
 		return name.get();

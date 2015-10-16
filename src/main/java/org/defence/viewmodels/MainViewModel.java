@@ -410,6 +410,8 @@ public class MainViewModel implements ViewModel {
 							catalogDescription.getValues());*/
 
 
+//					dbHelper.addCatalogDescription()
+
 //					Measurement measurement1 = new Measurement("10", "локоть", "лок");
 
 //					dbHelper.addMeasurement(measurement1);

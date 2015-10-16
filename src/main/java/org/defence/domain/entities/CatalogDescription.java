@@ -9,6 +9,7 @@ import java.util.List;
  */
 public class CatalogDescription implements Serializable {
     private int id;
+    private String code;
     private String name;
     private List<CharacteristicValue> values = new ArrayList<CharacteristicValue>();
 
@@ -32,7 +33,15 @@ public class CatalogDescription implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public String getName() {
         return name;
     }
 

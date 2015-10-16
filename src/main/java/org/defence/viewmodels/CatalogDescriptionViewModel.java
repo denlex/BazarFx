@@ -14,14 +14,16 @@ import java.util.List;
  */
 public class CatalogDescriptionViewModel {
 	private final IntegerProperty id = new SimpleIntegerProperty();
+	private final StringProperty code = new SimpleStringProperty();
 	private final StringProperty name = new SimpleStringProperty();
 	private final ListProperty<CharacteristicValueViewModel> values = new SimpleListProperty<>();
 
 	public CatalogDescriptionViewModel() {
 	}
 
-	public CatalogDescriptionViewModel(Integer id, String name, List<CharacteristicValue> values) {
+	public CatalogDescriptionViewModel(Integer id, String code, String name, List<CharacteristicValue> values) {
 		this.id.setValue(id);
+		this.code.setValue(code);
 		this.name.setValue(name);
 
 		if (values != null) {
@@ -34,7 +36,7 @@ public class CatalogDescriptionViewModel {
 	}
 
 	public CatalogDescriptionViewModel(CatalogDescription catalogDescription) {
-		this(catalogDescription.getId(), catalogDescription.getName(), catalogDescription.getValues());
+		this(catalogDescription.getId(), catalogDescription.getCode(), catalogDescription.getName(), catalogDescription.getValues());
 	}
 
 	public int getId() {
@@ -47,6 +49,18 @@ public class CatalogDescriptionViewModel {
 
 	public void setId(int id) {
 		this.id.set(id);
+	}
+
+	public String getCode() {
+		return code.get();
+	}
+
+	public StringProperty codeProperty() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code.set(code);
 	}
 
 	public String getName() {

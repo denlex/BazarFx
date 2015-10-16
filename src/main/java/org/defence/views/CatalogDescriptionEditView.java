@@ -16,8 +16,8 @@ import org.defence.viewmodels.CharacteristicValueViewModel;
  */
 public class CatalogDescriptionEditView implements FxmlView<CatalogDescriptionEditViewModel>, Returnable {
 
-	/*@FXML
-	TextField codeTextField;*/
+	@FXML
+	TextField codeTextField;
 
 	@FXML
 	TextField nameTextField;
@@ -87,7 +87,7 @@ public class CatalogDescriptionEditView implements FxmlView<CatalogDescriptionEd
 	}
 
 	public void initialize() {
-//		codeTextField.textProperty().bindBidirectional(viewModel.codeProperty());
+		codeTextField.textProperty().bindBidirectional(viewModel.codeProperty());
 		nameTextField.textProperty().bindBidirectional(viewModel.nameProperty());
 
 		initializeValuesTableView();
