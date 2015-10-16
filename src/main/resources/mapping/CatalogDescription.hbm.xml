@@ -8,6 +8,7 @@
             <generator class="native"/>
         </id>
 
+        <property name="code" column="CODE" type="string"/>
         <property name="name" column="NAME" type="string"/>
         <list name="values" table="CHARACTERISTICS_VALUE" fetch="select" lazy="false" cascade="all" inverse="false">
             <key column="CATALOG_DESCRIPTION_ID"/>

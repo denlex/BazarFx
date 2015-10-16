@@ -29,25 +29,25 @@ public class HibernateTest {
         Characteristic moatWidth = new Characteristic("04", "Ширана преодолеваемого рва");
         Characteristic speedOnRoad = new Characteristic("05", "Скорость по трассе");
 
-        List<Characteristic> migCharacteristics = new ArrayList<Characteristic>();
+        List<Characteristic> migCharacteristics = new ArrayList<>();
         migCharacteristics.add(maxDistance);
         migCharacteristics.add(maxHeight);
         migCharacteristics.add(maxSpeed);
 
         CharacteristicKit destroyersOfVVS = new CharacteristicKit("Истребители ВВС", migCharacteristics);
 
-        List<CharacteristicKit> characteristicKits = new ArrayList<CharacteristicKit>();
+        List<CharacteristicKit> characteristicKits = new ArrayList<>();
         characteristicKits.add(destroyersOfVVS);
 
-        List<CharacteristicValue> migCharacteristicValues = new ArrayList<CharacteristicValue>();
+        List<CharacteristicValue> migCharacteristicValues = new ArrayList<>();
         migCharacteristicValues.add(new CharacteristicValue(maxDistance, "1 430"));
         migCharacteristicValues.add(new CharacteristicValue(maxHeight, "18 000"));
         migCharacteristicValues.add(new CharacteristicValue(maxSpeed, "2 450"));
 
-        CatalogDescription mig29 = new CatalogDescription("Миг-29", migCharacteristicValues);
+        CatalogDescription mig29 = new CatalogDescription("Миг-29", "000", migCharacteristicValues);
 
 
-        List<CatalogDescription> catalogDescriptions = new ArrayList<CatalogDescription>();
+        List<CatalogDescription> catalogDescriptions = new ArrayList<>();
         catalogDescriptions.add(mig29);
 
 		AssertedName assertedName = new AssertedName("code", "Миги");

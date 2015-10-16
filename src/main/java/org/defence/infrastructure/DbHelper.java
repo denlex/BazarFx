@@ -294,8 +294,7 @@ public class DbHelper {
 		CharacteristicValue characteristicValue = null;
 
 		try {
-			characteristicValue.setCharacteristic(characteristic);
-			characteristicValue.setValue(value);
+			characteristicValue = new CharacteristicValue(characteristic, value);
 
 			transaction = session.beginTransaction();
 			session.save(characteristicValue);
@@ -309,20 +308,21 @@ public class DbHelper {
 		}
 	}
 
-	public CatalogDescription addCatalogDescription(Integer assertedNameId, String name, List<CharacteristicValue>
+	public CatalogDescription addCatalogDescription(Integer assertedNameId, String code, String name, List<CharacteristicValue>
 			values) {
 		Session session = factory.openSession();
 		Transaction transaction = null;
 		CatalogDescription description = null;
 
 		try {
-			description = new CatalogDescription(name, values);
+			description = new CatalogDescription(code, name, values);
 			AssertedName assertedName = (AssertedName) session.get(AssertedName.class, assertedNameId);
 			assertedName.getCatalogDescriptions().add(description);
 			transaction = session.beginTransaction();
 			session.save(assertedName);
 			transaction.commit();
 		} catch (Exception ex) {
+			System.out.println("Error when catalogDescription add process!");
 			transaction.rollback();
 		} finally {
 			session.close();
@@ -1124,6 +1124,21 @@ public class DbHelper {
 					break;
 				}
 			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			session.close();
+			return result;
+		}
+	}
+
+	public List<CatalogDescription> getCatalogDescriptionsByAssertedName(Integer assertedNameId) {
+		Session session = factory.openSession();
+		List<CatalogDescription> result = null;
+
+		try {
+			AssertedName name = (AssertedName) session.get(AssertedName.class, assertedNameId);
+			result = name.getCatalogDescriptions();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		} finally {

@@ -10,8 +10,7 @@
 
         <property name="value" column="VALUE" type="string"/>
 
-
         <many-to-one name="characteristic" column="CHARACTERISTIC_ID" class="Characteristic" not-null="true"
-                     lazy="false"/>
+                     lazy="false" cascade="save-update"/>
     </class>
 </hibernate-mapping>
