@@ -208,109 +208,107 @@ public class MainViewModel implements ViewModel {
 				type.getMeasurements().add(measurement);
 			}
 
-			private Integer addMeasurementTypeIfNotFoundInDb(MeasurementType measurementType) {
+			private MeasurementType addMeasurementTypeIfNotFoundInDb(MeasurementType measurementType) {
 				List<MeasurementType> measurementTypes = dbHelper.getAllMeasurementTypes();
 
 				for (MeasurementType type : measurementTypes) {
 					if (type.getCode().equalsIgnoreCase(measurementType.getCode())) {
-						return type.getId();
+						return type;
 					}
 				}
 
 				System.out.println("New measurement type was added");
 
-				return dbHelper.addMeasurementType(measurementType).getId();
+				return dbHelper.addMeasurementType(measurementType);
 			}
 
-			private void addMeasurementIfNotFoundInDb(Integer measurementTypeId, Measurement measurement) {
+			private Measurement addMeasurementIfNotFoundInDb(Integer measurementTypeId, Measurement measurement) {
 				List<Measurement> measurements = dbHelper.getMeasurementsByTypeId(measurementTypeId);
 				boolean isFound = false;
+				Measurement result = null;
 
 				if (measurements == null) {
-					return;
-				}
+					result = null;
+				} else {
+					for (Measurement m : measurements) {
+						if (m.getCode().equalsIgnoreCase(measurement.getCode())) {
+							/*isFound = true;
+							break;*/
+							return m;
+						}
+					}
 
-				for (Measurement m : measurements) {
-					if (m.getCode().equalsIgnoreCase(measurement.getCode())) {
-						isFound = true;
-						break;
+					if (!isFound) {
+						System.out.println("New measurement was added");
+
+						result = dbHelper.addMeasurement(measurementTypeId, measurement.getCode(), measurement.getName(),
+								measurement.getShortName());
 					}
 				}
 
-				if (!isFound) {
-					dbHelper.addMeasurement(measurementTypeId, measurement.getCode(), measurement.getName(),
-							measurement.getShortName());
-					System.out.println("New measurement was added");
-				}
+				return result;
 			}
 
-			public Integer addCharacteristicTypeIfNotFoundInDb(CharacteristicType type) {
+			public CharacteristicType addCharacteristicTypeIfNotFoundInDb(CharacteristicType type) {
 				List<CharacteristicType> types = dbHelper.getAllCharacteristicTypes();
 
 				for (CharacteristicType t : types) {
 					if (t.getCode().equalsIgnoreCase(type.getCode())) {
-						return t.getId();
+						return t;
 					}
 				}
 
 				System.out.println("New characteristic type was added!");
 
-				return dbHelper.addCharacteristicType(type.getCode(), type.getName()).getId();
+				return dbHelper.addCharacteristicType(type.getCode(), type.getName());
 			}
 
-			public void addCharacteristicIfNotFoundInDb(Integer characteristicTypeId, Characteristic characteristic) {
+			public Characteristic addCharacteristicIfNotFoundInDb(Integer characteristicTypeId, Characteristic characteristic) {
 				List<Characteristic> characteristics = dbHelper.getCharacteristicsByTypeId(characteristicTypeId);
 				boolean isFound = false;
+				Characteristic result = null;
 
 				for (Characteristic ch : characteristics) {
 					if (ch.getCode().equalsIgnoreCase(characteristic.getCode())) {
-						isFound = true;
-						break;
+						/*isFound = true;
+						break;*/
+						return ch;
 					}
 				}
 
 				if (!isFound) {
 					List<Integer> measurementIdList = new ArrayList<>();
 					for (Measurement m : characteristic.getMeasurements()) {
+						if (m == null) {
+							continue;
+						}
+
 						measurementIdList.add(m.getId());
 					}
 
-					dbHelper.addCharacteristic(characteristicTypeId, characteristic.getCode(), characteristic.getName
+					result = dbHelper.addCharacteristic(characteristicTypeId, characteristic.getCode(), characteristic.getName
 							(), measurementIdList);
-					System.out.println("New measurement was added!");
+					System.out.println("New characteristic was added!");
 				}
+
+				return result;
 			}
 
 			public boolean addCatalogDescriptionIfNotFoundInDb(Integer assertedNameId, CatalogDescription
-					description, List<CharacteristicType> characteristicTypeList, List<MeasurementType>
-					measurementTypeList) {
+					description) {
 				List<CatalogDescription> descriptions = dbHelper.getCatalogDescriptionsByAssertedName(assertedNameId);
 
-				/*for (CatalogDescription d : descriptions) {
+				for (CatalogDescription d : descriptions) {
 					if (d.getCode().equalsIgnoreCase(description.getCode())) {
 						return false;
 					}
-				}*/
-
-				/*for (MeasurementType type : measurementTypeList) {
-					addMeasurementTypeIfNotFoundInDb(type);
 				}
-
-				for (CharacteristicType type : characteristicTypeList) {
-					addCharacteristicTypeIfNotFoundInDb(type);
-				}*/
-
-				/*for (CharacteristicValue value : description.getValues()) {
-					for (Measurement measurement : value.getCharacteristic().getMeasurements()) {
-						addMeasurementIfNotFoundInDb();
-					}
-
-
-					dbHelper.addCharacteristicValue(value.getCharacteristic(), value.getValue());
-				}*/
 
 				dbHelper.addCatalogDescription(assertedNameId, description.getCode(), description.getName(),
 						description.getValues());
+
+
+
 				System.out.println("New catalogDescription was added!");
 
 				return true;
@@ -398,12 +396,13 @@ public class MainViewModel implements ViewModel {
 							measurementType.setName(((Element) measurementTypeNode.getElementsByTagName("name").item
 									(0)).getAttribute("value"));
 
+							measurementType = addMeasurementTypeIfNotFoundInDb(measurementType);
+							measurement = addMeasurementIfNotFoundInDb(measurementType.getId(), measurement);
+
 							measurementType.getMeasurements().add(measurement);
 							measurementTypeList.add(measurementType);
-							characteristic.getMeasurements().add(measurement);
 
-							Integer measurementTypeId = addMeasurementTypeIfNotFoundInDb(measurementType);
-							addMeasurementIfNotFoundInDb(measurementTypeId, measurement);
+							characteristic.getMeasurements().add(measurement);
 						}
 
 						Element characteristicTypeNode = (Element) characteristicValueNode.getElementsByTagName
@@ -417,6 +416,9 @@ public class MainViewModel implements ViewModel {
 						characteristicType.setCode(characteristicTypeCodeNode.getAttribute("value"));
 						characteristicType.setName(characteristicTypeNameNode.getAttribute("value"));
 
+						characteristicType = addCharacteristicTypeIfNotFoundInDb(characteristicType);
+						characteristic = addCharacteristicIfNotFoundInDb(characteristicType.getId(), characteristic);
+
 						characteristicType.getCharacteristics().add(characteristic);
 						characteristicTypeList.add(characteristicType);
 
@@ -424,10 +426,6 @@ public class MainViewModel implements ViewModel {
 						value.setValue(characteristicValue.getValue());
 						value.setCharacteristic(characteristic);
 						valueList.add(value);
-
-						Integer characteristicTypeId = addCharacteristicTypeIfNotFoundInDb(characteristicType);
-						addCharacteristicIfNotFoundInDb(characteristicTypeId, characteristic);
-//						dbHelper.addCharacteristicValue(characteristic, value.getValue());
 					}
 
 					CatalogDescription catalogDescription = new CatalogDescription(catalogDescriptionCodeNode
@@ -436,8 +434,7 @@ public class MainViewModel implements ViewModel {
 					catalogDescription.setValues(valueList);
 					catalogDescription.setName(catalogDescriptionNameNode.getAttribute("value"));
 
-					if (addCatalogDescriptionIfNotFoundInDb(selectedName.getValue().getId(), catalogDescription,
-							characteristicTypeList, measurementTypeList)) {
+					if (addCatalogDescriptionIfNotFoundInDb(selectedName.getValue().getId(), catalogDescription)) {
 						Alert alert = new Alert(Alert.AlertType.INFORMATION);
 						alert.setContentText(String.format("Было добалено новое КО:\nНаименование:\t%s\nКод:\t%s",
 								catalogDescription.getName(), catalogDescription.getCode()));

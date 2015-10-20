@@ -123,10 +123,10 @@ public class DbHelper {
 	public MeasurementType addMeasurementType(MeasurementType measurementType) {
 		Session session = factory.openSession();
 		Transaction transaction = null;
-		MeasurementType newType = null;
+//		MeasurementType newType = null;
 
 		try {
-			newType = new MeasurementType(measurementType.getCode(), measurementType.getName());
+//			newType = new MeasurementType(measurementType.getCode(), measurementType.getName());
 			transaction = session.beginTransaction();
 			session.save(measurementType);
 			transaction.commit();
@@ -134,7 +134,7 @@ public class DbHelper {
 			transaction.rollback();
 		} finally {
 			session.close();
-			return newType;
+			return measurementType;
 		}
 	}
 
@@ -305,6 +305,28 @@ public class DbHelper {
 		} finally {
 			session.close();
 			return characteristicValue;
+		}
+	}
+
+	public CatalogDescription addCatalogDescriptionWhileImport(Integer assertedNameId, String code, String name, List<CharacteristicValue>
+			values) {
+		Session session = factory.openSession();
+		Transaction transaction = null;
+		CatalogDescription description = null;
+
+		try {
+			for (CharacteristicValue value : values) {
+				 session.get(CharacteristicValue.class, value.getId());
+			}
+			AssertedName assertedName = (AssertedName) session.get(AssertedName.class, assertedNameId);
+
+			transaction.commit();
+		} catch (Exception ex) {
+			transaction.rollback();
+			ex.printStackTrace();
+		} finally {
+			session.close();
+			return description;
 		}
 	}
 

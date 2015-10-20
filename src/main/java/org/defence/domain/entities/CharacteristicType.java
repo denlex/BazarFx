@@ -17,7 +17,7 @@ public class CharacteristicType implements Serializable {
     }
 
     public CharacteristicType(String code, String name) {
-        this(code, name, null);
+        this(code, name, new ArrayList<>());
     }
 
     public CharacteristicType(String code, String name, List<Characteristic> characteristics) {
