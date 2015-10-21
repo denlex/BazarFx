@@ -315,6 +315,7 @@ public class DbHelper {
 		CatalogDescription description = null;
 
 		try {
+			// refresh object references which point on the same object
 			for (CharacteristicValue value : values) {
 				value.setCharacteristic((Characteristic) session.get(Characteristic.class, value
 						.getCharacteristic().getId()));
