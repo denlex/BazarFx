@@ -45,7 +45,7 @@
                 <TableColumn fx:id="checkBoxTableColumn" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="150.0" text="Выбор характеристики" />
             </columns>
             <GridPane.margin>
-                <Insets />
+                <Insets left="10.0" />
             </GridPane.margin>
         </TableView>
         <AnchorPane GridPane.columnSpan="3" GridPane.rowIndex="6" />
@@ -77,7 +77,7 @@
     <columnConstraints>
         <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" />
         <ColumnConstraints hgrow="ALWAYS" />
-        <ColumnConstraints hgrow="ALWAYS" maxWidth="270.0" minWidth="270.0" prefWidth="270.0" />
+        <ColumnConstraints hgrow="ALWAYS" maxWidth="-Infinity" minWidth="-Infinity" />
     </columnConstraints>
     <rowConstraints>
         <RowConstraints maxHeight="50.0" minHeight="50.0" vgrow="NEVER" />
