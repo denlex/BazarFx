@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.geometry.*?>
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane stylesheets="/css/Button.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.defence.views.MeasurementCatalogView">
+<GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" stylesheets="/css/Button.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.defence.views.MeasurementCatalogView">
     <children>
         <GridPane GridPane.columnIndex="0" GridPane.rowIndex="0">
             <children>
@@ -46,7 +44,7 @@
                                                         </Button>
                                                         <Button fx:id="addTypeButton" onAction="#addTypeButtonClicked" text="Добавить" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="270.0" AnchorPane.topAnchor="10.0">
                                                         </Button>
-                                                        <Button fx:id="reportButton" layoutY="10.0" mnemonicParsing="false" onAction="#hndlOpenFile" text="Отчет" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="400.0" AnchorPane.topAnchor="10.0" />
+                                                        <!--<Button fx:id="reportButton" layoutY="10.0" mnemonicParsing="false" onAction="#hndlOpenFile" text="Отчет" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="400.0" AnchorPane.topAnchor="10.0" />-->
                                                     </children>
                                                 </AnchorPane>
                                             </children>

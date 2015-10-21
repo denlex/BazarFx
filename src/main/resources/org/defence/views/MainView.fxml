@@ -34,8 +34,8 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="Справочники">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Единицы измерения" />
-                        <MenuItem mnemonicParsing="false" text="Характеристики" />
+                        <MenuItem mnemonicParsing="false" text="Единицы измерения" onAction="#measurementCatalogClicked"/>
+                        <MenuItem mnemonicParsing="false" text="Характеристики" onAction="#characteristicCatalogClicked"/>
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" text="Организации" />
                     </items>
@@ -181,7 +181,7 @@
                                             </content>
                                         </Tab>-->
 
-                                        <Tab fx:id="measurementsTab" text="Справочник единиц измерения">
+                                        <!--<Tab fx:id="measurementsTab" text="Справочник единиц измерения">
                                             <content>
                                                 <GridPane maxHeight="1.7976931348623157E308"
                                                           maxWidth="1.7976931348623157E308"
@@ -224,7 +224,7 @@
                                                     </children>
                                                 </GridPane>
                                             </content>
-                                        </Tab>
+                                        </Tab>-->
                                       <!--<Tab text="Добавление характеристики">
                                             <content>
                                                 <GridPane maxHeight="1.7976931348623157E308"

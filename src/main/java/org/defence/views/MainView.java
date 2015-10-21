@@ -33,6 +33,9 @@ public class MainView implements FxmlView<MainViewModel> {
 	private MenuItem exitBtn;
 
 	@FXML
+	private MenuItem characteristicCatalogOpenBtn;
+
+	@FXML
 	TabPane tabs;
 
 	@FXML
@@ -122,7 +125,8 @@ public class MainView implements FxmlView<MainViewModel> {
 		}
 	}
 
-	/*private void selectEditedCatalogDescription(AssertedNameViewModel name, CatalogDescriptionViewModel description) {
+	/*private void selectEditedCatalogDescription(AssertedNameViewModel name, CatalogDescriptionViewModel
+	description) {
 		ObservableList<TreeItem<Object>> formatItems = treeView.getRoot().getChildren();
 
 		for (TreeItem<Object> formatItem : formatItems) {
@@ -226,7 +230,7 @@ public class MainView implements FxmlView<MainViewModel> {
 			});
 
 			assertedNameMenu.getItems().addAll(addCatalogDescriptionMenuItem, editAssertedNameMenuItem,
-					removeAssertedNameMenuItem,new SeparatorMenuItem(), importCatalogDescriptionMenuItem);
+					removeAssertedNameMenuItem, new SeparatorMenuItem(), importCatalogDescriptionMenuItem);
 
 			MenuItem editCatalogDescriptionMenuItem = new MenuItem("Редактировать КО");
 			editCatalogDescriptionMenuItem.setOnAction(event -> editCatalogDescription());
@@ -488,6 +492,56 @@ public class MainView implements FxmlView<MainViewModel> {
 						() : 0);
 			}*/
 		}
+	}
+
+	public void measurementCatalogClicked() {
+		ViewTuple<MeasurementCatalogView, MeasurementCatalogViewModel> viewTuple = FluentViewLoader.fxmlView
+				(MeasurementCatalogView.class).load();
+//		viewTuple.getViewModel().setParentViewModel(viewModel);
+
+		Parent root = viewTuple.getView();
+		Stage dialog = new Stage();
+		viewTuple.getCodeBehind().setStage(dialog);
+//		viewTuple.getCodeBehind().initializeStage();
+
+		dialog.initModality(Modality.WINDOW_MODAL);
+		dialog.initOwner(MainApp.mainStage);
+		dialog.setResizable(true);
+
+		Scene scene = new Scene(root);
+		scene.addEventHandler(KeyEvent.ANY, event -> {
+			if (event.getCode() == KeyCode.ESCAPE) {
+				dialog.close();
+			}
+		});
+
+		dialog.setScene(scene);
+		dialog.showAndWait();
+	}
+
+	public void characteristicCatalogClicked() {
+		ViewTuple<CharacteristicCatalogView, CharacteristicCatalogViewModel> viewTuple = FluentViewLoader.fxmlView
+				(CharacteristicCatalogView.class).load();
+//		viewTuple.getViewModel().setParentViewModel(viewModel);
+
+		Parent root = viewTuple.getView();
+		Stage dialog = new Stage();
+		viewTuple.getCodeBehind().setStage(dialog);
+//		viewTuple.getCodeBehind().initializeStage();
+
+		dialog.initModality(Modality.WINDOW_MODAL);
+		dialog.initOwner(MainApp.mainStage);
+		dialog.setResizable(true);
+
+		Scene scene = new Scene(root);
+		scene.addEventHandler(KeyEvent.ANY, event -> {
+			if (event.getCode() == KeyCode.ESCAPE) {
+				dialog.close();
+			}
+		});
+
+		dialog.setScene(scene);
+		dialog.showAndWait();
 	}
 
 	public void setStage(Stage stage) {
