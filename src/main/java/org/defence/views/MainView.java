@@ -122,6 +122,24 @@ public class MainView implements FxmlView<MainViewModel> {
 		}
 	}
 
+	/*private void selectEditedCatalogDescription(AssertedNameViewModel name, CatalogDescriptionViewModel description) {
+		ObservableList<TreeItem<Object>> formatItems = treeView.getRoot().getChildren();
+
+		for (TreeItem<Object> formatItem : formatItems) {
+			if (((DescriptionFormatViewModel) formatItem.getValue()).getId() == format.getId()) {
+				ObservableList<TreeItem<Object>> nameItems = formatItem.getChildren();
+
+				for (TreeItem<Object> nameItem : nameItems) {
+					if (name.getId() == ((AssertedNameViewModel) nameItem.getValue()).getId()) {
+						treeView.getSelectionModel().select(nameItem);
+						break;
+					}
+				}
+				break;
+			}
+		}
+	}*/
+
 	private void addDescriptionFormat() {
 		ViewTuple<DescriptionFormatEditView, DescriptionFormatEditViewModel> viewTuple = FluentViewLoader.fxmlView
 				(DescriptionFormatEditView.class).load();
@@ -199,6 +217,10 @@ public class MainView implements FxmlView<MainViewModel> {
 				if (file != null) {
 					viewModel.setCatalogDescriptionFile(file);
 					viewModel.getImportCatalogDescriptionCommand().execute();
+
+					viewModel.displayFormats();
+					// select new added assertedName in treeView
+//					selectEditedCatalogDescription(selectedFormat, viewTuple.getViewModel().getEditedName());
 				}
 
 			});

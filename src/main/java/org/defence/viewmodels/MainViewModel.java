@@ -270,22 +270,20 @@ public class MainViewModel implements ViewModel {
 				return result;
 			}
 
-			public boolean addCatalogDescriptionIfNotFoundInDb(Integer assertedNameId, CatalogDescription
+			public CatalogDescription addCatalogDescriptionIfNotFoundInDb(Integer assertedNameId, CatalogDescription
 					description) {
 				List<CatalogDescription> descriptions = dbHelper.getCatalogDescriptionsByAssertedName(assertedNameId);
 
 				for (CatalogDescription d : descriptions) {
 					if (d.getCode().equalsIgnoreCase(description.getCode())) {
-						return false;
+						return null;
 					}
 				}
 
-				dbHelper.addCatalogDescriptionWhileImport(assertedNameId, description.getCode(), description.getName(),
-						description.getValues());
-
 				System.out.println("New catalogDescription was added!");
 
-				return true;
+				return dbHelper.addCatalogDescriptionWhileImport(assertedNameId, description.getCode(), description.getName(),
+						description.getValues());
 			}
 
 
@@ -410,11 +408,14 @@ public class MainViewModel implements ViewModel {
 					catalogDescription.setValues(valueList);
 					catalogDescription.setName(catalogDescriptionNameNode.getAttribute("value"));
 
-					if (addCatalogDescriptionIfNotFoundInDb(selectedName.getValue().getId(), catalogDescription)) {
+					if ((catalogDescription = addCatalogDescriptionIfNotFoundInDb(selectedName.getValue().getId(), catalogDescription)) != null) {
 						Alert alert = new Alert(Alert.AlertType.INFORMATION);
 						alert.setContentText(String.format("Было добалено новое КО:\nНаименование:\t%s\nКод:\t%s",
 								catalogDescription.getName(), catalogDescription.getCode()));
 						alert.showAndWait();
+
+						selectedName.getValue().getCatalogDescriptions().add(new CatalogDescriptionViewModel
+								(catalogDescription));
 					}
 
 				} catch (Exception ex) {
