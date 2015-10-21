@@ -38,10 +38,14 @@
         </GridPane>
         <AnchorPane GridPane.columnSpan="2" GridPane.rowIndex="2">
             <children>
-                <Button fx:id="yesBtn" defaultButton="true" onAction="#saveButtonClicked" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="140.0" AnchorPane.topAnchor="10.0" GridPane.halignment="RIGHT">Применить
+            <HBox layoutX="181.0" layoutY="10.0" spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+               <children>
+                      <Button fx:id="yesBtn" defaultButton="true" onAction="#saveButtonClicked" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="140.0" AnchorPane.topAnchor="10.0" GridPane.halignment="RIGHT">Применить
                 </Button>
-                <Button fx:id="noBtn" onAction="#cancelButtonClicked" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10" AnchorPane.topAnchor="10.0" GridPane.halignment="RIGHT">Отмена
+                      <Button fx:id="noBtn" onAction="#cancelButtonClicked" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10" AnchorPane.topAnchor="10.0" GridPane.halignment="RIGHT">Отмена
                 </Button>
+               </children>
+            </HBox>
             </children>
         </AnchorPane>
     </children>

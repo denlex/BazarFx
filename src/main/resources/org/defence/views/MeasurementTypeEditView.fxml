@@ -35,13 +35,17 @@
         </GridPane>
         <AnchorPane GridPane.columnSpan="2" GridPane.rowIndex="2">
             <children>
-                <Button fx:id="yesBtn" defaultButton="true" onAction="#saveButtonClicked" AnchorPane.rightAnchor="140.0" GridPane.halignment="RIGHT">Применить
+            <HBox layoutX="181.0" spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+               <children>
+                      <Button fx:id="yesBtn" defaultButton="true" onAction="#saveButtonClicked" AnchorPane.rightAnchor="140.0" GridPane.halignment="RIGHT">Применить
                 </Button>
-                <Button fx:id="noBtn" onAction="#cancelButtonClicked" AnchorPane.rightAnchor="10" GridPane.halignment="RIGHT">Отмена
+                      <Button fx:id="noBtn" onAction="#cancelButtonClicked" AnchorPane.rightAnchor="10" GridPane.halignment="RIGHT">Отмена
                 </Button>
+               </children>
+            </HBox>
             </children>
          <GridPane.margin>
-            <Insets top="10.0" />
+            <Insets />
          </GridPane.margin>
         </AnchorPane>
     </children>
@@ -53,6 +57,6 @@
     <rowConstraints>
         <RowConstraints minHeight="50.0" vgrow="NEVER" />
         <RowConstraints minHeight="100.0" vgrow="NEVER" />
-        <RowConstraints minHeight="35.0" vgrow="NEVER" />
+        <RowConstraints vgrow="NEVER" />
     </rowConstraints>
 </GridPane>

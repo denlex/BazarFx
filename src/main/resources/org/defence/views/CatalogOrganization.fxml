@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.geometry.*?>
 <?import java.lang.*?>
 <?import javafx.geometry.Insets?>
@@ -7,7 +8,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
-<GridPane minHeight="650.0" minWidth="800.0" prefHeight="650.0" prefWidth="800.0" stylesheets="/css/Button.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane minHeight="650.0" minWidth="900.0" prefHeight="650.0" prefWidth="900.0" stylesheets="/css/Button.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <StackPane style="-fx-background-color: #4A6C9B" GridPane.columnIndex="0" GridPane.rowIndex="0">
             <children>
@@ -15,6 +16,20 @@
                 </Label>
             </children>
         </StackPane>
+      <AnchorPane GridPane.rowIndex="2">
+         <children>
+            <HBox spacing="10.0" AnchorPane.rightAnchor="10.0">
+               <children>
+                  <Button alignment="BOTTOM_LEFT" mnemonicParsing="false" text="Отмена" GridPane.columnIndex="2" />
+                              <Button alignment="CENTER" text="Добавить" textAlignment="CENTER" GridPane.halignment="CENTER">
+                        </Button>
+               </children>
+               <padding>
+                  <Insets bottom="10.0" top="10.0" />
+               </padding>
+            </HBox>
+         </children>
+      </AnchorPane>
         <TableView fx:id="table" stylesheets="/css/TableView.css" GridPane.columnIndex="0" GridPane.rowIndex="1">
             <columns>
                 <TableColumn maxWidth="1.7976931348623157E308" minWidth="210.0" prefWidth="350.0" text="Наименование организации">
@@ -28,23 +43,6 @@
             <Insets />
          </opaqueInsets>
         </TableView>
-                <GridPane alignment="BASELINE_RIGHT" GridPane.columnIndex="0" GridPane.rowIndex="3">
-                    <children>
-                        <Button alignment="CENTER" text="Добавить" textAlignment="CENTER" GridPane.halignment="CENTER">
-                        </Button>
-            <Button alignment="BOTTOM_LEFT" mnemonicParsing="false" text="Отмена" GridPane.columnIndex="2" />
-                        <!--               <Button alignment="CENTER" minHeight="30" minWidth="120.0" prefHeight="30" prefWidth="120.0" text="Отмена" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="0">
-                                    </Button>-->
-                    </children>
-                    <columnConstraints>
-                        <ColumnConstraints maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
-                        <ColumnConstraints maxWidth="20.0" minWidth="20.0" prefWidth="20.0" />
-                        <ColumnConstraints halignment="CENTER" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                        <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" />
-                    </rowConstraints>
-                </GridPane>
     </children>
     <columnConstraints>
         <ColumnConstraints hgrow="ALWAYS" />
@@ -52,7 +50,7 @@
     <rowConstraints>
         <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="ALWAYS" />
         <RowConstraints maxHeight="1.7976931348623157E308" vgrow="ALWAYS" />
-        <RowConstraints />
+        <RowConstraints maxHeight="1.7976931348623157E308" vgrow="NEVER" />
         <RowConstraints />
     </rowConstraints>
 </GridPane>

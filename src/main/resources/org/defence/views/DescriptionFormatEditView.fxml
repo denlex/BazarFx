@@ -9,7 +9,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 
-<GridPane maxHeight="650.0" maxWidth="800.0" minHeight="650.0" minWidth="800.0" prefHeight="650.0" prefWidth="800.0" stylesheets="/css/Button.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.defence.views.DescriptionFormatEditView">
+<GridPane maxHeight="650.0" maxWidth="900.0" minHeight="650.0" minWidth="900.0" prefHeight="650.0" prefWidth="900.0" stylesheets="/css/Button.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.defence.views.DescriptionFormatEditView">
     <children>
         <StackPane style="-fx-background-color: #4A6C9B" GridPane.columnIndex="0" GridPane.columnSpan="3" GridPane.rowIndex="0">
             <children>
@@ -49,20 +49,27 @@
             </GridPane.margin>
         </TableView>
         <AnchorPane GridPane.columnSpan="3" GridPane.rowIndex="6" />
-        <ToggleButton mnemonicParsing="false" style="-fx-pref-width: 230px" stylesheets="/css/Button.css" text="Отобразить отмеченные ячейки" GridPane.columnIndex="2" GridPane.rowIndex="3">
+        <ToggleButton maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-pref-width: 230px" stylesheets="/css/Button.css" text="Отобразить отмеченные ячейки" GridPane.columnIndex="2" GridPane.rowIndex="3">
             <GridPane.margin>
                 <Insets left="10.0" right="10.0" />
             </GridPane.margin>
         </ToggleButton>
         <AnchorPane GridPane.columnIndex="2" GridPane.rowIndex="6">
             <children>
-                <Button onAction="#saveButtonClicked" text="Применить" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="140.0" AnchorPane.topAnchor="10.0">
+            <HBox layoutX="21.0" layoutY="10.0" spacing="10.0" AnchorPane.rightAnchor="10.0">
+               <children>
+                      <Button onAction="#saveButtonClicked" text="Применить" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="140.0" AnchorPane.topAnchor="10.0">
                 </Button>
-                <Button onAction="#cancelButtonClicked" text="Отмена" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                      <Button onAction="#cancelButtonClicked" text="Отмена" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                 </Button>
+               </children>
+               <padding>
+                  <Insets bottom="10.0" />
+               </padding>
+            </HBox>
             </children>
             <GridPane.margin>
-                <Insets bottom="10.0" left="10.0" right="20.0" top="10.0" />
+                <Insets />
             </GridPane.margin>
 
         </AnchorPane>
