@@ -316,10 +316,15 @@ public class DbHelper {
 
 		try {
 			for (CharacteristicValue value : values) {
-				 session.get(CharacteristicValue.class, value.getId());
+				value.setCharacteristic((Characteristic) session.get(Characteristic.class, value
+						.getCharacteristic().getId()));
 			}
-			AssertedName assertedName = (AssertedName) session.get(AssertedName.class, assertedNameId);
 
+			description = new CatalogDescription(code, name, values);
+			AssertedName assertedName = (AssertedName) session.get(AssertedName.class, assertedNameId);
+			assertedName.getCatalogDescriptions().add(description);
+			transaction = session.beginTransaction();
+			session.save(assertedName);
 			transaction.commit();
 		} catch (Exception ex) {
 			transaction.rollback();

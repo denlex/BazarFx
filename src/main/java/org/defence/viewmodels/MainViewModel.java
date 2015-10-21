@@ -304,7 +304,10 @@ public class MainViewModel implements ViewModel {
 					}
 				}
 
-				dbHelper.addCatalogDescription(assertedNameId, description.getCode(), description.getName(),
+				/*dbHelper.addCatalogDescription(assertedNameId, description.getCode(), description.getName(),
+						description.getValues());*/
+
+				dbHelper.addCatalogDescriptionWhileImport(assertedNameId, description.getCode(), description.getName(),
 						description.getValues());
 
 
