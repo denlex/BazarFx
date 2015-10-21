@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <catalogDescription>
     <name value="бац! бац! бац!"/>
+    <code value="123"/>
     <characteristicValue value="8">
         <characteristic>
             <code value="1"/>
@@ -40,10 +41,11 @@
             <name value="Длины"/>
         </characteristicType>
     </characteristicValue>
+
     <characteristicValue value="88">
         <characteristic>
             <code value="2"/>
-            <name value="Длин фюзеляжа"/>
+            <name value="Длина фюзеляжа"/>
             <measurements>
                 <measurement>
                     <code value="1"/>
@@ -61,11 +63,22 @@
             <name value="Длины"/>
         </characteristicType>
     </characteristicValue>
+
     <characteristicValue value="888">
         <characteristic>
             <code value="1"/>
             <name value="Взлетная масса"/>
             <measurements>
+                <measurement>
+                    <code value="1"/>
+                    <name value="метр"/>
+                    <shortName value="м"/>
+                    <measurementType>
+                        <code value="2"/>
+                        <name value="Единицы длины"/>
+                    </measurementType>
+                </measurement>
+
                 <measurement>
                     <code value="1"/>
                     <name value="килограмм"/>

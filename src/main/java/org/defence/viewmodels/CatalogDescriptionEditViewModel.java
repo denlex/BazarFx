@@ -93,7 +93,7 @@ public class CatalogDescriptionEditViewModel implements ViewModel {
 					}
 				} else {
 					editedDescription = new CatalogDescriptionViewModel(dbHelper.addCatalogDescription(assertedName
-							.getId(), name.getValue(), values.stream().map(CharacteristicValueViewModel::toModel)
+							.getId(), code.getValue(), name.getValue(), values.stream().map(CharacteristicValueViewModel::toModel)
 							.collect(Collectors.toList())));
 
 					if (assertedName.getCatalogDescriptions() == null) {

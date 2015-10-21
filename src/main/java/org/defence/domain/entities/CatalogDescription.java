@@ -11,16 +11,17 @@ public class CatalogDescription implements Serializable {
     private int id;
     private String code;
     private String name;
-    private List<CharacteristicValue> values = new ArrayList<CharacteristicValue>();
+    private List<CharacteristicValue> values = new ArrayList<>();
 
     public CatalogDescription() {
     }
 
-    public CatalogDescription(String name) {
-        this.name = name;
-    }
+    public CatalogDescription(String code, String name) {
+		this(code, name, null);
+	}
 
-    public CatalogDescription(String name, List<CharacteristicValue> values) {
+    public CatalogDescription(String code, String name, List<CharacteristicValue> values) {
+		this.code = code;
         this.name = name;
         this.values = values;
     }

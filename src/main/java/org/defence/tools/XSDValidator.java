@@ -14,19 +14,6 @@ import java.io.IOException;
  * Created by root on 10/13/15.
  */
 public class XSDValidator {
-	public static void main(String[] args) {
-		XSDValidator ob = new XSDValidator();
-
-		ClassLoader classLoader = ob.getClass().getClassLoader();
-		String xsdPath = classLoader.getResource("exchange_format/catalog_description.xsd").getFile();
-		String xmlPath = classLoader.getResource("exchange_format/catalog_description.xml").getFile();
-
-		if (validateXMLSchema(xsdPath, xmlPath)) {
-			System.out.println("XML is valid");
-		} else {
-			System.out.println("XML is NOT valid");
-		}
-	}
 
 	public static boolean validateXMLSchema(String xsdPath, String xmlPath) {
 		try {

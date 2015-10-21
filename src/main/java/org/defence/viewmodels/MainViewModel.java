@@ -193,102 +193,99 @@ public class MainViewModel implements ViewModel {
 
 		importCatalogDescriptionCommand = new DelegateCommand(() -> new Action() {
 
-			private void addCatalogDescription() {
-
-			}
-
-			private void addMeasurementIfNotExists(Measurement measurement, MeasurementType type) {
-
-				for (Measurement m : type.getMeasurements()) {
-					if (m.getCode().equalsIgnoreCase(measurement.getCode())) {
-						return;
-					}
-				}
-
-				type.getMeasurements().add(measurement);
-			}
-
-			private Integer addMeasurementTypeIfNotFoundInDb(MeasurementType measurementType) {
+			private MeasurementType addMeasurementTypeIfNotFoundInDb(MeasurementType measurementType) {
 				List<MeasurementType> measurementTypes = dbHelper.getAllMeasurementTypes();
 
 				for (MeasurementType type : measurementTypes) {
 					if (type.getCode().equalsIgnoreCase(measurementType.getCode())) {
-						return type.getId();
+						return type;
 					}
 				}
 
 				System.out.println("New measurement type was added");
 
-				return dbHelper.addMeasurementType(measurementType).getId();
+				return dbHelper.addMeasurementType(measurementType);
 			}
 
-			private void addMeasurementIfNotFoundInDb(Integer measurementTypeId, Measurement measurement) {
+			private Measurement addMeasurementIfNotFoundInDb(Integer measurementTypeId, Measurement measurement) {
 				List<Measurement> measurements = dbHelper.getMeasurementsByTypeId(measurementTypeId);
-				boolean isFound = false;
+				Measurement result;
 
 				if (measurements == null) {
-					return;
-				}
-
-				for (Measurement m : measurements) {
-					if (m.getCode().equalsIgnoreCase(measurement.getCode())) {
-						isFound = true;
-						break;
+					result = null;
+				} else {
+					for (Measurement m : measurements) {
+						if (m.getCode().equalsIgnoreCase(measurement.getCode())) {
+							return m;
+						}
 					}
+
+					System.out.println("New measurement was added");
+
+					result = dbHelper.addMeasurement(measurementTypeId, measurement.getCode(), measurement.getName(),
+							measurement.getShortName());
 				}
 
-				if (!isFound) {
-					dbHelper.addMeasurement(measurementTypeId, measurement.getCode(), measurement.getName(),
-							measurement.getShortName());
-					System.out.println("New measurement was added");
-				}
+				return result;
 			}
 
-			public Integer addCharacteristicTypeIfNotFoundInDb(CharacteristicType type) {
+			public CharacteristicType addCharacteristicTypeIfNotFoundInDb(CharacteristicType type) {
 				List<CharacteristicType> types = dbHelper.getAllCharacteristicTypes();
 
 				for (CharacteristicType t : types) {
 					if (t.getCode().equalsIgnoreCase(type.getCode())) {
-						return t.getId();
+						return t;
 					}
 				}
 
-				System.out.println("New characteristic type was added");
+				System.out.println("New characteristic type was added!");
 
-				return dbHelper.addCharacteristicType(type.getCode(), type.getName()).getId();
+				return dbHelper.addCharacteristicType(type.getCode(), type.getName());
 			}
 
-			public void addCharacteristicIfNotFoundInDb(Integer characteristicTypeId, Characteristic characteristic) {
+			public Characteristic addCharacteristicIfNotFoundInDb(Integer characteristicTypeId, Characteristic
+					characteristic) {
 				List<Characteristic> characteristics = dbHelper.getCharacteristicsByTypeId(characteristicTypeId);
-				boolean isFound = false;
+				Characteristic result;
 
 				for (Characteristic ch : characteristics) {
 					if (ch.getCode().equalsIgnoreCase(characteristic.getCode())) {
-						isFound = true;
-						break;
+						return ch;
 					}
 				}
 
-				if (!isFound) {
-					List<Integer> measurementIdList = new ArrayList<>();
-					for (Measurement m : characteristic.getMeasurements()) {
-						measurementIdList.add(m.getId());
+				List<Integer> measurementIdList = new ArrayList<>();
+				for (Measurement m : characteristic.getMeasurements()) {
+					if (m == null) {
+						continue;
 					}
 
-					dbHelper.addCharacteristic(characteristicTypeId, characteristic.getCode(), characteristic.getName
-							(), measurementIdList);
-					System.out.println("New measurement was added");
+					measurementIdList.add(m.getId());
 				}
+
+				result = dbHelper.addCharacteristic(characteristicTypeId, characteristic.getCode(), characteristic
+						.getName(), measurementIdList);
+				System.out.println("New characteristic was added!");
+
+				return result;
 			}
 
-			public void addCharacteristicIfNotExists(Characteristic characteristic, CharacteristicType
-					characteristicType) {
-				List<Characteristic> characteristicList = dbHelper.getCharacteristicsByTypeId(characteristicType.getId
-						());
+			public boolean addCatalogDescriptionIfNotFoundInDb(Integer assertedNameId, CatalogDescription
+					description) {
+				List<CatalogDescription> descriptions = dbHelper.getCatalogDescriptionsByAssertedName(assertedNameId);
 
-				/*for (Characteristic ch : characteristicList) {
-					if (ch.getCode().equalsIgnoreCase(characteristic.getCode())
-				}*/
+				for (CatalogDescription d : descriptions) {
+					if (d.getCode().equalsIgnoreCase(description.getCode())) {
+						return false;
+					}
+				}
+
+				dbHelper.addCatalogDescriptionWhileImport(assertedNameId, description.getCode(), description.getName(),
+						description.getValues());
+
+				System.out.println("New catalogDescription was added!");
+
+				return true;
 			}
 
 
@@ -297,7 +294,17 @@ public class MainViewModel implements ViewModel {
 				try {
 					ClassLoader classLoader = getClass().getClassLoader();
 					String xsdPath = classLoader.getResource("exchange_format/catalogDescription.xsd").getFile();
-					String xmlPath = classLoader.getResource("exchange_format/catalogDescription.xml").getFile();
+					String xmlPath = catalogDescriptionFile.getPath();
+
+
+					if (!new File(xmlPath).exists()) {
+						Alert alert = new Alert(Alert.AlertType.ERROR);
+						alert.setContentText("Удебитесь, что выбранный файл импорта КО существует");
+						alert.showAndWait();
+						return;
+					}
+
+					System.out.println(xmlPath);
 					if (!XSDValidator.validateXMLSchema(xsdPath, xmlPath)) {
 						Alert alert = new Alert(Alert.AlertType.ERROR);
 						alert.setContentText("Ошибка при чтении импортируемого КО. Убедитесь, что файл имеет " +
@@ -309,8 +316,7 @@ public class MainViewModel implements ViewModel {
 					DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 //					dbFactory.setValidating(true);
 					DocumentBuilder builder = dbFactory.newDocumentBuilder();
-//					Document doc = builder.parse(catalogDescriptionFile);
-					Document doc = builder.parse(xmlPath);
+					Document doc = builder.parse(catalogDescriptionFile);
 
 					Element measurementNode;
 					MeasurementType measurementType;
@@ -318,8 +324,9 @@ public class MainViewModel implements ViewModel {
 					CharacteristicValue characteristicValue;
 					Characteristic characteristic;
 
-
 					Element catalogDescriptionNode = doc.getDocumentElement();
+					Element catalogDescriptionCodeNode = (Element) catalogDescriptionNode.getElementsByTagName("code")
+							.item(0);
 					Element catalogDescriptionNameNode = (Element) catalogDescriptionNode.getElementsByTagName("name")
 							.item(0);
 					NodeList characteristicValueNodeList = catalogDescriptionNode.getElementsByTagName
@@ -369,13 +376,12 @@ public class MainViewModel implements ViewModel {
 							measurementType.setName(((Element) measurementTypeNode.getElementsByTagName("name").item
 									(0)).getAttribute("value"));
 
-//							addMeasurementIfNotExists(measurement, measurementType);
-							measurementType.getMeasurements().add(measurement);
-//							addCharacteristicIfNotExists();
-							characteristic.getMeasurements().add(measurement);
+							// write measurement and type into DB before saving catalogDescription - important step
+							measurementType = addMeasurementTypeIfNotFoundInDb(measurementType);
+							measurement = addMeasurementIfNotFoundInDb(measurementType.getId(), measurement);
 
-							Integer measurementTypeId = addMeasurementTypeIfNotFoundInDb(measurementType);
-							addMeasurementIfNotFoundInDb(measurementTypeId, measurement);
+							measurementType.getMeasurements().add(measurement);
+							characteristic.getMeasurements().add(measurement);
 						}
 
 						Element characteristicTypeNode = (Element) characteristicValueNode.getElementsByTagName
@@ -389,40 +395,27 @@ public class MainViewModel implements ViewModel {
 						characteristicType.setCode(characteristicTypeCodeNode.getAttribute("value"));
 						characteristicType.setName(characteristicTypeNameNode.getAttribute("value"));
 
-//						addCharacteristicIfNotExists(characteristic, characteristicType);
+						// write characteristic and type into DB before saving catalogDescription - important step
+						characteristicType = addCharacteristicTypeIfNotFoundInDb(characteristicType);
+						characteristic = addCharacteristicIfNotFoundInDb(characteristicType.getId(), characteristic);
+
 						characteristicType.getCharacteristics().add(characteristic);
 
-						CharacteristicValue value = new CharacteristicValue();
-						value.setValue(characteristicValue.getValue());
-						value.setCharacteristic(characteristic);
-						valueList.add(value);
-
-						Integer characteristicTypeId = addCharacteristicTypeIfNotFoundInDb(characteristicType);
-						addCharacteristicIfNotFoundInDb(characteristicTypeId, characteristic);
+						valueList.add(new CharacteristicValue(characteristic, characteristicValue.getValue()));
 					}
 
-					CatalogDescription catalogDescription = new CatalogDescription(catalogDescriptionNameNode
-							.getAttribute("value"));
+					CatalogDescription catalogDescription = new CatalogDescription(catalogDescriptionCodeNode
+							.getAttribute("value"), catalogDescriptionNameNode.getAttribute("value"));
 
 					catalogDescription.setValues(valueList);
 					catalogDescription.setName(catalogDescriptionNameNode.getAttribute("value"));
-					/*dbHelper.addCatalogDescription(selectedName.getValue().getId(), catalogDescription.getName(),
-							catalogDescription.getValues());*/
 
-
-//					dbHelper.addCatalogDescription()
-
-//					Measurement measurement1 = new Measurement("10", "локоть", "лок");
-
-//					dbHelper.addMeasurement(measurement1);
-
-					Alert alert = new Alert(Alert.AlertType.INFORMATION);
-					alert.setContentText("code: " + selectedName.getValue().getCode()
-							+ "\nname: " + selectedName.getValue().getName());
-					alert.showAndWait();
-
-					CharacteristicValue value = new CharacteristicValue();
-
+					if (addCatalogDescriptionIfNotFoundInDb(selectedName.getValue().getId(), catalogDescription)) {
+						Alert alert = new Alert(Alert.AlertType.INFORMATION);
+						alert.setContentText(String.format("Было добалено новое КО:\nНаименование:\t%s\nКод:\t%s",
+								catalogDescription.getName(), catalogDescription.getCode()));
+						alert.showAndWait();
+					}
 
 				} catch (Exception ex) {
 					ex.printStackTrace();
@@ -448,10 +441,18 @@ public class MainViewModel implements ViewModel {
 					Element descriptionName = doc.createElement("name");
 					catalogDescription.appendChild(descriptionName);
 
+					// code element
+					Element descriptionCode = doc.createElement("code");
+					catalogDescription.appendChild(descriptionCode);
+
 					// setting attribute to element
 					Attr descriptionNameAttr = doc.createAttribute("value");
 					descriptionNameAttr.setValue(selectedDescription.getValue().getName());
 					descriptionName.setAttributeNode(descriptionNameAttr);
+
+					Attr descriptionCodeAttr = doc.createAttribute("value");
+					descriptionCodeAttr.setValue(selectedDescription.getValue().getCode());
+					descriptionCode.setAttributeNode(descriptionCodeAttr);
 
 					List<CharacteristicValueViewModel> values = selectedDescription.getValue().getValues();
 

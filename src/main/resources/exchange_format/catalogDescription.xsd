@@ -37,6 +37,7 @@
   <xs:complexType name="catalogDescriptionType">
     <xs:sequence>
       <xs:element type="nameType" name="name"/>
+      <xs:element type="codeType" name="code"/>
       <xs:element type="characteristicValueType" name="characteristicValue" maxOccurs="unbounded" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
