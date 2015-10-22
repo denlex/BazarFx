@@ -77,7 +77,7 @@
     <columnConstraints>
         <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" />
         <ColumnConstraints hgrow="ALWAYS" />
-        <ColumnConstraints hgrow="ALWAYS" maxWidth="-Infinity" minWidth="-Infinity" />
+        <ColumnConstraints hgrow="ALWAYS" maxWidth="-Infinity" />
     </columnConstraints>
     <rowConstraints>
         <RowConstraints maxHeight="50.0" minHeight="50.0" vgrow="NEVER" />

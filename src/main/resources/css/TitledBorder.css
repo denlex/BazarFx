@@ -1,0 +1,18 @@
+.bordered-titled-title {
+    -fx-background-color: whitesmoke;
+    -fx-translate-y: -10; /* Величина текста в корне обводки */
+}
+
+.bordered-titled-border {
+    -fx-border-radius: 5px;
+    -fx-content-display: top;
+    -fx-border-insets: 10 5 10 5;
+/*    -fx-background-color: white;*/
+    -fx-border-color: gainsboro;
+    -fx-border-width: 1.5;
+
+}
+
+.bordered-titled-content {
+    -fx-padding: 26 10 10 10;
+}
