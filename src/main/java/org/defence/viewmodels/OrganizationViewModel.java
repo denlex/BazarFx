@@ -14,6 +14,7 @@ public class OrganizationViewModel implements ViewModel {
 	private final IntegerProperty id = new SimpleIntegerProperty();
 	private final StringProperty code = new SimpleStringProperty();
 	private final StringProperty name = new SimpleStringProperty();
+	private final StringProperty type = new SimpleStringProperty();
 
 	public OrganizationViewModel() {
 	}
@@ -62,5 +63,17 @@ public class OrganizationViewModel implements ViewModel {
 
 	public void setName(String name) {
 		this.name.set(name);
+	}
+
+	public String getType() {
+		return type.get();
+	}
+
+	public StringProperty typeProperty() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type.set(type);
 	}
 }

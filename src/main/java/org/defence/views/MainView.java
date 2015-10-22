@@ -33,9 +33,6 @@ public class MainView implements FxmlView<MainViewModel> {
 	private MenuItem exitBtn;
 
 	@FXML
-	private MenuItem characteristicCatalogOpenBtn;
-
-	@FXML
 	TabPane tabs;
 
 	@FXML
@@ -494,7 +491,7 @@ public class MainView implements FxmlView<MainViewModel> {
 		}
 	}
 
-	public void measurementCatalogClicked() {
+	public void measurementCatalogOpenClicked() {
 		ViewTuple<MeasurementCatalogView, MeasurementCatalogViewModel> viewTuple = FluentViewLoader.fxmlView
 				(MeasurementCatalogView.class).load();
 //		viewTuple.getViewModel().setParentViewModel(viewModel);
@@ -519,9 +516,34 @@ public class MainView implements FxmlView<MainViewModel> {
 		dialog.showAndWait();
 	}
 
-	public void characteristicCatalogClicked() {
+	public void characteristicCatalogOpenClicked() {
 		ViewTuple<CharacteristicCatalogView, CharacteristicCatalogViewModel> viewTuple = FluentViewLoader.fxmlView
 				(CharacteristicCatalogView.class).load();
+//		viewTuple.getViewModel().setParentViewModel(viewModel);
+
+		Parent root = viewTuple.getView();
+		Stage dialog = new Stage();
+		viewTuple.getCodeBehind().setStage(dialog);
+//		viewTuple.getCodeBehind().initializeStage();
+
+		dialog.initModality(Modality.WINDOW_MODAL);
+		dialog.initOwner(MainApp.mainStage);
+		dialog.setResizable(true);
+
+		Scene scene = new Scene(root);
+		scene.addEventHandler(KeyEvent.ANY, event -> {
+			if (event.getCode() == KeyCode.ESCAPE) {
+				dialog.close();
+			}
+		});
+
+		dialog.setScene(scene);
+		dialog.showAndWait();
+	}
+
+	public void organizationCatalogOpenClicked() {
+		ViewTuple<OrganizationCatalogView, OrganizationCatalogViewModel> viewTuple = FluentViewLoader.fxmlView
+				(OrganizationCatalogView.class).load();
 //		viewTuple.getViewModel().setParentViewModel(viewModel);
 
 		Parent root = viewTuple.getView();
