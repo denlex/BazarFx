@@ -5,6 +5,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.defence.domain.entities.CatalogDescription;
 import org.defence.domain.entities.CharacteristicValue;
+import org.defence.domain.entities.Organization;
+import org.defence.domain.entities.RegistrationInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,15 +18,19 @@ public class CatalogDescriptionViewModel {
 	private final IntegerProperty id = new SimpleIntegerProperty();
 	private final StringProperty code = new SimpleStringProperty();
 	private final StringProperty name = new SimpleStringProperty();
+	private final ObjectProperty<RegistrationInfoViewModel> registrationInfo = new SimpleObjectProperty<>();
+	private final ObjectProperty<OrganizationViewModel> organization = new SimpleObjectProperty<>();
 	private final ListProperty<CharacteristicValueViewModel> values = new SimpleListProperty<>();
 
 	public CatalogDescriptionViewModel() {
 	}
 
-	public CatalogDescriptionViewModel(Integer id, String code, String name, List<CharacteristicValue> values) {
+	public CatalogDescriptionViewModel(Integer id, String code, String name, RegistrationInfo registrationInfo,
+			Organization organization, List<CharacteristicValue> values) {
 		this.id.setValue(id);
 		this.code.setValue(code);
 		this.name.setValue(name);
+		this.registrationInfo.setValue(new RegistrationInfoViewModel(registrationInfo));
 
 		if (values != null) {
 			List<CharacteristicValueViewModel> list = new ArrayList<>();
@@ -36,7 +42,8 @@ public class CatalogDescriptionViewModel {
 	}
 
 	public CatalogDescriptionViewModel(CatalogDescription catalogDescription) {
-		this(catalogDescription.getId(), catalogDescription.getCode(), catalogDescription.getName(), catalogDescription.getValues());
+		this(catalogDescription.getId(), catalogDescription.getCode(), catalogDescription.getName(),
+				catalogDescription.getValues());
 	}
 
 	public int getId() {
@@ -73,6 +80,30 @@ public class CatalogDescriptionViewModel {
 
 	public void setName(String name) {
 		this.name.set(name);
+	}
+
+	public RegistrationInfo getRegistrationInfo() {
+		return registrationInfo.get();
+	}
+
+	public ObjectProperty<RegistrationInfo> registrationInfoProperty() {
+		return registrationInfo;
+	}
+
+	public void setRegistrationInfo(RegistrationInfo registrationInfo) {
+		this.registrationInfo.set(registrationInfo);
+	}
+
+	public OrganizationViewModel getOrganization() {
+		return organization.get();
+	}
+
+	public ObjectProperty<OrganizationViewModel> organizationProperty() {
+		return organization;
+	}
+
+	public void setOrganization(OrganizationViewModel organization) {
+		this.organization.set(organization);
 	}
 
 	public ObservableList<CharacteristicValueViewModel> getValues() {
