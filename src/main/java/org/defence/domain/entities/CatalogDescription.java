@@ -11,7 +11,9 @@ public class CatalogDescription implements Serializable {
     private int id;
     private String code;
     private String name;
-    private List<CharacteristicValue> values = new ArrayList<>();
+    private RegistrationInfo registrationInfo;
+	private Organization organization;
+	private List<CharacteristicValue> values = new ArrayList<>();
 
     public CatalogDescription() {
     }
@@ -50,7 +52,23 @@ public class CatalogDescription implements Serializable {
         this.name = name;
     }
 
-    public List<CharacteristicValue> getValues() {
+	public RegistrationInfo getRegistrationInfo() {
+		return registrationInfo;
+	}
+
+	public void setRegistrationInfo(RegistrationInfo registrationInfo) {
+		this.registrationInfo = registrationInfo;
+	}
+
+	public Organization getOrganization() {
+		return organization;
+	}
+
+	public void setOrganization(Organization organization) {
+		this.organization = organization;
+	}
+
+	public List<CharacteristicValue> getValues() {
         return values;
     }
 

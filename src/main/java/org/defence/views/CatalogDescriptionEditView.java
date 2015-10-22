@@ -26,6 +26,9 @@ public class CatalogDescriptionEditView implements FxmlView<CatalogDescriptionEd
 	TableView<CharacteristicValueViewModel> valuesTableView;
 
 	@FXML
+	TableColumn<CharacteristicValueViewModel, String> characteristicCodeTableColumn;
+
+	@FXML
 	TableColumn<CharacteristicValueViewModel, String> characteristicTableColumn;
 
 	@FXML
@@ -43,6 +46,9 @@ public class CatalogDescriptionEditView implements FxmlView<CatalogDescriptionEd
 	private void initializeValuesTableView() {
 		valuesTableView.setEditable(true);
 		valuesTableView.itemsProperty().bindBidirectional(viewModel.valuesProperty());
+
+		characteristicCodeTableColumn.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue()
+				.getCharacteristic().getCode()));
 
 		characteristicTableColumn.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue()
 				.getCharacteristic().getName()));

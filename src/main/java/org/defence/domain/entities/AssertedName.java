@@ -16,7 +16,7 @@ public class AssertedName implements IEntity {
 	}
 
 	public AssertedName(String code, String name) {
-		this(code, name, null);
+		this(code, name, new ArrayList<>());
 	}
 
 	public AssertedName(String code, String name, List<CatalogDescription> catalogDescriptions) {

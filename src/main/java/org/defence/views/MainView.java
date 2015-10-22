@@ -122,6 +122,25 @@ public class MainView implements FxmlView<MainViewModel> {
 		}
 	}
 
+	/*private void selectEditedCatalogDescription(AssertedNameViewModel name, CatalogDescriptionViewModel
+	description) {
+		ObservableList<TreeItem<Object>> formatItems = treeView.getRoot().getChildren();
+
+		for (TreeItem<Object> formatItem : formatItems) {
+			if (((DescriptionFormatViewModel) formatItem.getValue()).getId() == format.getId()) {
+				ObservableList<TreeItem<Object>> nameItems = formatItem.getChildren();
+
+				for (TreeItem<Object> nameItem : nameItems) {
+					if (name.getId() == ((AssertedNameViewModel) nameItem.getValue()).getId()) {
+						treeView.getSelectionModel().select(nameItem);
+						break;
+					}
+				}
+				break;
+			}
+		}
+	}*/
+
 	private void addDescriptionFormat() {
 		ViewTuple<DescriptionFormatEditView, DescriptionFormatEditViewModel> viewTuple = FluentViewLoader.fxmlView
 				(DescriptionFormatEditView.class).load();
@@ -199,12 +218,16 @@ public class MainView implements FxmlView<MainViewModel> {
 				if (file != null) {
 					viewModel.setCatalogDescriptionFile(file);
 					viewModel.getImportCatalogDescriptionCommand().execute();
+
+					viewModel.displayFormats();
+					// select new added assertedName in treeView
+//					selectEditedCatalogDescription(selectedFormat, viewTuple.getViewModel().getEditedName());
 				}
 
 			});
 
 			assertedNameMenu.getItems().addAll(addCatalogDescriptionMenuItem, editAssertedNameMenuItem,
-					removeAssertedNameMenuItem,new SeparatorMenuItem(), importCatalogDescriptionMenuItem);
+					removeAssertedNameMenuItem, new SeparatorMenuItem(), importCatalogDescriptionMenuItem);
 
 			MenuItem editCatalogDescriptionMenuItem = new MenuItem("Редактировать КО");
 			editCatalogDescriptionMenuItem.setOnAction(event -> editCatalogDescription());
@@ -466,6 +489,81 @@ public class MainView implements FxmlView<MainViewModel> {
 						() : 0);
 			}*/
 		}
+	}
+
+	public void measurementCatalogOpenClicked() {
+		ViewTuple<MeasurementCatalogView, MeasurementCatalogViewModel> viewTuple = FluentViewLoader.fxmlView
+				(MeasurementCatalogView.class).load();
+//		viewTuple.getViewModel().setParentViewModel(viewModel);
+
+		Parent root = viewTuple.getView();
+		Stage dialog = new Stage();
+		viewTuple.getCodeBehind().setStage(dialog);
+//		viewTuple.getCodeBehind().initializeStage();
+
+		dialog.initModality(Modality.WINDOW_MODAL);
+		dialog.initOwner(MainApp.mainStage);
+		dialog.setResizable(true);
+
+		Scene scene = new Scene(root);
+		scene.addEventHandler(KeyEvent.ANY, event -> {
+			if (event.getCode() == KeyCode.ESCAPE) {
+				dialog.close();
+			}
+		});
+
+		dialog.setScene(scene);
+		dialog.showAndWait();
+	}
+
+	public void characteristicCatalogOpenClicked() {
+		ViewTuple<CharacteristicCatalogView, CharacteristicCatalogViewModel> viewTuple = FluentViewLoader.fxmlView
+				(CharacteristicCatalogView.class).load();
+//		viewTuple.getViewModel().setParentViewModel(viewModel);
+
+		Parent root = viewTuple.getView();
+		Stage dialog = new Stage();
+		viewTuple.getCodeBehind().setStage(dialog);
+//		viewTuple.getCodeBehind().initializeStage();
+
+		dialog.initModality(Modality.WINDOW_MODAL);
+		dialog.initOwner(MainApp.mainStage);
+		dialog.setResizable(true);
+
+		Scene scene = new Scene(root);
+		scene.addEventHandler(KeyEvent.ANY, event -> {
+			if (event.getCode() == KeyCode.ESCAPE) {
+				dialog.close();
+			}
+		});
+
+		dialog.setScene(scene);
+		dialog.showAndWait();
+	}
+
+	public void organizationCatalogOpenClicked() {
+		ViewTuple<OrganizationCatalogView, OrganizationCatalogViewModel> viewTuple = FluentViewLoader.fxmlView
+				(OrganizationCatalogView.class).load();
+//		viewTuple.getViewModel().setParentViewModel(viewModel);
+
+		Parent root = viewTuple.getView();
+		Stage dialog = new Stage();
+		viewTuple.getCodeBehind().setStage(dialog);
+//		viewTuple.getCodeBehind().initializeStage();
+
+		dialog.initModality(Modality.WINDOW_MODAL);
+		dialog.initOwner(MainApp.mainStage);
+		dialog.setResizable(true);
+
+		Scene scene = new Scene(root);
+		scene.addEventHandler(KeyEvent.ANY, event -> {
+			if (event.getCode() == KeyCode.ESCAPE) {
+				dialog.close();
+			}
+		});
+
+		dialog.setScene(scene);
+		dialog.showAndWait();
 	}
 
 	public void setStage(Stage stage) {

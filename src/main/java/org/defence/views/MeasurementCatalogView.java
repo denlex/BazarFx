@@ -23,19 +23,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.defence.MainApp;
 import org.defence.viewmodels.*;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.design.JasperDesign;
-import net.sf.jasperreports.engine.xml.JRXmlLoader;
-import net.sf.jasperreports.view.JasperViewer;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
+
 import java.io.File;
-import java.sql.Connection;
-import java.util.HashMap;
 
 /**
  * Created by root on 8/12/15.
@@ -91,6 +80,13 @@ public class MeasurementCatalogView implements FxmlView<MeasurementCatalogViewMo
 
     @InjectViewModel
     MeasurementCatalogViewModel viewModel;
+
+	private Stage stage;
+
+	public void setStage(Stage stage) {
+		this.stage = stage;
+	}
+
 
     private void initializeTypesTableView() {
         typesTableView.itemsProperty().bindBidirectional(viewModel.typesProperty());

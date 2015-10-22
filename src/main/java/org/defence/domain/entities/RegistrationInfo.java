@@ -7,7 +7,7 @@ import java.util.Date;
  */
 public class RegistrationInfo {
     private int id;
-    private String applicationName;
+    private String applicationNumber;
     private Date registrationDate;
     private String registrationNumber;
 
@@ -19,12 +19,12 @@ public class RegistrationInfo {
         this.id = id;
     }
 
-    public String getApplicationName() {
-        return applicationName;
+    public String getApplicationNumber() {
+        return applicationNumber;
     }
 
-    public void setApplicationName(String applicationName) {
-        this.applicationName = applicationName;
+    public void setApplicationNumber(String applicationNumber) {
+        this.applicationNumber = applicationNumber;
     }
 
     public Date getRegistrationDate() {
@@ -34,4 +34,12 @@ public class RegistrationInfo {
     public void setRegistrationDate(Date registrationDate) {
         this.registrationDate = registrationDate;
     }
+
+	public String getRegistrationNumber() {
+		return registrationNumber;
+	}
+
+	public void setRegistrationNumber(String registrationNumber) {
+		this.registrationNumber = registrationNumber;
+	}
 }

@@ -76,6 +76,12 @@ public class CharacteristicCatalogView implements FxmlView<CharacteristicCatalog
 	@InjectViewModel
 	CharacteristicCatalogViewModel viewModel;
 
+	private Stage stage;
+
+	public void setStage(Stage stage) {
+		this.stage = stage;
+	}
+
 	private void initializeTypesTableView() {
 		typesTableView.itemsProperty().bindBidirectional(viewModel.typesProperty());
 		idTypeTableColumn.setCellValueFactory(new PropertyValueFactory("id"));

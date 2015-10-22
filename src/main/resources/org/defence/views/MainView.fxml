@@ -34,10 +34,10 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="Справочники">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Единицы измерения" />
-                        <MenuItem mnemonicParsing="false" text="Характеристики" />
+                        <MenuItem mnemonicParsing="false" text="Единицы измерения" onAction="#measurementCatalogOpenClicked"/>
+                        <MenuItem mnemonicParsing="false" text="Характеристики" onAction="#characteristicCatalogOpenClicked"/>
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" text="Организации" />
+                        <MenuItem mnemonicParsing="false" text="Организации" onAction="#organizationCatalogOpenClicked"/>
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Поиск">
@@ -181,7 +181,7 @@
                                             </content>
                                         </Tab>-->
 
-                                        <Tab fx:id="measurementsTab" text="Справочник единиц измерения">
+                                        <!--<Tab fx:id="measurementsTab" text="Справочник единиц измерения">
                                             <content>
                                                 <GridPane maxHeight="1.7976931348623157E308"
                                                           maxWidth="1.7976931348623157E308"
@@ -224,7 +224,7 @@
                                                     </children>
                                                 </GridPane>
                                             </content>
-                                        </Tab>
+                                        </Tab>-->
                                       <!--<Tab text="Добавление характеристики">
                                             <content>
                                                 <GridPane maxHeight="1.7976931348623157E308"
@@ -284,7 +284,7 @@
                                                                         valignment="TOP" vgrow="ALWAYS"/>
                                                     </rowConstraints>
                                                     <children>
-                                                        <fx:include source="/org/defence/views/CatalogOrganization.fxml"
+                                                        <fx:include source="/org/defence/views/OrganizationCatalogView.fxml"
                                                                     GridPane.hgrow="ALWAYS"
                                                                     GridPane.vgrow="ALWAYS"/>
                                                     </children>

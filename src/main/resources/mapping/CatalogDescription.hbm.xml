@@ -10,6 +10,13 @@
 
         <property name="code" column="CODE" type="string"/>
         <property name="name" column="NAME" type="string"/>
+
+        <many-to-one name="registrationInfo" column="REGISTRATION_INFO" unique="true" class="RegistrationInfo"
+                     not-null="true" lazy="false" cascade="save-update"/>
+
+        <many-to-one name="organization" column="ORGANIZATION" unique="true" class="Organization" not-null="true"
+                     lazy="false" cascade="save-update"/>
+
         <list name="values" table="CHARACTERISTICS_VALUE" fetch="select" lazy="false" cascade="all" inverse="false">
             <key column="CATALOG_DESCRIPTION_ID"/>
             <list-index column="idx"/>
