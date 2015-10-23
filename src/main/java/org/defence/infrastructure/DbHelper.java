@@ -9,7 +9,10 @@ import org.hibernate.cfg.Configuration;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -358,6 +361,26 @@ public class DbHelper {
 		}
 	}
 
+	public Organization addOrganization(String code, String name, String type) {
+		Session session = factory.openSession();
+		Transaction transaction = null;
+		Organization organization = null;
+
+		try {
+			organization = new Organization(code, name, type);
+			transaction = session.beginTransaction();
+			session.save(organization);
+			transaction.commit();
+		} catch (Exception ex) {
+			transaction.rollback();
+			ex.printStackTrace();
+		} finally {
+			session.close();
+			return organization;
+		}
+	}
+
+
 	public DescriptionFormat addDescriptionFormat(String code, String name, List<Integer> characteristicIdList) {
 
 		Session session = factory.openSession();
@@ -588,6 +611,28 @@ public class DbHelper {
 		} finally {
 			session.close();
 			return description;
+		}
+	}
+
+	public Organization updateOrganization(Integer id, String code, String name, String type) {
+		Session session = factory.openSession();
+		Transaction transaction = null;
+		Organization organization = null;
+
+		try {
+			transaction = session.beginTransaction();
+			organization = (Organization) session.get(Organization.class, id);
+			organization.setCode(code);
+			organization.setName(name);
+			organization.setType(type);
+			session.save(organization);
+			transaction.commit();
+		} catch(Exception ex) {
+			transaction.rollback();
+			ex.printStackTrace();
+		} finally {
+			session.close();
+			return organization;
 		}
 	}
 

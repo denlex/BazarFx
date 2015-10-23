@@ -21,7 +21,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.defence.MainApp;
 import org.defence.viewmodels.*;
 
 import java.io.File;
@@ -122,7 +121,7 @@ public class MeasurementCatalogView implements FxmlView<MeasurementCatalogViewMo
         viewTuple.getCodeBehind().setStage(dialog);
 
         dialog.initModality(Modality.WINDOW_MODAL);
-        dialog.initOwner(MainApp.mainStage);
+        dialog.initOwner(stage);
         dialog.setResizable(false);
 
         Scene scene = new Scene(root);
@@ -158,7 +157,7 @@ public class MeasurementCatalogView implements FxmlView<MeasurementCatalogViewMo
         viewTuple.getCodeBehind().setStage(dialog);
 
         dialog.initModality(Modality.WINDOW_MODAL);
-        dialog.initOwner(MainApp.mainStage);
+        dialog.initOwner(stage);
         dialog.setResizable(false);
 
         Scene scene = new Scene(root);
@@ -193,7 +192,7 @@ public class MeasurementCatalogView implements FxmlView<MeasurementCatalogViewMo
         viewTuple.getCodeBehind().setStage(dialog);
 
         dialog.initModality(Modality.WINDOW_MODAL);
-        dialog.initOwner(MainApp.mainStage);
+        dialog.initOwner(stage);
         dialog.setResizable(false);
 
         Scene scene = new Scene(root);
@@ -239,7 +238,7 @@ public class MeasurementCatalogView implements FxmlView<MeasurementCatalogViewMo
         viewTuple.getViewModel().setCachedName(m.getValue().nameProperty().getValue());*/
 
         dialog.initModality(Modality.WINDOW_MODAL);
-        dialog.initOwner(MainApp.mainStage);
+        dialog.initOwner(stage);
         dialog.setResizable(false);
 
         Scene scene = new Scene(root);

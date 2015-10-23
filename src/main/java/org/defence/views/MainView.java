@@ -152,7 +152,7 @@ public class MainView implements FxmlView<MainViewModel> {
 		viewTuple.getCodeBehind().initializeStage();
 
 		dialog.initModality(Modality.WINDOW_MODAL);
-		dialog.initOwner(MainApp.mainStage);
+		dialog.initOwner(stage);
 		dialog.setResizable(false);
 
 		Scene scene = new Scene(root);
@@ -311,7 +311,7 @@ public class MainView implements FxmlView<MainViewModel> {
 
 
 			dialog.initModality(Modality.WINDOW_MODAL);
-			dialog.initOwner(MainApp.mainStage);
+			dialog.initOwner(stage);
 			dialog.setResizable(false);
 
 			Scene scene = new Scene(root);
@@ -340,7 +340,7 @@ public class MainView implements FxmlView<MainViewModel> {
 			viewTuple.getCodeBehind().setStage(dialog);
 
 			dialog.initModality(Modality.WINDOW_MODAL);
-			dialog.initOwner(MainApp.mainStage);
+			dialog.initOwner(stage);
 			dialog.setResizable(false);
 
 			Scene scene = new Scene(root);
@@ -382,7 +382,7 @@ public class MainView implements FxmlView<MainViewModel> {
 
 
 			dialog.initModality(Modality.WINDOW_MODAL);
-			dialog.initOwner(MainApp.mainStage);
+			dialog.initOwner(stage);
 			dialog.setResizable(false);
 
 			Scene scene = new Scene(root);
@@ -421,7 +421,7 @@ public class MainView implements FxmlView<MainViewModel> {
 			viewTuple.getCodeBehind().initializeStage();
 
 			dialog.initModality(Modality.WINDOW_MODAL);
-			dialog.initOwner(MainApp.mainStage);
+			dialog.initOwner(stage);
 			dialog.setResizable(false);
 
 			Scene scene = new Scene(root);
@@ -463,7 +463,7 @@ public class MainView implements FxmlView<MainViewModel> {
 
 
 			dialog.initModality(Modality.WINDOW_MODAL);
-			dialog.initOwner(MainApp.mainStage);
+			dialog.initOwner(stage);
 			dialog.setResizable(false);
 
 			Scene scene = new Scene(root);
@@ -502,7 +502,7 @@ public class MainView implements FxmlView<MainViewModel> {
 //		viewTuple.getCodeBehind().initializeStage();
 
 		dialog.initModality(Modality.WINDOW_MODAL);
-		dialog.initOwner(MainApp.mainStage);
+		dialog.initOwner(stage);
 		dialog.setResizable(true);
 
 		Scene scene = new Scene(root);
@@ -527,7 +527,7 @@ public class MainView implements FxmlView<MainViewModel> {
 //		viewTuple.getCodeBehind().initializeStage();
 
 		dialog.initModality(Modality.WINDOW_MODAL);
-		dialog.initOwner(MainApp.mainStage);
+		dialog.initOwner(stage);
 		dialog.setResizable(true);
 
 		Scene scene = new Scene(root);
@@ -552,7 +552,7 @@ public class MainView implements FxmlView<MainViewModel> {
 //		viewTuple.getCodeBehind().initializeStage();
 
 		dialog.initModality(Modality.WINDOW_MODAL);
-		dialog.initOwner(MainApp.mainStage);
+		dialog.initOwner(stage);
 		dialog.setResizable(true);
 
 		Scene scene = new Scene(root);

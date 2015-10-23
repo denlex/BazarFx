@@ -118,7 +118,7 @@ public class CharacteristicCatalogView implements FxmlView<CharacteristicCatalog
 		viewTuple.getCodeBehind().setStage(dialog);
 
 		dialog.initModality(Modality.WINDOW_MODAL);
-		dialog.initOwner(MainApp.mainStage);
+		dialog.initOwner(stage);
 		dialog.setResizable(false);
 
 		Scene scene = new Scene(root);
@@ -156,7 +156,7 @@ public class CharacteristicCatalogView implements FxmlView<CharacteristicCatalog
 		viewTuple.getCodeBehind().setStage(dialog);
 
 		dialog.initModality(Modality.WINDOW_MODAL);
-		dialog.initOwner(MainApp.mainStage);
+		dialog.initOwner(stage);
 		dialog.setResizable(false);
 
 		Scene scene = new Scene(root);
@@ -193,7 +193,7 @@ public class CharacteristicCatalogView implements FxmlView<CharacteristicCatalog
 		viewTuple.getCodeBehind().initializeStage();
 
 		dialog.initModality(Modality.WINDOW_MODAL);
-		dialog.initOwner(MainApp.mainStage);
+		dialog.initOwner(stage);
 		dialog.setResizable(false);
 
 		Scene scene = new Scene(root);
@@ -239,7 +239,7 @@ public class CharacteristicCatalogView implements FxmlView<CharacteristicCatalog
         viewTuple.getViewModel().setCachedName(m.getValue().nameProperty().getValue());*/
 
 		dialog.initModality(Modality.WINDOW_MODAL);
-		dialog.initOwner(MainApp.mainStage);
+		dialog.initOwner(stage);
 		dialog.setResizable(false);
 
 		Scene scene = new Scene(root);
@@ -330,6 +330,10 @@ public class CharacteristicCatalogView implements FxmlView<CharacteristicCatalog
 		if (keyCode == KeyCode.ENTER) {
 			editCharacteristicButtonClicked(event);
 		}
+	}
+
+	public void cancelButtonClicked() {
+		stage.close();
 	}
 
 	public void initialize() {

@@ -9,7 +9,21 @@ public class Organization {
     private String name;
     private String type;
 
-    public int getId() {
+	public Organization() {
+	}
+
+	public Organization(String code, String name, String type) {
+		this(null, code, name, type);
+	}
+
+	public Organization(Integer id, String code, String name, String type) {
+		this.id = id;
+		this.code = code;
+		this.name = name;
+		this.type = type;
+	}
+
+	public int getId() {
         return id;
     }
 

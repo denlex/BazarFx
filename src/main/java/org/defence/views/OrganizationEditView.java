@@ -3,6 +3,7 @@ package org.defence.views;
 import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
 import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.defence.viewmodels.OrganizationEditViewModel;
@@ -17,8 +18,8 @@ public class OrganizationEditView implements FxmlView<OrganizationEditViewModel>
 	@FXML
 	TextField nameTextField;
 
-	/*@FXML
-	ComboBox<String> typeComboBox;*/
+	@FXML
+	ComboBox<String> typeComboBox;
 
 	@InjectViewModel
 	OrganizationEditViewModel viewModel;
@@ -45,6 +46,8 @@ public class OrganizationEditView implements FxmlView<OrganizationEditViewModel>
 		dialogResult = DialogResult.CANCEL;
 		stage.close();
 	}
+
+
 
 	public void initialize() {
 		codeTextField.textProperty().bindBidirectional(viewModel.codeProperty());
