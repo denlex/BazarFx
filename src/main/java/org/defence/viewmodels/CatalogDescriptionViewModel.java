@@ -31,6 +31,7 @@ public class CatalogDescriptionViewModel {
 		this.code.setValue(code);
 		this.name.setValue(name);
 		this.registrationInfo.setValue(new RegistrationInfoViewModel(registrationInfo));
+		this.organization.setValue(new OrganizationViewModel(organization));
 
 		if (values != null) {
 			List<CharacteristicValueViewModel> list = new ArrayList<>();
@@ -43,6 +44,7 @@ public class CatalogDescriptionViewModel {
 
 	public CatalogDescriptionViewModel(CatalogDescription catalogDescription) {
 		this(catalogDescription.getId(), catalogDescription.getCode(), catalogDescription.getName(),
+				catalogDescription.getRegistrationInfo(), catalogDescription.getOrganization(),
 				catalogDescription.getValues());
 	}
 
@@ -82,15 +84,15 @@ public class CatalogDescriptionViewModel {
 		this.name.set(name);
 	}
 
-	public RegistrationInfo getRegistrationInfo() {
+	public RegistrationInfoViewModel getRegistrationInfo() {
 		return registrationInfo.get();
 	}
 
-	public ObjectProperty<RegistrationInfo> registrationInfoProperty() {
+	public ObjectProperty<RegistrationInfoViewModel> registrationInfoProperty() {
 		return registrationInfo;
 	}
 
-	public void setRegistrationInfo(RegistrationInfo registrationInfo) {
+	public void setRegistrationInfo(RegistrationInfoViewModel registrationInfo) {
 		this.registrationInfo.set(registrationInfo);
 	}
 
