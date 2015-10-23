@@ -47,9 +47,14 @@ public class OrganizationEditView implements FxmlView<OrganizationEditViewModel>
 		stage.close();
 	}
 
-
+	public void initializeTypeComboBox() {
+		typeComboBox.getItems().add("Организация-разработчик");
+		typeComboBox.getItems().add("Организация-исполнитель");
+		typeComboBox.getSelectionModel().select(0);
+	}
 
 	public void initialize() {
+		initializeTypeComboBox();
 		codeTextField.textProperty().bindBidirectional(viewModel.codeProperty());
 		nameTextField.textProperty().bindBidirectional(viewModel.nameProperty());
 	}

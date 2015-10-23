@@ -47,9 +47,9 @@
         <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="4">
             <children>
                 <Button alignment="CENTER" mnemonicParsing="false" text="Принять" AnchorPane.bottomAnchor="15"
-                        AnchorPane.rightAnchor="150"/>
+                        AnchorPane.rightAnchor="150" onAction="#saveButtonClicked"/>
                 <Button alignment="CENTER" mnemonicParsing="false" text="Отмена" AnchorPane.bottomAnchor="15"
-                        AnchorPane.rightAnchor="15"/>
+                        AnchorPane.rightAnchor="15" onAction="#cancelButtonClicked"/>
             </children>
             <GridPane.margin>
                 <Insets top="10.0"/>

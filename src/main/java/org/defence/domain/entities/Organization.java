@@ -13,14 +13,14 @@ public class Organization {
 	}
 
 	public Organization(String code, String name, String type) {
-		this(null, code, name, type);
-	}
-
-	public Organization(Integer id, String code, String name, String type) {
-		this.id = id;
 		this.code = code;
 		this.name = name;
 		this.type = type;
+	}
+
+	public Organization(Integer id, String code, String name, String type) {
+		this(code, name, type);
+		this.id = id;
 	}
 
 	public int getId() {

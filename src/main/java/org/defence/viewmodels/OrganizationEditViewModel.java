@@ -32,7 +32,7 @@ public class OrganizationEditViewModel implements ViewModel {
 			protected void action() throws Exception {
 				OrganizationViewModel organization = parentViewModel.getSelectedOrganization();
 
-				if (organization != null) {
+				if (id.getValue() != 0) {
 					editedOrganization = new OrganizationViewModel(dbHelper.updateOrganization(id.getValue(), code
 							.getValue(), name.getValue(), type.getValue()));
 
