@@ -30,7 +30,9 @@ public class OrganizationEditViewModel implements ViewModel {
 		saveCommand = new DelegateCommand(() -> new Action() {
 			@Override
 			protected void action() throws Exception {
-				OrganizationViewModel organization = parentViewModel.getSelectedOrganization();
+//				OrganizationViewModel organization = parentViewModel.getSelectedOrganization();
+
+				System.out.println(type.getValue());
 
 				if (id.getValue() != 0) {
 					editedOrganization = new OrganizationViewModel(dbHelper.updateOrganization(id.getValue(), code
@@ -83,6 +85,18 @@ public class OrganizationEditViewModel implements ViewModel {
 
 	public void setName(String name) {
 		this.name.set(name);
+	}
+
+	public String getType() {
+		return type.get();
+	}
+
+	public StringProperty typeProperty() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type.set(type);
 	}
 
 	public Command getSaveCommand() {

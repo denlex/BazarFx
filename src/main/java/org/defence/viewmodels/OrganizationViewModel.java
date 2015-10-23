@@ -19,14 +19,15 @@ public class OrganizationViewModel implements ViewModel {
 	public OrganizationViewModel() {
 	}
 
-	public OrganizationViewModel(Integer id, String code, String name) {
+	public OrganizationViewModel(Integer id, String code, String name, String type) {
 		this.id.setValue(id);
 		this.code.setValue(code);
 		this.name.setValue(name);
+		this.type.setValue(type);
 	}
 
 	public OrganizationViewModel(Organization organization) {
-		this(organization.getId(), organization.getCode(), organization.getName());
+		this(organization.getId(), organization.getCode(), organization.getName(), organization.getType());
 	}
 
 	public int getId() {

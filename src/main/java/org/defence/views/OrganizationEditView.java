@@ -2,6 +2,7 @@ package org.defence.views;
 
 import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -50,7 +51,12 @@ public class OrganizationEditView implements FxmlView<OrganizationEditViewModel>
 	public void initializeTypeComboBox() {
 		typeComboBox.getItems().add("Организация-разработчик");
 		typeComboBox.getItems().add("Организация-исполнитель");
-		typeComboBox.getSelectionModel().select(0);
+//		typeComboBox.getSelectionModel().select(0);
+
+		typeComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+			viewModel.typeProperty().unbind();
+			viewModel.typeProperty().bindBidirectional(new SimpleObjectProperty<>(newValue));
+		});
 	}
 
 	public void initialize() {

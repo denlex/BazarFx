@@ -28,6 +28,8 @@
       <mapping resource="mapping/DescriptionFormat.hbm.xml"/>
       <mapping resource="mapping/Measurement.hbm.xml"/>
       <mapping resource="mapping/MeasurementType.hbm.xml"/>
+      <mapping resource="mapping/Organization.hbm.xml"/>
+      <mapping resource="mapping/RegistrationInfo.hbm.xml"/>
 
       <mapping resource="mapping/Certificate.hbm.xml"/>
       <mapping resource="mapping/Person.hbm.xml"/>

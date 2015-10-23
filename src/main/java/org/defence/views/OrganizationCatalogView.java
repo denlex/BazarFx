@@ -135,8 +135,8 @@ public class OrganizationCatalogView implements FxmlView<OrganizationCatalogView
 
 	private void initializeOrganizationsTableView() {
 		organizationsTableView.itemsProperty().bindBidirectional(viewModel.organizationsProperty());
-		nameTableColumn.setCellValueFactory(new PropertyValueFactory("name"));
 		codeTableColumn.setCellValueFactory(new PropertyValueFactory("code"));
+		nameTableColumn.setCellValueFactory(new PropertyValueFactory("name"));
 		typeTableColumn.setCellValueFactory(new PropertyValueFactory("type"));
 
 		organizationsTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {

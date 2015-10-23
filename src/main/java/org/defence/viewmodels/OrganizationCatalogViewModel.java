@@ -20,6 +20,10 @@ public class OrganizationCatalogViewModel implements ViewModel {
 
 	private final DbHelper dbHelper = DbHelper.getInstance();
 
+	public OrganizationCatalogViewModel() {
+		loadAllOrganizations();
+	}
+
 	public OrganizationViewModel getSelectedOrganization() {
 		return selectedOrganization.get();
 	}
@@ -42,5 +46,10 @@ public class OrganizationCatalogViewModel implements ViewModel {
 
 	public void setOrganizations(ObservableList<OrganizationViewModel> organizations) {
 		this.organizations.set(organizations);
+	}
+
+
+	public void loadAllOrganizations() {
+
 	}
 }
