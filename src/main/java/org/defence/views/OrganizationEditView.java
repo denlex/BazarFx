@@ -4,6 +4,7 @@ import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -38,6 +39,12 @@ public class OrganizationEditView implements FxmlView<OrganizationEditViewModel>
 	}
 
 	public void saveButtonClicked() {
+		if (typeComboBox.getValue() == null) {
+			Alert alert = new Alert(Alert.AlertType.WARNING);
+			alert.setContentText("Не выбран тип организации");
+			alert.showAndWait();
+		}
+
 		viewModel.getSaveCommand().execute();
 		dialogResult = DialogResult.OK;
 		stage.close();

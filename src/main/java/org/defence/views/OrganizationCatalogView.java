@@ -6,6 +6,7 @@ import de.saxsys.mvvmfx.InjectViewModel;
 import de.saxsys.mvvmfx.ViewTuple;
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -14,6 +15,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.defence.viewmodels.OrganizationCatalogViewModel;
@@ -45,7 +48,7 @@ public class OrganizationCatalogView implements FxmlView<OrganizationCatalogView
 		this.stage = stage;
 	}
 
-	public void addOrganizationButtonClicked() {
+	public void addOrganizationButtonClicked(Event event) {
 		ViewTuple<OrganizationEditView, OrganizationEditViewModel> viewTuple = FluentViewLoader.fxmlView
 				(OrganizationEditView.class).load();
 		viewTuple.getViewModel().setParentViewModel(viewModel);
@@ -78,7 +81,7 @@ public class OrganizationCatalogView implements FxmlView<OrganizationCatalogView
 		}
 	}
 
-	public void editOrganizationButtonClicked() {
+	public void editOrganizationButtonClicked(Event event) {
 		System.out.println("INSIDE");
 
 		Property<OrganizationViewModel> org = viewModel.selectedOrganizationProperty();
@@ -126,6 +129,37 @@ public class OrganizationCatalogView implements FxmlView<OrganizationCatalogView
 
 		organizationsTableView.scrollTo(selectedItemIndex);
 		organizationsTableView.selectionModelProperty().get().select(selectedItemIndex);
+		organizationsTableView.requestFocus();
+	}
+
+	public void organizationTableViewKeyPressed(KeyEvent event) {
+		KeyCode keyCode = event.getCode();
+
+		if (keyCode == KeyCode.INSERT) {
+			addOrganizationButtonClicked(event);
+			return;
+		}
+
+		if (keyCode == KeyCode.ENTER) {
+			editOrganizationButtonClicked(event);
+			return;
+		}
+
+		if (event.getCode() == KeyCode.DELETE) {
+			deleteOrganizationButtonClicked(event);
+		}
+	}
+
+	public void organizationsTableViewMouseRelease(MouseEvent event) {
+		if (event.getButton().equals(MouseButton.PRIMARY)) {
+			if (event.getClickCount() == 2) {
+				editOrganizationButtonClicked(event);
+			}
+		}
+	}
+
+	public void deleteOrganizationButtonClicked(Event event) {
+		viewModel.getDeleteCommand().execute();
 		organizationsTableView.requestFocus();
 	}
 
