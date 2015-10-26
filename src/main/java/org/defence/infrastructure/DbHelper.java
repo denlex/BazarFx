@@ -830,6 +830,20 @@ public class DbHelper {
 		}
 	}
 
+	public List<Organization> getAllOrganizations() {
+		Session session = factory.openSession();
+		List<Organization> result = null;
+
+		try {
+			result = session.createQuery("from Organization order by name").list();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			session.close();
+			return result;
+		}
+	}
+
 	public List<DescriptionFormat> getAllDescriptionFormats() {
 		Session session = factory.openSession();
 		List<DescriptionFormat> result = null;
