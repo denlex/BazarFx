@@ -6,7 +6,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="120.0" minWidth="400.0" stylesheets="/css/Button.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.defence.views.MeasurementTypeEditView">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minWidth="400.0" stylesheets="/css/Button.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.defence.views.MeasurementTypeEditView">
     <children>
         <StackPane style="-fx-background-color: #4A6C9B" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="0">
             <children>

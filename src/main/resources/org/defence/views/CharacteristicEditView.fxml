@@ -69,7 +69,7 @@
                 </GridPane>
                 <AnchorPane GridPane.rowIndex="2">
                     <children>
-            <HBox alignment="TOP_RIGHT" layoutX="581.0" spacing="10.0" AnchorPane.rightAnchor="12.0">
+            <HBox alignment="TOP_RIGHT" layoutX="581.0" spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="0.0">
                <children>
                               <Button fx:id="okBtn" alignment="CENTER" defaultButton="true" mnemonicParsing="false" onAction="#saveButtonClicked" text="Принять" AnchorPane.bottomAnchor="15" AnchorPane.rightAnchor="150" />
                               <Button alignment="CENTER" mnemonicParsing="false" onAction="#cancelButtonClicked" text="Отмена" AnchorPane.bottomAnchor="15" AnchorPane.rightAnchor="15" />

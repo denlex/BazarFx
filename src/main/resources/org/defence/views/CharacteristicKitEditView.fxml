@@ -50,7 +50,7 @@
         </TableView>
         <AnchorPane GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="4">
             <children>
-            <HBox layoutX="581.0" layoutY="10.0" spacing="10.0" AnchorPane.rightAnchor="10.0">
+            <HBox layoutX="581.0" layoutY="10.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                <children>
                       <Button onAction="#saveCharacteristicKitClicked" text="Применить" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="140.0" AnchorPane.topAnchor="10.0">
                 </Button>

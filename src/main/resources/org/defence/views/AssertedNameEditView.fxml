@@ -39,16 +39,20 @@
          </GridPane.margin></TextField>
         <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="3">
             <children>
-                <Button alignment="CENTER" mnemonicParsing="false" onAction="#saveButtonClicked" text="Принять" AnchorPane.bottomAnchor="15" AnchorPane.rightAnchor="150" />
-                <Button alignment="CENTER" mnemonicParsing="false" onAction="#cancelButtonClicked" text="Отмена" AnchorPane.bottomAnchor="15" AnchorPane.rightAnchor="15" />
+            <HBox spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+               <children>
+                      <Button alignment="CENTER" mnemonicParsing="false" onAction="#saveButtonClicked" text="Принять" AnchorPane.bottomAnchor="15" AnchorPane.rightAnchor="150" />
+                      <Button alignment="CENTER" mnemonicParsing="false" onAction="#cancelButtonClicked" text="Отмена" AnchorPane.bottomAnchor="15" AnchorPane.rightAnchor="15" />
+               </children>
+            </HBox>
             </children>
          <GridPane.margin>
-            <Insets top="10.0" />
+            <Insets />
          </GridPane.margin>
         </AnchorPane>
     </children>
     <columnConstraints>
-        <ColumnConstraints hgrow="NEVER" minWidth="-Infinity" />
+        <ColumnConstraints hgrow="NEVER" />
         <ColumnConstraints hgrow="ALWAYS" />
     </columnConstraints>
     <rowConstraints>

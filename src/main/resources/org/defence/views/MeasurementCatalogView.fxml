@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -38,12 +39,16 @@
                                                 </TableView>
                                                 <AnchorPane GridPane.columnIndex="0" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
                                                     <children>
-                                                        <Button fx:id="editTypeButton" onAction="#editTypeButtonClicked" text="Изменить" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="140.0" AnchorPane.topAnchor="10.0">
+                                          <HBox layoutX="193.0" layoutY="10.0" spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                                             <children>
+                                                              <Button fx:id="addTypeButton" onAction="#addTypeButtonClicked" text="Добавить" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="270.0" AnchorPane.topAnchor="10.0">
                                                         </Button>
-                                                        <Button fx:id="deleteTypeButton" text="Удалить" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                                                              <Button fx:id="editTypeButton" onAction="#editTypeButtonClicked" text="Изменить" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="140.0" AnchorPane.topAnchor="10.0">
                                                         </Button>
-                                                        <Button fx:id="addTypeButton" onAction="#addTypeButtonClicked" text="Добавить" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="270.0" AnchorPane.topAnchor="10.0">
+                                                              <Button fx:id="deleteTypeButton" text="Удалить" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                                                         </Button>
+                                             </children>
+                                          </HBox>
                                                         <!--<Button fx:id="reportButton" layoutY="10.0" mnemonicParsing="false" onAction="#hndlOpenFile" text="Отчет" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="400.0" AnchorPane.topAnchor="10.0" />-->
                                                     </children>
                                                 </AnchorPane>
@@ -75,12 +80,16 @@
                                                 </TableView>
                                                 <AnchorPane GridPane.columnIndex="0" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
                                                     <children>
-                                                        <Button fx:id="editMeasurementButton" onAction="#editMeasurementButtonClicked" text="Изменить" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="140.0" AnchorPane.topAnchor="10.0">
+                                          <HBox layoutX="193.0" layoutY="10.0" spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                                             <children>
+                                                              <Button fx:id="addMeasurementButton" onAction="#addMeasurementButtonClicked" text="Добавить" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="270.0" AnchorPane.topAnchor="10.0">
                                                         </Button>
-                                                        <Button fx:id="deleteMeasurementButton" onAction="#deleteMeasurementButtonClicked" text="Удалить" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                                                              <Button fx:id="editMeasurementButton" onAction="#editMeasurementButtonClicked" text="Изменить" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="140.0" AnchorPane.topAnchor="10.0">
                                                         </Button>
-                                                        <Button fx:id="addMeasurementButton" onAction="#addMeasurementButtonClicked" text="Добавить" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="270.0" AnchorPane.topAnchor="10.0">
+                                                              <Button fx:id="deleteMeasurementButton" onAction="#deleteMeasurementButtonClicked" text="Удалить" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                                                         </Button>
+                                             </children>
+                                          </HBox>
                                                     </children>
                                                 </AnchorPane>
                                             </children>
