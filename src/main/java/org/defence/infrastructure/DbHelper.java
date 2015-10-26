@@ -1197,6 +1197,26 @@ public class DbHelper {
 		return true;
 	}
 
+	public boolean deleteOrganization(Integer id) {
+		Session session = factory.openSession();
+		Transaction transaction = null;
+
+		try {
+			transaction = session.beginTransaction();
+			Organization organization = (Organization) session.get(Organization.class, id);
+			session.delete(organization);
+			transaction.commit();
+		} catch (Exception ex) {
+			transaction.rollback();
+			ex.printStackTrace();
+			return false;
+		} finally {
+			session.close();
+		}
+
+		return true;
+	}
+
 	public List<Characteristic> getCharacteristicsByAssertedNameId(Integer assertedNameId) {
 		Session session = factory.openSession();
 		List<Characteristic> result = null;
