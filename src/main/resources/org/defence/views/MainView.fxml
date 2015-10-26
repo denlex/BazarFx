@@ -136,7 +136,7 @@
                                                 </GridPane>
                                             </content>
                                         </Tab>
-                                        <!--<Tab text="Добавление класс">
+                                        <Tab text="Добавление класс">
                                             <content>
                                                 <GridPane maxHeight="1.7976931348623157E308"
                                                           maxWidth="1.7976931348623157E308"
@@ -157,7 +157,7 @@
                                                     </children>
                                                 </GridPane>
                                             </content>
-                                        </Tab>-->
+                                        </Tab>
                                         <!--<Tab fx:id="assertedNameEditView" text="Редактирование УН">
                                             <content>
                                                 <GridPane maxHeight="1.7976931348623157E308"
