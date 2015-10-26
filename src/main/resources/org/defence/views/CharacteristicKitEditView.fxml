@@ -41,7 +41,7 @@
         <TableView fx:id="characteristicsTableView" GridPane.columnSpan="2" GridPane.rowIndex="3">
             <columns>
                 <TableColumn fx:id="idTableColumn" maxWidth="1.7976931348623157E308" minWidth="70.0" prefWidth="70.0" text="ID" />
-                <TableColumn fx:id="nameTableColumn" maxWidth="1.7976931348623157E308" minWidth="400.0" prefWidth="300.0" text="Наименование" />
+                <TableColumn fx:id="nameTableColumn" maxWidth="1.7976931348623157E308" minWidth="400.0" prefWidth="600.0" text="Наименование" />
                 <TableColumn fx:id="checkBoxTableColumn" maxWidth="1.7976931348623157E308" minWidth="70.0" prefWidth="70.0" text="isBelong" />
             </columns>
          <GridPane.margin>
