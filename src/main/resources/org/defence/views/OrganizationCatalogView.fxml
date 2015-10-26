@@ -18,7 +18,7 @@
                 <HBox spacing="10.0" AnchorPane.rightAnchor="10.0">
                     <children>
                         <Button alignment="CENTER" onAction="#addOrganizationButtonClicked" text="Добавить" textAlignment="CENTER" GridPane.halignment="CENTER" />
-                        <Button alignment="CENTER" onAction="#editOrganizationButtonClicked" text="Редактировать" textAlignment="CENTER" GridPane.halignment="CENTER" />
+                        <Button alignment="CENTER" onAction="#editOrganizationButtonClicked" text="Редактировать" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" />
                   <Button mnemonicParsing="false" text="Удалить" />
                         <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#cancelButtonClicked" text="Отмена" textAlignment="CENTER" GridPane.columnIndex="2" />
                     </children>
