@@ -103,9 +103,9 @@
                <GridPane.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </GridPane.margin>
-               <image>
+<!--               <image>
                   <Image url="" />
-               </image>
+               </image>-->
             </ImageView>
             <Button style="-fx-pref-width: 350px" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Загрузка изображения" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
          </children>
