@@ -43,6 +43,7 @@ public class OrganizationEditView implements FxmlView<OrganizationEditViewModel>
 			Alert alert = new Alert(Alert.AlertType.WARNING);
 			alert.setContentText("Не выбран тип организации");
 			alert.showAndWait();
+			return;
 		}
 
 		viewModel.getSaveCommand().execute();

@@ -82,8 +82,6 @@ public class OrganizationCatalogView implements FxmlView<OrganizationCatalogView
 	}
 
 	public void editOrganizationButtonClicked(Event event) {
-		System.out.println("INSIDE");
-
 		Property<OrganizationViewModel> org = viewModel.selectedOrganizationProperty();
 
 		// if item in measurementTableView was not selected
