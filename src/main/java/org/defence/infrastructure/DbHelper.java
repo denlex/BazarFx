@@ -380,7 +380,6 @@ public class DbHelper {
 		}
 	}
 
-
 	public DescriptionFormat addDescriptionFormat(String code, String name, List<Integer> characteristicIdList) {
 
 		Session session = factory.openSession();
@@ -422,6 +421,24 @@ public class DbHelper {
 		} finally {
 			session.close();
 			return newFormat;
+		}
+	}
+
+	public CatalogClass addCatalogClass(String code, String name) {
+		Session session = factory.openSession();
+		Transaction transaction = null;
+		CatalogClass newClass = new CatalogClass(code, name);
+
+		try {
+			transaction = session.beginTransaction();
+			session.save(newClass);
+			transaction.commit();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			transaction.rollback();
+		} finally {
+			session.close();
+			return newClass;
 		}
 	}
 
@@ -695,6 +712,26 @@ public class DbHelper {
 		return format;
 	}
 
+	public CatalogClass updateCatalogClass(Integer id, String code, String name) {
+		Session session = factory.openSession();
+		Transaction transaction = null;
+		CatalogClass editedClass = null;
+
+		try {
+			transaction = session.beginTransaction();
+			editedClass = (CatalogClass) session.get(CatalogClass.class, id);
+			editedClass.setCode(code);
+			editedClass.setName(name);
+			session.save(editedClass);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			transaction.rollback();
+		} finally {
+			session.close();
+			return editedClass;
+		}
+	}
+
 	public MeasurementType getMeasurementTypeById(int id) {
 		Session session = factory.openSession();
 		MeasurementType result = null;
@@ -850,6 +887,20 @@ public class DbHelper {
 
 		try {
 			result = session.createQuery("from DescriptionFormat order by name").list();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			session.close();
+			return result;
+		}
+	}
+
+	public List<CatalogClass> getAllClasses() {
+		Session session = factory.openSession();
+		List<CatalogClass> result = null;
+
+		try {
+			result = session.createQuery("from CatalogClass order by name").list();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		} finally {

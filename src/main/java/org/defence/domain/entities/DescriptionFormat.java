@@ -1,6 +1,7 @@
 package org.defence.domain.entities;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -17,7 +18,7 @@ public class DescriptionFormat {
     }
 
 	public DescriptionFormat(String code, String name) {
-		this(code, name, null, null);
+		this(code, name, new LinkedList<>(), new LinkedList<>());
 	}
 
     public DescriptionFormat(String code, String name, List<Characteristic> characteristics, List<AssertedName> assertedNames) {

@@ -40,10 +40,14 @@ import java.util.Optional;
  */
 public class MainViewModel implements ViewModel {
 	private Command exitCommand;
-	private final ListProperty<DescriptionFormatViewModel> formats = new SimpleListProperty<>();
+	private final ListProperty<CatalogClassViewModel> classes = new SimpleListProperty<>(FXCollections
+			.observableArrayList());
+	private final ListProperty<DescriptionFormatViewModel> formats = new SimpleListProperty<>(FXCollections
+			.observableArrayList());
 	private DbHelper dbHelper = DbHelper.getInstance();
 	private File catalogDescriptionFile;
 
+	private final ObjectProperty<CatalogClassViewModel> selectedClass = new SimpleObjectProperty<>();
 	private final ObjectProperty<DescriptionFormatViewModel> selectedFormat = new SimpleObjectProperty<>();
 	private final ObjectProperty<AssertedNameViewModel> selectedName = new SimpleObjectProperty<>();
 	private final ObjectProperty<CatalogDescriptionViewModel> selectedDescription = new SimpleObjectProperty<>();
@@ -74,7 +78,8 @@ public class MainViewModel implements ViewModel {
 
 	public MainViewModel() {
 
-		loadAllFormatsFromDb();
+//		loadAllFormatsFromDb();
+		loadAllClassesFromDb();
 		root.setValue(new TreeItem<>());
 		displayFormats();
 
@@ -282,7 +287,8 @@ public class MainViewModel implements ViewModel {
 
 				System.out.println("New catalogDescription was added!");
 
-				return dbHelper.addCatalogDescriptionWhileImport(assertedNameId, description.getCode(), description.getName(),
+				return dbHelper.addCatalogDescriptionWhileImport(assertedNameId, description.getCode(), description
+								.getName(),
 						description.getValues());
 			}
 
@@ -408,7 +414,8 @@ public class MainViewModel implements ViewModel {
 					catalogDescription.setValues(valueList);
 					catalogDescription.setName(catalogDescriptionNameNode.getAttribute("value"));
 
-					if ((catalogDescription = addCatalogDescriptionIfNotFoundInDb(selectedName.getValue().getId(), catalogDescription)) != null) {
+					if ((catalogDescription = addCatalogDescriptionIfNotFoundInDb(selectedName.getValue().getId(),
+							catalogDescription)) != null) {
 						Alert alert = new Alert(Alert.AlertType.INFORMATION);
 						alert.setContentText(String.format("Было добалено новое КО:\nНаименование:\t%s\nКод:\t%s",
 								catalogDescription.getName(), catalogDescription.getCode()));
@@ -654,6 +661,18 @@ public class MainViewModel implements ViewModel {
 		return exitCommand;
 	}
 
+	public ObservableList<CatalogClassViewModel> getClasses() {
+		return classes.get();
+	}
+
+	public ListProperty<CatalogClassViewModel> classesProperty() {
+		return classes;
+	}
+
+	public void setClasses(ObservableList<CatalogClassViewModel> classes) {
+		this.classes.set(classes);
+	}
+
 	public ObservableList<DescriptionFormatViewModel> getFormats() {
 		return formats.get();
 	}
@@ -676,6 +695,18 @@ public class MainViewModel implements ViewModel {
 
 	public void setRoot(TreeItem<Object> root) {
 		this.root.set(root);
+	}
+
+	public CatalogClassViewModel getSelectedClass() {
+		return selectedClass.get();
+	}
+
+	public ObjectProperty<CatalogClassViewModel> selectedClassProperty() {
+		return selectedClass;
+	}
+
+	public void setSelectedClass(CatalogClassViewModel selectedClass) {
+		this.selectedClass.set(selectedClass);
 	}
 
 	public DescriptionFormatViewModel getSelectedFormat() {
@@ -778,6 +809,24 @@ public class MainViewModel implements ViewModel {
 		this.catalogDescriptionFile = catalogDescriptionFile;
 	}
 
+	public void loadAllClassesFromDb() {
+		List<CatalogClass> allClassesFromDb = dbHelper.getAllClasses();
+		List<CatalogClassViewModel> list = null;
+
+		if (allClassesFromDb != null) {
+			list = new LinkedList<>();
+
+			for (CatalogClass elem : allClassesFromDb) {
+				if (elem.getFormats() == null) {
+					continue;
+				}
+				list.add(new CatalogClassViewModel(elem));
+			}
+		}
+
+		classes.setValue(new ObservableListWrapper<>(list));
+	}
+
 	public void loadAllFormatsFromDb() {
 		List<DescriptionFormat> allFormatsFromDb = dbHelper.getAllDescriptionFormats();
 		List<DescriptionFormatViewModel> list = null;
@@ -838,7 +887,7 @@ public class MainViewModel implements ViewModel {
 
 		TreeItem<Object> rootItem = new TreeItem<>(root.getValue().getValue());
 
-		for (Object object : formats) {
+		for (Object object : classes) {
 			rootItem.getChildren().add(createNode(object));
 
 		}
@@ -878,6 +927,23 @@ public class MainViewModel implements ViewModel {
 			}
 
 			private ObservableList<TreeItem<Object>> buildChildren(TreeItem<Object> treeItem) {
+				if (treeItem.getValue() instanceof CatalogClassViewModel) {
+					CatalogClassViewModel catalogClass = (CatalogClassViewModel) treeItem.getValue();
+
+					if (catalogClass != null) {
+						List<DescriptionFormatViewModel> formats = catalogClass.getFormats();
+
+						if (formats != null && formats.size() > 0) {
+							ObservableList<TreeItem<Object>> children = FXCollections.observableArrayList();
+
+							for (DescriptionFormatViewModel format : formats) {
+								children.add(createNode(format));
+							}
+							return children;
+						}
+					}
+				}
+
 				if (treeItem.getValue() instanceof DescriptionFormatViewModel) {
 					DescriptionFormatViewModel format = (DescriptionFormatViewModel) treeItem.getValue();
 

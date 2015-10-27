@@ -3,13 +3,20 @@
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping package="org.defence.domain.entities">
-    <class name="CatalogClass" table="CatalogClass">
+    <class name="CatalogClass" table="CATALOG_CLASS">
         <id name="id" column="ID">
             <generator class="native"/>
         </id>
-        <property name="code" column="Number" type="int"/>
+        <property name="code" column="Number" type="string"/>
         <property name="name" column="Name" type="string"/>
         <property name="include" column="Include" type="string"/>
         <property name="exclude" column="Exclude" type="string"/>
+
+        <list name="formats" table="DESCRIPTION_FORMAT"
+              inverse="false" lazy="false" fetch="select" cascade="all">
+            <key column="CATALOG_CLASS_ID" />
+            <list-index column="idx"/>
+            <one-to-many class="DescriptionFormat" />
+        </list>
     </class>
 </hibernate-mapping>

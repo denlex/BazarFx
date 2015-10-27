@@ -151,7 +151,7 @@
                                                                         valignment="TOP" vgrow="ALWAYS"/>
                                                     </rowConstraints>
                                                     <children>
-                                                        <fx:include source="/org/defence/views/Class.fxml"
+                                                        <fx:include source="/org/defence/views/CatalogClassEditView.fxml"
                                                                     GridPane.hgrow="ALWAYS"
                                                                     GridPane.vgrow="ALWAYS"/>
                                                     </children>

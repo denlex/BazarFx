@@ -1,21 +1,27 @@
 package org.defence.viewmodels;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
+import javafx.collections.ObservableList;
+import org.defence.domain.entities.CatalogClass;
 
 /**
  * Created by root on 10/26/15.
  */
 public class CatalogClassViewModel {
 	private IntegerProperty id = new SimpleIntegerProperty();
-	private StringProperty number = new SimpleStringProperty();
+	private StringProperty code = new SimpleStringProperty();
 	private StringProperty name = new SimpleStringProperty();
 	private StringProperty include = new SimpleStringProperty();
 	private StringProperty exclude = new SimpleStringProperty();
+	private ListProperty<DescriptionFormatViewModel> formats = new SimpleListProperty<>();
 
 	public CatalogClassViewModel() {
+	}
+
+	public CatalogClassViewModel(CatalogClass catalogClass) {
+		id.setValue(catalogClass.getId());
+		code.setValue(catalogClass.getCode());
+		name.setValue(catalogClass.getName());
 	}
 
 	public int getId() {
@@ -30,16 +36,16 @@ public class CatalogClassViewModel {
 		this.id.set(id);
 	}
 
-	public String getNumber() {
-		return number.get();
+	public String getCode() {
+		return code.get();
 	}
 
-	public StringProperty numberProperty() {
-		return number;
+	public StringProperty codeProperty() {
+		return code;
 	}
 
-	public void setNumber(String number) {
-		this.number.set(number);
+	public void setCode(String code) {
+		this.code.set(code);
 	}
 
 	public String getName() {
@@ -76,5 +82,22 @@ public class CatalogClassViewModel {
 
 	public void setExclude(String exclude) {
 		this.exclude.set(exclude);
+	}
+
+	public ObservableList<DescriptionFormatViewModel> getFormats() {
+		return formats.get();
+	}
+
+	public ListProperty<DescriptionFormatViewModel> formatsProperty() {
+		return formats;
+	}
+
+	public void setFormats(ObservableList<DescriptionFormatViewModel> formats) {
+		this.formats.set(formats);
+	}
+
+	@Override
+	public String toString() {
+		return String.format("%s. %s", code.getValue(), name.getValue());
 	}
 }

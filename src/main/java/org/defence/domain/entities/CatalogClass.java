@@ -1,14 +1,32 @@
 package org.defence.domain.entities;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * Created by root on 22.07.15.
  */
 public class CatalogClass {
     private int id;
-    private String number;
+    private String code;
     private String name;
     private String include;
     private String exclude;
+	private List<DescriptionFormat> formats = new LinkedList<>();
+
+    public CatalogClass() {
+
+	}
+
+	public CatalogClass(String code, String name) {
+		this.code = code;
+		this.name = name;
+	}
+
+	public CatalogClass(Integer id, String code, String name) {
+		this(code, name);
+		this.id = id;
+	}
 
     public int getId() {
         return id;
@@ -18,12 +36,12 @@ public class CatalogClass {
         this.id = id;
     }
 
-    public String getNumber() {
-        return number;
+    public String getCode() {
+        return code;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getName() {
@@ -49,4 +67,12 @@ public class CatalogClass {
     public void setExclude(String exclude) {
         this.exclude = exclude;
     }
+
+	public List<DescriptionFormat> getFormats() {
+		return formats;
+	}
+
+	public void setFormats(List<DescriptionFormat> formats) {
+		this.formats = formats;
+	}
 }

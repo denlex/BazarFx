@@ -20,7 +20,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.defence.MainApp;
 import org.defence.viewmodels.*;
 
 import java.io.File;
@@ -33,10 +32,10 @@ public class MainView implements FxmlView<MainViewModel> {
 	private MenuItem exitBtn;
 
 	@FXML
-	TabPane tabs;
+	private TabPane tabs;
 
 	@FXML
-	TreeView<Object> treeView;
+	private TreeView<Object> treeView;
 
 	private TreeItem<Object> root = new TreeItem<>("Каталог");
 
@@ -94,18 +93,28 @@ public class MainView implements FxmlView<MainViewModel> {
 		root.setExpanded(true);
 	}
 
-	private void selectEditedDescriptionFormat(DescriptionFormatViewModel format) {
-		ObservableList<TreeItem<Object>> formats = treeView.getRoot().getChildren();
-		for (TreeItem<Object> object : formats) {
-			if (format.getId() == ((DescriptionFormatViewModel) object.getValue()).getId()) {
+	private void selectEditedCatalogClass(CatalogClassViewModel catalogClass) {
+		ObservableList<TreeItem<Object>> catalogClasses = treeView.getRoot().getChildren();
+		for (TreeItem<Object> object : catalogClasses) {
+			if (catalogClass.getId() == ((CatalogClassViewModel) object.getValue()).getId()) {
 				treeView.getSelectionModel().select(object);
 				break;
 			}
 		}
 	}
 
+	private void selectEditedDescriptionFormat(DescriptionFormatViewModel format) {
+		/*ObservableList<TreeItem<Object>> formats = treeView.getRoot().getChildren();
+		for (TreeItem<Object> object : formats) {
+			if (format.getId() == ((DescriptionFormatViewModel) object.getValue()).getId()) {
+				treeView.getSelectionModel().select(object);
+				break;
+			}
+		}*/
+	}
+
 	private void selectEditedAssertedName(DescriptionFormatViewModel format, AssertedNameViewModel name) {
-		ObservableList<TreeItem<Object>> formatItems = treeView.getRoot().getChildren();
+		/*ObservableList<TreeItem<Object>> formatItems = treeView.getRoot().getChildren();
 
 		for (TreeItem<Object> formatItem : formatItems) {
 			if (((DescriptionFormatViewModel) formatItem.getValue()).getId() == format.getId()) {
@@ -119,7 +128,7 @@ public class MainView implements FxmlView<MainViewModel> {
 				}
 				break;
 			}
-		}
+		}*/
 	}
 
 	/*private void selectEditedCatalogDescription(AssertedNameViewModel name, CatalogDescriptionViewModel
@@ -141,46 +150,32 @@ public class MainView implements FxmlView<MainViewModel> {
 		}
 	}*/
 
-	private void addDescriptionFormat() {
-		ViewTuple<DescriptionFormatEditView, DescriptionFormatEditViewModel> viewTuple = FluentViewLoader.fxmlView
-				(DescriptionFormatEditView.class).load();
-		viewTuple.getViewModel().setParentViewModel(viewModel);
-
-		Parent root = viewTuple.getView();
-		Stage dialog = new Stage();
-		viewTuple.getCodeBehind().setStage(dialog);
-		viewTuple.getCodeBehind().initializeStage();
-
-		dialog.initModality(Modality.WINDOW_MODAL);
-		dialog.initOwner(stage);
-		dialog.setResizable(false);
-
-		Scene scene = new Scene(root);
-		scene.addEventHandler(KeyEvent.ANY, event -> {
-			if (event.getCode() == KeyCode.ESCAPE) {
-				dialog.close();
-			}
-		});
-
-		dialog.setScene(scene);
-		dialog.showAndWait();
-
-		if (viewTuple.getCodeBehind().getModalResult() == DialogResult.OK) {
-			viewModel.displayFormats();
-			// select new added format in treeView
-			selectEditedDescriptionFormat(viewTuple.getViewModel().getEditedFormat());
-			treeView.scrollTo(treeView.getSelectionModel() != null ? treeView.getSelectionModel().getSelectedIndex() :
-					0);
-		}
-	}
 
 	private final class TreeCellFactory extends TreeCell<Object> {
+		private ContextMenu catalogClassMenu = new ContextMenu();
 		private ContextMenu descriptionFormatMenu = new ContextMenu();
 		private ContextMenu assertedNameMenu = new ContextMenu();
 		private ContextMenu catalogDescriptionMenu = new ContextMenu();
 		private ContextMenu rootMenu = new ContextMenu();
 
 		public TreeCellFactory() {
+			MenuItem addCatalogClassMenuItem = new MenuItem("Добавить класс");
+			addCatalogClassMenuItem.setOnAction(event -> addCatalogClass());
+			//==========================================================================================================
+			MenuItem addDescriptionFormatItem = new MenuItem("Добавить СФО");
+			addDescriptionFormatItem.setOnAction(event -> addDescriptionFormat());
+
+			MenuItem editCatalogClassMenuItem = new MenuItem("Редактировать класс");
+			editCatalogClassMenuItem.setOnAction(event -> editCatalogClass());
+
+			MenuItem removeCatalogClassMenuItem = new MenuItem("Удалить класс");
+			removeCatalogClassMenuItem.setOnAction(event -> {
+
+			});
+
+			catalogClassMenu.getItems().addAll(addDescriptionFormatItem, editCatalogClassMenuItem,
+					removeCatalogClassMenuItem);
+			//==========================================================================================================
 			MenuItem addAssertedNameMenuItem = new MenuItem("Добавить УН");
 			addAssertedNameMenuItem.setOnAction(event -> addAssertedName());
 
@@ -195,9 +190,10 @@ public class MainView implements FxmlView<MainViewModel> {
 
 			descriptionFormatMenu.getItems().addAll(addAssertedNameMenuItem, editDescriptionFormatMenuItem,
 					removeDescriptionFormatMenuItem);
-
+			//==========================================================================================================
 			MenuItem addCatalogDescriptionMenuItem = new MenuItem("Добавить КО");
 			addCatalogDescriptionMenuItem.setOnAction(event -> addCatalogDescription());
+
 			MenuItem editAssertedNameMenuItem = new MenuItem("Редактировать УН");
 			editAssertedNameMenuItem.setOnAction(event -> editAssertedName());
 
@@ -228,7 +224,7 @@ public class MainView implements FxmlView<MainViewModel> {
 
 			assertedNameMenu.getItems().addAll(addCatalogDescriptionMenuItem, editAssertedNameMenuItem,
 					removeAssertedNameMenuItem, new SeparatorMenuItem(), importCatalogDescriptionMenuItem);
-
+			//==========================================================================================================
 			MenuItem editCatalogDescriptionMenuItem = new MenuItem("Редактировать КО");
 			editCatalogDescriptionMenuItem.setOnAction(event -> editCatalogDescription());
 			MenuItem removeCatalogDescriptionMenuItem = new MenuItem("Удалить КО");
@@ -255,11 +251,8 @@ public class MainView implements FxmlView<MainViewModel> {
 
 			catalogDescriptionMenu.getItems().addAll(editCatalogDescriptionMenuItem, removeCatalogDescriptionMenuItem,
 					new SeparatorMenuItem(), exportCatalogDescriptionMenuItem);
-
-			MenuItem addDescriptionFormatItem = new MenuItem("Добавить СФО");
-			addDescriptionFormatItem.setOnAction(event -> addDescriptionFormat());
-
-			rootMenu.getItems().add(addDescriptionFormatItem);
+			//==========================================================================================================
+			rootMenu.getItems().add(addCatalogClassMenuItem);
 		}
 
 		@Override
@@ -270,6 +263,10 @@ public class MainView implements FxmlView<MainViewModel> {
 				setText(null);
 			} else {
 				setText(item.toString());
+			}
+
+			if (item instanceof CatalogClassViewModel) {
+				setContextMenu(catalogClassMenu);
 			}
 
 			if (item instanceof DescriptionFormatViewModel) {
@@ -286,6 +283,113 @@ public class MainView implements FxmlView<MainViewModel> {
 
 			if (item instanceof String) {
 				setContextMenu(rootMenu);
+			}
+		}
+
+		private void addCatalogClass() {
+			ViewTuple<CatalogClassEditView, CatalogClassEditViewModel> viewTuple = FluentViewLoader.fxmlView
+					(CatalogClassEditView.class).load();
+			viewTuple.getViewModel().setParentViewModel(viewModel);
+
+			Parent root = viewTuple.getView();
+			Stage dialog = new Stage();
+			viewTuple.getCodeBehind().setStage(dialog);
+//			viewTuple.getCodeBehind().initializeStage();
+
+			dialog.initModality(Modality.WINDOW_MODAL);
+			dialog.initOwner(stage);
+			dialog.setResizable(false);
+
+			Scene scene = new Scene(root);
+			scene.addEventHandler(KeyEvent.ANY, event -> {
+				if (event.getCode() == KeyCode.ESCAPE) {
+					dialog.close();
+				}
+			});
+
+			dialog.setScene(scene);
+			dialog.showAndWait();
+
+			if (viewTuple.getCodeBehind().getModalResult() == DialogResult.OK) {
+				viewModel.displayFormats();
+				// select new added format in treeView
+				/*selectEditedCatalogClass(viewTuple.getViewModel().getEditedFormat());
+				treeView.scrollTo(treeView.getSelectionModel() != null ? treeView.getSelectionModel().getSelectedIndex
+						() : 0);*/
+			}
+		}
+
+		private void editCatalogClass() {
+			if (viewModel.getSelectedClass() == null) {
+				return;
+			}
+
+			ViewTuple<CatalogClassEditView, CatalogClassEditViewModel> viewTuple = FluentViewLoader.fxmlView
+					(CatalogClassEditView.class).load();
+			viewTuple.getViewModel().setParentViewModel(viewModel);
+
+			Parent root = viewTuple.getView();
+			Stage dialog = new Stage();
+			viewTuple.getCodeBehind().setStage(dialog);
+			viewTuple.getCodeBehind().initializeStage();
+
+			Property<CatalogClassViewModel> f = viewModel.selectedClassProperty();
+			viewTuple.getViewModel().idProperty().bindBidirectional(f.getValue().idProperty());
+			viewTuple.getViewModel().codeProperty().bindBidirectional(f.getValue().codeProperty());
+			viewTuple.getViewModel().nameProperty().bindBidirectional(f.getValue().nameProperty());
+
+
+			dialog.initModality(Modality.WINDOW_MODAL);
+			dialog.initOwner(stage);
+			dialog.setResizable(false);
+
+			Scene scene = new Scene(root);
+			scene.addEventHandler(KeyEvent.ANY, event -> {
+				if (event.getCode() == KeyCode.ESCAPE) {
+					dialog.close();
+				}
+			});
+
+			dialog.setScene(scene);
+			dialog.showAndWait();
+
+			// select edited format in treeView
+			/*if (viewTuple.getCodeBehind().getModalResult() == DialogResult.OK) {
+				selectEditedCatalogClass(viewTuple.getViewModel().getEditedFormat());
+			}*/
+		}
+
+		private void addDescriptionFormat() {
+			ViewTuple<DescriptionFormatEditView, DescriptionFormatEditViewModel> viewTuple = FluentViewLoader.fxmlView
+					(DescriptionFormatEditView.class).load();
+			viewTuple.getViewModel().setParentViewModel(viewModel);
+
+			Parent root = viewTuple.getView();
+			Stage dialog = new Stage();
+			viewTuple.getCodeBehind().setStage(dialog);
+			viewTuple.getCodeBehind().initializeStage();
+
+			dialog.initModality(Modality.WINDOW_MODAL);
+			dialog.initOwner(stage);
+			dialog.setResizable(false);
+
+			Scene scene = new Scene(root);
+			scene.addEventHandler(KeyEvent.ANY, event -> {
+				if (event.getCode() == KeyCode.ESCAPE) {
+					dialog.close();
+				}
+			});
+
+			dialog.setScene(scene);
+			dialog.showAndWait();
+
+			if (viewTuple.getCodeBehind().getModalResult() == DialogResult.OK) {
+				viewModel.displayFormats();
+				// select new added format in treeView
+				selectEditedDescriptionFormat(viewTuple.getViewModel().getEditedFormat());
+				treeView.scrollTo(treeView.getSelectionModel() != null ? treeView.getSelectionModel().getSelectedIndex
+						() :
+						0);
 			}
 		}
 
