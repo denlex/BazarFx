@@ -26,7 +26,7 @@ public class CatalogClassEditView implements FxmlView<CatalogClassEditViewModel>
 
 	@Override
 	public DialogResult getModalResult() {
-		return null;
+		return dialogResult;
 	}
 
 	public void setStage(Stage stage) {

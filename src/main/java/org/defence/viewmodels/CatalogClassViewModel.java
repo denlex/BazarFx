@@ -1,8 +1,13 @@
 package org.defence.viewmodels;
 
 import javafx.beans.property.*;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.defence.domain.entities.CatalogClass;
+import org.defence.domain.entities.DescriptionFormat;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by root on 10/26/15.
@@ -22,6 +27,14 @@ public class CatalogClassViewModel {
 		id.setValue(catalogClass.getId());
 		code.setValue(catalogClass.getCode());
 		name.setValue(catalogClass.getName());
+
+		if (catalogClass.getFormats() != null) {
+			List<DescriptionFormatViewModel> list = new ArrayList<>();
+			for (DescriptionFormat format : catalogClass.getFormats()) {
+				list.add(new DescriptionFormatViewModel(format));
+			}
+			this.formats.setValue(FXCollections.observableArrayList(list));
+		}
 	}
 
 	public int getId() {

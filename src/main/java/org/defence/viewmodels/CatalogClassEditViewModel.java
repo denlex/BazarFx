@@ -32,8 +32,10 @@ public class CatalogClassEditViewModel implements ViewModel {
 			@Override
 			protected void action() throws Exception {
 
+				CatalogClassViewModel selectedClass = parentViewModel.getSelectedClass();
+
 				// if window was opened in adding mode
-				if (parentViewModel.getSelectedClass() == null) {
+				if (selectedClass == null) {
 					editedClass = new CatalogClassViewModel(dbHelper.addCatalogClass(code.getValue(), name
 							.getValue()));
 					parentViewModel.getClasses().add(editedClass);
@@ -42,6 +44,9 @@ public class CatalogClassEditViewModel implements ViewModel {
 					// TODO: Сделать проверку на пустой ввод данных о типе измерения
 					editedClass = new CatalogClassViewModel(dbHelper.updateCatalogClass(id.getValue(), code
 							.getValue(), name.getValue()));
+					selectedClass.setCode(editedClass.getCode());
+					selectedClass.setName(editedClass.getName());
+					selectedClass.setFormats(editedClass.getFormats());
 				}
 				// TODO: реализовать возможность обновления списка наборов характеристик
 

@@ -73,17 +73,28 @@ public class DescriptionFormatEditViewModel implements ViewModel {
 					}
 				}
 
+				DescriptionFormatViewModel selectedFormat = parentViewModel.getSelectedFormat();
+
 				// if window was opened in adding mode
-				if (parentViewModel.getSelectedFormat() == null) {
-					editedFormat = new DescriptionFormatViewModel(dbHelper.addDescriptionFormat(code.getValue(), name
-							.getValue(), characteristicIdList));
-                    parentViewModel.getFormats().add(editedFormat);
+				if (selectedFormat == null) {
+					editedFormat = new DescriptionFormatViewModel(dbHelper.addDescriptionFormat(parentViewModel
+							.getSelectedClass().getId(), code.getValue(), name.getValue(), characteristicIdList));
+					parentViewModel.getFormats().add(editedFormat);
+
+					System.out.println();
+					for (DescriptionFormatViewModel f : parentViewModel.getFormats()) {
+						System.out.println(f.getName());
+					}
+					System.out.println();
 				} else {
 					// change exist descriptionFormat
 					// TODO: Сделать проверку на пустой ввод данных о типе измерения
 					editedFormat = new DescriptionFormatViewModel(dbHelper.updateDescriptionFormat(id.getValue(), code
-									.getValue(), name.getValue(),
-							characteristicIdList));
+							.getValue(), name.getValue(), characteristicIdList));
+					selectedFormat.setCode(editedFormat.getCode());
+					selectedFormat.setName(editedFormat.getName());
+					selectedFormat.setCharacteristics(editedFormat.getCharacteristics());
+					selectedFormat.setAssertedNames(editedFormat.getAssertedNames());
 				}
 				// TODO: реализовать возможность обновления списка наборов характеристик
 

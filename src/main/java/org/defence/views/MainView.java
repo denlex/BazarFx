@@ -61,28 +61,33 @@ public class MainView implements FxmlView<MainViewModel> {
 		viewModel.getRoot().setValue("Каталог СФО");
 
 		treeView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+			viewModel.setSelectedClass(null);
 			viewModel.setSelectedFormat(null);
 			viewModel.setSelectedName(null);
 			viewModel.setSelectedDescription(null);
 
 			if (newValue != null) {
-				if (newValue.getValue() instanceof DescriptionFormatViewModel) {
-					viewModel.selectedFormatProperty().unbind();
-					viewModel.selectedFormatProperty().bindBidirectional(new SimpleObjectProperty<>(
-							(DescriptionFormatViewModel) newValue.getValue()));
-//					System.out.println(viewModel.getSelectedFormat().getName());
+				if (newValue.getValue() instanceof CatalogClassViewModel) {
+					viewModel.selectedClassProperty().unbind();
+					viewModel.selectedClassProperty().bindBidirectional(new SimpleObjectProperty<>(
+							(CatalogClassViewModel) newValue.getValue()));
 				} else {
-					if (newValue.getValue() instanceof AssertedNameViewModel) {
-						viewModel.selectedNameProperty().unbind();
-						viewModel.selectedNameProperty().bindBidirectional(new SimpleObjectProperty<>(
-								(AssertedNameViewModel)
-										newValue.getValue()));
-//						System.out.println(viewModel.getSelectedName());
+					if (newValue.getValue() instanceof DescriptionFormatViewModel) {
+						viewModel.selectedFormatProperty().unbind();
+						viewModel.selectedFormatProperty().bindBidirectional(new SimpleObjectProperty<>(
+								(DescriptionFormatViewModel) newValue.getValue()));
 					} else {
-						if (newValue.getValue() instanceof CatalogDescriptionViewModel) {
-							viewModel.selectedDescriptionProperty().unbind();
-							viewModel.selectedDescriptionProperty().bindBidirectional(new SimpleObjectProperty<>(
-									(CatalogDescriptionViewModel) newValue.getValue()));
+						if (newValue.getValue() instanceof AssertedNameViewModel) {
+							viewModel.selectedNameProperty().unbind();
+							viewModel.selectedNameProperty().bindBidirectional(new SimpleObjectProperty<>(
+									(AssertedNameViewModel)
+											newValue.getValue()));
+						} else {
+							if (newValue.getValue() instanceof CatalogDescriptionViewModel) {
+								viewModel.selectedDescriptionProperty().unbind();
+								viewModel.selectedDescriptionProperty().bindBidirectional(new SimpleObjectProperty<>(
+										(CatalogDescriptionViewModel) newValue.getValue()));
+							}
 						}
 					}
 				}
@@ -311,6 +316,7 @@ public class MainView implements FxmlView<MainViewModel> {
 			dialog.showAndWait();
 
 			if (viewTuple.getCodeBehind().getModalResult() == DialogResult.OK) {
+				System.out.println("RESULT OK");
 				viewModel.displayFormats();
 				// select new added format in treeView
 				/*selectEditedCatalogClass(viewTuple.getViewModel().getEditedFormat());
@@ -388,8 +394,7 @@ public class MainView implements FxmlView<MainViewModel> {
 				// select new added format in treeView
 				selectEditedDescriptionFormat(viewTuple.getViewModel().getEditedFormat());
 				treeView.scrollTo(treeView.getSelectionModel() != null ? treeView.getSelectionModel().getSelectedIndex
-						() :
-						0);
+						() : 0);
 			}
 		}
 

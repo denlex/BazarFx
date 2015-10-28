@@ -380,7 +380,7 @@ public class DbHelper {
 		}
 	}
 
-	public DescriptionFormat addDescriptionFormat(String code, String name, List<Integer> characteristicIdList) {
+	public DescriptionFormat addDescriptionFormat(Integer classId, String code, String name, List<Integer> characteristicIdList) {
 
 		Session session = factory.openSession();
 		Transaction transaction = null;
@@ -388,6 +388,8 @@ public class DbHelper {
 
 		try {
 			transaction = session.beginTransaction();
+
+			CatalogClass catalogClass = (CatalogClass) session.get(CatalogClass.class, classId);
 
 			// getting assertedName list of descriptionFormat
 			List<Characteristic> characteristics;
@@ -413,7 +415,8 @@ public class DbHelper {
 
 			/*Integer newId = (Integer) session.save(format);
 			result = (DescriptionFormat) session.get(DescriptionFormat.class, newId);*/
-			session.save(newFormat);
+			catalogClass.getFormats().add(newFormat);
+			session.save(catalogClass);
 			transaction.commit();
 		} catch (Exception ex) {
 			transaction.rollback();
