@@ -79,13 +79,9 @@ public class DescriptionFormatEditViewModel implements ViewModel {
 				if (selectedFormat == null) {
 					editedFormat = new DescriptionFormatViewModel(dbHelper.addDescriptionFormat(parentViewModel
 							.getSelectedClass().getId(), code.getValue(), name.getValue(), characteristicIdList));
-					parentViewModel.getFormats().add(editedFormat);
 
-					System.out.println();
-					for (DescriptionFormatViewModel f : parentViewModel.getFormats()) {
-						System.out.println(f.getName());
-					}
-					System.out.println();
+					parentViewModel.getSelectedClass().getFormats().add(editedFormat);
+
 				} else {
 					// change exist descriptionFormat
 					// TODO: Сделать проверку на пустой ввод данных о типе измерения

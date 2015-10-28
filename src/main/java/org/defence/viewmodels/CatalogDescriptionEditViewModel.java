@@ -12,6 +12,7 @@ import javafx.event.EventHandler;
 import javafx.stage.WindowEvent;
 import org.defence.domain.entities.Characteristic;
 import org.defence.domain.entities.CharacteristicValue;
+import org.defence.domain.entities.Organization;
 import org.defence.infrastructure.DbHelper;
 
 import java.util.ArrayList;
@@ -25,12 +26,16 @@ public class CatalogDescriptionEditViewModel implements ViewModel {
 	private final IntegerProperty id = new SimpleIntegerProperty();
 	private final StringProperty code = new SimpleStringProperty();
 	private final StringProperty name = new SimpleStringProperty();
+	private final ObjectProperty<RegistrationInfoViewModel> registrationInfo = new SimpleObjectProperty<>();
+	private final ObjectProperty<OrganizationViewModel> organization = new SimpleObjectProperty<>();
 	private final ListProperty<CharacteristicValueViewModel> values = new SimpleListProperty<>();
+	private final ListProperty<OrganizationViewModel> organizations = new SimpleListProperty<>(FXCollections.observableArrayList());
 
 //	private final ListProperty<CharacteristicValueViewModel> characteristics = new SimpleListProperty<>();
 
 	private final ObjectProperty<CharacteristicValueViewModel> selectedCharacteristicValue = new
 			SimpleObjectProperty<>();
+
 	private ObjectProperty<EventHandler<WindowEvent>> shownWindow;
 
 	private final ObjectProperty<AssertedNameViewModel> selectedName = new SimpleObjectProperty<>();
@@ -67,6 +72,13 @@ public class CatalogDescriptionEditViewModel implements ViewModel {
 			}
 
 			values.set(new ObservableListWrapper<>(list));
+
+
+			List<Organization> organizationList = dbHelper.getAllOrganizations();
+
+			for (Organization organization : organizationList) {
+				organizations.add(new OrganizationViewModel(organization));
+			}
 		});
 
 		saveCommand = new DelegateCommand(() -> new Action() {
@@ -168,6 +180,30 @@ public class CatalogDescriptionEditViewModel implements ViewModel {
 		this.name.set(name);
 	}
 
+	public RegistrationInfoViewModel getRegistrationInfo() {
+		return registrationInfo.get();
+	}
+
+	public ObjectProperty<RegistrationInfoViewModel> registrationInfoProperty() {
+		return registrationInfo;
+	}
+
+	public void setRegistrationInfo(RegistrationInfoViewModel registrationInfo) {
+		this.registrationInfo.set(registrationInfo);
+	}
+
+	public OrganizationViewModel getOrganization() {
+		return organization.get();
+	}
+
+	public ObjectProperty<OrganizationViewModel> organizationProperty() {
+		return organization;
+	}
+
+	public void setOrganization(OrganizationViewModel organization) {
+		this.organization.set(organization);
+	}
+
 	public ObservableList<CharacteristicValueViewModel> getValues() {
 		return values.get();
 	}
@@ -178,6 +214,18 @@ public class CatalogDescriptionEditViewModel implements ViewModel {
 
 	public void setValues(ObservableList<CharacteristicValueViewModel> values) {
 		this.values.set(values);
+	}
+
+	public ObservableList<OrganizationViewModel> getOrganizations() {
+		return organizations.get();
+	}
+
+	public ListProperty<OrganizationViewModel> organizationsProperty() {
+		return organizations;
+	}
+
+	public void setOrganizations(ObservableList<OrganizationViewModel> organizations) {
+		this.organizations.set(organizations);
 	}
 
 	public AssertedNameViewModel getSelectedName() {

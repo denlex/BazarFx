@@ -889,7 +889,6 @@ public class MainViewModel implements ViewModel {
 
 		for (Object object : classes) {
 			rootItem.getChildren().add(createNode(object));
-			System.out.println(((CatalogClassViewModel) object).getName());
 		}
 		root.setValue(null);
 		root.setValue(rootItem);

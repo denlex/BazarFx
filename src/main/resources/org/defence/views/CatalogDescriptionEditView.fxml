@@ -9,9 +9,12 @@
 
 <?import org.defence.tools.TitledBorder?>
 
-<GridPane minHeight="650.0" minWidth="900.0" prefHeight="650.0" prefWidth="900.0" stylesheets="/css/Button.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.defence.views.CatalogDescriptionEditView">
+<GridPane minHeight="650.0" minWidth="900.0" prefHeight="650.0" prefWidth="900.0" stylesheets="/css/Button.css"
+          xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="org.defence.views.CatalogDescriptionEditView">
     <children>
-        <StackPane style="-fx-background-color: #4A6C9B" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="0">
+        <StackPane style="-fx-background-color: #4A6C9B" GridPane.columnIndex="0" GridPane.columnSpan="2"
+                   GridPane.rowIndex="0">
             <children>
                 <Label stylesheets="/css/LabelProperty.css" text="Добавление КО">
                 </Label>
@@ -19,153 +22,94 @@
         </StackPane>
         <Label text="Номер" GridPane.columnIndex="0" GridPane.rowIndex="1">
             <GridPane.margin>
-                <Insets left="10.0" />
+                <Insets left="10.0"/>
             </GridPane.margin>
         </Label>
-        <TextField fx:id="codeTextField" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1">
+        <TextField fx:id="codeTextField" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1"
+                   GridPane.rowIndex="1">
             <GridPane.margin>
-                <Insets right="10.0" />
+                <Insets right="10.0"/>
             </GridPane.margin>
         </TextField>
         <Label text="Наименование:" GridPane.columnIndex="0" GridPane.rowIndex="2">
             <GridPane.margin>
-                <Insets left="10.0" right="10.0" />
+                <Insets left="10.0" right="10.0"/>
             </GridPane.margin>
         </Label>
-        <TextField fx:id="nameTextField" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="2">
+        <TextField fx:id="nameTextField" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1"
+                   GridPane.rowIndex="2">
             <GridPane.margin>
-                <Insets right="10.0" />
+                <Insets right="10.0"/>
             </GridPane.margin>
         </TextField>
         <Label text="Наименование организации:" GridPane.rowIndex="3">
             <GridPane.margin>
-                <Insets left="10.0" />
+                <Insets left="10.0"/>
             </GridPane.margin>
             <padding>
-                <Insets right="10.0" />
+                <Insets right="10.0"/>
             </padding>
         </Label>
-        <ComboBox maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="3">
+        <ComboBox fx:id="organizationComboBox" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1"
+                  GridPane.rowIndex="3">
             <GridPane.margin>
-                <Insets right="10" />
+                <Insets right="10"/>
             </GridPane.margin>
         </ComboBox>
 
         <!--Свеления о регистрации КО-->
-        <TitledBorder stylesheets="/css/TitledBorder.css" title="Сведения о регистрации КО" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="4">
-  <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.hgrow="NEVER" GridPane.vgrow="ALWAYS">
-                          <children>
-                              <Label text="Номер заявки:" wrapText="true" GridPane.columnIndex="0">
-                                  <GridPane.margin>
-                                      <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
-                                  </GridPane.margin>
-                              </Label>
-                              <TextField GridPane.columnIndex="1">
-                                  <GridPane.margin>
-                                      <Insets bottom="10.0" right="10.0" top="10" />
-                                  </GridPane.margin>
-                              </TextField>
-                              <Label text="Регистрационный номер:" wrapText="true" GridPane.columnIndex="2">
-                                  <GridPane.margin>
-                                      <Insets left="5.0" right="5.0" />
-                                  </GridPane.margin>
-                              </Label>
-                              <TextField GridPane.columnIndex="3">
-                                  <GridPane.margin>
-                                      <Insets bottom="10.0" right="10.0" top="10.0" />
-                                  </GridPane.margin>
-                              </TextField>
-                              <Label text="Дата регистрации:" wrapText="true" GridPane.columnIndex="4">
-                                  <GridPane.margin>
-                                      <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
-                                  </GridPane.margin>
-                              </Label>
-                              <DatePicker maxWidth="1.7976931348623157E308" stylesheets="/css/DateButton.css" GridPane.columnIndex="5">
-                                  <GridPane.margin>
-                                      <Insets bottom="10.0" right="5" top="10.0" />
-                                  </GridPane.margin>
-                              </DatePicker>
-                          </children>
-                          <columnConstraints>
-                              <ColumnConstraints hgrow="ALWAYS" />
-                              <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" />
-                              <ColumnConstraints hgrow="ALWAYS" />
-                              <ColumnConstraints hgrow="ALWAYS" />
-                              <ColumnConstraints hgrow="ALWAYS" />
-                              <ColumnConstraints hgrow="ALWAYS" maxWidth="140.0" minWidth="140.0" prefWidth="140.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                              <RowConstraints />
-                              <RowConstraints />
-                              <RowConstraints />
-                          </rowConstraints>
-                      </GridPane>
+        <TitledBorder stylesheets="/css/TitledBorder.css" title="Сведения о регистрации КО" GridPane.columnIndex="0"
+                      GridPane.columnSpan="2" GridPane.rowIndex="4">
+            <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.hgrow="NEVER"
+                      GridPane.vgrow="ALWAYS">
+                <children>
+                    <Label text="Номер заявки:" wrapText="true" GridPane.columnIndex="0">
+                        <GridPane.margin>
+                            <Insets bottom="10.0" left="5.0" right="5.0" top="10.0"/>
+                        </GridPane.margin>
+                    </Label>
+                    <TextField fx:id="applicationNumberTextField" GridPane.columnIndex="1">
+                        <GridPane.margin>
+                            <Insets bottom="10.0" right="10.0" top="10"/>
+                        </GridPane.margin>
+                    </TextField>
+                    <Label text="Регистрационный номер:" wrapText="true" GridPane.columnIndex="2">
+                        <GridPane.margin>
+                            <Insets left="5.0" right="5.0"/>
+                        </GridPane.margin>
+                    </Label>
+                    <TextField fx:id="registrationNumberTextField" GridPane.columnIndex="3">
+                        <GridPane.margin>
+                            <Insets bottom="10.0" right="10.0" top="10.0"/>
+                        </GridPane.margin>
+                    </TextField>
+                    <Label text="Дата регистрации:" wrapText="true" GridPane.columnIndex="4">
+                        <GridPane.margin>
+                            <Insets bottom="10.0" left="5.0" right="5.0" top="10.0"/>
+                        </GridPane.margin>
+                    </Label>
+                    <DatePicker fx:id="registrationDateDatePicker" maxWidth="1.7976931348623157E308"
+                                stylesheets="/css/DateButton.css" GridPane.columnIndex="5">
+                        <GridPane.margin>
+                            <Insets bottom="10.0" right="5" top="10.0"/>
+                        </GridPane.margin>
+                    </DatePicker>
+                </children>
+                <columnConstraints>
+                    <ColumnConstraints hgrow="ALWAYS"/>
+                    <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308"/>
+                    <ColumnConstraints hgrow="ALWAYS"/>
+                    <ColumnConstraints hgrow="ALWAYS"/>
+                    <ColumnConstraints hgrow="ALWAYS"/>
+                    <ColumnConstraints hgrow="ALWAYS" maxWidth="140.0" minWidth="140.0" prefWidth="140.0"/>
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints/>
+                    <RowConstraints/>
+                    <RowConstraints/>
+                </rowConstraints>
+            </GridPane>
         </TitledBorder>
-
-             <!-- <GridPane GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="4">
-                  <children>
-                      <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.hgrow="NEVER" GridPane.vgrow="ALWAYS">
-                          <children>
-                              <Label text="Номер заявки:" wrapText="true" GridPane.columnIndex="0">
-                                  <GridPane.margin>
-                                      <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
-                                  </GridPane.margin>
-                              </Label>
-                              <TextField GridPane.columnIndex="1">
-                                  <GridPane.margin>
-                                      <Insets bottom="10.0" right="10.0" top="10" />
-                                  </GridPane.margin>
-                              </TextField>
-                              <Label text="Регистрационный номер:" wrapText="true" GridPane.columnIndex="2">
-                                  <GridPane.margin>
-                                      <Insets left="5.0" right="5.0" />
-                                  </GridPane.margin>
-                              </Label>
-                              <TextField GridPane.columnIndex="3">
-                                  <GridPane.margin>
-                                      <Insets bottom="10.0" right="10.0" top="10.0" />
-                                  </GridPane.margin>
-                              </TextField>
-                              <Label text="Дата регистрации:" wrapText="true" GridPane.columnIndex="4">
-                                  <GridPane.margin>
-                                      <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
-                                  </GridPane.margin>
-                              </Label>
-                              <DatePicker maxWidth="1.7976931348623157E308" stylesheets="/css/DateButton.css" GridPane.columnIndex="5">
-                                  <GridPane.margin>
-                                      <Insets bottom="10.0" right="5" top="10.0" />
-                                  </GridPane.margin>
-                              </DatePicker>
-                          </children>
-                          <columnConstraints>
-                              <ColumnConstraints hgrow="ALWAYS" />
-                              <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" />
-                              <ColumnConstraints hgrow="ALWAYS" />
-                              <ColumnConstraints hgrow="ALWAYS" />
-                              <ColumnConstraints hgrow="ALWAYS" />
-                              <ColumnConstraints hgrow="ALWAYS" maxWidth="140.0" minWidth="140.0" prefWidth="140.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                              <RowConstraints />
-                              <RowConstraints />
-                              <RowConstraints />
-                          </rowConstraints>
-                      </GridPane>
-                  </children>
-                  <columnConstraints>
-                      <ColumnConstraints hgrow="ALWAYS" />
-                      <ColumnConstraints hgrow="NEVER" />
-                      <ColumnConstraints hgrow="NEVER" />
-                  </columnConstraints>
-                  <rowConstraints>
-                      <RowConstraints />
-                      <RowConstraints />
-                      <RowConstraints />
-                  </rowConstraints>
-                  <GridPane.margin>
-                      <Insets right="10.0" />
-                  </GridPane.margin>
-              </GridPane>-->
 
         <TabPane GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="5">
             <tabs>
@@ -175,18 +119,23 @@
                             <children>
                                 <TableView fx:id="valuesTableView">
                                     <columns>
-                                        <TableColumn fx:id="characteristicCodeTableColumn" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="100.0" text="Номер КО" />
-                                        <TableColumn fx:id="characteristicTableColumn" maxWidth="1.7976931348623157E308" minWidth="150.0" prefWidth="430.0" text="Характеристика" />
-                                        <TableColumn fx:id="valueTableColumn" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="150.0" text="Значение" />
-                                        <TableColumn fx:id="measurementTableColumn" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="200.0" text="Единица измерения" />
+                                        <TableColumn fx:id="characteristicCodeTableColumn"
+                                                     maxWidth="1.7976931348623157E308" minWidth="100.0"
+                                                     prefWidth="100.0" text="Номер КО"/>
+                                        <TableColumn fx:id="characteristicTableColumn" maxWidth="1.7976931348623157E308"
+                                                     minWidth="150.0" prefWidth="430.0" text="Характеристика"/>
+                                        <TableColumn fx:id="valueTableColumn" maxWidth="1.7976931348623157E308"
+                                                     minWidth="100.0" prefWidth="150.0" text="Значение"/>
+                                        <TableColumn fx:id="measurementTableColumn" maxWidth="1.7976931348623157E308"
+                                                     minWidth="100.0" prefWidth="200.0" text="Единица измерения"/>
                                     </columns>
                                 </TableView>
                             </children>
                             <columnConstraints>
-                                <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                                <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0"/>
                             </columnConstraints>
                             <rowConstraints>
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS"/>
                             </rowConstraints>
                         </GridPane>
                     </content>
@@ -195,27 +144,32 @@
                     <content>
                         <GridPane>
                             <columnConstraints>
-                        <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="408.0" prefWidth="428.0" />
-                                <ColumnConstraints hgrow="NEVER" maxWidth="472.0" minWidth="319.0" prefWidth="452.0" />
+                                <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="408.0"
+                                                   prefWidth="428.0"/>
+                                <ColumnConstraints hgrow="NEVER" maxWidth="472.0" minWidth="319.0" prefWidth="452.0"/>
                             </columnConstraints>
                             <rowConstraints>
-                                <RowConstraints vgrow="NEVER" />
+                                <RowConstraints vgrow="NEVER"/>
                             </rowConstraints>
                             <children>
-                                <ImageView fitHeight="300.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                                <ImageView fitHeight="300.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true"
+                                           GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
+                                           GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                                     <GridPane.margin>
-                                        <Insets left="10.0" right="10.0" top="10.0" />
+                                        <Insets left="10.0" right="10.0" top="10.0"/>
                                     </GridPane.margin>
-                           <viewport>
-                              <Rectangle2D />
-                           </viewport>
+                                    <viewport>
+                                        <Rectangle2D/>
+                                    </viewport>
                                     <!--<image>
                                         <Image url=""/>
                                     </image>-->
                                 </ImageView>
-                                <Button alignment="CENTER" mnemonicParsing="false" style="-fx-pref-width: 290px" text="Загрузить изображение" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="BOTTOM">
+                                <Button alignment="CENTER" mnemonicParsing="false" style="-fx-pref-width: 290px"
+                                        text="Загрузить изображение" GridPane.columnIndex="1"
+                                        GridPane.halignment="RIGHT" GridPane.valignment="BOTTOM">
                                     <GridPane.margin>
-                                        <Insets top="10.0" />
+                                        <Insets top="10.0"/>
                                     </GridPane.margin>
                                 </Button>
                             </children>
@@ -224,35 +178,38 @@
                 </Tab>
             </tabs>
             <GridPane.margin>
-                <Insets left="10.0" right="10.0" />
+                <Insets left="10.0" right="10.0"/>
             </GridPane.margin>
         </TabPane>
         <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="6">
             <children>
-                <HBox layoutX="511.0" spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                <HBox layoutX="511.0" spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0"
+                      AnchorPane.topAnchor="10.0">
                     <children>
-                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#saveButtonClicked" text="Принять" AnchorPane.bottomAnchor="15" AnchorPane.rightAnchor="150" />
-                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#cancelButtonClicked" text="Отмена" AnchorPane.bottomAnchor="15" AnchorPane.rightAnchor="15" />
+                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#saveButtonClicked" text="Принять"
+                                AnchorPane.bottomAnchor="15" AnchorPane.rightAnchor="150"/>
+                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#cancelButtonClicked" text="Отмена"
+                                AnchorPane.bottomAnchor="15" AnchorPane.rightAnchor="15"/>
                     </children>
                 </HBox>
             </children>
             <GridPane.margin>
-                <Insets top="10.0" />
+                <Insets top="10.0"/>
             </GridPane.margin>
         </AnchorPane>
     </children>
     <columnConstraints>
-        <ColumnConstraints hgrow="NEVER" minWidth="-Infinity" />
-        <ColumnConstraints hgrow="ALWAYS" />
-        <ColumnConstraints />
+        <ColumnConstraints hgrow="NEVER" minWidth="-Infinity"/>
+        <ColumnConstraints hgrow="ALWAYS"/>
+        <ColumnConstraints/>
     </columnConstraints>
     <rowConstraints>
-        <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="NEVER" />
-        <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="NEVER" />
-        <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="NEVER" />
-        <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="NEVER" />
-        <RowConstraints vgrow="ALWAYS" />
-        <RowConstraints maxHeight="1.7976931348623157E308" vgrow="ALWAYS" />
-        <RowConstraints vgrow="NEVER" />
+        <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="NEVER"/>
+        <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="NEVER"/>
+        <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="NEVER"/>
+        <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="NEVER"/>
+        <RowConstraints vgrow="ALWAYS"/>
+        <RowConstraints maxHeight="1.7976931348623157E308" vgrow="ALWAYS"/>
+        <RowConstraints vgrow="NEVER"/>
     </rowConstraints>
 </GridPane>

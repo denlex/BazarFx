@@ -312,8 +312,22 @@ public class MainView implements FxmlView<MainViewModel> {
 				}
 			});
 
+			System.out.println(viewModel.getFormats());
+
+			/*System.out.println("==========================================================================");
+			for (DescriptionFormatViewModel format : viewModel.getFormats()) {
+				System.out.println(format.getName());
+			}*/
+
 			dialog.setScene(scene);
 			dialog.showAndWait();
+
+			System.out.println(viewModel.getFormats());
+
+			/*System.out.println("==========================================================================");
+			for (DescriptionFormatViewModel format : viewModel.getFormats()) {
+				System.out.println(format.getName());
+			}*/
 
 			if (viewTuple.getCodeBehind().getModalResult() == DialogResult.OK) {
 				System.out.println("RESULT OK");

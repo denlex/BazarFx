@@ -10,6 +10,7 @@ import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import org.defence.viewmodels.CatalogDescriptionEditViewModel;
 import org.defence.viewmodels.CharacteristicValueViewModel;
+import org.defence.viewmodels.OrganizationViewModel;
 
 /**
  * Created by root on 9/25/15.
@@ -36,6 +37,18 @@ public class CatalogDescriptionEditView implements FxmlView<CatalogDescriptionEd
 
 	@FXML
 	TableColumn<CharacteristicValueViewModel, String> measurementTableColumn;
+
+	@FXML
+	ComboBox<OrganizationViewModel> organizationComboBox;
+
+	@FXML
+	TextField applicationNumberTextField;
+
+	@FXML
+	TextField registrationNumberTextField;
+
+	@FXML
+	DatePicker registrationDateDatePicker;
 
 	@InjectViewModel
 	CatalogDescriptionEditViewModel viewModel;
@@ -68,6 +81,13 @@ public class CatalogDescriptionEditView implements FxmlView<CatalogDescriptionEd
 		});
 	}
 
+	private void initializeOrganizationComboBox() {
+		/*organizationComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+
+		});*/
+		organizationComboBox.itemsProperty().bindBidirectional(viewModel.organizationsProperty());
+	}
+
 	public void setStage(Stage stage) {
 		this.stage = stage;
 	}
@@ -93,6 +113,7 @@ public class CatalogDescriptionEditView implements FxmlView<CatalogDescriptionEd
 	}
 
 	public void initialize() {
+		initializeOrganizationComboBox();
 		codeTextField.textProperty().bindBidirectional(viewModel.codeProperty());
 		nameTextField.textProperty().bindBidirectional(viewModel.nameProperty());
 
