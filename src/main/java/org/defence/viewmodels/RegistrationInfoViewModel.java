@@ -2,8 +2,10 @@ package org.defence.viewmodels;
 
 import javafx.beans.property.*;
 import org.defence.domain.entities.RegistrationInfo;
+import org.defence.tools.DateConverter;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 /**
  * Created by root on 10/22/15.
@@ -21,10 +23,12 @@ public class RegistrationInfoViewModel {
 		this(info.getId(), info.getApplicationNumber(), info.getRegistrationDate(), info.getRegistrationNumber());
 	}
 
-	public RegistrationInfoViewModel(Integer id, String applicationNumber, LocalDate registrationDate, String registrationNumber) {
+	public RegistrationInfoViewModel(Integer id, String applicationNumber, Date registrationDate, String registrationNumber) {
 		this.id.setValue(id);
 		this.applicationNumber.setValue(applicationNumber);
-		this.registrationDate.setValue(registrationDate);
+
+
+		this.registrationDate.setValue(DateConverter.toLocalDate(registrationDate));
 		this.registrationNumber.setValue(registrationNumber);
 	}
 
@@ -81,7 +85,7 @@ public class RegistrationInfoViewModel {
 		result.setId(this.getId());
 		result.setApplicationNumber(this.getApplicationNumber());
 		result.setRegistrationNumber(this.getRegistrationNumber());
-		result.setRegistrationDate(this.getRegistrationDate());
+		result.setRegistrationDate(DateConverter.toDate(this.getRegistrationDate()));
 
 		return result;
 	}

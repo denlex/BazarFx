@@ -89,7 +89,7 @@
                         </GridPane.margin>
                     </Label>
                     <DatePicker fx:id="registrationDateDatePicker" maxWidth="1.7976931348623157E308"
-                                stylesheets="/css/DateButton.css" GridPane.columnIndex="5">
+                                stylesheets="/css/DateButton.css" GridPane.columnIndex="5" editable="false">
                         <GridPane.margin>
                             <Insets bottom="10.0" right="5" top="10.0"/>
                         </GridPane.margin>

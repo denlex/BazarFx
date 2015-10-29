@@ -2,7 +2,6 @@ package org.defence.views;
 
 import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
-import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -13,7 +12,6 @@ import javafx.util.StringConverter;
 import org.defence.viewmodels.CatalogDescriptionEditViewModel;
 import org.defence.viewmodels.CharacteristicValueViewModel;
 import org.defence.viewmodels.OrganizationViewModel;
-import org.defence.viewmodels.RegistrationInfoViewModel;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -146,7 +144,7 @@ public class CatalogDescriptionEditView implements FxmlView<CatalogDescriptionEd
 		codeTextField.textProperty().bindBidirectional(viewModel.codeProperty());
 		nameTextField.textProperty().bindBidirectional(viewModel.nameProperty());
 
-		Bindings.bindBidirectional(applicationNumberTextField.textProperty(), viewModel.registrationInfoProperty(),
+		/*Bindings.bindBidirectional(applicationNumberTextField.textProperty(), viewModel.registrationInfoProperty(),
 				new StringConverter<RegistrationInfoViewModel>() {
 
 					@Override
@@ -176,9 +174,11 @@ public class CatalogDescriptionEditView implements FxmlView<CatalogDescriptionEd
 					}
 				});
 
+		Bindings.bindBidirectional(registrationDateDatePicker.valueProperty(), viewModel.testDateProperty());*/
 
-		Bindings.bindBidirectional(registrationDateDatePicker.valueProperty(), viewModel.getRegistrationInfo()
-				.registrationDateProperty());
+		applicationNumberTextField.textProperty().bindBidirectional(viewModel.applicationNumberProperty());
+		registrationNumberTextField.textProperty().bindBidirectional(viewModel.registrationNumberProperty());
+		registrationDateDatePicker.valueProperty().bindBidirectional(viewModel.registrationDateProperty());
 
 		/*registrationDateDatePicker.valueProperty().addListener((observable, oldValue, newValue) -> {
 
@@ -192,13 +192,7 @@ public class CatalogDescriptionEditView implements FxmlView<CatalogDescriptionEd
 	}
 
 	public void testButtonClicked() {
-		String appNumber = viewModel.getRegistrationInfo().getApplicationNumber();
-		String regNumber = viewModel.getRegistrationInfo().getRegistrationNumber();
-		String regDate = viewModel.getRegistrationInfo().getRegistrationDate().toString();
 
-		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-		alert.setContentText(appNumber + "\n" + regNumber + "\n" + regDate);
-		alert.showAndWait();
 	}
 
 

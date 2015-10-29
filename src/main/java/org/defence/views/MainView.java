@@ -584,8 +584,16 @@ public class MainView implements FxmlView<MainViewModel> {
 			viewTuple.getViewModel().codeProperty().bindBidirectional(d.getValue().codeProperty());
 			viewTuple.getViewModel().nameProperty().bindBidirectional(d.getValue().nameProperty());
 
-			viewTuple.getViewModel().registrationInfoProperty().bindBidirectional(d.getValue()
-					.registrationInfoProperty());
+			/*viewTuple.getViewModel().registrationInfoProperty().bindBidirectional(d.getValue()
+					.registrationInfoProperty());*/
+
+
+			viewTuple.getViewModel().applicationNumberProperty().bindBidirectional(d.getValue()
+					.registrationInfoProperty().getValue().applicationNumberProperty());
+			viewTuple.getViewModel().registrationNumberProperty().bindBidirectional(d.getValue()
+					.registrationInfoProperty().getValue().registrationNumberProperty());
+			viewTuple.getViewModel().registrationDateProperty().bindBidirectional(d.getValue()
+					.registrationInfoProperty().getValue().registrationDateProperty());
 
 			/*System.out.println(d.getValue().getRegistrationInfo().getApplicationNumber());
 			System.out.println(d.getValue().getRegistrationInfo().getRegistrationNumber());

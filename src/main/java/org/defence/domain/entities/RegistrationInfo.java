@@ -1,6 +1,6 @@
 package org.defence.domain.entities;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 /**
  * Created by root on 22.07.15.
@@ -8,10 +8,24 @@ import java.time.LocalDate;
 public class RegistrationInfo {
     private int id;
     private String applicationNumber;
-    private LocalDate registrationDate;
+    private Date registrationDate;
     private String registrationNumber;
 
-    public int getId() {
+	public RegistrationInfo() {
+	}
+
+	public RegistrationInfo(String applicationNumber, String registrationNumber, Date registrationDate) {
+		this.applicationNumber = applicationNumber;
+		this.registrationNumber = registrationNumber;
+		this.registrationDate = registrationDate;
+	}
+
+	public RegistrationInfo(Integer id, String applicationNumber, String registrationNumber, Date registrationDate) {
+		this(applicationNumber, registrationNumber, registrationDate);
+		this.id = id;
+	}
+
+	public int getId() {
         return id;
     }
 
@@ -27,11 +41,11 @@ public class RegistrationInfo {
         this.applicationNumber = applicationNumber;
     }
 
-    public LocalDate getRegistrationDate() {
+    public Date getRegistrationDate() {
         return registrationDate;
     }
 
-    public void setRegistrationDate(LocalDate registrationDate) {
+    public void setRegistrationDate(Date registrationDate) {
         this.registrationDate = registrationDate;
     }
 

@@ -13,8 +13,11 @@ import javafx.stage.WindowEvent;
 import org.defence.domain.entities.Characteristic;
 import org.defence.domain.entities.CharacteristicValue;
 import org.defence.domain.entities.Organization;
+import org.defence.domain.entities.RegistrationInfo;
 import org.defence.infrastructure.DbHelper;
+import org.defence.tools.DateConverter;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,10 +33,14 @@ public class CatalogDescriptionEditViewModel implements ViewModel {
 
 	private final StringProperty test = new SimpleStringProperty();
 
-	private final ObjectProperty<RegistrationInfoViewModel> registrationInfo = new SimpleObjectProperty<>(new RegistrationInfoViewModel());
+//	private final ObjectProperty<RegistrationInfoViewModel> registrationInfo = new SimpleObjectProperty<>(new RegistrationInfoViewModel());
 	private final ObjectProperty<OrganizationViewModel> organization = new SimpleObjectProperty<>(new OrganizationViewModel());
 	private final ListProperty<CharacteristicValueViewModel> values = new SimpleListProperty<>();
 	private final ListProperty<OrganizationViewModel> organizations = new SimpleListProperty<>(FXCollections.observableArrayList());
+
+	private final StringProperty applicationNumber = new SimpleStringProperty();
+	private final StringProperty registrationNumber = new SimpleStringProperty();
+	private final ObjectProperty<LocalDate> registrationDate = new SimpleObjectProperty<>();
 
 //	private final ListProperty<CharacteristicValueViewModel> characteristics = new SimpleListProperty<>();
 
@@ -55,6 +62,8 @@ public class CatalogDescriptionEditViewModel implements ViewModel {
 		shownWindow = new SimpleObjectProperty<>(event -> {
 			List<Characteristic> characteristics = null;
 			List<CharacteristicValueViewModel> list = new ArrayList<>();
+
+//			registrationInfo.getValue().setRegistrationDate(testDate.getValue());
 
 			// adding CatalogDescription
 			if (parentViewModel.getSelectedName() != null) {
@@ -120,9 +129,15 @@ public class CatalogDescriptionEditViewModel implements ViewModel {
 						selectedDescription.setValues(editedDescription.getValues());
 					}
 				} else {
+					/*editedDescription = new CatalogDescriptionViewModel(dbHelper.addCatalogDescription(assertedName
+							.getId(), code.getValue(), name.getValue(), values.stream().map(CharacteristicValueViewModel::toModel)
+							.collect(Collectors.toList()), organization.getValue().toModel(), registrationInfo.getValue().toModel()));*/
+
 					editedDescription = new CatalogDescriptionViewModel(dbHelper.addCatalogDescription(assertedName
 							.getId(), code.getValue(), name.getValue(), values.stream().map(CharacteristicValueViewModel::toModel)
-							.collect(Collectors.toList()), organization.getValue().toModel(), registrationInfo.getValue().toModel()));
+							.collect(Collectors.toList()), organization.getValue().toModel(), new RegistrationInfo
+							(applicationNumber.getValue(), registrationNumber.getValue(), DateConverter.toDate(registrationDate
+									.getValue()))));
 
 					if (assertedName.getCatalogDescriptions() == null) {
 						List<CatalogDescriptionViewModel> list = new ArrayList<>();
@@ -194,18 +209,6 @@ public class CatalogDescriptionEditViewModel implements ViewModel {
 
 	public void setName(String name) {
 		this.name.set(name);
-	}
-
-	public RegistrationInfoViewModel getRegistrationInfo() {
-		return registrationInfo.get();
-	}
-
-	public ObjectProperty<RegistrationInfoViewModel> registrationInfoProperty() {
-		return registrationInfo;
-	}
-
-	public void setRegistrationInfo(RegistrationInfoViewModel registrationInfo) {
-		this.registrationInfo.set(registrationInfo);
 	}
 
 	public OrganizationViewModel getOrganization() {
@@ -306,5 +309,41 @@ public class CatalogDescriptionEditViewModel implements ViewModel {
 
 	public void setTest(String test) {
 		this.test.set(test);
+	}
+
+	public String getApplicationNumber() {
+		return applicationNumber.get();
+	}
+
+	public StringProperty applicationNumberProperty() {
+		return applicationNumber;
+	}
+
+	public void setApplicationNumber(String applicationNumber) {
+		this.applicationNumber.set(applicationNumber);
+	}
+
+	public String getRegistrationNumber() {
+		return registrationNumber.get();
+	}
+
+	public StringProperty registrationNumberProperty() {
+		return registrationNumber;
+	}
+
+	public void setRegistrationNumber(String registrationNumber) {
+		this.registrationNumber.set(registrationNumber);
+	}
+
+	public LocalDate getRegistrationDate() {
+		return registrationDate.get();
+	}
+
+	public ObjectProperty<LocalDate> registrationDateProperty() {
+		return registrationDate;
+	}
+
+	public void setRegistrationDate(LocalDate registrationDate) {
+		this.registrationDate.set(registrationDate);
 	}
 }
