@@ -571,8 +571,7 @@ public class MainView implements FxmlView<MainViewModel> {
 			}
 
 			ViewTuple<CatalogDescriptionEditView, CatalogDescriptionEditViewModel> viewTuple = FluentViewLoader
-					.fxmlView
-							(CatalogDescriptionEditView.class).load();
+					.fxmlView(CatalogDescriptionEditView.class).load();
 			viewTuple.getViewModel().setParentViewModel(viewModel);
 
 			Parent root = viewTuple.getView();
@@ -580,10 +579,23 @@ public class MainView implements FxmlView<MainViewModel> {
 			viewTuple.getCodeBehind().setStage(dialog);
 			viewTuple.getCodeBehind().initializeStage();
 
-			Property<CatalogDescriptionViewModel> f = viewModel.selectedDescriptionProperty();
-			viewTuple.getViewModel().idProperty().bindBidirectional(f.getValue().idProperty());
-			viewTuple.getViewModel().nameProperty().bindBidirectional(f.getValue().nameProperty());
+			Property<CatalogDescriptionViewModel> d = viewModel.selectedDescriptionProperty();
+			viewTuple.getViewModel().idProperty().bindBidirectional(d.getValue().idProperty());
+			viewTuple.getViewModel().codeProperty().bindBidirectional(d.getValue().codeProperty());
+			viewTuple.getViewModel().nameProperty().bindBidirectional(d.getValue().nameProperty());
 
+			viewTuple.getViewModel().registrationInfoProperty().bindBidirectional(d.getValue()
+					.registrationInfoProperty());
+
+			/*System.out.println(d.getValue().getRegistrationInfo().getApplicationNumber());
+			System.out.println(d.getValue().getRegistrationInfo().getRegistrationNumber());
+			System.out.println(d.getValue().getRegistrationInfo().getRegistrationDate());
+
+			System.out.println("========================================================================");
+
+			System.out.println(viewTuple.getViewModel().getRegistrationInfo().getApplicationNumber());
+			System.out.println(viewTuple.getViewModel().getRegistrationInfo().getRegistrationNumber());
+			System.out.println(viewTuple.getViewModel().getRegistrationInfo().getRegistrationDate());*/
 
 			dialog.initModality(Modality.WINDOW_MODAL);
 			dialog.initOwner(stage);

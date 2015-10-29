@@ -190,6 +190,8 @@
                                 AnchorPane.bottomAnchor="15" AnchorPane.rightAnchor="150"/>
                         <Button alignment="CENTER" mnemonicParsing="false" onAction="#cancelButtonClicked" text="Отмена"
                                 AnchorPane.bottomAnchor="15" AnchorPane.rightAnchor="15"/>
+                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#testButtonClicked" text="Тест"
+                                AnchorPane.bottomAnchor="15" AnchorPane.rightAnchor="15"/>
                     </children>
                 </HBox>
             </children>

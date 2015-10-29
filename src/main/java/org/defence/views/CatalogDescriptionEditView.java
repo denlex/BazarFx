@@ -2,15 +2,21 @@ package org.defence.views;
 
 import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 import org.defence.viewmodels.CatalogDescriptionEditViewModel;
 import org.defence.viewmodels.CharacteristicValueViewModel;
 import org.defence.viewmodels.OrganizationViewModel;
+import org.defence.viewmodels.RegistrationInfoViewModel;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Created by root on 9/25/15.
@@ -81,13 +87,6 @@ public class CatalogDescriptionEditView implements FxmlView<CatalogDescriptionEd
 		});
 	}
 
-	private void initializeOrganizationComboBox() {
-		/*organizationComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-
-		});*/
-		organizationComboBox.itemsProperty().bindBidirectional(viewModel.organizationsProperty());
-	}
-
 	public void setStage(Stage stage) {
 		this.stage = stage;
 	}
@@ -112,13 +111,96 @@ public class CatalogDescriptionEditView implements FxmlView<CatalogDescriptionEd
 		stage.close();
 	}
 
+	public void initializeDatePicker() {
+		final String pattern = "dd.MM.yyyy";
+
+		StringConverter converter = new StringConverter<LocalDate>() {
+			DateTimeFormatter dateFormatter =
+					DateTimeFormatter.ofPattern(pattern);
+
+			@Override
+			public String toString(LocalDate date) {
+				if (date != null) {
+					return dateFormatter.format(date);
+				} else {
+					return "";
+				}
+			}
+
+			@Override
+			public LocalDate fromString(String string) {
+				if (string != null && !string.isEmpty()) {
+					return LocalDate.parse(string, dateFormatter);
+				} else {
+					return null;
+				}
+			}
+		};
+		registrationDateDatePicker.setConverter(converter);
+//		registrationDateDatePicker.setPromptText(pattern.toLowerCase());
+	}
+
 	public void initialize() {
-		initializeOrganizationComboBox();
+		initializeDatePicker();
+		organizationComboBox.itemsProperty().bindBidirectional(viewModel.organizationsProperty());
 		codeTextField.textProperty().bindBidirectional(viewModel.codeProperty());
 		nameTextField.textProperty().bindBidirectional(viewModel.nameProperty());
 
+		Bindings.bindBidirectional(applicationNumberTextField.textProperty(), viewModel.registrationInfoProperty(),
+				new StringConverter<RegistrationInfoViewModel>() {
+
+					@Override
+					public String toString(RegistrationInfoViewModel object) {
+						return object.getApplicationNumber();
+					}
+
+					@Override
+					public RegistrationInfoViewModel fromString(String string) {
+						viewModel.getRegistrationInfo().setApplicationNumber(string);
+						return new RegistrationInfoViewModel(viewModel.getRegistrationInfo().toModel());
+					}
+				});
+
+		Bindings.bindBidirectional(registrationNumberTextField.textProperty(), viewModel.registrationInfoProperty(),
+				new StringConverter<RegistrationInfoViewModel>() {
+
+					@Override
+					public String toString(RegistrationInfoViewModel object) {
+						return object.getRegistrationNumber();
+					}
+
+					@Override
+					public RegistrationInfoViewModel fromString(String string) {
+						viewModel.getRegistrationInfo().setRegistrationNumber(string);
+						return new RegistrationInfoViewModel(viewModel.getRegistrationInfo().toModel());
+					}
+				});
+
+
+		Bindings.bindBidirectional(registrationDateDatePicker.valueProperty(), viewModel.getRegistrationInfo()
+				.registrationDateProperty());
+
+		/*registrationDateDatePicker.valueProperty().addListener((observable, oldValue, newValue) -> {
+
+			Instant instant = Instant.from(newValue.atStartOfDay(ZoneId.systemDefault()));
+			Date date = Date.from(instant);
+			viewModel.getRegistrationInfo().registrationDateProperty().bindBidirectional(new SimpleObjectProperty<>
+					(date));
+		});*/
+
 		initializeValuesTableView();
 	}
+
+	public void testButtonClicked() {
+		String appNumber = viewModel.getRegistrationInfo().getApplicationNumber();
+		String regNumber = viewModel.getRegistrationInfo().getRegistrationNumber();
+		String regDate = viewModel.getRegistrationInfo().getRegistrationDate().toString();
+
+		Alert alert = new Alert(Alert.AlertType.INFORMATION);
+		alert.setContentText(appNumber + "\n" + regNumber + "\n" + regDate);
+		alert.showAndWait();
+	}
+
 
 	// EditableTableCell - for editing capability in a TableCell
 	public static class EditableTableCell extends TableCell<CharacteristicValueViewModel, String> {

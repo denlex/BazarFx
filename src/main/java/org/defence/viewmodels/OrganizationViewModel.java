@@ -77,4 +77,19 @@ public class OrganizationViewModel implements ViewModel {
 	public void setType(String type) {
 		this.type.set(type);
 	}
+
+	@Override
+	public String toString() {
+		return name.getValue();
+	}
+
+	public Organization toModel() {
+		Organization result = new Organization();
+		result.setId(this.getId());
+		result.setCode(this.getCode());
+		result.setName(this.getName());
+		result.setType(this.getType());
+
+		return result;
+	}
 }

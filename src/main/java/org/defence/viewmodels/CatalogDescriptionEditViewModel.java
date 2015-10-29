@@ -26,8 +26,12 @@ public class CatalogDescriptionEditViewModel implements ViewModel {
 	private final IntegerProperty id = new SimpleIntegerProperty();
 	private final StringProperty code = new SimpleStringProperty();
 	private final StringProperty name = new SimpleStringProperty();
-	private final ObjectProperty<RegistrationInfoViewModel> registrationInfo = new SimpleObjectProperty<>();
-	private final ObjectProperty<OrganizationViewModel> organization = new SimpleObjectProperty<>();
+
+
+	private final StringProperty test = new SimpleStringProperty();
+
+	private final ObjectProperty<RegistrationInfoViewModel> registrationInfo = new SimpleObjectProperty<>(new RegistrationInfoViewModel());
+	private final ObjectProperty<OrganizationViewModel> organization = new SimpleObjectProperty<>(new OrganizationViewModel());
 	private final ListProperty<CharacteristicValueViewModel> values = new SimpleListProperty<>();
 	private final ListProperty<OrganizationViewModel> organizations = new SimpleListProperty<>(FXCollections.observableArrayList());
 
@@ -52,7 +56,7 @@ public class CatalogDescriptionEditViewModel implements ViewModel {
 			List<Characteristic> characteristics = null;
 			List<CharacteristicValueViewModel> list = new ArrayList<>();
 
-
+			// adding CatalogDescription
 			if (parentViewModel.getSelectedName() != null) {
 				characteristics = dbHelper.getCharacteristicsByAssertedNameId(parentViewModel.getSelectedName().getId());
 
@@ -61,6 +65,8 @@ public class CatalogDescriptionEditViewModel implements ViewModel {
 				}
 			} else {
 				if (parentViewModel.getSelectedDescription() != null) {
+
+					// loading characteristicValues
 					List<CharacteristicValue> characteristicValues = dbHelper.getCharacteristicValuesByCatalogDescriptionId(parentViewModel
 							.getSelectedDescription().getId());
 
@@ -68,6 +74,16 @@ public class CatalogDescriptionEditViewModel implements ViewModel {
 						list.add(new CharacteristicValueViewModel(new CharacteristicValue(value.getCharacteristic(),
 								value.getValue())));
 					}
+
+					/*System.out.println("EDIT MODE");
+
+					// loading registrationInfo
+					CatalogDescriptionViewModel catalogDescriptionViewModel = new CatalogDescriptionViewModel(dbHelper
+							.getCatalogDescriptionById(parentViewModel.getSelectedDescription().getId()));
+
+					registrationInfo.setValue(catalogDescriptionViewModel.getRegistrationInfo());
+
+					test.setValue("Crazy");*/
 				}
 			}
 
@@ -106,7 +122,7 @@ public class CatalogDescriptionEditViewModel implements ViewModel {
 				} else {
 					editedDescription = new CatalogDescriptionViewModel(dbHelper.addCatalogDescription(assertedName
 							.getId(), code.getValue(), name.getValue(), values.stream().map(CharacteristicValueViewModel::toModel)
-							.collect(Collectors.toList())));
+							.collect(Collectors.toList()), organization.getValue().toModel(), registrationInfo.getValue().toModel()));
 
 					if (assertedName.getCatalogDescriptions() == null) {
 						List<CatalogDescriptionViewModel> list = new ArrayList<>();
@@ -278,5 +294,17 @@ public class CatalogDescriptionEditViewModel implements ViewModel {
 
 	public void setSelectedCharacteristicValue(CharacteristicValueViewModel selectedCharacteristicValue) {
 		this.selectedCharacteristicValue.set(selectedCharacteristicValue);
+	}
+
+	public String getTest() {
+		return test.get();
+	}
+
+	public StringProperty testProperty() {
+		return test;
+	}
+
+	public void setTest(String test) {
+		this.test.set(test);
 	}
 }

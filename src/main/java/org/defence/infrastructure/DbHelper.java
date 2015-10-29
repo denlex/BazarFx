@@ -340,13 +340,13 @@ public class DbHelper {
 	}
 
 	public CatalogDescription addCatalogDescription(Integer assertedNameId, String code, String name, List<CharacteristicValue>
-			values) {
+			values, Organization organization, RegistrationInfo info) {
 		Session session = factory.openSession();
 		Transaction transaction = null;
 		CatalogDescription description = null;
 
 		try {
-			description = new CatalogDescription(code, name, values);
+			description = new CatalogDescription(code, name, values, organization, info);
 			AssertedName assertedName = (AssertedName) session.get(AssertedName.class, assertedNameId);
 			assertedName.getCatalogDescriptions().add(description);
 			transaction = session.beginTransaction();
@@ -1292,6 +1292,21 @@ public class DbHelper {
 			return result;
 		}
 	}
+
+	public CatalogDescription getCatalogDescriptionById(Integer id) {
+		Session session = factory.openSession();
+		CatalogDescription result = null;
+
+		try {
+			result = (CatalogDescription) session.get(CatalogDescription.class, id);
+		} catch(Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			session.close();
+			return result;
+		}
+	}
+
 
 	public List<CatalogDescription> getCatalogDescriptionsByAssertedName(Integer assertedNameId) {
 		Session session = factory.openSession();
