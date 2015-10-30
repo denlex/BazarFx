@@ -33,11 +33,15 @@ public class CatalogDescriptionEditViewModel implements ViewModel {
 
 	private final StringProperty test = new SimpleStringProperty();
 
-//	private final ObjectProperty<RegistrationInfoViewModel> registrationInfo = new SimpleObjectProperty<>(new RegistrationInfoViewModel());
-	private final ObjectProperty<OrganizationViewModel> organization = new SimpleObjectProperty<>(new OrganizationViewModel());
-	private final ObjectProperty<OrganizationViewModel> selectedOrganization = new SimpleObjectProperty<>(new OrganizationViewModel());
+	//	private final ObjectProperty<RegistrationInfoViewModel> registrationInfo = new SimpleObjectProperty<>(new
+	// RegistrationInfoViewModel());
+	private final ObjectProperty<OrganizationViewModel> organization = new SimpleObjectProperty<>(new
+			OrganizationViewModel());
+	private final ObjectProperty<OrganizationViewModel> selectedOrganization = new SimpleObjectProperty<>(new
+			OrganizationViewModel());
 	private final ListProperty<CharacteristicValueViewModel> values = new SimpleListProperty<>();
-	private final ListProperty<OrganizationViewModel> organizations = new SimpleListProperty<>(FXCollections.observableArrayList());
+	private final ListProperty<OrganizationViewModel> organizations = new SimpleListProperty<>(FXCollections
+			.observableArrayList());
 
 	private final StringProperty applicationNumber = new SimpleStringProperty();
 	private final StringProperty registrationNumber = new SimpleStringProperty();
@@ -68,7 +72,8 @@ public class CatalogDescriptionEditViewModel implements ViewModel {
 
 			// adding CatalogDescription
 			if (parentViewModel.getSelectedName() != null) {
-				characteristics = dbHelper.getCharacteristicsByAssertedNameId(parentViewModel.getSelectedName().getId());
+				characteristics = dbHelper.getCharacteristicsByAssertedNameId(parentViewModel.getSelectedName().getId
+						());
 
 				for (Characteristic characteristic : characteristics) {
 					list.add(new CharacteristicValueViewModel(new CharacteristicValue(characteristic, null)));
@@ -77,8 +82,9 @@ public class CatalogDescriptionEditViewModel implements ViewModel {
 				if (parentViewModel.getSelectedDescription() != null) {
 
 					// loading characteristicValues
-					List<CharacteristicValue> characteristicValues = dbHelper.getCharacteristicValuesByCatalogDescriptionId(parentViewModel
-							.getSelectedDescription().getId());
+					List<CharacteristicValue> characteristicValues = dbHelper
+							.getCharacteristicValuesByCatalogDescriptionId(parentViewModel
+									.getSelectedDescription().getId());
 
 					for (CharacteristicValue value : characteristicValues) {
 						list.add(new CharacteristicValueViewModel(new CharacteristicValue(value.getCharacteristic(),
@@ -120,8 +126,10 @@ public class CatalogDescriptionEditViewModel implements ViewModel {
 				// editting catalogDescription
 				if (assertedName == null) {
 					editedDescription = new CatalogDescriptionViewModel(dbHelper.updateCatalogDescription(id.getValue
-							(), name.getValue(), values.stream().map(CharacteristicValueViewModel::toModel)
-							.collect(Collectors.toList())));
+							(), code.getValue(), name.getValue(), values.stream().map
+							(CharacteristicValueViewModel::toModel).collect(Collectors.toList()), selectedOrganization
+							.getValue().getId(), new RegistrationInfo(applicationNumber.getValue(), registrationNumber
+							.getValue(), DateConverter.toDate(registrationDate.getValue()))));
 					CatalogDescriptionViewModel selectedDescription = parentViewModel.getSelectedDescription();
 
 					if (selectedDescription != null) {
@@ -131,17 +139,16 @@ public class CatalogDescriptionEditViewModel implements ViewModel {
 					}
 				} else {
 					/*editedDescription = new CatalogDescriptionViewModel(dbHelper.addCatalogDescription(assertedName
-							.getId(), code.getValue(), name.getValue(), values.stream().map(CharacteristicValueViewModel::toModel)
-							.collect(Collectors.toList()), organization.getValue().toModel(), registrationInfo.getValue().toModel()));*/
+							.getId(), code.getValue(), name.getValue(), values.stream().map
+							(CharacteristicValueViewModel::toModel)
+							.collect(Collectors.toList()), organization.getValue().toModel(), registrationInfo
+							.getValue().toModel()));*/
 
 					editedDescription = new CatalogDescriptionViewModel(dbHelper.addCatalogDescription(assertedName
 							.getId(), code.getValue(), name.getValue(), values.stream().map
-							(CharacteristicValueViewModel::toModel)
-							.collect(Collectors.toList()), selectedOrganization.getValue().getId(), new
-							RegistrationInfo
-							(applicationNumber.getValue(), registrationNumber.getValue(), DateConverter.toDate
-									(registrationDate
-											.getValue()))));
+							(CharacteristicValueViewModel::toModel).collect(Collectors.toList()), selectedOrganization
+							.getValue().getId(), new RegistrationInfo(applicationNumber.getValue(), registrationNumber
+							.getValue(), DateConverter.toDate(registrationDate.getValue()))));
 
 					if (assertedName.getCatalogDescriptions() == null) {
 						List<CatalogDescriptionViewModel> list = new ArrayList<>();

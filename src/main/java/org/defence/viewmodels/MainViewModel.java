@@ -174,7 +174,7 @@ public class MainViewModel implements ViewModel {
 
 //					formats.stream().forEach(f -> f.getAssertedNames().removeIf(n -> n.getId() == getSelectedName()
 // .getId()));
-//					displayFormats();
+					displayFormats();
 				}
 			}
 		});

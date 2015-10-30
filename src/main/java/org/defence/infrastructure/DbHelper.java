@@ -9,10 +9,7 @@ import org.hibernate.cfg.Configuration;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -311,8 +308,9 @@ public class DbHelper {
 		}
 	}
 
-	public CatalogDescription addCatalogDescriptionWhileImport(Integer assertedNameId, String code, String name, List<CharacteristicValue>
-			values) {
+	public CatalogDescription addCatalogDescriptionWhileImport(Integer assertedNameId, String code, String name,
+			List<CharacteristicValue>
+					values) {
 		Session session = factory.openSession();
 		Transaction transaction = null;
 		CatalogDescription description = null;
@@ -328,7 +326,7 @@ public class DbHelper {
 			AssertedName assertedName = (AssertedName) session.get(AssertedName.class, assertedNameId);
 			assertedName.getCatalogDescriptions().add(description);
 			transaction = session.beginTransaction();
-			session.save(assertedName);
+			session.saveOrUpdate(assertedName);
 			transaction.commit();
 		} catch (Exception ex) {
 			transaction.rollback();
@@ -339,8 +337,9 @@ public class DbHelper {
 		}
 	}
 
-	public CatalogDescription addCatalogDescription(Integer assertedNameId, String code, String name, List<CharacteristicValue>
-			values, Integer organizationId, RegistrationInfo info) {
+	public CatalogDescription addCatalogDescription(Integer assertedNameId, String code, String name,
+			List<CharacteristicValue>
+					values, Integer organizationId, RegistrationInfo info) {
 		Session session = factory.openSession();
 		Transaction transaction = null;
 		CatalogDescription description = null;
@@ -353,13 +352,24 @@ public class DbHelper {
 			}
 
 			description = new CatalogDescription(code, name, values, organization, info);
+
+			for (CharacteristicValue value : values) {
+				List<Measurement> measurements = value.getCharacteristic().getMeasurements();
+
+				for (int i = 0; i < measurements.size(); i++) {
+					measurements.set(i, (Measurement) session.get(Measurement.class, measurements.get(i).getId()));
+				}
+				value.getCharacteristic().setMeasurements(measurements);
+			}
+
 			AssertedName assertedName = (AssertedName) session.get(AssertedName.class, assertedNameId);
 			assertedName.getCatalogDescriptions().add(description);
 			transaction = session.beginTransaction();
-			session.save(assertedName);
+			session.saveOrUpdate(assertedName);
 			transaction.commit();
 		} catch (Exception ex) {
 			System.out.println("Error when catalogDescription add process!");
+			ex.printStackTrace();
 			transaction.rollback();
 		} finally {
 			session.close();
@@ -386,7 +396,8 @@ public class DbHelper {
 		}
 	}
 
-	public DescriptionFormat addDescriptionFormat(Integer classId, String code, String name, List<Integer> characteristicIdList) {
+	public DescriptionFormat addDescriptionFormat(Integer classId, String code, String name, List<Integer>
+			characteristicIdList) {
 
 		Session session = factory.openSession();
 		Transaction transaction = null;
@@ -619,17 +630,49 @@ public class DbHelper {
 		}
 	}
 
-	public CatalogDescription updateCatalogDescription(Integer id, String name, List<CharacteristicValue> values) {
+	public CatalogDescription updateCatalogDescription(Integer id, String code, String name, List<CharacteristicValue>
+			values, Integer organizationId, RegistrationInfo info) {
 		Session session = factory.openSession();
 		Transaction transaction = null;
 		CatalogDescription description = null;
 
 		try {
 			transaction = session.beginTransaction();
+
+			Organization organization = (Organization) session.get(Organization.class, organizationId);
+
+			if (organization == null) {
+				throw new Exception("Organization id=" + organizationId + " is absent in DB");
+			}
+
+//			description = new CatalogDescription(code, name, values, organization, info);
 			description = (CatalogDescription) session.get(CatalogDescription.class, id);
+
+			for (int k = 0; k < values.size(); k++) {
+				values.set(k, (CharacteristicValue) session.get(CharacteristicValue.class, values.get(k).getId()));
+
+				/*for (CharacteristicValue value : values) {
+
+
+					List<Measurement> measurements = value.getCharacteristic().getMeasurements();
+
+					for (int i = 0; i < measurements.size(); i++) {
+						measurements.set(i, (Measurement) session.get(Measurement.class, measurements.get(i).getId()));
+					}
+					value.getCharacteristic().setMeasurements(measurements);
+				}*/
+			}
+
+			description.setCode(code);
 			description.setName(name);
-			description.setValues(values);
-			session.save(description);
+
+			if (values != null) {
+				description.setValues(values);
+			}
+
+			description.setOrganization(organization);
+			description.setRegistrationInfo(info);
+			session.update(description);
 			transaction.commit();
 		} catch (Exception ex) {
 			transaction.rollback();
@@ -653,7 +696,7 @@ public class DbHelper {
 			organization.setType(type);
 			session.save(organization);
 			transaction.commit();
-		} catch(Exception ex) {
+		} catch (Exception ex) {
 			transaction.rollback();
 			ex.printStackTrace();
 		} finally {
@@ -1305,7 +1348,7 @@ public class DbHelper {
 
 		try {
 			result = (CatalogDescription) session.get(CatalogDescription.class, id);
-		} catch(Exception ex) {
+		} catch (Exception ex) {
 			ex.printStackTrace();
 		} finally {
 			session.close();
