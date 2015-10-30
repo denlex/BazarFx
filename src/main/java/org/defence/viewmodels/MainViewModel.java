@@ -576,19 +576,68 @@ public class MainViewModel implements ViewModel {
 						}
 					}
 
+					//**************************************************************************************************
+
+					Element registrationInfoNode = doc.createElement("registrationInfo");
+					catalogDescription.appendChild(registrationInfoNode);
+
+					Element applicationNumberNode = doc.createElement("applicationNumber");
+					registrationInfoNode.appendChild(applicationNumberNode);
+
+					Attr applicationNumberAttr = doc.createAttribute("value");
+					applicationNumberAttr.setValue(selectedDescription.getValue().getRegistrationInfo().getApplicationNumber());
+					applicationNumberNode.setAttributeNode(applicationNumberAttr);
+
+					Element registrationNumberNode = doc.createElement("registrationNumber");
+					registrationInfoNode.appendChild(registrationNumberNode);
+
+					Attr registrationNumberAttr = doc.createAttribute("value");
+					registrationNumberAttr.setValue(selectedDescription.getValue().getRegistrationInfo().getRegistrationNumber());
+					registrationNumberNode.setAttributeNode(registrationNumberAttr);
+
+					Element registrationDateNode = doc.createElement("registrationDate");
+					registrationInfoNode.appendChild(registrationDateNode);
+
+					Attr registrationDateAttr = doc.createAttribute("value");
+					registrationDateAttr.setValue(selectedDescription.getValue().getRegistrationInfo().getRegistrationDate().toString());
+					registrationDateNode.setAttributeNode(registrationDateAttr);
+
+					//**************************************************************************************************
+
+					Element organizationNode = doc.createElement("organization");
+					catalogDescription.appendChild(organizationNode);
+
+					Element organizationCodeNode = doc.createElement("code");
+					organizationNode.appendChild(organizationCodeNode);
+
+					Attr organizationCodeAttr = doc.createAttribute("value");
+					organizationCodeAttr.setValue(selectedDescription.getValue().getOrganization().getCode());
+					organizationCodeNode.setAttributeNode(organizationCodeAttr);
+
+					Element organizationNameNode = doc.createElement("name");
+					organizationNode.appendChild(organizationNameNode);
+
+					Attr organizationNameAttr = doc.createAttribute("value");
+					organizationNameAttr.setValue(selectedDescription.getValue().getOrganization().getName());
+					organizationNameNode.setAttributeNode(organizationNameAttr);
+
+					Element organizationTypeNode = doc.createElement("type");
+					organizationNode.appendChild(organizationTypeNode);
+
+					Attr organizationTypeAttr = doc.createAttribute("value");
+					organizationTypeAttr.setValue(selectedDescription.getValue().getOrganization().getType());
+					organizationTypeNode.setAttributeNode(organizationTypeAttr);
+
+					//**************************************************************************************************
 
 					// write the content into xml file
-					TransformerFactory transformerFactory =
-							TransformerFactory.newInstance();
-					Transformer transformer =
-							transformerFactory.newTransformer();
+					TransformerFactory transformerFactory = TransformerFactory.newInstance();
+					Transformer transformer = transformerFactory.newTransformer();
 					DOMSource source = new DOMSource(doc);
-					StreamResult result =
-							new StreamResult(catalogDescriptionFile);
+					StreamResult result = new StreamResult(catalogDescriptionFile);
 					transformer.transform(source, result);
 					// Output to console for testing
-					StreamResult consoleResult =
-							new StreamResult(System.out);
+					StreamResult consoleResult = new StreamResult(System.out);
 					transformer.transform(source, consoleResult);
 				} catch (Exception e) {
 					e.printStackTrace();

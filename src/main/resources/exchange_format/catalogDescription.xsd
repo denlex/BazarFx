@@ -1,19 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:element name="catalogDescription" type="catalogDescriptionType"/>
-  <xs:complexType name="nameType">
-    <xs:simpleContent>
-      <xs:extension base="xs:string">
-        <xs:attribute type="xs:string" name="value" use="optional"/>
-      </xs:extension>
-    </xs:simpleContent>
-  </xs:complexType>
-  <xs:complexType name="characteristicTypeType">
-    <xs:sequence>
-      <xs:element type="codeType" name="code"/>
-      <xs:element type="nameType" name="name"/>
-    </xs:sequence>
-  </xs:complexType>
   <xs:complexType name="characteristicValueType">
     <xs:sequence>
       <xs:element type="characteristicType" name="characteristic"/>
@@ -34,11 +21,68 @@
       <xs:element type="nameType" name="name"/>
     </xs:sequence>
   </xs:complexType>
+  <xs:complexType name="registrationDateType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="value"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="registrationInfoType">
+    <xs:sequence>
+      <xs:element type="applicationNumberType" name="applicationNumber"/>
+      <xs:element type="registrationNumberType" name="registrationNumber"/>
+      <xs:element type="registrationDateType" name="registrationDate"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="typeType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="value"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="registrationNumberType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="value"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="characteristicType">
+    <xs:sequence>
+      <xs:element type="codeType" name="code"/>
+      <xs:element type="nameType" name="name"/>
+      <xs:element type="measurementsType" name="measurements"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="nameType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="value" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="organizationType">
+    <xs:sequence>
+      <xs:element type="codeType" name="code"/>
+      <xs:element type="nameType" name="name"/>
+      <xs:element type="typeType" name="type"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="characteristicTypeType">
+    <xs:sequence>
+      <xs:element type="codeType" name="code"/>
+      <xs:element type="nameType" name="name"/>
+    </xs:sequence>
+  </xs:complexType>
   <xs:complexType name="catalogDescriptionType">
     <xs:sequence>
       <xs:element type="nameType" name="name"/>
       <xs:element type="codeType" name="code"/>
       <xs:element type="characteristicValueType" name="characteristicValue" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element type="registrationInfoType" name="registrationInfo"/>
+      <xs:element type="organizationType" name="organization"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="shortNameType">
@@ -61,11 +105,11 @@
       <xs:element type="measurementType" name="measurement" maxOccurs="unbounded" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="characteristicType">
-    <xs:sequence>
-      <xs:element type="codeType" name="code"/>
-      <xs:element type="nameType" name="name"/>
-      <xs:element type="measurementsType" name="measurements"/>
-    </xs:sequence>
+  <xs:complexType name="applicationNumberType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="value"/>
+      </xs:extension>
+    </xs:simpleContent>
   </xs:complexType>
 </xs:schema>

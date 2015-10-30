@@ -114,4 +114,16 @@
             <name value="Массы"/>
         </characteristicType>
     </characteristicValue>
+
+    <registrationInfo>
+        <applicationNumber value="10"/>
+        <registrationNumber value="20"/>
+        <registrationDate value="10.12.2010"/>
+    </registrationInfo>
+
+    <organization>
+        <code value="101"/>
+        <name value="Рога и копыта"/>
+        <type value="Организация-разработчик"/>
+    </organization>
 </catalogDescription>
