@@ -61,6 +61,8 @@ public class OrganizationEditView implements FxmlView<OrganizationEditViewModel>
 		typeComboBox.getItems().add("Организация-исполнитель");
 //		typeComboBox.getSelectionModel().select(0);
 
+		typeComboBox.valueProperty().bindBidirectional(viewModel.typeProperty());
+
 		typeComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
 			viewModel.typeProperty().unbind();
 			viewModel.typeProperty().bindBidirectional(new SimpleObjectProperty<>(newValue));

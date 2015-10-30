@@ -30,7 +30,7 @@ public class OrganizationEditViewModel implements ViewModel {
 		saveCommand = new DelegateCommand(() -> new Action() {
 			@Override
 			protected void action() throws Exception {
-//				OrganizationViewModel organization = parentViewModel.getSelectedOrganization();
+//				OrganizationViewModel organization = parentViewModel.getOrganization();
 
 				System.out.println(type.getValue());
 

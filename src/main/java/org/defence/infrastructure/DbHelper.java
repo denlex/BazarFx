@@ -340,12 +340,18 @@ public class DbHelper {
 	}
 
 	public CatalogDescription addCatalogDescription(Integer assertedNameId, String code, String name, List<CharacteristicValue>
-			values, Organization organization, RegistrationInfo info) {
+			values, Integer organizationId, RegistrationInfo info) {
 		Session session = factory.openSession();
 		Transaction transaction = null;
 		CatalogDescription description = null;
 
 		try {
+			Organization organization = (Organization) session.get(Organization.class, organizationId);
+
+			if (organization == null) {
+				throw new Exception("Organization id=" + organizationId + " is absent in DB");
+			}
+
 			description = new CatalogDescription(code, name, values, organization, info);
 			AssertedName assertedName = (AssertedName) session.get(AssertedName.class, assertedNameId);
 			assertedName.getCatalogDescriptions().add(description);

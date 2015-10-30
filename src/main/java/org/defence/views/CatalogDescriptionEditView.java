@@ -135,12 +135,22 @@ public class CatalogDescriptionEditView implements FxmlView<CatalogDescriptionEd
 			}
 		};
 		registrationDateDatePicker.setConverter(converter);
-//		registrationDateDatePicker.setPromptText(pattern.toLowerCase());
 	}
 
 	public void initialize() {
 		initializeDatePicker();
+
 		organizationComboBox.itemsProperty().bindBidirectional(viewModel.organizationsProperty());
+
+		organizationComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue)
+				-> {
+			viewModel.selectedOrganizationProperty().unbind();
+			viewModel.selectedOrganizationProperty().bindBidirectional(new SimpleObjectProperty<>(newValue));
+		});
+
+
+		organizationComboBox.valueProperty().bindBidirectional(viewModel.organizationProperty());
+
 		codeTextField.textProperty().bindBidirectional(viewModel.codeProperty());
 		nameTextField.textProperty().bindBidirectional(viewModel.nameProperty());
 
@@ -192,7 +202,6 @@ public class CatalogDescriptionEditView implements FxmlView<CatalogDescriptionEd
 	}
 
 	public void testButtonClicked() {
-
 	}
 
 

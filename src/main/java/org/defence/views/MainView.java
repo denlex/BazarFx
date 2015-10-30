@@ -588,6 +588,8 @@ public class MainView implements FxmlView<MainViewModel> {
 					.registrationInfoProperty());*/
 
 
+			viewTuple.getViewModel().organizationProperty().bindBidirectional(d.getValue().organizationProperty());
+
 			viewTuple.getViewModel().applicationNumberProperty().bindBidirectional(d.getValue()
 					.registrationInfoProperty().getValue().applicationNumberProperty());
 			viewTuple.getViewModel().registrationNumberProperty().bindBidirectional(d.getValue()

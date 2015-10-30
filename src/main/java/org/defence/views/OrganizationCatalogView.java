@@ -101,6 +101,7 @@ public class OrganizationCatalogView implements FxmlView<OrganizationCatalogView
 		viewTuple.getViewModel().idProperty().bindBidirectional(org.getValue().idProperty());
 		viewTuple.getViewModel().codeProperty().bindBidirectional(org.getValue().codeProperty());
 		viewTuple.getViewModel().nameProperty().bindBidirectional(org.getValue().nameProperty());
+		viewTuple.getViewModel().typeProperty().bindBidirectional(org.getValue().typeProperty());
         /*viewTuple.getViewModel().setCachedCode(m.getValue().codeProperty().getValue());
         viewTuple.getViewModel().setCachedName(m.getValue().nameProperty().getValue());*/
 

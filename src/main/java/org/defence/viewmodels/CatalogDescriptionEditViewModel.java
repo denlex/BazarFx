@@ -35,6 +35,7 @@ public class CatalogDescriptionEditViewModel implements ViewModel {
 
 //	private final ObjectProperty<RegistrationInfoViewModel> registrationInfo = new SimpleObjectProperty<>(new RegistrationInfoViewModel());
 	private final ObjectProperty<OrganizationViewModel> organization = new SimpleObjectProperty<>(new OrganizationViewModel());
+	private final ObjectProperty<OrganizationViewModel> selectedOrganization = new SimpleObjectProperty<>(new OrganizationViewModel());
 	private final ListProperty<CharacteristicValueViewModel> values = new SimpleListProperty<>();
 	private final ListProperty<OrganizationViewModel> organizations = new SimpleListProperty<>(FXCollections.observableArrayList());
 
@@ -134,10 +135,13 @@ public class CatalogDescriptionEditViewModel implements ViewModel {
 							.collect(Collectors.toList()), organization.getValue().toModel(), registrationInfo.getValue().toModel()));*/
 
 					editedDescription = new CatalogDescriptionViewModel(dbHelper.addCatalogDescription(assertedName
-							.getId(), code.getValue(), name.getValue(), values.stream().map(CharacteristicValueViewModel::toModel)
-							.collect(Collectors.toList()), organization.getValue().toModel(), new RegistrationInfo
-							(applicationNumber.getValue(), registrationNumber.getValue(), DateConverter.toDate(registrationDate
-									.getValue()))));
+							.getId(), code.getValue(), name.getValue(), values.stream().map
+							(CharacteristicValueViewModel::toModel)
+							.collect(Collectors.toList()), selectedOrganization.getValue().getId(), new
+							RegistrationInfo
+							(applicationNumber.getValue(), registrationNumber.getValue(), DateConverter.toDate
+									(registrationDate
+											.getValue()))));
 
 					if (assertedName.getCatalogDescriptions() == null) {
 						List<CatalogDescriptionViewModel> list = new ArrayList<>();
@@ -221,6 +225,18 @@ public class CatalogDescriptionEditViewModel implements ViewModel {
 
 	public void setOrganization(OrganizationViewModel organization) {
 		this.organization.set(organization);
+	}
+
+	public OrganizationViewModel getSelectedOrganization() {
+		return selectedOrganization.get();
+	}
+
+	public ObjectProperty<OrganizationViewModel> selectedOrganizationProperty() {
+		return selectedOrganization;
+	}
+
+	public void setSelectedOrganization(OrganizationViewModel organization) {
+		this.selectedOrganization.set(organization);
 	}
 
 	public ObservableList<CharacteristicValueViewModel> getValues() {
