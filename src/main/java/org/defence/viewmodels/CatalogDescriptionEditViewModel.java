@@ -124,13 +124,24 @@ public class CatalogDescriptionEditViewModel implements ViewModel {
 
 				String errorMsg = "";
 
-				if (selectedOrganization.getValue().getId() == 0) {
-					errorMsg = "Выберите организацию";
+				// input check
+				if (getCode() == null || getCode().equals("")) {
+					errorMsg = "Введите код КО";
 					saveCommandSuccess = false;
 				} else {
-					if (registrationDate == null || getRegistrationDate() == null) {
-						errorMsg = "Выберите дату регистрации";
+					if (getName() == null || getName().equals("")) {
+						errorMsg = "Введите наименование КО";
 						saveCommandSuccess = false;
+					} else {
+						if (selectedOrganization.getValue().getId() == 0) {
+							errorMsg = "Выберите организацию";
+							saveCommandSuccess = false;
+						} else {
+							if (registrationDate == null || getRegistrationDate() == null) {
+								errorMsg = "Выберите дату регистрации";
+								saveCommandSuccess = false;
+							}
+						}
 					}
 				}
 
@@ -197,7 +208,7 @@ public class CatalogDescriptionEditViewModel implements ViewModel {
 	}
 
 	public void setCode(String code) {
-		this.code.set(code);
+		this.code.set(code.trim());
 	}
 
 	public String getName() {
@@ -209,7 +220,7 @@ public class CatalogDescriptionEditViewModel implements ViewModel {
 	}
 
 	public void setName(String name) {
-		this.name.set(name);
+		this.name.set(name.trim());
 	}
 
 	public OrganizationViewModel getOrganization() {
