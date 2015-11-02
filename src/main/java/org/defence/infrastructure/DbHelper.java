@@ -353,13 +353,9 @@ public class DbHelper {
 
 			description = new CatalogDescription(code, name, values, organization, info);
 
+			// rereading characteristic
 			for (CharacteristicValue value : values) {
-				List<Measurement> measurements = value.getCharacteristic().getMeasurements();
-
-				for (int i = 0; i < measurements.size(); i++) {
-					measurements.set(i, (Measurement) session.get(Measurement.class, measurements.get(i).getId()));
-				}
-				value.getCharacteristic().setMeasurements(measurements);
+				value.setCharacteristic((Characteristic) session.get(Characteristic.class, value.getCharacteristic().getId()));
 			}
 
 			AssertedName assertedName = (AssertedName) session.get(AssertedName.class, assertedNameId);
@@ -648,19 +644,9 @@ public class DbHelper {
 //			description = new CatalogDescription(code, name, values, organization, info);
 			description = (CatalogDescription) session.get(CatalogDescription.class, id);
 
-			for (int k = 0; k < values.size(); k++) {
-				values.set(k, (CharacteristicValue) session.get(CharacteristicValue.class, values.get(k).getId()));
-
-				/*for (CharacteristicValue value : values) {
-
-
-					List<Measurement> measurements = value.getCharacteristic().getMeasurements();
-
-					for (int i = 0; i < measurements.size(); i++) {
-						measurements.set(i, (Measurement) session.get(Measurement.class, measurements.get(i).getId()));
-					}
-					value.getCharacteristic().setMeasurements(measurements);
-				}*/
+			// rereading characteristic
+			for (CharacteristicValue value : values) {
+				value.setCharacteristic((Characteristic) session.get(Characteristic.class, value.getCharacteristic().getId()));
 			}
 
 			description.setCode(code);

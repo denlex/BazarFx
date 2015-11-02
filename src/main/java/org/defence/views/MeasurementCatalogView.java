@@ -155,8 +155,9 @@ public class MeasurementCatalogView implements FxmlView<MeasurementCatalogViewMo
         Parent root = viewTuple.getView();
         Stage dialog = new Stage();
         viewTuple.getCodeBehind().setStage(dialog);
+		viewTuple.getCodeBehind().initializeStage();
 
-        dialog.initModality(Modality.WINDOW_MODAL);
+		dialog.initModality(Modality.WINDOW_MODAL);
         dialog.initOwner(stage);
         dialog.setResizable(false);
 
@@ -228,7 +229,7 @@ public class MeasurementCatalogView implements FxmlView<MeasurementCatalogViewMo
 
         Stage dialog = new Stage();
         viewTuple.getCodeBehind().setStage(dialog);
-
+		viewTuple.getCodeBehind().initializeStage();
 
         viewTuple.getViewModel().idProperty().bindBidirectional(m.getValue().idProperty());
         viewTuple.getViewModel().codeProperty().bindBidirectional(m.getValue().codeProperty());

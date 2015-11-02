@@ -20,7 +20,6 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.defence.MainApp;
 import org.defence.viewmodels.*;
 
 /**
@@ -154,6 +153,7 @@ public class CharacteristicCatalogView implements FxmlView<CharacteristicCatalog
 		Parent root = viewTuple.getView();
 		Stage dialog = new Stage();
 		viewTuple.getCodeBehind().setStage(dialog);
+		viewTuple.getCodeBehind().initializeStage();
 
 		dialog.initModality(Modality.WINDOW_MODAL);
 		dialog.initOwner(stage);

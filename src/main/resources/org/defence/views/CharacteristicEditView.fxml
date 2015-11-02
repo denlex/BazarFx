@@ -14,77 +14,92 @@
 <!--    </children>
 </AnchorPane>-->
 
-<GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="650.0" minWidth="900.0" stylesheets="/css/Button.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.defence.views.CharacteristicEditView">
+<GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="650.0" minWidth="900.0"
+          stylesheets="/css/Button.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+          AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8"
+          xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.defence.views.CharacteristicEditView">
+    <columnConstraints>
+        <ColumnConstraints hgrow="ALWAYS" minWidth="150.0"/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints maxHeight="50" minHeight="50.0" prefHeight="50.0" vgrow="ALWAYS"/>
+        <RowConstraints vgrow="ALWAYS"/>
+        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" vgrow="NEVER"/>
+    </rowConstraints>
+    <children>
+        <StackPane style="-fx-background-color: #4A6C9B" GridPane.halignment="CENTER" GridPane.rowIndex="0"
+                   GridPane.valignment="TOP">
+            <children>
+                <Label stylesheets="/css/LabelProperty.css" text="Добавление новой характеристики"
+                       GridPane.halignment="CENTER">
+                    <StackPane.margin>
+                        <Insets left="50" right="50"/>
+                    </StackPane.margin>
+                </Label>
+            </children>
+        </StackPane>
+        <GridPane style="-fx-vgap: 10; -fx-hgap: 20; -fx-padding: 20" GridPane.rowIndex="1">
+            <children>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Код:" GridPane.columnIndex="0"
+                      GridPane.rowIndex="0"/>
+                <TextField fx:id="codeTextField" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                    <GridPane.margin>
+                        <Insets/>
+                    </GridPane.margin>
+                </TextField>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Наименование:" GridPane.columnIndex="0"
+                      GridPane.rowIndex="1">
+                </Text>
+                <TextField fx:id="nameTextField" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                    <GridPane.margin>
+                        <Insets/>
+                    </GridPane.margin>
+                </TextField>
+                <TableView fx:id="measurementsTableView" maxHeight="1.7976931348623157E308"
+                           maxWidth="1.7976931348623157E308" GridPane.columnSpan="2" GridPane.rowIndex="2">
+                    <columns>
+                        <TableColumn fx:id="idTableColumn" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" text="ID"/>
+                        <TableColumn fx:id="codeTableColumn" maxWidth="50.0" minWidth="50.0" prefWidth="50.0"
+                                     text="Код"/>
+                        <TableColumn fx:id="nameTableColumn" maxWidth="1.7976931348623157E308" minWidth="400.0"
+                                     prefWidth="450.0" text="Наименование единицы измерения"/>
+                        <TableColumn fx:id="checkBoxTableColumn" maxWidth="1.7976931348623157E308" minWidth="130.0"
+                                     prefWidth="200.0" text="Выбор ед. изме-ия."/>
+                    </columns>
+                </TableView>
+            </children>
             <columnConstraints>
-                <ColumnConstraints hgrow="ALWAYS" minWidth="150.0" />
+                <ColumnConstraints minWidth="-Infinity"/>
+                <ColumnConstraints hgrow="ALWAYS"/>
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints maxHeight="50" minHeight="50.0" prefHeight="50.0" vgrow="ALWAYS" />
-                <RowConstraints vgrow="ALWAYS" />
-                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" vgrow="NEVER" />
+                <RowConstraints/>
+                <RowConstraints/>
+                <RowConstraints vgrow="ALWAYS"/>
             </rowConstraints>
-            <children>
-                <StackPane style="-fx-background-color: #4A6C9B" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="TOP">
-                    <children>
-                        <Label stylesheets="/css/LabelProperty.css" text="Добавление новой характеристики" GridPane.halignment="CENTER">
-                            <StackPane.margin>
-                                <Insets left="50" right="50" />
-                            </StackPane.margin>
-                        </Label>
-                    </children>
-                </StackPane>
-                <GridPane style="-fx-vgap: 10; -fx-hgap: 20; -fx-padding: 20" GridPane.rowIndex="1">
-                    <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Код:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                        <TextField fx:id="codeTextField" GridPane.columnIndex="1" GridPane.rowIndex="0">
-                            <GridPane.margin>
-                                <Insets />
-                            </GridPane.margin>
-                        </TextField>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Наименование:" GridPane.columnIndex="0" GridPane.rowIndex="1">
-                        </Text>
-                        <TextField fx:id="nameTextField" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                            <GridPane.margin>
-                                <Insets />
-                            </GridPane.margin>
-                        </TextField>
-                        <TableView fx:id="measurementsTableView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnSpan="2" GridPane.rowIndex="2">
-                            <columns>
-                                <TableColumn fx:id="idTableColumn" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" text="ID" />
-                                <TableColumn fx:id="codeTableColumn" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" text="Код" />
-                                <TableColumn fx:id="nameTableColumn" maxWidth="1.7976931348623157E308" minWidth="400.0" prefWidth="450.0" text="Наименование единицы измерения" />
-                                <TableColumn fx:id="checkBoxTableColumn" maxWidth="1.7976931348623157E308" minWidth="130.0" prefWidth="200.0" text="Выбор ед. изме-ия." />
-                            </columns>
-                        </TableView>
-                    </children>
-                    <columnConstraints>
-                        <ColumnConstraints minWidth="-Infinity" />
-                        <ColumnConstraints hgrow="ALWAYS" />
-                    </columnConstraints>
-                    <rowConstraints>
-                        <RowConstraints />
-                        <RowConstraints />
-                        <RowConstraints vgrow="ALWAYS" />
-                    </rowConstraints>
-                </GridPane>
-                <AnchorPane GridPane.rowIndex="2">
-                    <children>
-            <HBox alignment="TOP_RIGHT" layoutX="581.0" spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="0.0">
-               <children>
-                              <Button fx:id="okBtn" alignment="CENTER" defaultButton="true" mnemonicParsing="false" onAction="#saveButtonClicked" text="Принять" AnchorPane.bottomAnchor="15" AnchorPane.rightAnchor="150" />
-                              <Button alignment="CENTER" mnemonicParsing="false" onAction="#cancelButtonClicked" text="Отмена" AnchorPane.bottomAnchor="15" AnchorPane.rightAnchor="15" />
-               </children>
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-               <padding>
-                  <Insets bottom="10.0" />
-               </padding>
-            </HBox>
-                    </children>
-         <padding>
-            <Insets right="6.0" />
-         </padding>
-                </AnchorPane>
-            </children>
         </GridPane>
+        <AnchorPane GridPane.rowIndex="2">
+            <children>
+                <HBox alignment="TOP_RIGHT" layoutX="581.0" spacing="10.0" AnchorPane.bottomAnchor="10.0"
+                      AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="0.0">
+                    <children>
+                        <Button fx:id="okBtn" alignment="CENTER" defaultButton="true" mnemonicParsing="false"
+                                onAction="#saveButtonClicked" text="Принять" AnchorPane.bottomAnchor="15"
+                                AnchorPane.rightAnchor="150"/>
+                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#cancelButtonClicked" text="Отмена"
+                                AnchorPane.bottomAnchor="15" AnchorPane.rightAnchor="15"/>
+                    </children>
+                    <opaqueInsets>
+                        <Insets/>
+                    </opaqueInsets>
+                    <padding>
+                        <Insets bottom="10.0"/>
+                    </padding>
+                </HBox>
+            </children>
+            <padding>
+                <Insets right="6.0"/>
+            </padding>
+        </AnchorPane>
+    </children>
+</GridPane>

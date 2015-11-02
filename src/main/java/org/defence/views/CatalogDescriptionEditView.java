@@ -100,6 +100,11 @@ public class CatalogDescriptionEditView implements FxmlView<CatalogDescriptionEd
 
 	public void saveButtonClicked(Event event) {
 		viewModel.getSaveCommand().execute();
+
+		if (!viewModel.getSaveCommandSuccess()) {
+			return;
+		}
+
 		dialogResult = DialogResult.OK;
 		stage.close();
 	}

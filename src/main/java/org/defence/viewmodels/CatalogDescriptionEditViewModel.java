@@ -9,6 +9,7 @@ import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
+import javafx.scene.control.Alert;
 import javafx.stage.WindowEvent;
 import org.defence.domain.entities.Characteristic;
 import org.defence.domain.entities.CharacteristicValue;
@@ -61,6 +62,7 @@ public class CatalogDescriptionEditViewModel implements ViewModel {
 
 	MainViewModel parentViewModel;
 	Command saveCommand;
+	private Boolean saveCommandSuccess = false;
 
 	public CatalogDescriptionEditViewModel() {
 
@@ -114,14 +116,30 @@ public class CatalogDescriptionEditViewModel implements ViewModel {
 		});
 
 		saveCommand = new DelegateCommand(() -> new Action() {
+
 			@Override
 			protected void action() throws Exception {
-				CharacteristicValueViewModel valueViewModel = selectedCharacteristicValue.getValue();
 				AssertedNameViewModel assertedName = parentViewModel.getSelectedName();
+				saveCommandSuccess = true;
 
-				/*dbHelper.addCatalogDescription(assertedName.getId(), name.getValue(), values.stream().map
-						(CharacteristicValueViewModel::toModel)
-						.collect(Collectors.toList()));*/
+				String errorMsg = "";
+
+				if (selectedOrganization.getValue().getId() == 0) {
+					errorMsg = "Выберите организацию";
+					saveCommandSuccess = false;
+				} else {
+					if (registrationDate == null || getRegistrationDate() == null) {
+						errorMsg = "Выберите дату регистрации";
+						saveCommandSuccess = false;
+					}
+				}
+
+				if (!saveCommandSuccess) {
+					Alert alert = new Alert(Alert.AlertType.ERROR);
+					alert.setContentText(errorMsg);
+					alert.showAndWait();
+					return;
+				}
 
 				// editting catalogDescription
 				if (assertedName == null) {
@@ -138,12 +156,6 @@ public class CatalogDescriptionEditViewModel implements ViewModel {
 						selectedDescription.setValues(editedDescription.getValues());
 					}
 				} else {
-					/*editedDescription = new CatalogDescriptionViewModel(dbHelper.addCatalogDescription(assertedName
-							.getId(), code.getValue(), name.getValue(), values.stream().map
-							(CharacteristicValueViewModel::toModel)
-							.collect(Collectors.toList()), organization.getValue().toModel(), registrationInfo
-							.getValue().toModel()));*/
-
 					editedDescription = new CatalogDescriptionViewModel(dbHelper.addCatalogDescription(assertedName
 							.getId(), code.getValue(), name.getValue(), values.stream().map
 							(CharacteristicValueViewModel::toModel).collect(Collectors.toList()), selectedOrganization
@@ -158,30 +170,8 @@ public class CatalogDescriptionEditViewModel implements ViewModel {
 						assertedName.getCatalogDescriptions().add(editedDescription);
 					}
 				}
-
 				// TODO: доделать позиционирование на отредактированную запись в treeView
 				parentViewModel.displayFormats();
-
-
-				/*if (assertedName == null) {
-					editedDescription = new CharacteristicValueViewModel(dbHelper.updateCharacteristicValue
-							(valueViewModel.getId(), valueViewModel.getCharacteristic(), valueViewModel.getValue()));
-
-					parentViewModel.getSelectedDescription().setId(editedDescription.getId());
-					parentViewModel.getSelectedDescription().setName(editedDescription.getName());
-					parentViewModel.getSelectedDescription().setValues(editedDescription.getValues());
-				} else {
-					editedDescription = new CharacteristicValueViewModel(dbHelper.addCharacteristicValue
-							(valueViewModel.getCharacteristic(), valueViewModel.getValue()));
-
-					if (assertedName.getCatalogDescriptions() == null) {
-						List<CatalogDescriptionViewModel> list = new ArrayList<>();
-						list.add(editedDescription);
-						assertedName.setCatalogDescriptions(FXCollections.observableArrayList(list));
-					} else {
-						assertedName.getCatalogDescriptions().add(editedDescription);
-					}
-				}*/
 			}
 		});
 	}
@@ -368,5 +358,9 @@ public class CatalogDescriptionEditViewModel implements ViewModel {
 
 	public void setRegistrationDate(LocalDate registrationDate) {
 		this.registrationDate.set(registrationDate);
+	}
+
+	public Boolean getSaveCommandSuccess() {
+		return saveCommandSuccess;
 	}
 }

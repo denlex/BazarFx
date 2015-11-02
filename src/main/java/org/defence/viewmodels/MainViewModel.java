@@ -132,6 +132,18 @@ public class MainViewModel implements ViewModel {
 
 				if (result.get() == yes) {
 					dbHelper.deleteAssertedName(getSelectedName().getId());
+
+					for (CatalogClassViewModel clazz : classes) {
+						for (DescriptionFormatViewModel format : clazz.getFormats()) {
+							for (AssertedNameViewModel name :format.getAssertedNames()) {
+								if (name.getId() == getSelectedName().getId()) {
+									format.getAssertedNames().remove(name);
+									displayFormats();
+									return;
+								}
+							}
+						}
+					}
 					// remove selectedName from formats collection
 					formats.stream().forEach(f -> f.getAssertedNames().removeIf(n -> n.getId() == getSelectedName()
 							.getId()));
@@ -160,13 +172,15 @@ public class MainViewModel implements ViewModel {
 				if (result.get() == yes) {
 					dbHelper.deleteCatalogDescription(getSelectedDescription().getId());
 					// remove selectedDescription from formats collection
-					for (DescriptionFormatViewModel format : formats) {
-						for (AssertedNameViewModel name : format.getAssertedNames()) {
-							for (CatalogDescriptionViewModel description : name.getCatalogDescriptions()) {
-								if (description.getId() == getSelectedDescription().getId()) {
-									name.getCatalogDescriptions().remove(description);
-									displayFormats();
-									return;
+					for (CatalogClassViewModel clazz : classes) {
+						for (DescriptionFormatViewModel format : clazz.getFormats()) {
+							for (AssertedNameViewModel name : format.getAssertedNames()) {
+								for (CatalogDescriptionViewModel description : name.getCatalogDescriptions()) {
+									if (description.getId() == getSelectedDescription().getId()) {
+										name.getCatalogDescriptions().remove(description);
+										displayFormats();
+										return;
+									}
 								}
 							}
 						}
@@ -174,7 +188,7 @@ public class MainViewModel implements ViewModel {
 
 //					formats.stream().forEach(f -> f.getAssertedNames().removeIf(n -> n.getId() == getSelectedName()
 // .getId()));
-					displayFormats();
+//					displayFormats();
 				}
 			}
 		});
@@ -585,21 +599,24 @@ public class MainViewModel implements ViewModel {
 					registrationInfoNode.appendChild(applicationNumberNode);
 
 					Attr applicationNumberAttr = doc.createAttribute("value");
-					applicationNumberAttr.setValue(selectedDescription.getValue().getRegistrationInfo().getApplicationNumber());
+					applicationNumberAttr.setValue(selectedDescription.getValue().getRegistrationInfo()
+							.getApplicationNumber());
 					applicationNumberNode.setAttributeNode(applicationNumberAttr);
 
 					Element registrationNumberNode = doc.createElement("registrationNumber");
 					registrationInfoNode.appendChild(registrationNumberNode);
 
 					Attr registrationNumberAttr = doc.createAttribute("value");
-					registrationNumberAttr.setValue(selectedDescription.getValue().getRegistrationInfo().getRegistrationNumber());
+					registrationNumberAttr.setValue(selectedDescription.getValue().getRegistrationInfo()
+							.getRegistrationNumber());
 					registrationNumberNode.setAttributeNode(registrationNumberAttr);
 
 					Element registrationDateNode = doc.createElement("registrationDate");
 					registrationInfoNode.appendChild(registrationDateNode);
 
 					Attr registrationDateAttr = doc.createAttribute("value");
-					registrationDateAttr.setValue(selectedDescription.getValue().getRegistrationInfo().getRegistrationDate().toString());
+					registrationDateAttr.setValue(selectedDescription.getValue().getRegistrationInfo()
+							.getRegistrationDate().toString());
 					registrationDateNode.setAttributeNode(registrationDateAttr);
 
 					//**************************************************************************************************

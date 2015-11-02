@@ -20,6 +20,10 @@ import java.util.List;
  * Created by root on 30.08.15.
  */
 public class CharacteristicEditViewModel implements ViewModel {
+	private final IntegerProperty idTemp = new SimpleIntegerProperty();
+	private final StringProperty codeTemp = new SimpleStringProperty();
+	private final StringProperty nameTemp = new SimpleStringProperty();
+
     private final IntegerProperty id = new SimpleIntegerProperty();
     private final StringProperty code = new SimpleStringProperty();
     private final StringProperty name = new SimpleStringProperty();
@@ -28,7 +32,7 @@ public class CharacteristicEditViewModel implements ViewModel {
     private final ListProperty<MeasurementViewModel> allMeasurements = new SimpleListProperty<>();
     private final ObjectProperty<MeasurementViewModel> selectedMeasurement = new SimpleObjectProperty<>();
 
-    private ObjectProperty<EventHandler<WindowEvent>> shownWindow;// = new SimpleObjectProperty<>();
+    private ObjectProperty<EventHandler<WindowEvent>> shownWindow;
 
     private String cachedCode;
     private String cachedName;
@@ -53,6 +57,10 @@ public class CharacteristicEditViewModel implements ViewModel {
 
         // filling checkBoxes in table with corresponded values
         shownWindow = new SimpleObjectProperty<>(event -> {
+            idTemp.setValue(id.getValue());
+            codeTemp.setValue(code.getValue());
+            nameTemp.setValue(name.getValue());
+
             // if modification open window mode (not creation new characteristic)
             if (id != null && id.getValue() != 0) {
                 Characteristic current = dbHelper.getCharacteristicById(id.getValue());
@@ -83,13 +91,13 @@ public class CharacteristicEditViewModel implements ViewModel {
                     }
                 }
 
-                if (id.getValue() == 0) {
+                if (idTemp.getValue() == 0) {
                     // add measurement
-                    dbHelper.addCharacteristic(typeId, code.getValue(), name.getValue(), measurementIdList);
+                    dbHelper.addCharacteristic(typeId, codeTemp.getValue(), nameTemp.getValue(), measurementIdList);
                 } else {
                     // change exist measurement
                     // TODO: Сделать проверку на пустой ввод данных о типе измерения
-                    dbHelper.updateCharacteristic(typeId, id.getValue(), code.getValue(), name.getValue(), measurementIdList);
+                    dbHelper.updateCharacteristic(typeId, idTemp.getValue(), codeTemp.getValue(), nameTemp.getValue(), measurementIdList);
                 }
 
                 parentViewModel.loadCharacteristicsBySelectedType();
@@ -227,4 +235,40 @@ public class CharacteristicEditViewModel implements ViewModel {
     public void setShownWindow(EventHandler<WindowEvent> shownWindow) {
         this.shownWindow.set(shownWindow);
     }
+
+	public int getIdTemp() {
+		return idTemp.get();
+	}
+
+	public IntegerProperty idTempProperty() {
+		return idTemp;
+	}
+
+	public void setIdTemp(int idTemp) {
+		this.idTemp.set(idTemp);
+	}
+
+	public String getCodeTemp() {
+		return codeTemp.get();
+	}
+
+	public StringProperty codeTempProperty() {
+		return codeTemp;
+	}
+
+	public void setCodeTemp(String codeTemp) {
+		this.codeTemp.set(codeTemp);
+	}
+
+	public String getNameTemp() {
+		return nameTemp.get();
+	}
+
+	public StringProperty nameTempProperty() {
+		return nameTemp;
+	}
+
+	public void setNameTemp(String nameTemp) {
+		this.nameTemp.set(nameTemp);
+	}
 }

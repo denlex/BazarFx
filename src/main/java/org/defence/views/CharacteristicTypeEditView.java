@@ -51,8 +51,12 @@ public class CharacteristicTypeEditView implements FxmlView<CharacteristicTypeEd
         return dialogResult;
     }
 
+	public void initializeStage() {
+		stage.onShownProperty().bindBidirectional(viewModel.shownWindowProperty());
+	}
+
     public void initialize() {
-        codeTextField.textProperty().bindBidirectional(viewModel.codeProperty());
-        nameTextField.textProperty().bindBidirectional(viewModel.nameProperty());
+        codeTextField.textProperty().bindBidirectional(viewModel.codeTempProperty());
+        nameTextField.textProperty().bindBidirectional(viewModel.nameTempProperty());
     }
 }

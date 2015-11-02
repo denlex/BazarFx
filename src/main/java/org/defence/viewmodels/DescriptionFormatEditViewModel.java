@@ -48,6 +48,8 @@ public class DescriptionFormatEditViewModel implements ViewModel {
 
 		// filling checkBoxes in table with corresponded values
 		shownWindow = new SimpleObjectProperty<>(event -> {
+			System.out.println("Inside ShownWindow");
+
 			// if modification open window mode (not creation new description format)
 			if (id != null && id.getValue() != 0) {
 				DescriptionFormat current = dbHelper.getDescriptionFormatById(id.getValue());

@@ -58,10 +58,15 @@ public class MeasurementEditView implements FxmlView<MeasurementEditViewModel>, 
         stage.close();
     }
 
+    public void initializeStage() {
+		System.out.println("Inside initializeStage");
+		stage.onShownProperty().bindBidirectional(viewModel.shownWindowProperty());
+    }
+
     public void initialize() {
 
-        codeTextField.textProperty().bindBidirectional(viewModel.codeProperty());
-        nameTextField.textProperty().bindBidirectional(viewModel.nameProperty());
-        shortNameTextField.textProperty().bindBidirectional(viewModel.shortNameProperty());
+        codeTextField.textProperty().bindBidirectional(viewModel.codeTempProperty());
+        nameTextField.textProperty().bindBidirectional(viewModel.nameTempProperty());
+        shortNameTextField.textProperty().bindBidirectional(viewModel.shortNameTempProperty());
     }
 }

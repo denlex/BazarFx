@@ -90,8 +90,8 @@ public class CharacteristicEditView implements FxmlView<CharacteristicEditViewMo
 	}
 
 	public void initialize() {
-		codeTextField.textProperty().bindBidirectional(viewModel.codeProperty());
-		nameTextField.textProperty().bindBidirectional(viewModel.nameProperty());
+		codeTextField.textProperty().bindBidirectional(viewModel.codeTempProperty());
+		nameTextField.textProperty().bindBidirectional(viewModel.nameTempProperty());
 
 		initializeTableView();
 	}

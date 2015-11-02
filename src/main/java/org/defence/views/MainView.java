@@ -312,7 +312,6 @@ public class MainView implements FxmlView<MainViewModel> {
 				}
 			});
 
-			System.out.println(viewModel.getFormats());
 
 			/*System.out.println("==========================================================================");
 			for (DescriptionFormatViewModel format : viewModel.getFormats()) {
@@ -322,7 +321,6 @@ public class MainView implements FxmlView<MainViewModel> {
 			dialog.setScene(scene);
 			dialog.showAndWait();
 
-			System.out.println(viewModel.getFormats());
 
 			/*System.out.println("==========================================================================");
 			for (DescriptionFormatViewModel format : viewModel.getFormats()) {
