@@ -94,9 +94,6 @@ public class DescriptionFormatEditViewModel implements ViewModel {
 					selectedFormat.setCharacteristics(editedFormat.getCharacteristics());
 					selectedFormat.setAssertedNames(editedFormat.getAssertedNames());
 				}
-				// TODO: реализовать возможность обновления списка наборов характеристик
-
-//				parentViewModel.displayFormats();
 			}
 		});
 	}

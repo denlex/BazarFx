@@ -1190,6 +1190,13 @@ public class DbHelper {
 		try {
 			transaction = session.beginTransaction();
 			Measurement measurement = (Measurement) session.get(Measurement.class, id);
+
+			for (Characteristic characteristic : getAllCharacteristics()) {
+				Characteristic ch = (Characteristic) session.get(Characteristic.class, characteristic.getId());
+				ch.getMeasurements().remove(measurement);
+				session.save(ch);
+			}
+
 			session.delete(measurement);
 			transaction.commit();
 		} catch (Exception ex) {
@@ -1210,8 +1217,37 @@ public class DbHelper {
 		try {
 			transaction = session.beginTransaction();
 			Characteristic characteristic = (Characteristic) session.get(Characteristic.class, id);
+
+			// removing characteristic from formats
+			for (DescriptionFormat format : getAllDescriptionFormats()) {
+				DescriptionFormat f = (DescriptionFormat) session.get(DescriptionFormat.class, format.getId());
+				f.getCharacteristics().remove(characteristic);
+				session.save(f);
+			}
+
 			characteristic.getMeasurements().clear();
 			session.delete(characteristic);
+			transaction.commit();
+		} catch (Exception ex) {
+			transaction.rollback();
+			ex.printStackTrace();
+			return false;
+		} finally {
+			session.close();
+		}
+
+		return true;
+	}
+
+	public boolean deleteCatalogClass(Integer id) {
+		Session session = factory.openSession();
+		Transaction transaction = null;
+
+		try {
+			transaction = session.beginTransaction();
+			CatalogClass clazz = (CatalogClass) session.get(CatalogClass.class, id);
+			clazz.getFormats().clear();
+			session.delete(clazz);
 			transaction.commit();
 		} catch (Exception ex) {
 			transaction.rollback();

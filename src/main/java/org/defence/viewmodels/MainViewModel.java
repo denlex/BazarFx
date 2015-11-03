@@ -55,6 +55,7 @@ public class MainViewModel implements ViewModel {
 
 	private ObjectProperty<TreeItem<Object>> root = new SimpleObjectProperty<>();
 
+	private Command deleteCatalogClassCommand;
 	private Command deleteDescriptionFormatCommand;
 	private Command deleteAssertedNameCommand;
 	private Command deleteCatalogDescriptionCommand;
@@ -88,6 +89,38 @@ public class MainViewModel implements ViewModel {
 
 		});
 
+		deleteCatalogClassCommand = new DelegateCommand(() -> new Action() {
+			@Override
+			protected void action() throws Exception {
+				Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+				alert.setTitle("Удаление класса");
+				alert.setHeaderText(null);
+				alert.setContentText("Вы действительно хотите удалить класс?:\nНаименование:   " + getSelectedClass()
+						.getName());
+
+				ButtonType yes = new ButtonType("Удалить");
+				ButtonType no = new ButtonType("Отмена");
+
+				alert.getButtonTypes().setAll(yes, no);
+				((Button) alert.getDialogPane().lookupButton(yes)).setDefaultButton(true);
+
+				Optional<ButtonType> result = alert.showAndWait();
+
+				if (result.get() == yes) {
+					dbHelper.deleteCatalogClass(getSelectedClass().getId());
+//					formats.removeIf(f -> f.getId() == getSelectedFormat().getId());
+
+					for (CatalogClassViewModel clazz : classes) {
+						if (clazz.getId() == getSelectedClass().getId()) {
+							classes.remove(clazz);
+							displayFormats();
+							return;
+						}
+					}
+				}
+			}
+		});
+
 		deleteDescriptionFormatCommand = new DelegateCommand(() -> new Action() {
 			@Override
 			protected void action() throws Exception {
@@ -107,8 +140,18 @@ public class MainViewModel implements ViewModel {
 
 				if (result.get() == yes) {
 					dbHelper.deleteDescriptionFormat(getSelectedFormat().getId());
-					formats.removeIf(f -> f.getId() == getSelectedFormat().getId());
-					displayFormats();
+//					formats.removeIf(f -> f.getId() == getSelectedFormat().getId());
+
+					for (CatalogClassViewModel clazz : classes) {
+						for (DescriptionFormatViewModel format : clazz.getFormats()) {
+							if (format.getId() == getSelectedFormat().getId()) {
+								clazz.getFormats().remove(format);
+								displayFormats();
+								return;
+							}
+						}
+					}
+//					displayFormats();
 				}
 			}
 		});
@@ -135,7 +178,7 @@ public class MainViewModel implements ViewModel {
 
 					for (CatalogClassViewModel clazz : classes) {
 						for (DescriptionFormatViewModel format : clazz.getFormats()) {
-							for (AssertedNameViewModel name :format.getAssertedNames()) {
+							for (AssertedNameViewModel name : format.getAssertedNames()) {
 								if (name.getId() == getSelectedName().getId()) {
 									format.getAssertedNames().remove(name);
 									displayFormats();
@@ -145,9 +188,9 @@ public class MainViewModel implements ViewModel {
 						}
 					}
 					// remove selectedName from formats collection
-					formats.stream().forEach(f -> f.getAssertedNames().removeIf(n -> n.getId() == getSelectedName()
+					/*formats.stream().forEach(f -> f.getAssertedNames().removeIf(n -> n.getId() == getSelectedName()
 							.getId()));
-					displayFormats();
+					displayFormats();*/
 				}
 			}
 		});
@@ -178,7 +221,11 @@ public class MainViewModel implements ViewModel {
 								for (CatalogDescriptionViewModel description : name.getCatalogDescriptions()) {
 									if (description.getId() == getSelectedDescription().getId()) {
 										name.getCatalogDescriptions().remove(description);
-										displayFormats();
+										/*clazz.getFormats().stream().findFirst().filter(f -> f.getId() == format.getId
+												()).get().getAssertedNames().stream().findFirst().filter(n -> n.getId
+												() == name.getId()).get().getCatalogDescriptions().remove
+												(description);*/
+//										displayFormats();
 										return;
 									}
 								}
@@ -947,6 +994,8 @@ public class MainViewModel implements ViewModel {
 
 	public void displayFormats() {
 
+		System.out.println("displayFormat");
+
 		if (root == null || root.getValue() == null) {
 			return;
 		}
@@ -1193,5 +1242,20 @@ public class MainViewModel implements ViewModel {
 			return nameAttrib.getNodeValue();
 		}
 
+	}
+
+	public void displayAllEnitites() {
+		for (CatalogClassViewModel clazz : getClasses()) {
+			System.out.println(clazz.getName());
+			for (DescriptionFormatViewModel format : clazz.getFormats()) {
+				System.out.println("\t" + format.getName());
+				for (AssertedNameViewModel name : format.getAssertedNames()) {
+					System.out.println("\t\t" + name.getName());
+					for (CatalogDescriptionViewModel description : name.getCatalogDescriptions()) {
+						System.out.println("\t\t\t" + description.getName());
+					}
+				}
+			}
+		}
 	}
 }

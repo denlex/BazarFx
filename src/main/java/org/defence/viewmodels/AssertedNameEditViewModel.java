@@ -57,33 +57,6 @@ public class AssertedNameEditViewModel implements ViewModel {
 						format.getAssertedNames().add(editedName);
 					}
 				}
-
-
-				/*Integer formatId = parentViewModel.getSelectedFormat().getId();
-
-				if (formatId == null || formatId == 0) {
-					return;
-				}
-
-				System.out.println("id = " + id);
-				System.out.println("code = " + code);
-				System.out.println("name = " + name);
-
-				if (id.getValue() == 0) {
-					// add assertedName
-					editedName = new AssertedNameViewModel(dbHelper.addAssertedName(formatId, code.getValue(), name
-							.getValue()));
-					parentViewModel.getSelectedFormat().getAssertedNames().add(editedName);
-				} else {
-					// change exist assertedName
-					// TODO: Сделать проверку на пустой ввод данных об УН
-					editedName = new AssertedNameViewModel(dbHelper.updateAssertedName(formatId, id.getValue(), code
-							.getValue(), name.getValue()));
-
-//					parentViewModel.getSelectedFormat().getAssertedNames()
-				}*/
-
-//				parentViewModel.loadMeasurementsBySelectedType();
 			}
 		});
 	}

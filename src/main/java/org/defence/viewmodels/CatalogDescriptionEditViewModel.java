@@ -179,10 +179,11 @@ public class CatalogDescriptionEditViewModel implements ViewModel {
 						assertedName.setCatalogDescriptions(FXCollections.observableArrayList(list));
 					} else {
 						assertedName.getCatalogDescriptions().add(editedDescription);
+						System.out.println("Новое КО добавлено");
 					}
 				}
 				// TODO: доделать позиционирование на отредактированную запись в treeView
-				parentViewModel.displayFormats();
+//				parentViewModel.displayFormats();
 			}
 		});
 	}

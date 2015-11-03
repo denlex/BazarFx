@@ -165,100 +165,133 @@ public class MainView implements FxmlView<MainViewModel> {
 
 		public TreeCellFactory() {
 			MenuItem addCatalogClassMenuItem = new MenuItem("Добавить класс");
-			addCatalogClassMenuItem.setOnAction(event -> addCatalogClass());
-			//==========================================================================================================
-			MenuItem addDescriptionFormatItem = new MenuItem("Добавить СФО");
-			addDescriptionFormatItem.setOnAction(event -> addDescriptionFormat());
-
-			MenuItem editCatalogClassMenuItem = new MenuItem("Редактировать класс");
-			editCatalogClassMenuItem.setOnAction(event -> editCatalogClass());
-
-			MenuItem removeCatalogClassMenuItem = new MenuItem("Удалить класс");
-			removeCatalogClassMenuItem.setOnAction(event -> {
-
+			addCatalogClassMenuItem.setOnAction(event -> {
+				addCatalogClass();
+				viewModel.displayFormats();
 			});
-
-			catalogClassMenu.getItems().addAll(addDescriptionFormatItem, editCatalogClassMenuItem,
-					removeCatalogClassMenuItem);
-			//==========================================================================================================
-			MenuItem addAssertedNameMenuItem = new MenuItem("Добавить УН");
-			addAssertedNameMenuItem.setOnAction(event -> addAssertedName());
-
-			MenuItem editDescriptionFormatMenuItem = new MenuItem("Редактировать СФО");
-			editDescriptionFormatMenuItem.setOnAction(event -> editDescriptionFormat());
-
-			MenuItem removeDescriptionFormatMenuItem = new MenuItem("Удалить СФО");
-			removeDescriptionFormatMenuItem.setOnAction(event -> {
-				viewModel.getDeleteDescriptionFormatCommand().execute();
-				treeView.getSelectionModel().select(0);
-			});
-
-			descriptionFormatMenu.getItems().addAll(addAssertedNameMenuItem, editDescriptionFormatMenuItem,
-					removeDescriptionFormatMenuItem);
-			//==========================================================================================================
-			MenuItem addCatalogDescriptionMenuItem = new MenuItem("Добавить КО");
-			addCatalogDescriptionMenuItem.setOnAction(event -> addCatalogDescription());
-
-			MenuItem editAssertedNameMenuItem = new MenuItem("Редактировать УН");
-			editAssertedNameMenuItem.setOnAction(event -> editAssertedName());
-
-			MenuItem removeAssertedNameMenuItem = new MenuItem("Удалить УН");
-			removeAssertedNameMenuItem.setOnAction(event -> viewModel.getDeleteAssertedNameCommand().execute());
-
-			MenuItem importCatalogDescriptionMenuItem = new MenuItem("Импорт КО");
-			importCatalogDescriptionMenuItem.setOnAction(event -> {
-				FileChooser fileChooser = new FileChooser();
-				fileChooser.setTitle("Импорт КО");
-
-				FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Формат КО файла (*.xml)", "*" +
-						".xml");
-				fileChooser.getExtensionFilters().add(filter);
-
-				File file = fileChooser.showOpenDialog(stage);
-
-				if (file != null) {
-					viewModel.setCatalogDescriptionFile(file);
-					viewModel.getImportCatalogDescriptionCommand().execute();
-
+				//==========================================================================================================
+				MenuItem addDescriptionFormatItem = new MenuItem("Добавить СФО");
+				addDescriptionFormatItem.setOnAction(event -> {
+					addDescriptionFormat();
 					viewModel.displayFormats();
-					// select new added assertedName in treeView
+				});
+
+				MenuItem editCatalogClassMenuItem = new MenuItem("Редактировать класс");
+				editCatalogClassMenuItem.setOnAction(event -> {
+					editCatalogClass();
+					treeView.refresh();
+				});
+
+				MenuItem removeCatalogClassMenuItem = new MenuItem("Удалить класс");
+				removeCatalogClassMenuItem.setOnAction(event -> {
+
+				});
+
+				catalogClassMenu.getItems().addAll(addDescriptionFormatItem, editCatalogClassMenuItem,
+						removeCatalogClassMenuItem);
+				//==========================================================================================================
+				MenuItem addAssertedNameMenuItem = new MenuItem("Добавить УН");
+				addAssertedNameMenuItem.setOnAction(event -> {
+					addAssertedName();
+					viewModel.displayFormats();
+				});
+
+				MenuItem editDescriptionFormatMenuItem = new MenuItem("Редактировать СФО");
+				editDescriptionFormatMenuItem.setOnAction(event -> {
+					editDescriptionFormat();
+					treeView.refresh();
+				});
+
+				MenuItem removeDescriptionFormatMenuItem = new MenuItem("Удалить СФО");
+				removeDescriptionFormatMenuItem.setOnAction(event -> {
+					viewModel.getDeleteDescriptionFormatCommand().execute();
+					treeView.getSelectionModel().select(0);
+				});
+
+				descriptionFormatMenu.getItems().addAll(addAssertedNameMenuItem, editDescriptionFormatMenuItem,
+						removeDescriptionFormatMenuItem);
+				//==========================================================================================================
+				MenuItem addCatalogDescriptionMenuItem = new MenuItem("Добавить КО");
+				addCatalogDescriptionMenuItem.setOnAction(event -> {
+					addCatalogDescription();
+					viewModel.displayFormats();
+				});
+
+
+				MenuItem editAssertedNameMenuItem = new MenuItem("Редактировать УН");
+				editAssertedNameMenuItem.setOnAction(event -> {
+					editAssertedName();
+					treeView.refresh();
+				});
+
+				MenuItem removeAssertedNameMenuItem = new MenuItem("Удалить УН");
+				removeAssertedNameMenuItem.setOnAction(event -> {
+					viewModel.getDeleteAssertedNameCommand().execute();
+					viewModel.displayFormats();
+				});
+
+				MenuItem importCatalogDescriptionMenuItem = new MenuItem("Импорт КО");
+				importCatalogDescriptionMenuItem.setOnAction(event -> {
+					FileChooser fileChooser = new FileChooser();
+					fileChooser.setTitle("Импорт КО");
+
+					FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Формат КО файла (*.xml)",
+							"*" +
+									".xml");
+					fileChooser.getExtensionFilters().add(filter);
+
+					File file = fileChooser.showOpenDialog(stage);
+
+					if (file != null) {
+						viewModel.setCatalogDescriptionFile(file);
+						viewModel.getImportCatalogDescriptionCommand().execute();
+
+						viewModel.displayFormats();
+						// select new added assertedName in treeView
 //					selectEditedCatalogDescription(selectedFormat, viewTuple.getViewModel().getEditedName());
-				}
+					}
 
-			});
+				});
 
-			assertedNameMenu.getItems().addAll(addCatalogDescriptionMenuItem, editAssertedNameMenuItem,
-					removeAssertedNameMenuItem, new SeparatorMenuItem(), importCatalogDescriptionMenuItem);
-			//==========================================================================================================
-			MenuItem editCatalogDescriptionMenuItem = new MenuItem("Редактировать КО");
-			editCatalogDescriptionMenuItem.setOnAction(event -> editCatalogDescription());
-			MenuItem removeCatalogDescriptionMenuItem = new MenuItem("Удалить КО");
-			removeCatalogDescriptionMenuItem.setOnAction(event -> viewModel.getDeleteCatalogDescriptionCommand()
-					.execute());
+				assertedNameMenu.getItems().addAll(addCatalogDescriptionMenuItem, editAssertedNameMenuItem,
+						removeAssertedNameMenuItem, new SeparatorMenuItem(), importCatalogDescriptionMenuItem);
+				//==========================================================================================================
+				MenuItem editCatalogDescriptionMenuItem = new MenuItem("Редактировать КО");
+				editCatalogDescriptionMenuItem.setOnAction(event -> {
+					editCatalogDescription();
+					treeView.refresh();
+				});
+				MenuItem removeCatalogDescriptionMenuItem = new MenuItem("Удалить КО");
+				removeCatalogDescriptionMenuItem.setOnAction(event -> {
+					viewModel.getDeleteCatalogDescriptionCommand().execute();
+					viewModel.displayFormats();
+				});
 
-			MenuItem exportCatalogDescriptionMenuItem = new MenuItem("Экспорт КО");
-			exportCatalogDescriptionMenuItem.setOnAction(event -> {
+				MenuItem exportCatalogDescriptionMenuItem = new MenuItem("Экспорт КО");
+				exportCatalogDescriptionMenuItem.setOnAction(event -> {
 
-				FileChooser fileChooser = new FileChooser();
-				fileChooser.setTitle("Экспорт КО");
+					FileChooser fileChooser = new FileChooser();
+					fileChooser.setTitle("Экспорт КО");
 
-				FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Формат КО файла (*.xml)", "*" +
-						".xml");
-				fileChooser.getExtensionFilters().add(filter);
+					FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Формат КО файла (*.xml)",
+							"*" +
+									".xml");
+					fileChooser.getExtensionFilters().add(filter);
 
-				File file = fileChooser.showSaveDialog(stage);
+					File file = fileChooser.showSaveDialog(stage);
 
-				if (file != null) {
-					viewModel.setCatalogDescriptionFile(file);
-					viewModel.getExportCatalogDescriptionCommand().execute();
-				}
-			});
+					if (file != null) {
+						viewModel.setCatalogDescriptionFile(file);
+						viewModel.getExportCatalogDescriptionCommand().execute();
+					}
+				});
 
-			catalogDescriptionMenu.getItems().addAll(editCatalogDescriptionMenuItem, removeCatalogDescriptionMenuItem,
-					new SeparatorMenuItem(), exportCatalogDescriptionMenuItem);
-			//==========================================================================================================
-			rootMenu.getItems().add(addCatalogClassMenuItem);
-		}
+				catalogDescriptionMenu.getItems().addAll(editCatalogDescriptionMenuItem,
+						removeCatalogDescriptionMenuItem,
+						new SeparatorMenuItem(), exportCatalogDescriptionMenuItem);
+				//==========================================================================================================
+				rootMenu.getItems().add(addCatalogClassMenuItem);
+			}
 
 		@Override
 		public void updateItem(Object item, boolean empty) {
@@ -321,11 +354,6 @@ public class MainView implements FxmlView<MainViewModel> {
 			dialog.setScene(scene);
 			dialog.showAndWait();
 
-
-			/*System.out.println("==========================================================================");
-			for (DescriptionFormatViewModel format : viewModel.getFormats()) {
-				System.out.println(format.getName());
-			}*/
 
 			if (viewTuple.getCodeBehind().getModalResult() == DialogResult.OK) {
 				System.out.println("RESULT OK");
@@ -520,7 +548,7 @@ public class MainView implements FxmlView<MainViewModel> {
 			if (viewTuple.getCodeBehind().getModalResult() == DialogResult.OK) {
 //				TreeItem<Object> selectedItem = treeView.getSelectionModel().getSelectedItem();
 				int index = treeView.getSelectionModel().getSelectedIndex();
-				viewModel.displayFormats();
+//				viewModel.displayFormats();
 //				treeView.getSelectionModel().select(selectedItem);
 				treeView.getSelectionModel().select(index);
 				treeView.getFocusModel().focus(index);
