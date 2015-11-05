@@ -182,6 +182,11 @@ public class CharacteristicCatalogView implements FxmlView<CharacteristicCatalog
 		typesTableView.requestFocus();
 	}
 
+	public void deleteTypeButtonClicked(Event event) {
+		viewModel.getDeleteTypeCommand().execute();
+		typesTableView.refresh();
+	}
+
 	public void addCharacteristicButtonClicked(Event event) {
 		ViewTuple<CharacteristicEditView, CharacteristicEditViewModel> viewTuple = FluentViewLoader.fxmlView
                 (CharacteristicEditView.class).load();

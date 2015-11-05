@@ -33,8 +33,35 @@ public class MeasurementCatalogViewModel implements ViewModel {
 
     private final DbHelper dbHelper = DbHelper.getInstance();
     private Command deleteMeasurementCommand;
+    private Command deleteTypeCommand;
 
     public MeasurementCatalogViewModel() {
+		deleteTypeCommand = new DelegateCommand(() -> new Action() {
+			@Override
+			protected void action() throws Exception {
+				Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+				alert.setTitle("Удаление типа единицы измерения");
+				alert.setHeaderText(null);
+				alert.setContentText("Вы действительно хотите удалить тип единицы измерения:\nНаименование:   " +
+						getSelectedType().getName());
+
+				ButtonType yes = new ButtonType("Удалить");
+				ButtonType no = new ButtonType("Отмена");
+
+				alert.getButtonTypes().setAll(yes, no);
+				((Button) alert.getDialogPane().lookupButton(yes)).setDefaultButton(true);
+
+				Optional<ButtonType> result = alert.showAndWait();
+
+				if (result.get() == yes) {
+					if (dbHelper.deleteMeasurementType(getSelectedType().getId())) {
+						types.remove(getSelectedType());
+					}
+//					loadCharacteristicsBySelectedType();
+				}
+			}
+		});
+
         deleteMeasurementCommand = new DelegateCommand(() -> new Action() {
             @Override
             protected void action() throws Exception {
@@ -110,6 +137,14 @@ public class MeasurementCatalogViewModel implements ViewModel {
 
     public Command getDeleteMeasurementCommand() {
         return deleteMeasurementCommand;
+    }
+
+    public Command getDeleteTypeCommand() {
+        return deleteTypeCommand;
+    }
+
+    public void setDeleteTypeCommand(Command deleteTypeCommand) {
+        this.deleteTypeCommand = deleteTypeCommand;
     }
 
     public void loadAllTypes() {

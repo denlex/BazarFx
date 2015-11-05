@@ -355,7 +355,8 @@ public class DbHelper {
 
 			// rereading characteristic
 			for (CharacteristicValue value : values) {
-				value.setCharacteristic((Characteristic) session.get(Characteristic.class, value.getCharacteristic().getId()));
+				value.setCharacteristic((Characteristic) session.get(Characteristic.class, value.getCharacteristic()
+						.getId()));
 			}
 
 			AssertedName assertedName = (AssertedName) session.get(AssertedName.class, assertedNameId);
@@ -646,7 +647,8 @@ public class DbHelper {
 
 			// rereading characteristic
 			for (CharacteristicValue value : values) {
-				value.setCharacteristic((Characteristic) session.get(Characteristic.class, value.getCharacteristic().getId()));
+				value.setCharacteristic((Characteristic) session.get(Characteristic.class, value.getCharacteristic()
+						.getId()));
 			}
 
 			description.setCode(code);
@@ -883,6 +885,20 @@ public class DbHelper {
 
 		try {
 			result = session.createQuery("from Characteristic order by id").list();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			session.close();
+			return result;
+		}
+	}
+
+	public List<CharacteristicValue> getAllCharacteristicValues() {
+		Session session = factory.openSession();
+		List<CharacteristicValue> result = null;
+
+		try {
+			result = session.createQuery("from CharacteristicValue order by id").list();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		} finally {
@@ -1210,6 +1226,63 @@ public class DbHelper {
 		return true;
 	}
 
+	public boolean deleteMeasurementType(Integer id) {
+		Session session = factory.openSession();
+		Transaction transaction = null;
+
+		try {
+			transaction = session.beginTransaction();
+			MeasurementType type = (MeasurementType) session.get(MeasurementType.class, id);
+
+			List<Measurement> typeMeasurements = type.getMeasurements();
+			List<Measurement> allMeasurements = getAllMeasurements();
+			List<Characteristic> allCharacteristics = getAllCharacteristics();
+
+			for (Characteristic characteristic : allCharacteristics) {
+				Iterator<Measurement> it = characteristic.getMeasurements().iterator();
+
+				while (it.hasNext()) {
+					Measurement m = it.next();
+					for (Measurement measurement : typeMeasurements) {
+						if (m.getId() == measurement.getId()) {
+							it.remove();
+						}
+					}
+				}
+
+				/*for (Measurement m : characteristic.getMeasurements()) {
+					for (Measurement measurement : typeMeasurements) {
+						if (m.getId() == measurement.getId()) {
+							characteristic.getMeasurements().remove(m);
+						}
+					}
+				}*/
+			}
+
+			for (Measurement measurement : allMeasurements) {
+				for (Measurement m : typeMeasurements) {
+					if (measurement.getId() == m.getId()) {
+						// TODO: неоптимизированно - сколько раз вызывается метод, столко раз открывается новая сессия
+						deleteMeasurement(measurement.getId());
+						break;
+					}
+				}
+			}
+			type.getMeasurements().clear();
+
+			session.delete(type);
+			transaction.commit();
+		} catch (Exception ex) {
+			transaction.rollback();
+			ex.printStackTrace();
+			return false;
+		} finally {
+			session.close();
+		}
+
+		return true;
+	}
+
 	public boolean deleteCharacteristic(Integer id) {
 		Session session = factory.openSession();
 		Transaction transaction = null;
@@ -1219,14 +1292,84 @@ public class DbHelper {
 			Characteristic characteristic = (Characteristic) session.get(Characteristic.class, id);
 
 			// removing characteristic from formats
-			for (DescriptionFormat format : getAllDescriptionFormats()) {
-				DescriptionFormat f = (DescriptionFormat) session.get(DescriptionFormat.class, format.getId());
-				f.getCharacteristics().remove(characteristic);
-				session.save(f);
+			List<DescriptionFormat> allFormats = session.createQuery("from DescriptionFormat order by id").list();
+
+			if (allFormats != null) {
+				for (DescriptionFormat format : allFormats) {
+					Iterator<Characteristic> it = format.getCharacteristics().iterator();
+					while (it.hasNext()) {
+						Characteristic ch = it.next();
+						if (ch.getId() == characteristic.getId()) {
+							it.remove();
+
+							session.merge(format);
+							break;
+						}
+					}
+				}
 			}
+
+			List<CharacteristicValue> values = session.createQuery("from CharacteristicValue order by id").list();
+
+			if (values != null) {
+				Iterator<CharacteristicValue> it = values.iterator();
+				while (it.hasNext()) {
+					CharacteristicValue value = it.next();
+
+					if (value.getCharacteristic().getId() == characteristic.getId()) {
+						it.remove();
+						System.out.println(value.getId());
+						session.save(value);
+					}
+				}
+			}
+
+			for (CharacteristicType type : getAllCharacteristicTypes()) {
+				if (type.getId() == characteristic.getId()) {
+					CharacteristicType characteristicType = (CharacteristicType) session.get(CharacteristicType.class,
+							type.getId());
+					characteristicType.getCharacteristics().remove(characteristic);
+					session.save(characteristicType);
+					break;
+				}
+			}
+
 
 			characteristic.getMeasurements().clear();
 			session.delete(characteristic);
+			transaction.commit();
+		} catch (Exception ex) {
+			transaction.rollback();
+			ex.printStackTrace();
+			return false;
+		} finally {
+			session.close();
+		}
+
+		return true;
+	}
+
+	public boolean deleteCharacteristicType(Integer id) {
+		Session session = factory.openSession();
+		Transaction transaction = null;
+
+		try {
+			transaction = session.beginTransaction();
+			CharacteristicType type = (CharacteristicType) session.get(CharacteristicType.class, id);
+
+			List<Characteristic> allCharacteristics = getAllCharacteristics();
+			for (Characteristic characteristic : allCharacteristics) {
+				for (Characteristic ch : type.getCharacteristics()) {
+					if (characteristic.getId() == ch.getId()) {
+						// TODO: неоптимизированно - сколько раз вызывается метод, столко раз открывается новая сессия
+						deleteCharacteristic(characteristic.getId());
+						break;
+					}
+				}
+			}
+			type.getCharacteristics().clear();
+
+			session.delete(type);
 			transaction.commit();
 		} catch (Exception ex) {
 			transaction.rollback();

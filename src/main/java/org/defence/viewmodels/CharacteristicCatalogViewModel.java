@@ -25,120 +25,158 @@ import java.util.Optional;
  * Created by root on 30.08.15.
  */
 public class CharacteristicCatalogViewModel implements ViewModel {
-    private final ListProperty<CharacteristicTypeViewModel> types = new SimpleListProperty<>();
-    private final ListProperty<CharacteristicViewModel> characteristics = new SimpleListProperty<>();
+	private final ListProperty<CharacteristicTypeViewModel> types = new SimpleListProperty<>();
+	private final ListProperty<CharacteristicViewModel> characteristics = new SimpleListProperty<>();
 
-    private final ObjectProperty<CharacteristicTypeViewModel> selectedType = new SimpleObjectProperty<>();
-    private final ObjectProperty<CharacteristicViewModel> selectedCharacteristic = new SimpleObjectProperty<>();
+	private final ObjectProperty<CharacteristicTypeViewModel> selectedType = new SimpleObjectProperty<>();
+	private final ObjectProperty<CharacteristicViewModel> selectedCharacteristic = new SimpleObjectProperty<>();
 
-    private final DbHelper dbHelper = DbHelper.getInstance();
-//    private final DbHelper dbHelper = null;
-    private Command deleteCharacteristicCommand;
+	private final DbHelper dbHelper = DbHelper.getInstance();
+	//    private final DbHelper dbHelper = null;
+	private Command deleteCharacteristicCommand;
 
-    public CharacteristicCatalogViewModel() {
-        deleteCharacteristicCommand = new DelegateCommand(() -> new Action() {
-            @Override
-            protected void action() throws Exception {
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Удаление типа характеристики");
-                alert.setHeaderText(null);
-                alert.setContentText("Вы действительно хотите удалить тип:\nНаименование:   " + getSelectedCharacteristic().getName());
+	private Command deleteTypeCommand;
 
-                ButtonType yes = new ButtonType("Удалить");
-                ButtonType no = new ButtonType("Отмена");
+	public CharacteristicCatalogViewModel() {
+		deleteTypeCommand = new DelegateCommand(() -> new Action() {
+			@Override
+			protected void action() throws Exception {
+				Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+				alert.setTitle("Удаление типа характеристики");
+				alert.setHeaderText(null);
+				alert.setContentText("Вы действительно хотите удалить тип характеристики:\nНаименование:   " +
+						getSelectedType().getName());
 
-                alert.getButtonTypes().setAll(yes, no);
-                ((Button) alert.getDialogPane().lookupButton(yes)).setDefaultButton(true);
+				ButtonType yes = new ButtonType("Удалить");
+				ButtonType no = new ButtonType("Отмена");
 
-                Optional<ButtonType> result = alert.showAndWait();
+				alert.getButtonTypes().setAll(yes, no);
+				((Button) alert.getDialogPane().lookupButton(yes)).setDefaultButton(true);
 
-                if (result.get() == yes) {
-                    dbHelper.deleteCharacteristic(getSelectedCharacteristic().getId());
-                    loadCharacteristicsBySelectedType();
-                }
-            }
-        });
-        loadAllTypes();
-    }
+				Optional<ButtonType> result = alert.showAndWait();
 
-    public CharacteristicViewModel getSelectedCharacteristic() {
-        return selectedCharacteristic.get();
-    }
+				if (result.get() == yes) {
+					if (dbHelper.deleteCharacteristicType(getSelectedType().getId())) {
+						types.remove(getSelectedType());
+					}
+//					loadCharacteristicsBySelectedType();
+				}
+			}
+		});
 
-    public ObjectProperty<CharacteristicViewModel> selectedCharacteristicProperty() {
-        return selectedCharacteristic;
-    }
+		deleteCharacteristicCommand = new DelegateCommand(() -> new Action() {
+			@Override
+			protected void action() throws Exception {
+				Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+				alert.setTitle("Удаление характеристики");
+				alert.setHeaderText(null);
+				alert.setContentText("Вы действительно хотите удалить характеристику:\nНаименование:   " +
+						getSelectedCharacteristic().getName());
 
-    public void setSelectedCharacteristic(CharacteristicViewModel selectedCharacteristic) {
-        this.selectedCharacteristic.set(selectedCharacteristic);
-    }
+				ButtonType yes = new ButtonType("Удалить");
+				ButtonType no = new ButtonType("Отмена");
 
-    public CharacteristicTypeViewModel getSelectedType() {
-        return selectedType.get();
-    }
+				alert.getButtonTypes().setAll(yes, no);
+				((Button) alert.getDialogPane().lookupButton(yes)).setDefaultButton(true);
 
-    public ObjectProperty<CharacteristicTypeViewModel> selectedTypeProperty() {
-        return selectedType;
-    }
+				Optional<ButtonType> result = alert.showAndWait();
 
-    public void setSelectedType(CharacteristicTypeViewModel selectedType) {
-        this.selectedType.set(selectedType);
-    }
+				if (result.get() == yes) {
+					dbHelper.deleteCharacteristic(getSelectedCharacteristic().getId());
+					loadCharacteristicsBySelectedType();
+				}
+			}
+		});
+		loadAllTypes();
+	}
 
-    public ObservableList<CharacteristicViewModel> getCharacteristics() {
-        return characteristics.get();
-    }
+	public CharacteristicViewModel getSelectedCharacteristic() {
+		return selectedCharacteristic.get();
+	}
 
-    public ListProperty<CharacteristicViewModel> characteristicsProperty() {
-        return characteristics;
-    }
+	public ObjectProperty<CharacteristicViewModel> selectedCharacteristicProperty() {
+		return selectedCharacteristic;
+	}
 
-    public void setCharacteristics(ObservableList<CharacteristicViewModel> characteristics) {
-        this.characteristics.set(characteristics);
-    }
+	public void setSelectedCharacteristic(CharacteristicViewModel selectedCharacteristic) {
+		this.selectedCharacteristic.set(selectedCharacteristic);
+	}
 
-    public ObservableList<CharacteristicTypeViewModel> getTypes() {
-        return types.get();
-    }
+	public CharacteristicTypeViewModel getSelectedType() {
+		return selectedType.get();
+	}
 
-    public ListProperty<CharacteristicTypeViewModel> typesProperty() {
-        return types;
-    }
+	public ObjectProperty<CharacteristicTypeViewModel> selectedTypeProperty() {
+		return selectedType;
+	}
 
-    public void setTypes(ObservableList<CharacteristicTypeViewModel> types) {
-        this.types.set(types);
-    }
+	public void setSelectedType(CharacteristicTypeViewModel selectedType) {
+		this.selectedType.set(selectedType);
+	}
 
-    public Command getDeleteCharacteristicCommand() {
-        return deleteCharacteristicCommand;
-    }
+	public ObservableList<CharacteristicViewModel> getCharacteristics() {
+		return characteristics.get();
+	}
 
-    public void setDeleteCharacteristicCommand(Command deleteCharacteristicCommand) {
-        this.deleteCharacteristicCommand = deleteCharacteristicCommand;
-    }
+	public ListProperty<CharacteristicViewModel> characteristicsProperty() {
+		return characteristics;
+	}
 
-    public void loadAllTypes() {
-        List<CharacteristicTypeViewModel> typeList = new LinkedList<>();
-        List<CharacteristicType> allTypes = dbHelper.getAllCharacteristicTypes();
+	public void setCharacteristics(ObservableList<CharacteristicViewModel> characteristics) {
+		this.characteristics.set(characteristics);
+	}
 
-        for (CharacteristicType type : allTypes) {
-            typeList.add(new CharacteristicTypeViewModel(type));
-        }
+	public ObservableList<CharacteristicTypeViewModel> getTypes() {
+		return types.get();
+	}
 
-        types.set(new ObservableListWrapper<>(typeList));
-    }
+	public ListProperty<CharacteristicTypeViewModel> typesProperty() {
+		return types;
+	}
 
-    public void loadCharacteristicsBySelectedType() {
-        // if user selected any type in typeTableView
-        if (selectedTypeProperty().get() != null) {
-            List<CharacteristicViewModel> characteristicList = new LinkedList<>();
-            List<Characteristic> filteredCharacteristics = dbHelper.getCharacteristicsByTypeId(getSelectedType().getId());
+	public void setTypes(ObservableList<CharacteristicTypeViewModel> types) {
+		this.types.set(types);
+	}
 
-            for (Characteristic characteristic : filteredCharacteristics) {
-                characteristicList.add(new CharacteristicViewModel(characteristic));
-            }
+	public Command getDeleteCharacteristicCommand() {
+		return deleteCharacteristicCommand;
+	}
 
-            characteristics.set(new ObservableListWrapper<>(characteristicList));
-        }
-    }
+	public void setDeleteCharacteristicCommand(Command deleteCharacteristicCommand) {
+		this.deleteCharacteristicCommand = deleteCharacteristicCommand;
+	}
+
+	public Command getDeleteTypeCommand() {
+		return deleteTypeCommand;
+	}
+
+	public void setDeleteTypeCommand(Command deleteTypeCommand) {
+		this.deleteTypeCommand = deleteTypeCommand;
+	}
+
+	public void loadAllTypes() {
+		List<CharacteristicTypeViewModel> typeList = new LinkedList<>();
+		List<CharacteristicType> allTypes = dbHelper.getAllCharacteristicTypes();
+
+		for (CharacteristicType type : allTypes) {
+			typeList.add(new CharacteristicTypeViewModel(type));
+		}
+
+		types.set(new ObservableListWrapper<>(typeList));
+	}
+
+	public void loadCharacteristicsBySelectedType() {
+		// if user selected any type in typeTableView
+		if (selectedTypeProperty().get() != null) {
+			List<CharacteristicViewModel> characteristicList = new LinkedList<>();
+			List<Characteristic> filteredCharacteristics = dbHelper.getCharacteristicsByTypeId(getSelectedType().getId
+					());
+
+			for (Characteristic characteristic : filteredCharacteristics) {
+				characteristicList.add(new CharacteristicViewModel(characteristic));
+			}
+
+			characteristics.set(new ObservableListWrapper<>(characteristicList));
+		}
+	}
 }

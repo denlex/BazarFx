@@ -184,6 +184,11 @@ public class MeasurementCatalogView implements FxmlView<MeasurementCatalogViewMo
         typesTableView.requestFocus();
     }
 
+    public void deleteTypeButtonClicked(Event event) {
+        viewModel.getDeleteTypeCommand().execute();
+        typesTableView.refresh();
+    }
+
     public void addMeasurementButtonClicked(Event event) {
         ViewTuple<MeasurementEditView, MeasurementEditViewModel> viewTuple = FluentViewLoader.fxmlView(MeasurementEditView.class).load();
         viewTuple.getViewModel().setParentViewModel(viewModel);
