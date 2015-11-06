@@ -12,7 +12,7 @@
         <property name="name" column="NAME" type="string"/>
 
         <list name="characteristics" table="FORMAT_N_CHARACTERISTIC"
-             inverse="false" lazy="false" fetch="select" cascade="all-delete-orphan">
+             inverse="false" lazy="false" fetch="select" cascade="all">
             <key column="DESCRIPTION_FORMAT_ID" />
             <list-index column="idx"/>
             <many-to-many column="CHARACTERISTIC_ID" class="Characteristic" />

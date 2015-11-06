@@ -82,7 +82,7 @@ public class CharacteristicCatalogViewModel implements ViewModel {
 				Optional<ButtonType> result = alert.showAndWait();
 
 				if (result.get() == yes) {
-					dbHelper.deleteCharacteristic(getSelectedCharacteristic().getId());
+					dbHelper.deleteCharacteristicById(getSelectedCharacteristic().getId());
 					loadCharacteristicsBySelectedType();
 				}
 			}

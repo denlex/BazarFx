@@ -1283,6 +1283,58 @@ public class DbHelper {
 		return true;
 	}
 
+	public boolean deleteCharacteristicById(Integer id) {
+		Session session = factory.openSession();
+		Transaction transaction = null;
+
+		try {
+			transaction = session.beginTransaction();
+			List<DescriptionFormat> allFormats = session.createQuery("from DescriptionFormat").list();
+			Characteristic characteristic = (Characteristic) session.get(Characteristic.class, id);
+
+			// delete references on characteristic from CHARACTERISTIC_VALUE table
+			session.createSQLQuery("DELETE FROM characteristic_value WHERE characteristic_id = :id").setParameter("id",
+					characteristic.getId()).executeUpdate();
+
+			// delete references on characteristic from DESCRIPTION_FORMAT table
+			for (DescriptionFormat format : allFormats) {
+				for (Characteristic ch : format.getCharacteristics()) {
+					if (ch.getId() == characteristic.getId()) {
+
+						System.out.println(ch.getId());
+						format.getCharacteristics().remove(ch);
+						break;
+					}
+				}
+			}
+
+			// delete references on characteristic from CHARACTERISTIC_TYPE table
+			List<CharacteristicType> types = session.createQuery("from CharacteristicType").list();
+			for (CharacteristicType type : types) {
+				Iterator<Characteristic> it = type.getCharacteristics().iterator();
+				while (it.hasNext()) {
+					Characteristic ch = it.next();
+					if (ch.getId() == characteristic.getId()) {
+						it.remove();
+					}
+				}
+			}
+			characteristic.getMeasurements().clear();
+
+			List<Characteristic> allCharacteristics = session.createQuery("from Characteristic ").list();
+			allCharacteristics.remove(characteristic);
+//			session.delete(characteristic);
+			transaction.commit();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return false;
+		} finally {
+			session.close();
+		}
+
+		return true;
+	}
+
 	public boolean deleteCharacteristic(Integer id) {
 		Session session = factory.openSession();
 		Transaction transaction = null;
@@ -1302,7 +1354,7 @@ public class DbHelper {
 						if (ch.getId() == characteristic.getId()) {
 							it.remove();
 
-							session.merge(format);
+//							session.merge(format);
 							break;
 						}
 					}
