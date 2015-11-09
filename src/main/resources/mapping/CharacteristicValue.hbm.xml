@@ -11,6 +11,6 @@
         <property name="value" column="VALUE" type="string"/>
 
         <many-to-one name="characteristic" column="CHARACTERISTIC_ID" class="Characteristic" not-null="true"
-                     lazy="false" cascade="save-update"/>
+                     lazy="false" cascade="save-update,merge"/>
     </class>
 </hibernate-mapping>

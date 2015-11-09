@@ -23,7 +23,8 @@
                                 textAlignment="CENTER" GridPane.halignment="CENTER"/>
                         <Button alignment="CENTER" onAction="#editOrganizationButtonClicked" text="Редактировать"
                                 textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER"/>
-                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Удалить"/>
+                        <Button alignment="CENTER" onAction="#deleteOrganizationButtonClicked" contentDisplay="CENTER"
+                                mnemonicParsing="false" text="Удалить"/>
                         <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false"
                                 onAction="#cancelButtonClicked" text="Отмена" textAlignment="CENTER"
                                 GridPane.columnIndex="2"/>

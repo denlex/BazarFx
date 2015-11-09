@@ -1324,6 +1324,8 @@ public class DbHelper {
 			List<Characteristic> allCharacteristics = session.createQuery("from Characteristic ").list();
 			allCharacteristics.remove(characteristic);
 //			session.delete(characteristic);
+//			session.evict(characteristic);
+//			session.flush();
 			transaction.commit();
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -1524,6 +1526,14 @@ public class DbHelper {
 		try {
 			transaction = session.beginTransaction();
 			Organization organization = (Organization) session.get(Organization.class, id);
+
+			List<CatalogDescription> descriptions = session.createQuery("from CatalogDescription where organization.id" +
+					" = :id").setParameter("id", id).list();
+
+			for (CatalogDescription description : descriptions) {
+				description.setOrganization(null);
+			}
+
 			session.delete(organization);
 			transaction.commit();
 		} catch (Exception ex) {

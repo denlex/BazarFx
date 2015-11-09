@@ -14,7 +14,7 @@
         <many-to-one name="registrationInfo" column="REGISTRATION_INFO" class="RegistrationInfo"
                      not-null="true" lazy="false" cascade="save-update"/>
 
-        <many-to-one name="organization" column="ORGANIZATION" class="Organization" not-null="true"
+        <many-to-one name="organization" column="ORGANIZATION" class="Organization" not-null="false"
                      lazy="false" cascade="save-update"/>
 
         <list name="values" table="CHARACTERISTICS_VALUE" fetch="select" lazy="false" cascade="all" inverse="false">

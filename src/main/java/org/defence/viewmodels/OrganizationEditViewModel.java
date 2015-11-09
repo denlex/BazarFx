@@ -25,7 +25,6 @@ public class OrganizationEditViewModel implements ViewModel {
 
 	private OrganizationCatalogViewModel parentViewModel;
 	private Command saveCommand;
-
 	public OrganizationEditViewModel() {
 		saveCommand = new DelegateCommand(() -> new Action() {
 			@Override
