@@ -912,7 +912,8 @@ public class DbHelper {
 		List<CharacteristicKit> result = null;
 
 		try {
-			result = session.createQuery("from CharacteristicKit order by id").list();
+//			result = session.createQuery("from CharacteristicKit order by id").list();
+			result = null;
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		} finally {
@@ -1020,8 +1021,9 @@ public class DbHelper {
 		CharacteristicKit result = null;
 
 		try {
-			result = (CharacteristicKit) session.createQuery("from CharacteristicKit where id = :id").setParameter
-					("id", id).uniqueResult();
+			/*result = (CharacteristicKit) session.createQuery("from CharacteristicKit where id = :id").setParameter
+					("id", id).uniqueResult();*/
+			result = null;
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		} finally {
@@ -1323,6 +1325,9 @@ public class DbHelper {
 
 			List<Characteristic> allCharacteristics = session.createQuery("from Characteristic ").list();
 			allCharacteristics.remove(characteristic);
+
+			session.createSQLQuery("DELETE  FROM characteristic WHERE id = :id").setParameter("id", characteristic
+					.getId()).executeUpdate();
 //			session.delete(characteristic);
 //			session.evict(characteristic);
 //			session.flush();

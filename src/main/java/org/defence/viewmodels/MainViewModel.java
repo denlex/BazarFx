@@ -1012,6 +1012,7 @@ public class MainViewModel implements ViewModel {
 	}
 
 	private TreeItem<Object> createNode(Object o) {
+
 		return new TreeItem<Object>(o) {
 			private boolean isLeaf;
 			private boolean isFirstTimeChildren = true;

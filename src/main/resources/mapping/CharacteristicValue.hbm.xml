@@ -8,9 +8,9 @@
             <generator class="native"/>
         </id>
 
-        <property name="value" column="VALUE" type="string"/>
+        <property name="value" column="VALUE" type="string" lazy="false"/>
 
-        <many-to-one name="characteristic" column="CHARACTERISTIC_ID" class="Characteristic" not-null="true"
+        <many-to-one name="characteristic" column="CHARACTERISTIC_ID" class="Characteristic" fetch="select" not-null="true"
                      lazy="false" cascade="save-update,merge"/>
     </class>
 </hibernate-mapping>

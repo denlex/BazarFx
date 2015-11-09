@@ -89,6 +89,10 @@ public class CatalogDescriptionEditViewModel implements ViewModel {
 									.getSelectedDescription().getId());
 
 					for (CharacteristicValue value : characteristicValues) {
+						if (value == null) {
+							continue;
+						}
+
 						list.add(new CharacteristicValueViewModel(new CharacteristicValue(value.getCharacteristic(),
 								value.getValue())));
 					}

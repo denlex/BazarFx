@@ -746,6 +746,8 @@ public class MainView implements FxmlView<MainViewModel> {
 	}
 
 	public void testButtonClicked() {
-		viewModel.getTestCommand().execute();
+//		viewModel.getTestCommand().execute();
+		new TreeCellFactory().editCatalogDescription();
+		treeView.refresh();
 	}
 }

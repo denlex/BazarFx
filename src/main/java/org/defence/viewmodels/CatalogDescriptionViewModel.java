@@ -36,6 +36,10 @@ public class CatalogDescriptionViewModel {
 		if (values != null) {
 			List<CharacteristicValueViewModel> list = new ArrayList<>();
 			for (CharacteristicValue value : values) {
+				//TODO: Возникает непонятная ситуация - грузит список из двух value, а по факту один из элементов = null
+				if (value == null) {
+					continue;
+				}
 				list.add(new CharacteristicValueViewModel(value));
 			}
 			this.values.setValue(FXCollections.observableArrayList(list));
