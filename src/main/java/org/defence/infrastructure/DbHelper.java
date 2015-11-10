@@ -1532,7 +1532,8 @@ public class DbHelper {
 			transaction = session.beginTransaction();
 			Organization organization = (Organization) session.get(Organization.class, id);
 
-			List<CatalogDescription> descriptions = session.createQuery("from CatalogDescription where organization.id" +
+			List<CatalogDescription> descriptions = session.createQuery("from CatalogDescription where organization" +
+					".id" +
 					" = :id").setParameter("id", id).list();
 
 			for (CatalogDescription description : descriptions) {
@@ -1570,6 +1571,41 @@ public class DbHelper {
 			ex.printStackTrace();
 		} finally {
 			session.close();
+			return result;
+		}
+	}
+
+	public List<Characteristic> getCharacteristicsByCatalogDescriptionId(Integer descriptionId) {
+		Session session = factory.openSession();
+		List<Characteristic> result = null;
+
+		try {
+			Integer assertedNameId = (Integer) session.createSQLQuery("SELECT asserted_name_id FROM " +
+					"catalog_description WHERE id = :id").setParameter("id", descriptionId).uniqueResult();
+			Integer descriptionFormatId = (Integer) session.createSQLQuery("SELECT DISTINCT description_format_id FROM  " +
+					"asserted_name t WHERE t.id = :id").setParameter("id", assertedNameId).uniqueResult();
+
+			result = getCharacteristicsByDescriptionFormatId(descriptionFormatId);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			session.close();
+			return result;
+		}
+	}
+
+	public List<Characteristic> getCharacteristicsByDescriptionFormatId(Integer formatId) {
+		Session session = factory.openSession();
+		List<Characteristic> result = null;
+
+		try {
+			DescriptionFormat format = (DescriptionFormat) session.get(DescriptionFormat.class, formatId);
+			if (format != null) {
+				result = format.getCharacteristics();
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
 			return result;
 		}
 	}

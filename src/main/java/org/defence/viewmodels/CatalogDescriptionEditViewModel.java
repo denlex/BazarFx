@@ -70,9 +70,7 @@ public class CatalogDescriptionEditViewModel implements ViewModel {
 			List<Characteristic> characteristics = null;
 			List<CharacteristicValueViewModel> list = new ArrayList<>();
 
-//			registrationInfo.getValue().setRegistrationDate(testDate.getValue());
-
-			// adding CatalogDescription
+			// adding catalogDescription
 			if (parentViewModel.getSelectedName() != null) {
 				characteristics = dbHelper.getCharacteristicsByAssertedNameId(parentViewModel.getSelectedName().getId
 						());
@@ -82,30 +80,17 @@ public class CatalogDescriptionEditViewModel implements ViewModel {
 				}
 			} else {
 				if (parentViewModel.getSelectedDescription() != null) {
+					characteristics = dbHelper.getCharacteristicsByCatalogDescriptionId(parentViewModel
+							.getSelectedDescription().getId());
 
-					// loading characteristicValues
-					List<CharacteristicValue> characteristicValues = dbHelper
-							.getCharacteristicValuesByCatalogDescriptionId(parentViewModel
-									.getSelectedDescription().getId());
-
-					for (CharacteristicValue value : characteristicValues) {
-						if (value == null) {
-							continue;
+					// fill characteristics of catalogDescriptions with values
+					for (Characteristic characteristic : characteristics) {
+						for (CharacteristicValueViewModel value : parentViewModel.getSelectedDescription().getValues()) {
+							if (value.getCharacteristic().getId() == characteristic.getId()) {
+								list.add(new CharacteristicValueViewModel(new CharacteristicValue(characteristic, value.getValue())));
+							}
 						}
-
-						list.add(new CharacteristicValueViewModel(new CharacteristicValue(value.getCharacteristic(),
-								value.getValue())));
 					}
-
-					/*System.out.println("EDIT MODE");
-
-					// loading registrationInfo
-					CatalogDescriptionViewModel catalogDescriptionViewModel = new CatalogDescriptionViewModel(dbHelper
-							.getCatalogDescriptionById(parentViewModel.getSelectedDescription().getId()));
-
-					registrationInfo.setValue(catalogDescriptionViewModel.getRegistrationInfo());
-
-					test.setValue("Crazy");*/
 				}
 			}
 

@@ -43,9 +43,8 @@ public class CharacteristicCatalogViewModel implements ViewModel {
 			protected void action() throws Exception {
 				Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 				alert.setTitle("Удаление типа характеристики");
-				alert.setHeaderText(null);
-				alert.setContentText("Вы действительно хотите удалить тип характеристики:\r\nНаименование:   " +
-						getSelectedType().getName());
+				alert.setHeaderText("Вы действительно хотите удалить тип характеристики");
+				alert.setContentText("Наименование:   " + getSelectedType().getName());
 
 				ButtonType yes = new ButtonType("Удалить");
 				ButtonType no = new ButtonType("Отмена");
@@ -69,9 +68,8 @@ public class CharacteristicCatalogViewModel implements ViewModel {
 			protected void action() throws Exception {
 				Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 				alert.setTitle("Удаление характеристики");
-				alert.setHeaderText(null);
-				alert.setContentText("Вы действительно хотите удалить характеристику:\r\nНаименование:   " +
-						getSelectedCharacteristic().getName());
+				alert.setHeaderText("Вы действительно хотите удалить характеристику:");
+				alert.setContentText("Наименование:   " + getSelectedCharacteristic().getName());
 
 				ButtonType yes = new ButtonType("Удалить");
 				ButtonType no = new ButtonType("Отмена");

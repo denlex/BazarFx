@@ -497,6 +497,10 @@ public class MainViewModel implements ViewModel {
 			protected void action() throws Exception {
 
 				try {
+					// rereading catalogDescription from DB
+					selectedDescription.set(new CatalogDescriptionViewModel(dbHelper.getCatalogDescriptionById
+							(selectedDescription.getValue().getId())));
+
 					DocumentBuilderFactory dbFactory =
 							DocumentBuilderFactory.newInstance();
 					DocumentBuilder dBuilder =
@@ -523,6 +527,7 @@ public class MainViewModel implements ViewModel {
 					descriptionCodeAttr.setValue(selectedDescription.getValue().getCode());
 					descriptionCode.setAttributeNode(descriptionCodeAttr);
 
+					dbHelper.getCharacteristicsByCatalogDescriptionId(selectedDescription.getValue().getId());
 					List<CharacteristicValueViewModel> values = selectedDescription.getValue().getValues();
 
 					if (values != null && values.size() > 0) {
@@ -530,6 +535,10 @@ public class MainViewModel implements ViewModel {
 						List<MeasurementType> measurementTypeListFromDb = dbHelper.getAllMeasurementTypes();
 
 						for (CharacteristicValueViewModel value : values) {
+							if (value == null) {
+								continue;
+							}
+
 							Element characteristicValueNode = doc.createElement("characteristicValue");
 							catalogDescription.appendChild(characteristicValueNode);
 

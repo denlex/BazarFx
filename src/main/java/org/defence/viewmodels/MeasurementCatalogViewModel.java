@@ -41,9 +41,8 @@ public class MeasurementCatalogViewModel implements ViewModel {
 			protected void action() throws Exception {
 				Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 				alert.setTitle("Удаление типа единицы измерения");
-				alert.setHeaderText(null);
-				alert.setContentText("Вы действительно хотите удалить тип единицы измерения:\nНаименование:   " +
-						getSelectedType().getName());
+				alert.setHeaderText("Вы действительно хотите удалить тип единицы измерения:");
+				alert.setContentText("Наименование:   " + getSelectedType().getName());
 
 				ButtonType yes = new ButtonType("Удалить");
 				ButtonType no = new ButtonType("Отмена");
@@ -66,9 +65,9 @@ public class MeasurementCatalogViewModel implements ViewModel {
             @Override
             protected void action() throws Exception {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Удаление типа единицы измерения");
-                alert.setHeaderText(null);
-                alert.setContentText("Вы действительно хотите удалить тип:\nНаименование:   " + getSelectedMeasurement().getName());
+                alert.setTitle("Удаление единицы измерения");
+                alert.setHeaderText("Вы действительно хотите удалить единицу измерения:");
+                alert.setContentText("Наименование:   " + getSelectedMeasurement().getName());
 
                 ButtonType yes = new ButtonType("Удалить");
                 ButtonType no = new ButtonType("Отмена");
