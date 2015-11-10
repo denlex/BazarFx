@@ -13,10 +13,9 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TreeItem;
+import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import javafx.stage.WindowEvent;
 import org.defence.domain.entities.*;
 import org.defence.infrastructure.DbHelper;
@@ -30,6 +29,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -369,7 +369,6 @@ public class MainViewModel implements ViewModel {
 						return;
 					}
 
-					System.out.println(xmlPath);
 					if (!XSDValidator.validateXMLSchema(xsdPath, xmlPath)) {
 						Alert alert = new Alert(Alert.AlertType.ERROR);
 						alert.setContentText("Ошибка при чтении импортируемого КО. Убедитесь, что файл имеет " +
@@ -469,6 +468,33 @@ public class MainViewModel implements ViewModel {
 						valueList.add(new CharacteristicValue(characteristic, characteristicValue.getValue()));
 					}
 
+					Element registrationInfoNode = (Element) catalogDescriptionNode.getElementsByTagName
+							("registrationInfo").item(0);
+
+					Element applicationNumberNode = (Element) registrationInfoNode.getElementsByTagName
+							("applicationNumber").item(0);
+					Element registrationNumber = (Element) registrationInfoNode.getElementsByTagName
+							("registrationNumber").item(0);
+					Element registrationDate = (Element) registrationInfoNode.getElementsByTagName("registrationDate")
+							.item(0);
+
+
+					System.out.println("applicationNumberNode = " + applicationNumberNode.getAttribute("value"));
+					System.out.println("registrationNumber = " + registrationNumber.getAttribute("value"));
+					System.out.println("registrationDate = " + registrationDate.getAttribute("value"));
+
+//					String applicationNumber = applicationNumberNode.getAttribute("value");
+
+					RegistrationInfo registrationInfo = new RegistrationInfo();
+					registrationInfo.setApplicationNumber(applicationNumberNode.getAttribute("value"));
+					registrationInfo.setRegistrationNumber(registrationNumber.getAttribute("value"));
+					registrationInfo.setRegistrationDate(new SimpleDateFormat("yyyy-MM-dd").parse(registrationDate
+							.getAttribute("value")));
+
+					System.out.println(registrationInfo.getApplicationNumber());
+					System.out.println(registrationInfo.getRegistrationNumber());
+					System.out.println(registrationInfo.getRegistrationDate());
+
 					CatalogDescription catalogDescription = new CatalogDescription(catalogDescriptionCodeNode
 							.getAttribute("value"), catalogDescriptionNameNode.getAttribute("value"));
 
@@ -478,16 +504,51 @@ public class MainViewModel implements ViewModel {
 					if ((catalogDescription = addCatalogDescriptionIfNotFoundInDb(selectedName.getValue().getId(),
 							catalogDescription)) != null) {
 						Alert alert = new Alert(Alert.AlertType.INFORMATION);
-						alert.setContentText(String.format("Было добалено новое КО:\nНаименование:\t%s\nКод:\t%s",
+						alert.setTitle("Импорт каталожного описания");
+						alert.setHeaderText("Было добалено новое КО:");
+						alert.setContentText(String.format("Наименование:\t%s\nКод:\t%s",
 								catalogDescription.getName(), catalogDescription.getCode()));
 						alert.showAndWait();
 
 						selectedName.getValue().getCatalogDescriptions().add(new CatalogDescriptionViewModel
 								(catalogDescription));
+					} else {
+						Alert alert = new Alert(Alert.AlertType.ERROR);
+						alert.setTitle("Импорт каталожного описания");
+						alert.setHeaderText(null);
+						alert.setContentText("КО с кодом " + catalogDescriptionCodeNode.getAttribute("value") + " уже" +
+								" существует в БД");
+						alert.showAndWait();
 					}
 
 				} catch (Exception ex) {
 					ex.printStackTrace();
+
+					Alert alert = new Alert(Alert.AlertType.ERROR);
+					alert.setTitle("Импорт каталожного описания");
+					alert.setHeaderText(null);
+
+					String exceptionText = ex.getMessage();
+
+					Label label = new Label("Причина ошибки:");
+
+					TextArea textArea = new TextArea(exceptionText);
+					textArea.setEditable(false);
+					textArea.setWrapText(true);
+
+					textArea.setMaxWidth(Double.MAX_VALUE);
+					textArea.setMaxHeight(Double.MAX_VALUE);
+					GridPane.setVgrow(textArea, Priority.ALWAYS);
+					GridPane.setHgrow(textArea, Priority.ALWAYS);
+
+					GridPane expContent = new GridPane();
+					expContent.setMaxWidth(Double.MAX_VALUE);
+					expContent.add(label, 0, 0);
+					expContent.add(textArea, 0, 1);
+
+// Set expandable Exception into the dialog pane.
+					alert.getDialogPane().setExpandableContent(expContent);
+					alert.showAndWait();
 				}
 			}
 		});

@@ -31,6 +31,10 @@ public class AssertedNameViewModel extends AbstractViewModel<AssertedName> {
 		if (catalogDescriptions != null) {
 			List<CatalogDescriptionViewModel> list = new ArrayList<>();
 			for (CatalogDescription description : catalogDescriptions) {
+				// TODO: непонятно почему размер catalogDescriptions не соответствует реальному содержимому колллекции (костыль)
+				if (description == null) {
+					continue;
+				}
 				list.add(new CatalogDescriptionViewModel(description));
 			}
 			this.catalogDescriptions.setValue(FXCollections.observableArrayList(list));

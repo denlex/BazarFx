@@ -56,4 +56,5 @@ public class RegistrationInfo {
 	public void setRegistrationNumber(String registrationNumber) {
 		this.registrationNumber = registrationNumber;
 	}
+
 }
