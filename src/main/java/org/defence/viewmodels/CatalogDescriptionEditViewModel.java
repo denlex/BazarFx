@@ -83,12 +83,20 @@ public class CatalogDescriptionEditViewModel implements ViewModel {
 					characteristics = dbHelper.getCharacteristicsByCatalogDescriptionId(parentViewModel
 							.getSelectedDescription().getId());
 
+
 					// fill characteristics of catalogDescriptions with values
 					for (Characteristic characteristic : characteristics) {
+						boolean flag = false;
 						for (CharacteristicValueViewModel value : parentViewModel.getSelectedDescription().getValues()) {
 							if (value.getCharacteristic().getId() == characteristic.getId()) {
 								list.add(new CharacteristicValueViewModel(new CharacteristicValue(characteristic, value.getValue())));
+								flag = true;
 							}
+						}
+
+						// if characteristic does not have value - display it
+						if (!flag) {
+							list.add(new CharacteristicValueViewModel(new CharacteristicValue(characteristic, null)));
 						}
 					}
 				}
