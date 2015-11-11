@@ -31,7 +31,10 @@ public class CatalogDescriptionViewModel {
 		this.code.setValue(code);
 		this.name.setValue(name);
 		this.registrationInfo.setValue(new RegistrationInfoViewModel(registrationInfo));
-		this.organization.setValue(new OrganizationViewModel(organization));
+
+		if (this.organization.getValue() != null) {
+			this.organization.setValue(new OrganizationViewModel(organization));
+		}
 
 		if (values != null) {
 			List<CharacteristicValueViewModel> list = new ArrayList<>();

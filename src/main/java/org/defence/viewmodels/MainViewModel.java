@@ -295,7 +295,7 @@ public class MainViewModel implements ViewModel {
 				return result;
 			}
 
-			public CharacteristicType addCharacteristicTypeIfNotFoundInDb(CharacteristicType type) {
+			private CharacteristicType addCharacteristicTypeIfNotFoundInDb(CharacteristicType type) {
 				List<CharacteristicType> types = dbHelper.getAllCharacteristicTypes();
 
 				for (CharacteristicType t : types) {
@@ -309,7 +309,7 @@ public class MainViewModel implements ViewModel {
 				return dbHelper.addCharacteristicType(type.getCode(), type.getName());
 			}
 
-			public Characteristic addCharacteristicIfNotFoundInDb(Integer characteristicTypeId, Characteristic
+			private Characteristic addCharacteristicIfNotFoundInDb(Integer characteristicTypeId, Characteristic
 					characteristic) {
 				List<Characteristic> characteristics = dbHelper.getCharacteristicsByTypeId(characteristicTypeId);
 				Characteristic result;
@@ -336,7 +336,7 @@ public class MainViewModel implements ViewModel {
 				return result;
 			}
 
-			public CatalogDescription addCatalogDescriptionIfNotFoundInDb(Integer assertedNameId, CatalogDescription
+			private CatalogDescription addCatalogDescriptionIfNotFoundInDb(Integer assertedNameId, CatalogDescription
 					description) {
 				List<CatalogDescription> descriptions = dbHelper.getCatalogDescriptionsByAssertedName(assertedNameId);
 
@@ -349,21 +349,39 @@ public class MainViewModel implements ViewModel {
 				System.out.println("New catalogDescription was added!");
 
 				return dbHelper.addCatalogDescriptionWhileImport(assertedNameId, description.getCode(), description
-								.getName(),
-						description.getValues());
+						.getName(), description.getValues(), description.getRegistrationInfo(), description
+						.getOrganization());
 			}
 
+			private Organization addOrganizationIfNotFoundInDb(Organization organization) {
+
+				List<Organization> organizations = dbHelper.getAllOrganizations();
+
+				for (Organization org : organizations) {
+					if (org.getCode().equalsIgnoreCase(organization.getCode())) {
+						return org;
+					}
+				}
+
+				return dbHelper.addOrganization(organization.getCode(), organization.getName(), organization.getType
+						());
+			}
 
 			@Override
 			protected void action() throws Exception {
 				try {
 					ClassLoader classLoader = getClass().getClassLoader();
-					String xsdPath = classLoader.getResource("exchange_format/catalogDescription.xsd").getFile();
+//					String xsdPath = classLoader.getResource("exchange_format/catalogDescription.xsd").getFile();
 					String xmlPath = catalogDescriptionFile.getPath();
 
 
+					String xsdPath = "/home/nd/test/catalogDescription.xsd";
+//					String xmlPath = "/home/nd/test/catalogDescription.xml";
+
 					if (!new File(xmlPath).exists()) {
 						Alert alert = new Alert(Alert.AlertType.ERROR);
+						alert.setTitle("Ошибка при импорте КО");
+						alert.setHeaderText("Ошибка при загрузке импортируемого КО");
 						alert.setContentText("Удебитесь, что выбранный файл импорта КО существует");
 						alert.showAndWait();
 						return;
@@ -371,8 +389,9 @@ public class MainViewModel implements ViewModel {
 
 					if (!XSDValidator.validateXMLSchema(xsdPath, xmlPath)) {
 						Alert alert = new Alert(Alert.AlertType.ERROR);
-						alert.setContentText("Ошибка при чтении импортируемого КО. Убедитесь, что файл имеет " +
-								"правильный формат");
+						alert.setTitle("Ошибка при импорте КО");
+						alert.setHeaderText("Ошибка при чтении импортируемого КО");
+						alert.setContentText("Убедитесь, что файл имеет правильный формат");
 						alert.showAndWait();
 						return;
 					}
@@ -478,28 +497,33 @@ public class MainViewModel implements ViewModel {
 					Element registrationDate = (Element) registrationInfoNode.getElementsByTagName("registrationDate")
 							.item(0);
 
-
-					System.out.println("applicationNumberNode = " + applicationNumberNode.getAttribute("value"));
-					System.out.println("registrationNumber = " + registrationNumber.getAttribute("value"));
-					System.out.println("registrationDate = " + registrationDate.getAttribute("value"));
-
-//					String applicationNumber = applicationNumberNode.getAttribute("value");
-
 					RegistrationInfo registrationInfo = new RegistrationInfo();
 					registrationInfo.setApplicationNumber(applicationNumberNode.getAttribute("value"));
 					registrationInfo.setRegistrationNumber(registrationNumber.getAttribute("value"));
 					registrationInfo.setRegistrationDate(new SimpleDateFormat("yyyy-MM-dd").parse(registrationDate
 							.getAttribute("value")));
 
-					System.out.println(registrationInfo.getApplicationNumber());
-					System.out.println(registrationInfo.getRegistrationNumber());
-					System.out.println(registrationInfo.getRegistrationDate());
+					Element organizationNode = (Element) catalogDescriptionNode.getElementsByTagName("organization")
+							.item(0);
+
+					Element organizationCodeNode = (Element) organizationNode.getElementsByTagName("code").item(0);
+					Element organizationNameNode = (Element) organizationNode.getElementsByTagName("name").item(0);
+					Element organizationTypeNode = (Element) organizationNode.getElementsByTagName("type").item(0);
+
+					Organization organization = new Organization();
+					organization.setCode(organizationCodeNode.getAttribute("value"));
+					organization.setName(organizationNameNode.getAttribute("value"));
+					organization.setType(organizationTypeNode.getAttribute("value"));
+
+					organization = addOrganizationIfNotFoundInDb(organization);
 
 					CatalogDescription catalogDescription = new CatalogDescription(catalogDescriptionCodeNode
 							.getAttribute("value"), catalogDescriptionNameNode.getAttribute("value"));
 
 					catalogDescription.setValues(valueList);
 					catalogDescription.setName(catalogDescriptionNameNode.getAttribute("value"));
+					catalogDescription.setRegistrationInfo(registrationInfo);
+					catalogDescription.setOrganization(organization);
 
 					if ((catalogDescription = addCatalogDescriptionIfNotFoundInDb(selectedName.getValue().getId(),
 							catalogDescription)) != null) {

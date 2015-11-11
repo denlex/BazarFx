@@ -309,8 +309,7 @@ public class DbHelper {
 	}
 
 	public CatalogDescription addCatalogDescriptionWhileImport(Integer assertedNameId, String code, String name,
-			List<CharacteristicValue>
-					values) {
+			List<CharacteristicValue> values, RegistrationInfo info,  Organization organization) {
 		Session session = factory.openSession();
 		Transaction transaction = null;
 		CatalogDescription description = null;
@@ -322,7 +321,7 @@ public class DbHelper {
 						.getCharacteristic().getId()));
 			}
 
-			description = new CatalogDescription(code, name, values);
+			description = new CatalogDescription(code, name, values, organization, info);
 			AssertedName assertedName = (AssertedName) session.get(AssertedName.class, assertedNameId);
 			assertedName.getCatalogDescriptions().add(description);
 			transaction = session.beginTransaction();
@@ -1533,8 +1532,7 @@ public class DbHelper {
 			Organization organization = (Organization) session.get(Organization.class, id);
 
 			List<CatalogDescription> descriptions = session.createQuery("from CatalogDescription where organization" +
-					".id" +
-					" = :id").setParameter("id", id).list();
+					".id = :id").setParameter("id", id).list();
 
 			for (CatalogDescription description : descriptions) {
 				description.setOrganization(null);
@@ -1633,6 +1631,21 @@ public class DbHelper {
 			AssertedName name = (AssertedName) session.get(AssertedName.class, assertedNameId);
 			result = name.getCatalogDescriptions();
 		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			session.close();
+			return result;
+		}
+	}
+
+	public Organization getOrganizationByCatalogDescription(Integer descriptionId) {
+		Session session = factory.openSession();
+		Organization result = null;
+
+		try {
+			CatalogDescription description = (CatalogDescription) session.get(CatalogDescription.class, descriptionId);
+			result = description.getOrganization();
+		} catch(Exception ex) {
 			ex.printStackTrace();
 		} finally {
 			session.close();

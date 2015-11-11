@@ -92,6 +92,7 @@ public class OrganizationCatalogViewModel implements ViewModel {
 	}
 
 	public void loadAllOrganizations() {
+//		organizations = new SimpleListProperty<>(FXCollections.observableArrayList());
 		List<Organization> organizationList = dbHelper.getAllOrganizations();
 
 		for (Organization organization : organizationList) {
