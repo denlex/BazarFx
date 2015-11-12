@@ -6,13 +6,17 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import org.defence.viewmodels.CatalogDescriptionEditViewModel;
 import org.defence.viewmodels.CharacteristicValueViewModel;
 import org.defence.viewmodels.OrganizationViewModel;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -20,6 +24,8 @@ import java.time.format.DateTimeFormatter;
  * Created by root on 9/25/15.
  */
 public class CatalogDescriptionEditView implements FxmlView<CatalogDescriptionEditViewModel>, Returnable {
+	@FXML
+	ImageView catalogImage;
 
 	@FXML
 	TextField codeTextField;
@@ -203,6 +209,43 @@ public class CatalogDescriptionEditView implements FxmlView<CatalogDescriptionEd
 		});*/
 
 		initializeValuesTableView();
+	}
+
+	private void openNewImageWindow(File file){
+		Image image = new Image(file.toURI().toString());
+
+		catalogImage.setFitHeight(400);
+		catalogImage.setPreserveRatio(true);
+		catalogImage.setImage(image);
+		catalogImage.setSmooth(true);
+		catalogImage.setCache(true);
+	}
+
+	private void setExtFilters(FileChooser chooser){
+		chooser.getExtensionFilters().addAll(
+				new FileChooser.ExtensionFilter("Все файлы изображений (*.BMP, *.JPG, *.PNG)", "*.bmp, *.jpg, *.png"),
+				new FileChooser.ExtensionFilter("Файлы изображения (*.BMP)", "*.bmp"),
+				new FileChooser.ExtensionFilter("Файлы изображения (*.JPG)", "*.jpg"),
+				new FileChooser.ExtensionFilter("Файлы изображения (*.PNG)", "*.png")
+		);
+	}
+
+	public void loadImageButtonClicked() {
+		final FileChooser fileChooser = new FileChooser();
+
+		setExtFilters(fileChooser);
+		File file = fileChooser.showOpenDialog(stage);
+		if (file != null) {
+			openNewImageWindow(file);
+
+			/*try {
+				ImageIO.write(SwingFXUtils.fromFXImage(catalogImage.getImage(),
+						null), "jpg", file);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}*/
+		}
+
 	}
 
 	public void testButtonClicked() {

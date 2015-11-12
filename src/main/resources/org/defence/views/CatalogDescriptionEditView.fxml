@@ -150,7 +150,8 @@
                                 <RowConstraints vgrow="NEVER"/>
                             </rowConstraints>
                             <children>
-                                <ImageView fitHeight="300.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true"
+                                <ImageView fx:id="catalogImage" fitHeight="300.0" fitWidth="300.0" pickOnBounds="true"
+                                           preserveRatio="true"
                                            GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
                                            GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                                     <GridPane.margin>
@@ -159,13 +160,11 @@
                                     <viewport>
                                         <Rectangle2D/>
                                     </viewport>
-                                    <!--<image>
-                                        <Image url=""/>
-                                    </image>-->
                                 </ImageView>
                                 <Button alignment="CENTER" mnemonicParsing="false" style="-fx-pref-width: 290px"
                                         text="Загрузить изображение" GridPane.columnIndex="1"
-                                        GridPane.halignment="RIGHT" GridPane.valignment="BOTTOM">
+                                        GridPane.halignment="RIGHT" GridPane.valignment="BOTTOM"
+                                        onAction="#loadImageButtonClicked">
                                     <GridPane.margin>
                                         <Insets top="10.0"/>
                                     </GridPane.margin>

@@ -40,7 +40,7 @@
                         <MenuItem mnemonicParsing="false" text="Организации" onAction="#organizationCatalogOpenClicked"/>
                     </items>
                 </Menu>
-                <Menu mnemonicParsing="false" text="Поиск">
+                <!--<Menu mnemonicParsing="false" text="Поиск">
                     <items>
                         <MenuItem mnemonicParsing="false" text="Произвольный поиск" />
                     </items>
@@ -56,7 +56,7 @@
                         <MenuItem mnemonicParsing="false" text="Сохранение данных в архив" />
                         <MenuItem mnemonicParsing="false" text="Загрузка данных из архива" />
                     </items>
-                </Menu>
+                </Menu>-->
             </menus>
         </MenuBar>
         <SplitPane dividerPositions="0.17224080267558528" GridPane.columnSpan="2147483647" GridPane.rowIndex="1" GridPane.rowSpan="2147483647">
@@ -99,7 +99,7 @@
                                 </TreeItem>
                             </root>-->
                         </TreeView>
-                        <Button onAction="#testButtonClicked" text="Test" GridPane.rowIndex="1" />
+                        <Button onAction="#testButtonClicked" text="Test" GridPane.rowIndex="1" visible="false" />
                     </children>
                 </GridPane>
                 <GridPane>
@@ -114,7 +114,7 @@
                             <children>
                                 <TabPane fx:id="tabs" tabClosingPolicy="ALL_TABS" GridPane.hgrow="ALWAYS" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
                                     <tabs>
-                                        <Tab text="Поиск">
+                                        <!--<Tab text="Поиск">
                                             <content>
                                                 <GridPane maxHeight="1.7976931348623157E308"
                                                           maxWidth="1.7976931348623157E308"
@@ -157,7 +157,7 @@
                                                     </children>
                                                 </GridPane>
                                             </content>
-                                        </Tab>
+                                        </Tab>-->
                                         <!--<Tab fx:id="assertedNameEditView" text="Редактирование УН">
                                             <content>
                                                 <GridPane maxHeight="1.7976931348623157E308"
