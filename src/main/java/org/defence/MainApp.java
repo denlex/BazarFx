@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.defence.infrastructure.DbHelper;
+import org.defence.tools.ActionLogger;
 import org.defence.viewmodels.MainViewModel;
 import org.defence.views.MainView;
 
@@ -35,40 +36,46 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        mainStage = primaryStage;
 
-        primaryStage.setTitle("Library JavaFX");
-/*        primaryStage.setMinWidth(1200);
-        primaryStage.setMaxWidth(1200);*/
-        primaryStage.setMinHeight(700);
+        try {
+			ActionLogger.out("Пользователь зашел в программу");
+			mainStage = primaryStage;
 
-        ViewTuple<MainView, MainViewModel> viewTuple = FluentViewLoader.fxmlView(MainView.class).load();
+			primaryStage.setTitle("Классификатор 2.0");
 
-        Parent root = viewTuple.getView();
-        Scene scene = new Scene(root);
-        scene.setFill(Color.TRANSPARENT);
+			primaryStage.setMinHeight(700);
 
-        viewTuple.getCodeBehind().setStage(primaryStage);
-		viewTuple.getCodeBehind().initializeStage();
+			ViewTuple<MainView, MainViewModel> viewTuple = FluentViewLoader.fxmlView(MainView.class).load();
 
-        scene.getStylesheets().add((getClass().getResource("/css/TreeView.css")).toExternalForm());
-        scene.getStylesheets().add((getClass().getResource("/css/SplitPanel.css")).toExternalForm());
+			Parent root = viewTuple.getView();
+			Scene scene = new Scene(root);
+			scene.setFill(Color.TRANSPARENT);
 
-        primaryStage.setOnCloseRequest(event -> {
+			viewTuple.getCodeBehind().setStage(primaryStage);
+			viewTuple.getCodeBehind().initializeStage();
+
+			scene.getStylesheets().add((getClass().getResource("/css/TreeView.css")).toExternalForm());
+			scene.getStylesheets().add((getClass().getResource("/css/SplitPanel.css")).toExternalForm());
+
+			primaryStage.setOnCloseRequest(event -> {
 //                JOptionPane.showMessageDialog(null, "Exit!");
-			DbHelper.terminateDbConnection();
-			Platform.exit();
-			System.exit(0);
-		});
+				ActionLogger.out("Завершение работы программы");
+				DbHelper.terminateDbConnection();
+				Platform.exit();
+				System.exit(0);
+			});
 
-        scene.setFill(null);
-        primaryStage.setScene(scene);
-        primaryStage.setMinHeight(500);
-        primaryStage.setMinWidth(700);
-        primaryStage.setResizable(true);
-        primaryStage.show();
-
+			scene.setFill(null);
+			primaryStage.setScene(scene);
+			primaryStage.setMinHeight(500);
+			primaryStage.setMinWidth(700);
+			primaryStage.setResizable(true);
+			primaryStage.show();
 //        FlatterFX.style(FlatterInputType.DEFAULT);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			ActionLogger.out("Аварийное завершение программы");
+		}
     }
 
     public static Stage mainStage;

@@ -11,8 +11,12 @@ import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.stage.WindowEvent;
-import org.defence.domain.entities.*;
+import org.defence.domain.entities.Characteristic;
+import org.defence.domain.entities.CharacteristicValue;
+import org.defence.domain.entities.Organization;
+import org.defence.domain.entities.RegistrationInfo;
 import org.defence.infrastructure.DbHelper;
+import org.defence.tools.ActionLogger;
 import org.defence.tools.DateConverter;
 
 import java.time.LocalDate;
@@ -168,6 +172,8 @@ public class CatalogDescriptionEditViewModel implements ViewModel {
 						selectedDescription.setName(editedDescription.getName());
 						selectedDescription.setValues(editedDescription.getValues());
 					}
+
+					ActionLogger.out("Пользователь отредактировал КО: " + editedDescription.getName());
 				} else {
 					editedDescription = new CatalogDescriptionViewModel(dbHelper.addCatalogDescription(assertedName
 							.getId(), code.getValue(), name.getValue(), values.stream().map
@@ -183,6 +189,8 @@ public class CatalogDescriptionEditViewModel implements ViewModel {
 						assertedName.getCatalogDescriptions().add(editedDescription);
 						System.out.println("Новое КО добавлено");
 					}
+
+					ActionLogger.out("Пользователь добавил КО: " + editedDescription.getName());
 				}
 				// TODO: доделать позиционирование на отредактированную запись в treeView
 //				parentViewModel.displayFormats();

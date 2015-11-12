@@ -8,6 +8,7 @@ import javafx.beans.property.*;
 import javafx.event.EventHandler;
 import javafx.stage.WindowEvent;
 import org.defence.infrastructure.DbHelper;
+import org.defence.tools.ActionLogger;
 
 /**
  * Created by root on 10/27/15.
@@ -39,6 +40,7 @@ public class CatalogClassEditViewModel implements ViewModel {
 					editedClass = new CatalogClassViewModel(dbHelper.addCatalogClass(code.getValue(), name
 							.getValue()));
 					parentViewModel.getClasses().add(editedClass);
+					ActionLogger.out("Пользователь добавил класс: " + editedClass.getName());
 				} else {
 					// change exist descriptionFormat
 					// TODO: Сделать проверку на пустой ввод данных о типе измерения
@@ -47,6 +49,7 @@ public class CatalogClassEditViewModel implements ViewModel {
 					selectedClass.setCode(editedClass.getCode());
 					selectedClass.setName(editedClass.getName());
 					selectedClass.setFormats(editedClass.getFormats());
+					ActionLogger.out("Пользователь отредактировал класс: " + editedClass.getName());
 				}
 				// TODO: реализовать возможность обновления списка наборов характеристик
 

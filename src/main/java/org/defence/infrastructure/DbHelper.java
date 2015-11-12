@@ -309,7 +309,7 @@ public class DbHelper {
 	}
 
 	public CatalogDescription addCatalogDescriptionWhileImport(Integer assertedNameId, String code, String name,
-			List<CharacteristicValue> values, RegistrationInfo info,  Organization organization) {
+			List<CharacteristicValue> values, Integer registrationInfoId,  Integer organizationId) {
 		Session session = factory.openSession();
 		Transaction transaction = null;
 		CatalogDescription description = null;
@@ -321,7 +321,10 @@ public class DbHelper {
 						.getCharacteristic().getId()));
 			}
 
-			description = new CatalogDescription(code, name, values, organization, info);
+			Organization org = (Organization) session.get(Organization.class, organizationId);
+			RegistrationInfo regInfo = (RegistrationInfo) session.get(RegistrationInfo.class, registrationInfoId);
+
+			description = new CatalogDescription(code, name, values, org, regInfo);
 			AssertedName assertedName = (AssertedName) session.get(AssertedName.class, assertedNameId);
 			assertedName.getCatalogDescriptions().add(description);
 			transaction = session.beginTransaction();

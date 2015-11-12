@@ -184,7 +184,7 @@ public class MainView implements FxmlView<MainViewModel> {
 
 				MenuItem removeCatalogClassMenuItem = new MenuItem("Удалить класс");
 				removeCatalogClassMenuItem.setOnAction(event -> {
-
+					viewModel.getDeleteCatalogClassCommand().execute();
 				});
 
 				catalogClassMenu.getItems().addAll(addDescriptionFormatItem, editCatalogClassMenuItem,

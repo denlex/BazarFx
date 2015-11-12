@@ -1,3 +1,4 @@
+
 package org.defence.viewmodels;
 
 import com.sun.javafx.collections.ObservableListWrapper;
@@ -19,6 +20,7 @@ import javafx.scene.layout.Priority;
 import javafx.stage.WindowEvent;
 import org.defence.domain.entities.*;
 import org.defence.infrastructure.DbHelper;
+import org.defence.tools.ActionLogger;
 import org.defence.tools.XSDValidator;
 import org.w3c.dom.*;
 
@@ -84,7 +86,6 @@ public class MainViewModel implements ViewModel {
 		root.setValue(new TreeItem<>());
 		displayFormats();
 
-
 		shownWindow = new SimpleObjectProperty<>(event -> {
 
 		});
@@ -107,14 +108,17 @@ public class MainViewModel implements ViewModel {
 				Optional<ButtonType> result = alert.showAndWait();
 
 				if (result.get() == yes) {
-					dbHelper.deleteCatalogClass(getSelectedClass().getId());
+//					String name = getSelectedClass().getName();
+					if (dbHelper.deleteCatalogClass(getSelectedClass().getId())) {
 //					formats.removeIf(f -> f.getId() == getSelectedFormat().getId());
+						ActionLogger.out("Пользователь удалил класс с именем: " + getSelectedClass().getName());
 
-					for (CatalogClassViewModel clazz : classes) {
-						if (clazz.getId() == getSelectedClass().getId()) {
-							classes.remove(clazz);
-							displayFormats();
-							return;
+						for (CatalogClassViewModel clazz : classes) {
+							if (clazz.getId() == getSelectedClass().getId()) {
+								classes.remove(clazz);
+								displayFormats();
+								return;
+							}
 						}
 					}
 				}
@@ -139,19 +143,23 @@ public class MainViewModel implements ViewModel {
 				Optional<ButtonType> result = alert.showAndWait();
 
 				if (result.get() == yes) {
-					dbHelper.deleteDescriptionFormat(getSelectedFormat().getId());
+
+					if (dbHelper.deleteDescriptionFormat(getSelectedFormat().getId())) {
 //					formats.removeIf(f -> f.getId() == getSelectedFormat().getId());
 
-					for (CatalogClassViewModel clazz : classes) {
-						for (DescriptionFormatViewModel format : clazz.getFormats()) {
-							if (format.getId() == getSelectedFormat().getId()) {
-								clazz.getFormats().remove(format);
-								displayFormats();
-								return;
+						ActionLogger.out("Пользователь удалил СФО с наименованием: " + getSelectedFormat().getName());
+
+						for (CatalogClassViewModel clazz : classes) {
+							for (DescriptionFormatViewModel format : clazz.getFormats()) {
+								if (format.getId() == getSelectedFormat().getId()) {
+									clazz.getFormats().remove(format);
+									displayFormats();
+									return;
+								}
 							}
 						}
-					}
 //					displayFormats();
+					}
 				}
 			}
 		});
@@ -174,23 +182,27 @@ public class MainViewModel implements ViewModel {
 				Optional<ButtonType> result = alert.showAndWait();
 
 				if (result.get() == yes) {
-					dbHelper.deleteAssertedName(getSelectedName().getId());
+					if (dbHelper.deleteAssertedName(getSelectedName().getId())) {
 
-					for (CatalogClassViewModel clazz : classes) {
-						for (DescriptionFormatViewModel format : clazz.getFormats()) {
-							for (AssertedNameViewModel name : format.getAssertedNames()) {
-								if (name.getId() == getSelectedName().getId()) {
-									format.getAssertedNames().remove(name);
-									displayFormats();
-									return;
+						ActionLogger.out("Пользователь удалил УН с наименованием: " + getSelectedName()
+								.getName());
+
+						for (CatalogClassViewModel clazz : classes) {
+							for (DescriptionFormatViewModel format : clazz.getFormats()) {
+								for (AssertedNameViewModel name : format.getAssertedNames()) {
+									if (name.getId() == getSelectedName().getId()) {
+										format.getAssertedNames().remove(name);
+										displayFormats();
+										return;
+									}
 								}
 							}
 						}
-					}
-					// remove selectedName from formats collection
+						// remove selectedName from formats collection
 					/*formats.stream().forEach(f -> f.getAssertedNames().removeIf(n -> n.getId() == getSelectedName()
 							.getId()));
 					displayFormats();*/
+					}
 				}
 			}
 		});
@@ -213,29 +225,32 @@ public class MainViewModel implements ViewModel {
 				Optional<ButtonType> result = alert.showAndWait();
 
 				if (result.get() == yes) {
-					dbHelper.deleteCatalogDescription(getSelectedDescription().getId());
-					// remove selectedDescription from formats collection
-					for (CatalogClassViewModel clazz : classes) {
-						for (DescriptionFormatViewModel format : clazz.getFormats()) {
-							for (AssertedNameViewModel name : format.getAssertedNames()) {
-								for (CatalogDescriptionViewModel description : name.getCatalogDescriptions()) {
-									if (description.getId() == getSelectedDescription().getId()) {
-										name.getCatalogDescriptions().remove(description);
+					if (dbHelper.deleteCatalogDescription(getSelectedDescription().getId())) {
+						ActionLogger.out("Пользователь удалил КО с наименованием: " + getSelectedDescription().getName());
+
+						// remove selectedDescription from formats collection
+						for (CatalogClassViewModel clazz : classes) {
+							for (DescriptionFormatViewModel format : clazz.getFormats()) {
+								for (AssertedNameViewModel name : format.getAssertedNames()) {
+									for (CatalogDescriptionViewModel description : name.getCatalogDescriptions()) {
+										if (description.getId() == getSelectedDescription().getId()) {
+											name.getCatalogDescriptions().remove(description);
 										/*clazz.getFormats().stream().findFirst().filter(f -> f.getId() == format.getId
 												()).get().getAssertedNames().stream().findFirst().filter(n -> n.getId
 												() == name.getId()).get().getCatalogDescriptions().remove
 												(description);*/
 //										displayFormats();
-										return;
+											return;
+										}
 									}
 								}
 							}
 						}
-					}
 
 //					formats.stream().forEach(f -> f.getAssertedNames().removeIf(n -> n.getId() == getSelectedName()
 // .getId()));
 //					displayFormats();
+					}
 				}
 			}
 		});
@@ -304,7 +319,6 @@ public class MainViewModel implements ViewModel {
 					}
 				}
 
-				System.out.println("New characteristic type was added!");
 
 				return dbHelper.addCharacteristicType(type.getCode(), type.getName());
 			}
@@ -349,8 +363,8 @@ public class MainViewModel implements ViewModel {
 				System.out.println("New catalogDescription was added!");
 
 				return dbHelper.addCatalogDescriptionWhileImport(assertedNameId, description.getCode(), description
-						.getName(), description.getValues(), description.getRegistrationInfo(), description
-						.getOrganization());
+						.getName(), description.getValues(), description.getRegistrationInfo().getId(), description
+						.getOrganization().getId());
 			}
 
 			private Organization addOrganizationIfNotFoundInDb(Organization organization) {
@@ -371,11 +385,21 @@ public class MainViewModel implements ViewModel {
 			protected void action() throws Exception {
 				try {
 					ClassLoader classLoader = getClass().getClassLoader();
-//					String xsdPath = classLoader.getResource("exchange_format/catalogDescription.xsd").getFile();
+					String xsdPath = classLoader.getResource("exchange_format/catalogDescription.xsd").getFile();
 					String xmlPath = catalogDescriptionFile.getPath();
 
+					System.out.println("IMPORT");
+					System.out.println(xsdPath);
 
-					String xsdPath = "/home/nd/test/catalogDescription.xsd";
+					if (new File(xsdPath).exists()) {
+						System.out.println("TRUE");
+					} else {
+						System.out.println("FALSE");
+					}
+
+//					String xsdPath = "/home/nd/test/catalogDescription.xsd";
+//					String xsdPath = System.getProperty("user.dir") + "/exchange_format/catalogDescription.xsd";
+
 //					String xmlPath = "/home/nd/test/catalogDescription.xml";
 
 					if (!new File(xmlPath).exists()) {
@@ -536,6 +560,8 @@ public class MainViewModel implements ViewModel {
 
 						selectedName.getValue().getCatalogDescriptions().add(new CatalogDescriptionViewModel
 								(catalogDescription));
+
+						ActionLogger.out("Пользователь импотрировал КО с наименованием: " + catalogDescription.getName());
 					} else {
 						Alert alert = new Alert(Alert.AlertType.ERROR);
 						alert.setTitle("Импорт каталожного описания");
@@ -797,6 +823,14 @@ public class MainViewModel implements ViewModel {
 					// Output to console for testing
 					StreamResult consoleResult = new StreamResult(System.out);
 					transformer.transform(source, consoleResult);
+
+					ActionLogger.out("Пользователь экспортировал КО с наименованием: " + selectedDescription.getValue().getName());
+
+					Alert alert = new Alert(Alert.AlertType.INFORMATION);
+					alert.setTitle("Экспорт КО");
+					alert.setHeaderText("КО " + selectedDescription.getValue().getName());
+					alert.setContentText("успешно экспортировано");
+					alert.showAndWait();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -966,6 +1000,14 @@ public class MainViewModel implements ViewModel {
 
 	public void setShownWindow(EventHandler<WindowEvent> shownWindow) {
 		this.shownWindow.set(shownWindow);
+	}
+
+	public Command getDeleteCatalogClassCommand() {
+		return deleteCatalogClassCommand;
+	}
+
+	public void setDeleteCatalogClassCommand(Command deleteCatalogClassCommand) {
+		this.deleteCatalogClassCommand = deleteCatalogClassCommand;
 	}
 
 	public Command getDeleteDescriptionFormatCommand() {

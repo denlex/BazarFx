@@ -12,6 +12,7 @@ import javafx.stage.WindowEvent;
 import org.defence.domain.entities.Characteristic;
 import org.defence.domain.entities.DescriptionFormat;
 import org.defence.infrastructure.DbHelper;
+import org.defence.tools.ActionLogger;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -84,6 +85,7 @@ public class DescriptionFormatEditViewModel implements ViewModel {
 
 					parentViewModel.getSelectedClass().getFormats().add(editedFormat);
 
+					ActionLogger.out("Пользователь добавил СФО: " + editedFormat.getName());
 				} else {
 					// change exist descriptionFormat
 					// TODO: Сделать проверку на пустой ввод данных о типе измерения
@@ -93,6 +95,8 @@ public class DescriptionFormatEditViewModel implements ViewModel {
 					selectedFormat.setName(editedFormat.getName());
 					selectedFormat.setCharacteristics(editedFormat.getCharacteristics());
 					selectedFormat.setAssertedNames(editedFormat.getAssertedNames());
+
+					ActionLogger.out("Пользователь отредактировал класс: " + editedFormat.getName());
 				}
 			}
 		});

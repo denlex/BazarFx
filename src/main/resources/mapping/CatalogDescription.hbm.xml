@@ -12,7 +12,7 @@
         <property name="name" column="NAME" type="string"/>
 
         <many-to-one name="registrationInfo" column="REGISTRATION_INFO" class="RegistrationInfo"
-                     not-null="true" lazy="false" cascade="save-update"/>
+                     not-null="false" lazy="false" cascade="save-update"/>
 
         <many-to-one name="organization" column="ORGANIZATION" class="Organization" not-null="false"
                      lazy="false" cascade="save-update"/>

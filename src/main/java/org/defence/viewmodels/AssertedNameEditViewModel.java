@@ -7,6 +7,7 @@ import de.saxsys.mvvmfx.utils.commands.DelegateCommand;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import org.defence.infrastructure.DbHelper;
+import org.defence.tools.ActionLogger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +43,9 @@ public class AssertedNameEditViewModel implements ViewModel {
 					parentViewModel.getSelectedName().setId(id.getValue());
 					parentViewModel.getSelectedName().setCode(code.getValue());
 					parentViewModel.getSelectedName().setName(name.getValue());
+
+					ActionLogger.out("Пользователь отредактировал УН: " + editedName.getName());
+
 				} else {
 
 					editedName = new AssertedNameViewModel(dbHelper.addAssertedName(format.getId(), code.getValue(),
@@ -56,6 +60,8 @@ public class AssertedNameEditViewModel implements ViewModel {
 					} else {
 						format.getAssertedNames().add(editedName);
 					}
+
+					ActionLogger.out("Пользователь добавил УН: " + editedName.getName());
 				}
 			}
 		});
