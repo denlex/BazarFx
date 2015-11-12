@@ -30,9 +30,12 @@ public class CatalogDescriptionViewModel {
 		this.id.setValue(id);
 		this.code.setValue(code);
 		this.name.setValue(name);
-		this.registrationInfo.setValue(new RegistrationInfoViewModel(registrationInfo));
 
-		if (this.organization.getValue() != null) {
+		if (registrationInfo != null) {
+			this.registrationInfo.setValue(new RegistrationInfoViewModel(registrationInfo));
+		}
+
+		if (organization != null) {
 			this.organization.setValue(new OrganizationViewModel(organization));
 		}
 

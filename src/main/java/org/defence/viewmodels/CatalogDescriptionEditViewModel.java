@@ -11,10 +11,7 @@ import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.stage.WindowEvent;
-import org.defence.domain.entities.Characteristic;
-import org.defence.domain.entities.CharacteristicValue;
-import org.defence.domain.entities.Organization;
-import org.defence.domain.entities.RegistrationInfo;
+import org.defence.domain.entities.*;
 import org.defence.infrastructure.DbHelper;
 import org.defence.tools.DateConverter;
 
@@ -79,15 +76,16 @@ public class CatalogDescriptionEditViewModel implements ViewModel {
 					list.add(new CharacteristicValueViewModel(new CharacteristicValue(characteristic, null)));
 				}
 			} else {
-				if (parentViewModel.getSelectedDescription() != null) {
-					characteristics = dbHelper.getCharacteristicsByCatalogDescriptionId(parentViewModel
-							.getSelectedDescription().getId());
+				CatalogDescriptionViewModel description = parentViewModel.getSelectedDescription();
+
+				if (description != null) {
+					characteristics = dbHelper.getCharacteristicsByCatalogDescriptionId(description.getId());
 
 
 					// fill characteristics of catalogDescriptions with values
 					for (Characteristic characteristic : characteristics) {
 						boolean flag = false;
-						for (CharacteristicValueViewModel value : parentViewModel.getSelectedDescription().getValues()) {
+						for (CharacteristicValueViewModel value : description.getValues()) {
 							if (value.getCharacteristic().getId() == characteristic.getId()) {
 								list.add(new CharacteristicValueViewModel(new CharacteristicValue(characteristic, value.getValue())));
 								flag = true;
@@ -98,6 +96,13 @@ public class CatalogDescriptionEditViewModel implements ViewModel {
 						if (!flag) {
 							list.add(new CharacteristicValueViewModel(new CharacteristicValue(characteristic, null)));
 						}
+					}
+
+					OrganizationViewModel org = description.getOrganization();
+
+					if (org != null && org.getId() != 0) {
+						organization.setValue(new OrganizationViewModel(org.getId(), org.getCode(), org.getName(),
+								org.getType()));
 					}
 				}
 			}

@@ -1,10 +1,7 @@
 package org.defence.viewmodels;
 
 import de.saxsys.mvvmfx.ViewModel;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 import org.defence.domain.entities.Organization;
 
 /**

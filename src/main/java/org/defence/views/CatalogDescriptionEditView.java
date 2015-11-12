@@ -118,8 +118,7 @@ public class CatalogDescriptionEditView implements FxmlView<CatalogDescriptionEd
 		final String pattern = "dd.MM.yyyy";
 
 		StringConverter converter = new StringConverter<LocalDate>() {
-			DateTimeFormatter dateFormatter =
-					DateTimeFormatter.ofPattern(pattern);
+			DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(pattern);
 
 			@Override
 			public String toString(LocalDate date) {
